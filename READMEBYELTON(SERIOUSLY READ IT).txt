@@ -8,7 +8,16 @@ IMPORTANT THINGS
 1) main will always hold a backup of the latest working version
 2) if you want to create your own branches in your cloned repo thats fine, but please push the branch changes to the branch that is universal to everyone then pull request it
 3) ONLY WORK IN THE TESTING BRANCH
-4) Thats all love yall xoxo
+4) When creating the commits, Put your name - followed by a brief summary of what the commit is about, best to also give some points in the description
+5) Thats all love yall xoxo
+
+I.E.
+
+Elton - Made these changes (Mandatory and will not be appreciated otherwise)
+description: (Optional but appreciated)
+1)this this this
+2)that that that
+...
 
 Visual Representation
 
