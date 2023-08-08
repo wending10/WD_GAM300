@@ -12,10 +12,10 @@ IMPORTANT THINGS
 
 Visual Representation
 
-Elton's Main Repo	----fork---->	Your Copy of the Repo
-					<----pull---		⌃			|
-										|			|
-										|Push		|Clone
-										|			|
-										|			V
-									Your local machine repo
+Elton's Main Repo ----fork---->	Your Copy of the Repo
+		  <----pull---	   ^		 |
+				   |		 |
+				   |Push	 |Clone
+				   |		 |
+				   |		 V
+				Your local machine repo
