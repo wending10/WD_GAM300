@@ -2,7 +2,7 @@
 /// @file AudioEngine.cpp
 /// @author Ross Hoyt
 ///
-#include "AudioEngine.h"
+#include "../header/AudioEngine.h"
 #include <FMOD/fmod_errors.h>
 #include <iostream>
 

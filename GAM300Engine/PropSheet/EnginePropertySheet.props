@@ -3,13 +3,13 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)\Include\FMOD;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Lib\Library_x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Lib\FMOD\Library_x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Include\FMOD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
