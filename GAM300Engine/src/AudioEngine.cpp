@@ -108,7 +108,6 @@ void AudioEngine::updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, u
 }
 
 
-
 void AudioEngine::update3DSoundPosition(SoundInfo soundInfo) {
     if (soundIsPlaying(soundInfo))
         set3dChannelPosition(soundInfo, loopsPlaying[soundInfo.getUniqueID()]);

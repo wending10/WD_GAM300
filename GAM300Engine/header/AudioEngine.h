@@ -17,7 +17,7 @@
 #include <vector>
 #include <list>
 #include <map>
-#include "SoundInfo.h"
+#include "../header/SoundInfo.h"
 
 /**
  * Error Handling Function for FMOD Errors
@@ -84,7 +84,6 @@ public:
      */
     void updateSoundLoopVolume(SoundInfo &soundInfo, float newVolume, unsigned int fadeSampleLength = 0);
 
-   
 
     /**
     * Updates the position of a looping 3D sound that has already been loaded and is playing back.
