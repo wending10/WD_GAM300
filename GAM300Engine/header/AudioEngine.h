@@ -34,8 +34,8 @@ void ERRCHECK_fn(FMOD_RESULT result, const char* file, int line);
 class AudioEngine {
 public:
     /**
-     * Default AudioEngine constructor. 
-     * AudioEngine::init() must be called before using the Audio Engine 
+     * Default AudioEngine constructor.
+     * AudioEngine::init() must be called before using the Audio Engine
      */
     AudioEngine();
 
@@ -173,8 +173,7 @@ public:
     // The audio sampling rate of the audio engine
     static const int AUDIO_SAMPLE_RATE = 44100;
 
-private:  
-
+private:
     /**
      * Checks if a sound file is in the soundCache
      */
@@ -196,7 +195,7 @@ private:
     void printEventInfo(FMOD::Studio::EventDescription* eventDescription);
 
     // FMOD Studio API system, which can play FMOD sound banks (*.bank)
-    FMOD::Studio::System* studioSystem = nullptr;       
+    FMOD::Studio::System* studioSystem {nullptr};
     
     // FMOD's low-level audio system which plays audio files and is obtained from Studio System
     FMOD::System* lowLevelSystem = nullptr;          
@@ -237,27 +236,27 @@ private:
      * Value is the FMOD::Sound* to be played back.
      * TODO Refactor to use numeric UID as key
      */
-    std::map<std::string, FMOD::Sound*> sounds;
+    std::map<std::string, FMOD::Sound*> sounds{};
 
     /*
      * Map which stores the current playback channels of any playing sound loop
      * Key is the SoundInfo's uniqueKey field.
      * Value is the FMOD::Channel* the FMOD::Sound* is playing back on.
      */
-    std::map<std::string, FMOD::Channel*> loopsPlaying;
+    std::map<std::string, FMOD::Channel*> loopsPlaying{};
 
     /*
      * Map which stores the soundbanks loaded with loadFMODStudioBank()
      */
-    std::map<std::string, FMOD::Studio::Bank*> soundBanks;
+    std::map<std::string, FMOD::Studio::Bank*> soundBanks{};
     
     /*
      * Map which stores event descriptions created during loadFMODStudioEvent()
      */
-    std::map<std::string, FMOD::Studio::EventDescription*> eventDescriptions;
+    std::map<std::string, FMOD::Studio::EventDescription*> eventDescriptions{};
     
     /*
      * Map which stores event instances created during loadFMODStudioEvent()
      */
-    std::map<std::string, FMOD::Studio::EventInstance*> eventInstances;
+    std::map<std::string, FMOD::Studio::EventInstance*> eventInstances{};
 };

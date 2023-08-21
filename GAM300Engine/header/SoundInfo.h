@@ -1,6 +1,15 @@
 #pragma once
 
 #include <string>
+#include <array>
+#include <time.h>
+
+enum SOUND_STATE
+{
+    SOUND_ERR = 0,
+    SOUND_LOADED,
+    SOUND_UNLOAD,
+};
 
 struct SoundInfo {
 
@@ -8,20 +17,32 @@ struct SoundInfo {
 
     const char* filePath;
 
-    bool isLoop, is3D, isLoaded;
+    bool isitLoop, isit3D, isitLoaded;
 
-    float x, y, z;
+    std::array<float, 3> posVec; //!!!!!!!To be replaced when vec container is used
 
     float volume, ReverbAmount;
 
+    SOUND_STATE state;
+
     // convienience method to set the 3D coordinates of the sound.
     void set3DCoords(float x, float y, float z) {
-        this->x = x, this->y = y, this->z = z;
+        this->posVec[0] = x, this->posVec[1] = y, this->posVec[2] = z; //!!!!!!!To be replaced when vec container is used
     }
 
     bool isLoaded()
     {
-        return isLoaded;
+        return isitLoaded;
+    }
+
+    bool is3D()
+    {
+        return isit3D;
+    }
+
+    bool isLoop()
+    {
+        return isitLoop;
     }
 
     std::string getUniqueID()
@@ -36,12 +57,27 @@ struct SoundInfo {
 
     float getX()
     {
-        return x;
+        return posVec[0]; //!!!!!!!To be replaced when vec container is used
+    }
+
+    float getY()
+    {
+        return posVec[1]; //!!!!!!!To be replaced when vec container is used
+    }
+
+    float getZ()
+    {
+        return posVec[2];
     }
 
     float getReverbAmount()
     {
         return ReverbAmount;
+    }
+
+    float getVolume()
+    {
+        return volume;
     }
 
     /**
@@ -52,10 +88,16 @@ struct SoundInfo {
         volume = 20.0f * log10f(vol);
     }
 
-    SoundInfo(const char* filePath = "", bool isLoop = false, bool is3D = false, float x = 0.0f, float y = 0.0f, float z = 0.0f)
-        : filePath(filePath), isLoop(isLoop), is3D(is3D), x(x), y(y), z(z)
+    void setLoaded(SOUND_STATE setting)
+    {
+        state = setting;
+    }
+
+    SoundInfo(const char* _filePath = "", bool _isLoop = false, bool _is3D = false, bool _isLoaded = false, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
+        : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitLoaded(_isLoaded), posVec{_x, _y, _z}  //!!!!!!!To be replaced when vec container is used
     {
         uniqueID = filePath;
+        state = SOUND_UNLOAD;
     }
 
     // TODO  implement sound instancing
