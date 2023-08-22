@@ -21,9 +21,15 @@
     <ClCompile Include="Src\windowswindow.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\application.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\windowswindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

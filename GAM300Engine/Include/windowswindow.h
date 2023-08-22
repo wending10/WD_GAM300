@@ -1,44 +1,52 @@
 #ifndef WINDOWS_WINDOW
 #define WINDOWS_WINDOW
 
+//reduce code from windows.h 
+#define _CRT_SECURE_NO_WARNINGS
+#define WIN32_LEAN_AND_MEAN
+#define WIN32_EXTRA_LEAN
 
 #include <Windows.h>
-#include <tuple>
-class WindowsWin
+#include <string>
+
+namespace TDS
 {
-public:
-	 WindowsWin();
-	~WindowsWin();
-
-
-	bool					registerWins();
-	bool					createWindow()		noexcept;
-
-	int						getWidth()			const	{ return m_Width; }
-	int						getHeight()			const	{ return m_Height;}
-	std::tuple<int, int>	getPosition()		const
+	class WindowsWin
 	{
-		POINT points{ 0, 0 };
-		ClientToScreen(m_handleWindows, &points);
-		return {static_cast<int>(points.x), static_cast<int>(points.y) };
-	}
+	public:		//functions
+				WindowsWin(HINSTANCE hInstance, int nCmdShow, const wchar_t* className);
+				~WindowsWin();
 
-	std::size_t				getWindowsHandle()  const
-	{
-		return reinterpret_cast <std::size_t> (m_handleWindows);
-	}
+     int		getWidth()  const noexcept;
+	 int		getHeight() const noexcept;
 
-private:
+	 bool		registerWindow();
+	 bool		createWindow();
+	 bool		processInputEvent();
 
-	HWND m_handleWindows{ nullptr };
+	 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	
+	private:	//functions
 
-	int	 m_Width{};
-	int	 m_Height{};
-
-
-};
+	public:		//variables
 
 
+	private:	//variables
+
+		HWND	  m_handleWindows {};
+		HINSTANCE m_hInstance	  {};
+		int		  m_Width		  {};
+		int		  m_Height		  {};
+		int		  m_cmdshow		  {};
+
+		std::wstring_view  m_classname	{};
+
+
+		static constexpr int minWidth {1240};
+		static constexpr int minHeight {800};
+	};
+
+}//end TDS
 
 
 #endif // !WINDOWS_WINDOW
