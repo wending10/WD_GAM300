@@ -35,3 +35,4 @@
 *.db-wal
 *.opendb
 GAM300Engine/.vs/GAM300Engine/v16/.suo
+*.vs
