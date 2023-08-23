@@ -19,38 +19,38 @@ void AudioEngine::init() {
     initReverb();
 }
 
-//void AudioEngine::deactivate() {
-//    lowLevelSystem->close();
-//    studioSystem->release();
-//}
-//
-//void AudioEngine::update() {
-//    ERRCHECK(studioSystem->update()); // also updates the low level system
-//}
-//
-//void AudioEngine::loadSound(SoundInfo soundInfo) {
-//    if (!soundInfo.isLoaded()) {
-//        std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
-//        FMOD::Sound* sound;
-//        ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
-//        ERRCHECK(sound->setMode(soundInfo.isLoop() ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF));
-//        ERRCHECK(sound->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR));
-//        sounds.insert({ soundInfo.getUniqueID(), sound });
-//        unsigned int msLength = 0;
-//        ERRCHECK(sounds[soundInfo.getUniqueID()]->getLength(&msLength, FMOD_TIMEUNIT_MS));
-//        //soundInfo.setMSLength(msLength);
-//        soundInfo.setLoaded(SOUND_LOADED);
-//    }
-//    else
-//        std::cout << "Audio Engine: Sound File was already loaded!\n";
-//}
-//
+void AudioEngine::deactivate() {
+    lowLevelSystem->close();
+    studioSystem->release();
+}
+
+void AudioEngine::update() {
+    //ERRCHECK(studioSystem->update()); // also updates the low level system
+}
+
+void AudioEngine::loadSound(SoundInfo soundInfo) {
+    if (!soundInfo.isLoaded()) {
+        std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
+        FMOD::Sound* sound;
+        /*ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
+        ERRCHECK(sound->setMode(soundInfo.isLoop() ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF));
+        ERRCHECK(sound->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR));*/
+        sounds.insert({ soundInfo.getUniqueID(), sound });
+        unsigned int msLength = 0;
+        //ERRCHECK(sounds[soundInfo.getUniqueID()]->getLength(&msLength, FMOD_TIMEUNIT_MS));
+        //soundInfo.setMSLength(msLength);
+        soundInfo.setLoaded(SOUND_LOADED);
+    }
+    else
+        std::cout << "Audio Engine: Sound File was already loaded!\n";
+}
+
 //void AudioEngine::playSound(SoundInfo soundInfo) {
 //    if (!soundInfo.isLoaded()) {
 //        //std::cout << "Playing Sound\n";
 //        FMOD::Channel* channel;
 //        // start play in 'paused' state
-//        ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
+//        //ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
 //
 //        if (soundInfo.is3D())
 //            set3dChannelPosition(soundInfo, channel);
@@ -71,7 +71,7 @@ void AudioEngine::init() {
 //        std::cout << "Audio Engine: Can't play, sound was not loaded yet from " << soundInfo.getFilePath() << '\n';
 //
 //}
-//
+
 //void AudioEngine::stopSound(SoundInfo soundInfo) {
 //    if (soundIsPlaying(soundInfo)) {
 //        ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
