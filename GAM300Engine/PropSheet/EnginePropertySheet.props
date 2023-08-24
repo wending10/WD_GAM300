@@ -5,6 +5,7 @@
   <PropertyGroup>
     <IncludePath>$(SolutionDir)Include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\FMOD\Libraries_x64\;$(LibraryPath)</LibraryPath>
+    <_PropertySheetDisplayName>EnginePropertySheet_64</_PropertySheetDisplayName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -16,8 +17,12 @@
       <AdditionalDependencies>fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)Lib\FMOD\Libraries_x64\fmodstudio.dll" "$(OutDir)"  /y /d</Command>
+      <Command>xcopy "$(SolutionDir)Lib\FMOD\Libraries_x64\*.dll" "$(OutDir)"  /y /d</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

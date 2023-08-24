@@ -23,8 +23,6 @@ struct SoundInfo {
 
     float volume, ReverbAmount;
 
-    SOUND_STATE state;
-
     // convienience method to set the 3D coordinates of the sound.
     void set3DCoords(float x, float y, float z) {
         this->posVec[0] = x, this->posVec[1] = y, this->posVec[2] = z; //!!!!!!!To be replaced when vec container is used
@@ -67,7 +65,7 @@ struct SoundInfo {
 
     float getZ()
     {
-        return posVec[2];
+        return posVec[2]; //!!!!!!!To be replaced when vec container is used
     }
 
     float getReverbAmount()
@@ -85,19 +83,35 @@ struct SoundInfo {
     */
     void setVolume(float vol)
     {
-        volume = 20.0f * log10f(vol);
+        /*volume = 20.0f * log10f(vol);
+
+        if (volume > 150.f)
+        {
+            volume = 149.f;
+        }*/
+
+        volume = 1.f;
     }
 
     void setLoaded(SOUND_STATE setting)
     {
-        state = setting;
+        isitLoaded = setting;
+    }
+
+    void setLoop(bool condition)
+    {
+        isitLoop = condition;
+    }
+
+    void set3D(bool condition)
+    {
+        isit3D = condition;
     }
 
     SoundInfo(const char* _filePath = "", bool _isLoop = false, bool _is3D = false, bool _isLoaded = false, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
         : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitLoaded(_isLoaded), posVec{_x, _y, _z}  //!!!!!!!To be replaced when vec container is used
     {
         uniqueID = filePath;
-        state = SOUND_UNLOAD;
     }
 
     // TODO  implement sound instancing
