@@ -153,6 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="Include\ecs\ecs.h" />
+    <ClInclude Include="Include\ecs\ecs.hpp" />
     <ClInclude Include="Include\windowswindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

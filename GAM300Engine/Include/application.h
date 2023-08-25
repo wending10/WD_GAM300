@@ -14,7 +14,7 @@ namespace TDS
 	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname);
 		~Application() {}
 		
-		void   Initalize();
+		void   Initialize();
 		void   Update();
 		void   Render(float aspectRatio) {}
 		void   Exit() {}

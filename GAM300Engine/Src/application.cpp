@@ -7,7 +7,7 @@ namespace TDS
 	 { 
 	 }
 
-     void Application::Initalize()
+     void Application::Initialize()
      {
          m_window.createWindow();
      }
