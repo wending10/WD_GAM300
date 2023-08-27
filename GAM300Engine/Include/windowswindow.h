@@ -2,12 +2,20 @@
 #define WINDOWS_WINDOW
 
 //reduce code from windows.h 
-#define _CRT_SECURE_NO_WARNINGS
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif//NOMINMAX
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
-#define WIN32_EXTRA_LEAN
+#endif//WIN32_LEAN_AND_MEAN
+#ifndef NOCOMM
+#define NOCOMM
+#endif//NOCOMM
 
-#include <Windows.h>
+#include <windows.h>
+
 #include <string>
+
 
 namespace TDS
 {
@@ -17,8 +25,8 @@ namespace TDS
 				WindowsWin(HINSTANCE hInstance, int nCmdShow, const wchar_t* className);
 				~WindowsWin();
 
-     int		getWidth()  const noexcept;
-	 int		getHeight() const noexcept;
+     uint32_t	getWidth()  const noexcept;
+	 uint32_t	getHeight() const noexcept;
 
 	 bool		registerWindow();
 	 bool		createWindow();
@@ -26,10 +34,20 @@ namespace TDS
 
 	 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	
+	 HWND		getWindowHandler() const { return m_handleWindows; }
+	 HINSTANCE	getHInstance()	   const { return m_hInstance;     }
 	private:	//functions
 
 	public:		//variables
 
+		struct Settings //will set to private in the future for now no optimization
+		{
+			bool validation		{ true };
+			bool fullscreen		{ false };
+			bool vsync			{ false };
+			bool overlay		{ true	};
+		
+		}settings;
 
 	private:	//variables
 
@@ -42,8 +60,9 @@ namespace TDS
 		std::wstring_view  m_classname	{};
 
 
-		static constexpr int minWidth {1240};
+		static constexpr int minWidth {1280};
 		static constexpr int minHeight {800};
+
 	};
 
 }//end TDS

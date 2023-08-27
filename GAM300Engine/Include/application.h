@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "windowswindow.h"
+#include "vulkanTools/vulkanInstance.h"
+
 
 namespace TDS
 {
@@ -12,11 +14,11 @@ namespace TDS
 	public:
 	
 	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname);
-		~Application() {}
+		~Application();
 		
 		void   Initalize();
 		void   Update();
-		void   Render(float aspectRatio) {}
+		void   Render() {}
 		void   Exit() {}
 
 
@@ -26,8 +28,9 @@ namespace TDS
 		Application& operator=(const Application&) {}
 
 	private:
-		WindowsWin m_window;
-		bool	   m_isRunning{ true };
+		WindowsWin						 m_window;
+		bool							 m_isRunning{ true };
+		std::shared_ptr <VulkanInstance> m_pVKInst;
 
 	};//class application
 

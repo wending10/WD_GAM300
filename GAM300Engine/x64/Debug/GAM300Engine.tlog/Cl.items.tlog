@@ -1,3 +1,7 @@
 C:\devGam300\GAM300\GAM300Engine\main.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\main.obj
 C:\devGam300\GAM300\GAM300Engine\Src\application.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\application.obj
+C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanDebugger.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\vulkanDebugger.obj
+C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanDevice.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\vulkanDevice.obj
+C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanInstance.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\vulkanInstance.obj
+C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\vulkanSwapChain.obj
 C:\devGam300\GAM300\GAM300Engine\Src\windowswindow.cpp;C:\devGam300\GAM300\GAM300Engine\x64\Debug\windowswindow.obj

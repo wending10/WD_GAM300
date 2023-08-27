@@ -1,0 +1,108 @@
+#ifndef VECTOR4_H
+#define VECTOR4_H
+
+#include "Math.h"
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <stdexcept>
+
+
+namespace TDS
+{
+class Vec2;
+class Vec3;
+class Vec4
+{
+public:
+    // Constructors and destructors
+    Vec4();
+    Vec4(const Vec4& v); // Copy constructor
+    Vec4(float value); // Constructor with one value
+    Vec4(float data[]); // Constructor with array of values
+    Vec4(float newX, float newY, float newZ, float newW); // Constructor with four values
+    Vec4(const Vec2& v, float newZ, float newW); // Constructor with Vec2 and two values
+    Vec4(const Vec3& v, float newW); // Constructor with Vec3 and one value
+    Vec4(const float* newX, const float* newY, const float* newZ, const float* newW); // Constructor with four pointers
+    ~Vec4();
+
+    // Static Properties
+    static Vec4 one();
+    static Vec4 zero();
+    static Vec4 positiveInfinity();
+    static Vec4 negativeInfinity();
+
+    // Properties
+    float magnitude();
+    Vec4 normalize();
+    float sqrMagnitude();
+
+    // Public Methods
+    bool Equals(const Vec4& v);
+    void Normalize();
+    void Set(float newX, float newY, float newZ, float newW);
+    std::string ToString();
+
+    // Static Methods
+    // Returns the distance between a and b.
+    static float Distance(Vec4 a, Vec4 b);
+    // Dot Product of two vectors.
+    static float Dot(const Vec4 lhs, const Vec4 rhs);
+    // Linearly interpolates between two vectors.
+    static Vec4 Lerp(const Vec4 a, const Vec4 b, float t);
+    // Linearly interpolates between two without clamping the interpolant.
+    static Vec4 LerpUnclamped(const Vec4 a, const Vec4 b, float t);
+    // Returns a vector that is made from the largest components of two vectors.
+    static Vec4 Max(const Vec4 lhs, const Vec4 rhs);
+    // Returns a vector that is made from the smallest components of two vectors.
+    static Vec4 Min(const Vec4 lhs, const Vec4 rhs);
+    // Moves a point current in a straight line towards a target point.
+    static Vec4 MoveTowards(Vec4 current, Vec4 target, float maxDistanceDelta);
+    // Makes this vector have a magnitude of 1.
+    static Vec4 Normalize(Vec4 value);
+    // Projects a vector onto another vector.
+    static Vec4 Project(Vec4 vector, Vec4 onNormal);
+    // Multiplies two vectors component-wise.
+    static Vec4 Scale(Vec4 a, Vec4 b);
+    // Multiplies every component of this vector by the same component of scale.
+    void Scale(Vec4 scale);
+
+    // Operators
+    Vec4 operator-();
+    Vec4& operator=(const Vec4& v);
+    Vec4& operator+=(const Vec4& v);
+    Vec4& operator-=(const Vec4& v);
+    Vec4& operator+=(const float f);
+    Vec4& operator-=(const float f);
+    Vec4& operator*=(const float f);
+    Vec4& operator/=(const float f);
+    Vec4 operator+(const Vec4& v);
+    Vec4 operator-(const Vec4& v);
+    Vec4 operator+(const float f);
+    Vec4 operator-(const float f);
+    Vec4 operator*(const float f);
+    Vec4 operator/(const float f);
+    bool operator==(const Vec4& v);
+    bool operator!=(const Vec4& v);
+    float& operator[](int index);
+
+    // Casting operators
+    operator Vec2(); // Vec4 to Vec2
+    operator Vec3(); // Vec4 to Vec3
+
+    // variables
+    float x;
+    float y;
+    float z;
+    float w;
+    static constexpr float kEpsilon = 0.00001f;
+    static constexpr float kEpsilonNormalSqrt = 1e-15f;
+
+};
+Vec4 operator*(const float scalar, const Vec4& v);
+std::ostream& operator<<(std::ostream& os, const Vec4& v);
+
+} 
+
+
+#endif // VECTOR4_H

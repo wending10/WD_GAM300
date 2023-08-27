@@ -13,24 +13,60 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\vulkanTools">
+      <UniqueIdentifier>{bab04baa-5efd-41fe-a91e-4dec703cb9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\windows">
+      <UniqueIdentifier>{bdd5d9ec-9c60-4fdd-baac-9a0bbb1dece0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\windows">
+      <UniqueIdentifier>{73b01578-c164-4098-a147-c027dcbf7f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\vulkanCore">
+      <UniqueIdentifier>{97068d07-b11d-429a-a85a-272cd95e04d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\windowswindow.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\application.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\windowswindow.cpp">
+      <Filter>Source Files\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanSwapChain.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\windowswindow.h">
+    <ClInclude Include="Include\application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="application.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Include\windowswindow.h">
+      <Filter>Header Files\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanInstance.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanDebugger.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanDevice.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanSwapChain.h">
+      <Filter>Header Files\vulkanCore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

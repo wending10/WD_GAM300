@@ -1,11 +1,5 @@
-﻿  main.cpp
-C:\devGam300\GAM300\GAM300Engine\main.cpp(15,33): warning C4100: 'argv': unreferenced formal parameter
-C:\devGam300\GAM300\GAM300Engine\main.cpp(15,14): warning C4100: 'argc': unreferenced formal parameter
-C:\devGam300\GAM300\GAM300Engine\Include\application.h(19,23): warning C4100: 'aspectRatio': unreferenced formal parameter
-C:\devGam300\GAM300\GAM300Engine\main.cpp(27,72): warning C4100: 'lpCmdLine': unreferenced formal parameter
-C:\devGam300\GAM300\GAM300Engine\main.cpp(27,51): warning C4100: 'hPrevInstance': unreferenced formal parameter
-  application.cpp
-C:\devGam300\GAM300\GAM300Engine\Include\application.h(19,23): warning C4100: 'aspectRatio': unreferenced formal parameter
-  windowswindow.cpp
+﻿  vulkanInstance.cpp
+  vulkanSwapChain.cpp
+C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp(140,83): warning C4100: 'fullscreen': unreferenced formal parameter
   Generating Code...
   GAM300Engine.vcxproj -> C:\devGam300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
