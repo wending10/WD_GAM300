@@ -1,5 +1,2 @@
 ﻿  vulkanInstance.cpp
-  vulkanSwapChain.cpp
-C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp(140,83): warning C4100: 'fullscreen': unreferenced formal parameter
-  Generating Code...
-  GAM300Engine.vcxproj -> C:\devGam300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
+  GAM300Engine.vcxproj -> C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
