@@ -1,3 +1,9 @@
-﻿  main.cpp
-  GAM300Engine.vcxproj -> C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
-  0 File(s) copied
+﻿  AudioEngine.cpp
+  main.cpp
+  Generating Code...
+  GAM300Engine.vcxproj -> E:\SiT\GAM300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
+  E:\SiT\GAM300\GAM300\GAM300Engine\Lib\FMOD\Libraries_x64\fmod.dll
+  E:\SiT\GAM300\GAM300\GAM300Engine\Lib\FMOD\Libraries_x64\fmodL.dll
+  E:\SiT\GAM300\GAM300\GAM300Engine\Lib\FMOD\Libraries_x64\fmodstudio.dll
+  E:\SiT\GAM300\GAM300\GAM300Engine\Lib\FMOD\Libraries_x64\fmodstudioL.dll
+  4 File(s) copied
