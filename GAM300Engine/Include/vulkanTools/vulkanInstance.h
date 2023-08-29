@@ -59,10 +59,10 @@ namespace TDS
 
 
 		bool					 checkDeviceExtensionSupport(VkPhysicalDevice device);
-		SwapChainSupportDetails  querySwapChainSupport(VkPhysicalDevice device);
+		SwapChainSupportDetails  querySwapChainSupport(const VkPhysicalDevice& device);
 		VkSurfaceFormatKHR		 chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 		VkPresentModeKHR         chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
-		VkExtent2D				 chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, WindowsWin windows);
+		VkExtent2D				 chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, const WindowsWin& windows);
 		std::vector<VkImageView> swapChainImageViews;
 
 	public://members
@@ -74,17 +74,17 @@ namespace TDS
 	
 	private:
 
-		VkInstance		 m_VKhandler;
-		VkPhysicalDevice m_PhysDeviceHandle{ VK_NULL_HANDLE }; //where selected graphic card is stored
-		VkDevice		 m_logicalDevice;
-		VkQueue			 m_graphicQueue;	
-		VkQueue			 m_presentQueue;
-		//VulkanSwapChain	 m_SwapChainHandle;
-		VkSurfaceKHR	 m_Surface;
-		VkSwapchainKHR	 m_SwapChain;
-		VkFormat		 m_swapChainImageFormat;
-		VkExtent2D		 m_swapChainExtent;
-
+		VkInstance			m_VKhandler;
+		VkPhysicalDevice	m_PhysDeviceHandle{ VK_NULL_HANDLE }; //where selected graphic card is stored
+		VkDevice			m_logicalDevice;
+		VkQueue				m_graphicQueue;	
+		VkQueue				m_presentQueue;
+		//VulkanSwapChain	m_SwapChainHandle;
+		VkSurfaceKHR		m_Surface{};
+		VkSwapchainKHR		m_SwapChain{};
+		VkFormat			m_swapChainImageFormat;
+		VkExtent2D			m_swapChainExtent;
+		VkSurfaceFormatKHR  m_VKSurfaceFormat{};
 
 		std::vector<VkImage> m_swapChainImages;
 		const std::vector<const char*> validationLayers { "VK_LAYER_KHRONOS_validation" };
@@ -92,6 +92,7 @@ namespace TDS
 		
 		bool	enableValidate{ false };
 
+		//uint32_t m_ImageCount{ 2 };// default double buffer
 
 	};
 
