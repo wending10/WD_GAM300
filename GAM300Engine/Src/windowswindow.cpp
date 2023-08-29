@@ -1,5 +1,6 @@
 #include "windowswindow.h"
 #include <iostream>
+
 namespace TDS
 {
 	WindowsWin::WindowsWin(HINSTANCE hInstance, int nCmdShow, const wchar_t* className)
@@ -16,14 +17,14 @@ namespace TDS
 		}
 	}
 
-	int		WindowsWin::getWidth()  const noexcept 
+	uint32_t WindowsWin::getWidth()  const noexcept 
 	{ 
-		return m_Width; 
+		return static_cast<uint32_t>(m_Width); 
 	}
 
-	int		WindowsWin::getHeight() const noexcept 
+	uint32_t WindowsWin::getHeight() const noexcept
 	{ 
-		return m_Height; 
+		return static_cast<uint32_t>(m_Height);
 	}
 
 	LRESULT WindowsWin::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -36,6 +37,9 @@ namespace TDS
 			case WM_DESTROY:
 				PostQuitMessage(0);
 				break;
+
+			
+			
 		}
 
 		return DefWindowProc(hwnd, uMsg, wParam, lParam);

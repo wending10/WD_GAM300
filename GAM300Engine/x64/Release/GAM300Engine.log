@@ -1,4 +1,8 @@
-﻿  application.cpp
-c1xx : fatal  error C1083: Cannot open source file: 'application.cpp': No such file or directory
-  main.cpp
+﻿  main.cpp
+  application.cpp
   windowswindow.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 26 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  GAM300Engine.vcxproj -> C:\devGam300\GAM300\GAM300Engine\x64\Release\GAM300Engine.exe
