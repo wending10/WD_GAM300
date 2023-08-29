@@ -4,6 +4,8 @@
 #include <array>
 #include <time.h>
 
+static unsigned int counter{ 0 };
+
 enum SOUND_STATE
 {
     SOUND_ERR = 0,
@@ -13,7 +15,7 @@ enum SOUND_STATE
 
 struct SoundInfo {
 
-    std::string uniqueID;
+    unsigned int uniqueID, MSLength;
 
     const char* filePath;
 
@@ -43,7 +45,7 @@ struct SoundInfo {
         return isitLoop;
     }
 
-    std::string getUniqueID()
+    unsigned int getUniqueID()
     {
         return uniqueID;
     }
@@ -93,6 +95,11 @@ struct SoundInfo {
         volume = 1.f;
     }
 
+    void setMSLength(unsigned int len)
+    {
+        MSLength = len;
+    }
+
     void setLoaded(SOUND_STATE setting)
     {
         isitLoaded = setting;
@@ -109,9 +116,9 @@ struct SoundInfo {
     }
 
     SoundInfo(const char* _filePath = "", bool _isLoop = false, bool _is3D = false, bool _isLoaded = false, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
-        : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitLoaded(_isLoaded), posVec{_x, _y, _z}  //!!!!!!!To be replaced when vec container is used
+        : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitLoaded(_isLoaded), posVec{_x, _y, _z}, volume(_volume), ReverbAmount(_reverbamount)  //!!!!!!!To be replaced when vec container is used
     {
-        uniqueID = filePath;
+        uniqueID = counter++; //Change UID to include time when added
     }
 
     // TODO  implement sound instancing

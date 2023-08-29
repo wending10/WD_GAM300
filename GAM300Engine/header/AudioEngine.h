@@ -236,14 +236,14 @@ private:
      * Value is the FMOD::Sound* to be played back.
      * TODO Refactor to use numeric UID as key
      */
-    std::map<std::string, FMOD::Sound*> sounds{};
+    std::map<unsigned int, FMOD::Sound*> sounds{};
 
     /*
      * Map which stores the current playback channels of any playing sound loop
      * Key is the SoundInfo's uniqueKey field.
      * Value is the FMOD::Channel* the FMOD::Sound* is playing back on.
      */
-    std::map<std::string, FMOD::Channel*> loopsPlaying{};
+    std::map<unsigned int, FMOD::Channel*> loopsPlaying{};
 
     /*
      * Map which stores the soundbanks loaded with loadFMODStudioBank()
