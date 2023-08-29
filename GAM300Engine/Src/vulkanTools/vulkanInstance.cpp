@@ -167,14 +167,16 @@ namespace TDS
 			if (vkCreateSwapchainKHR(m_logicalDevice, &SwapChainInfo, nullptr, &m_SwapChain) != VK_SUCCESS) {
 				throw std::runtime_error("failed to create swap chain!");
 			}
+			vkGetSwapchainImagesKHR(m_logicalDevice, m_SwapChain, &imageCount, nullptr);
+			m_swapChainImages.resize(imageCount);
+			vkGetSwapchainImagesKHR(m_logicalDevice, m_SwapChain, &imageCount, m_swapChainImages.data());
 
 			m_swapChainImageFormat = surfaceFormat.format;
 			m_swapChainExtent = extent;
 		}
 		//image View
 		{
-		/*	swapChainImageViews.resize(m_swapChainImages.size());
-
+			swapChainImageViews.resize(m_swapChainImages.size());
 			for (size_t i = 0; i < m_swapChainImages.size(); i++) {
 				VkImageViewCreateInfo createInfo{};
 				createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -194,18 +196,45 @@ namespace TDS
 				if (vkCreateImageView(m_logicalDevice, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS) {
 					throw std::runtime_error("failed to create image views!");
 				}
-			}*/
+			}
+		}
+		//graphics pipeline???
+		{
+			auto vertShaderCode = readFile("../assets/shaders/vert.spv");
+			auto fragShaderCode = readFile("../assets/shaders/frag.spv");
+
+			VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
+			VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
+
+			VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
+			vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+			vertShaderStageInfo.module = vertShaderModule;
+			vertShaderStageInfo.pName = "main";
+
+			VkPipelineShaderStageCreateInfo fragShaderStageInfo{};
+			fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+			fragShaderStageInfo.module = fragShaderModule;
+			fragShaderStageInfo.pName = "main";
+
+			VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
+
+			vkDestroyShaderModule(m_logicalDevice, fragShaderModule, nullptr);
+			vkDestroyShaderModule(m_logicalDevice, vertShaderModule, nullptr);
 
 		}
+
+
 
 	}
 
 	VulkanInstance::~VulkanInstance()
 	{
-		//for (auto imageView : swapChainImageViews) {
-		//	vkDestroyImageView(m_logicalDevice, imageView, nullptr);
-		//}
-		//
+		for (auto imageView : swapChainImageViews) {
+			vkDestroyImageView(m_logicalDevice, imageView, nullptr);
+		}
+		
 		vkDestroySwapchainKHR(m_logicalDevice, m_SwapChain, nullptr);
 		vkDestroyDevice(m_logicalDevice, nullptr);
 		if(enableValidate)
@@ -483,5 +512,22 @@ namespace TDS
 		}
 
 	}
+
+	VkShaderModule VulkanInstance::createShaderModule(const std::vector<char>& code)
+	{
+		VkShaderModuleCreateInfo createInfo{};
+		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		createInfo.codeSize = code.size();
+		createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+
+		VkShaderModule shaderModule;
+		if (vkCreateShaderModule(m_logicalDevice, &createInfo, nullptr, &shaderModule) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create shader module!");
+		}
+
+		return shaderModule;
+	}
+
+
 
 }//namespace TDS

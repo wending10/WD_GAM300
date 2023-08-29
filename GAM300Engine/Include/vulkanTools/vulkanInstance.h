@@ -13,6 +13,7 @@
 #include <set>
 #include <limits>
 #include <algorithm>
+#include <fstream>
 
 #include "windowswindow.h"
 #include "vulkanTools/vulkanDebugger.h"
@@ -24,6 +25,24 @@ namespace TDS
 	
 	class VulkanInstance
 	{
+
+		static std::vector<char> readFile(const std::string& filename) {
+			std::ifstream file(filename, std::ios::ate | std::ios::binary);
+
+			if (!file.is_open()) {
+				throw std::runtime_error("failed to open file!");
+			}
+
+			size_t fileSize = (size_t)file.tellg();
+			std::vector<char> buffer(fileSize);
+
+			file.seekg(0);
+			file.read(buffer.data(), fileSize);
+
+			file.close();
+
+			return buffer;
+	}
 	struct QueueFamilyIndices
 	{
 		std::optional<uint32_t> graphicsFamily;
@@ -63,8 +82,7 @@ namespace TDS
 		VkSurfaceFormatKHR		 chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 		VkPresentModeKHR         chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
 		VkExtent2D				 chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, const WindowsWin& windows);
-		std::vector<VkImageView> swapChainImageViews;
-
+		VkShaderModule			 createShaderModule(const std::vector<char>& code);
 	public://members
 
 
@@ -74,6 +92,7 @@ namespace TDS
 	
 	private:
 
+		std::vector<VkImageView> swapChainImageViews;
 		VkInstance			m_VKhandler;
 		VkPhysicalDevice	m_PhysDeviceHandle{ VK_NULL_HANDLE }; //where selected graphic card is stored
 		VkDevice			m_logicalDevice;
