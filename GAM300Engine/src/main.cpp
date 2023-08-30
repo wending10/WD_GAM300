@@ -8,15 +8,15 @@ int main()
 
 	unsigned int x { 2 };
 	FMOD::System* sys{};
-	FMOD::Studio::System* sys2{};
 	bool check{ false };
 
 	int i{ 1 }, channels{ 0 };
 
 	audioeng.init();
 
-	SoundInfo test_track{ "../GAM300Game/Assets/AudioFiles/Songs/test2.flac" };
+	SoundInfo test_track{ "../GAM300Game/Assets/AudioFiles/Songs/test.flac" };
 	test_track.setVolume(80.f);
+	test_track.set3DCoords(-1.f, 0.f, 1.f);
 
 	audioeng.loadSound(test_track);
 	audioeng.playSound(test_track);
