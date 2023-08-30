@@ -104,11 +104,15 @@ namespace TDS
 		VkFormat			m_swapChainImageFormat;
 		VkExtent2D			m_swapChainExtent;
 		VkSurfaceFormatKHR  m_VKSurfaceFormat{};
+		VkRenderPass		m_RenderPass;
+		VkPipelineLayout	m_pipelineLayout;
+		VkPipeline			m_graphicPipeline;
 
 		std::vector<VkImage> m_swapChainImages;
+		std::vector<VkFramebuffer> m_swapChainFramebuffers;
 		const std::vector<const char*> validationLayers { "VK_LAYER_KHRONOS_validation" };
 		const std::vector<const char*> deviceExtensions { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
-		
+		std::vector <VkPipelineShaderStageCreateInfo> shaderStages{};
 		bool	enableValidate{ false };
 
 		//uint32_t m_ImageCount{ 2 };// default double buffer
