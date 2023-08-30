@@ -131,36 +131,6 @@ namespace TDS
         return ss.str();
     }
 
-    Mat2 Mat2::operator+(const Mat2& matrix) const
-    {
-        return Mat2(m[0][0] + matrix.m[0][0], m[0][1] + matrix.m[0][1], m[1][0] + matrix.m[1][0], m[1][1] + matrix.m[1][1]);
-    }
-
-    Mat2 Mat2::operator-(const Mat2& matrix) const
-    {
-        return Mat2(m[0][0] - matrix.m[0][0], m[0][1] - matrix.m[0][1], m[1][0] - matrix.m[1][0], m[1][1] - matrix.m[1][1]);
-    }
-
-    Mat2 Mat2::operator*(const Mat2& matrix) const
-    {
-        // column-major order
-        float temp00 = m[0][0] * matrix.m[0][0] + m[1][0] * matrix.m[0][1];
-        float temp01 = m[0][1] * matrix.m[0][0] + m[1][1] * matrix.m[0][1];
-        float temp10 = m[0][0] * matrix.m[1][0] + m[1][0] * matrix.m[1][1];
-        float temp11 = m[0][1] * matrix.m[1][0] + m[1][1] * matrix.m[1][1];
-        return Mat2(temp00, temp01, temp10, temp11);
-    }
-
-    Mat2 Mat2::operator*(float value) const
-    {
-        return Mat2(m[0][0] * value, m[0][1] * value, m[1][0] * value, m[1][1] * value);
-    }
-
-    Mat2 Mat2::operator/(float value) const
-    {
-        return Mat2(m[0][0] / value, m[0][1] / value, m[1][0] / value, m[1][1] / value);
-    }
-
     Mat2& Mat2::operator=(const Mat2& matrix)
     {
         m[0][0] = matrix.m[0][0]; m[1][0] = matrix.m[1][0];
@@ -168,10 +138,24 @@ namespace TDS
         return *this;
     }
 
+    Mat2& Mat2::operator+=(float value) 
+    {
+        m[0][0] += value; m[1][0] += value;
+        m[0][1] += value; m[1][1] += value;
+        return *this;
+    }
+
     Mat2& Mat2::operator+=(const Mat2& matrix)
     {
         m[0][0] += matrix.m[0][0]; m[1][0] += matrix.m[1][0];
         m[0][1] += matrix.m[0][1]; m[1][1] += matrix.m[1][1];
+        return *this;
+    }
+
+    Mat2& Mat2::operator-=(float value) 
+    {
+        m[0][0] -= value; m[1][0] -= value;
+        m[0][1] -= value; m[1][1] -= value;
         return *this;
     }
 
@@ -206,39 +190,6 @@ namespace TDS
         return *this;
     }
 
-    Mat2 Mat2::operator-() const
-    {
-        return Mat2(-m[0][0], -m[0][1], -m[1][0], -m[1][1]);
-    }
-
-    Vec2 Mat2::operator*(const Vec2& v) const
-    {
-        return Vec2(m[0][0] * v.x + m[1][0] * v.y, m[0][1] * v.x + m[1][1] * v.y);
-    }
-
-    bool Mat2::operator==(const Mat2& matrix) const
-    {
-        return m[0][0] == matrix.m[0][0] && m[0][1] == matrix.m[0][1] && m[1][0] == matrix.m[1][0] && m[1][1] == matrix.m[1][1];
-    }
-
-    bool Mat2::operator!=(const Mat2& matrix) const
-    {
-        return m[0][0] != matrix.m[0][0] || m[0][1] != matrix.m[0][1] || m[1][0] != matrix.m[1][0] || m[1][1] != matrix.m[1][1];
-    }
-
-    float WD::Mat2::operator[](int index) const 
-    {
-        switch (index)
-        {
-        case 0: return m[0][0];
-        case 1: return m[0][1];
-        case 2: return m[1][0];
-        case 3: return m[1][1];
-        default:
-            throw std::out_of_range("Mat2 index out of range");
-        }
-    }
-
     float& Mat2::operator[](int index) 
     {
         switch (index)
@@ -252,6 +203,18 @@ namespace TDS
         }
     }
 
+    float const& Mat2::operator[](int index) const 
+    {
+        switch (index)
+        {
+        case 0: return m[0][0];
+        case 1: return m[0][1];
+        case 2: return m[1][0];
+        case 3: return m[1][1];
+        default:
+            throw std::out_of_range("Mat2 index out of range");
+        }
+    }
 
     std::ostream& operator<<(std::ostream& os, const Mat2& matrix) {
         // ensure "|"" is perfectly aligned with the matrix regardless of the value
@@ -269,4 +232,75 @@ namespace TDS
         return os;
     }
 
-} // namespace WD
+    Mat2 operator-(const Mat2& var) 
+    {
+        return Mat2(-var.m[0][0], -var.m[0][1], -var.m[1][0], -var.m[1][1]);
+    }
+
+    Mat2 operator+(Mat2 const& var, float const& value)
+    {
+        return Mat2(var.m[0][0] + value, var.m[0][1] + value, var.m[1][0] + value, var.m[1][1] + value);
+    }
+
+    Mat2 operator+(float const& value, Mat2 const& var)
+    {
+        return Mat2(var.m[0][0] + value, var.m[0][1] + value, var.m[1][0] + value, var.m[1][1] + value);
+    }
+
+    Mat2 operator+(Mat2 const& var1, Mat2 const& var2)
+    {
+        return Mat2(var1.m[0][0] + var2.m[0][0], var1.m[0][1] + var2.m[0][1], var1.m[1][0] + var2.m[1][0], var1.m[1][1] + var2.m[1][1]);
+    }
+
+    Mat2 operator-(Mat2 const& var, float const& value)
+    {
+        return Mat2(var.m[0][0] - value, var.m[0][1] - value, var.m[1][0] - value, var.m[1][1] - value);
+    }
+
+    Mat2 operator-(float const& value, Mat2 const& var)
+    {
+        return Mat2(value - var.m[0][0], value - var.m[0][1], value - var.m[1][0], value - var.m[1][1]);
+    }
+
+    Mat2 operator-(Mat2 const& var1, Mat2 const& var2)
+    {
+        return Mat2(var1.m[0][0] - var2.m[0][0], var1.m[0][1] - var2.m[0][1], var1.m[1][0] - var2.m[1][0], var1.m[1][1] - var2.m[1][1]);
+    }
+
+    Mat2 operator*(Mat2 const& var, float const& value)
+    {
+        return Mat2(var.m[0][0] * value, var.m[0][1] * value, var.m[1][0] * value, var.m[1][1] * value);
+    }
+
+    Mat2 operator*(float const& value, Mat2 const& var)
+    {
+        return Mat2(var.m[0][0] * value, var.m[0][1] * value, var.m[1][0] * value, var.m[1][1] * value);
+    }
+
+    Mat2 operator*(Mat2 const& var1, Mat2 const& var2)
+    {
+        return Mat2(var1.m[0][0] * var2.m[0][0] + var1.m[1][0] * var2.m[0][1], var1.m[0][1] * var2.m[0][0] + var1.m[1][1] * var2.m[0][1],
+                    var1.m[0][0] * var2.m[1][0] + var1.m[1][0] * var2.m[1][1], var1.m[0][1] * var2.m[1][0] + var1.m[1][1] * var2.m[1][1]);
+    }
+
+    Mat2 operator/(Mat2 const& var, float const& value)
+    {
+        return Mat2(var.m[0][0] / value, var.m[0][1] / value, var.m[1][0] / value, var.m[1][1] / value);
+    }
+
+    Mat2 operator/(float const& value, Mat2 const& var)
+    {
+        return Mat2(value / var.m[0][0], value / var.m[0][1], value / var.m[1][0], value / var.m[1][1]);
+    }
+
+    bool operator==(Mat2 const& var1, Mat2 const& var2)
+    {
+        return var1.m[0][0] == var2.m[0][0] && var1.m[0][1] == var2.m[0][1] && var1.m[1][0] == var2.m[1][0] && var1.m[1][1] == var2.m[1][1];
+    }
+
+    bool operator!=(Mat2 const& var1, Mat2 const& var2)
+    {
+        return var1.m[0][0] != var2.m[0][0] || var1.m[0][1] != var2.m[0][1] || var1.m[1][0] != var2.m[1][0] || var1.m[1][1] != var2.m[1][1];
+    }
+
+}  // namespace WD

@@ -2,8 +2,7 @@
 #define MATRIX4_H
 
 #include "Vector4.h"
-#include <iomanip>
-
+#include "Matrix3.h"
 // Variables (column-major order)
 // memory layout:
 //
@@ -26,7 +25,8 @@ struct FrustumPlanes
   float zNear;
   float zFar;
 };
-
+class Quat;
+class Mat3;
 class Mat4
 {
 
@@ -41,6 +41,7 @@ class Mat4
        float m20, float m21, float m22, float m23,
        float m30, float m31, float m32, float m33); // constructor with sixteen values
   Mat4(Vec4 v1, Vec4 v2, Vec4 v3, Vec4 v4); // constructor with four vectors
+  Mat4(Mat3 m); // constructor with a 3x3 matrix
   ~Mat4();
 
   // Static Properties
@@ -53,9 +54,6 @@ class Mat4
   FrustumPlanes decomposeProjection();
   float determinant();
   Mat4 inverse();
-  bool isIdentity();
-  // Attempts to get a rotation quaternion from the matrix.
-  // Quaternion rotation(); // TODO: implement
   Mat4 transpose();
 
   // Methods
@@ -71,9 +69,6 @@ class Mat4
   Vec3 MultiplyVector(Vec3 vec);
   void SetColumn(int index, Vec4 vec);
   void SetRow(int index, Vec4 vec);
-  // Set this matrix to a translation, rotation and scaling matrix.
-  // the current matrix is modified so that it places object at position pos, oriented in rotation q and scaled by s.
-  // void SetTRS(Vec3 pos, Quaternion q, Vec3 s); // TODO: implement
   std::string ToString();
 
   // Static Methods
@@ -91,39 +86,48 @@ class Mat4
   // Create a perspective projection matrix.
   // https://docs.unity3d.com/ScriptReference/Matrix4x4.Perspective.html
   static Mat4 Perspective(float fov, float aspect, float zNear, float zFar);
-  // Creates a rotation matrix using a Quaternion.
-  // static Mat4 Rotate(Quaternion q); 
   // Creates a scaling matrix.
   static Mat4 Scale(Vec3 scale);
   // Creates a translation matrix.
   static Mat4 Translate(Vec3 vec);
-  // Create a translation, rotation and scaling matrix.
-  // the return matrix is such that it places object at position pos, oriented in rotation q and scaled by s.
-  // static Mat4 TRS(Vec3 pos, Quaternion q, Vec3 s); // TODO: implement
 
-  // Operators
-  Mat4 operator+(const Mat4& var) const;
-  Mat4 operator-(const Mat4& var) const;
-  Mat4 operator*(const Mat4& var) const;
-  Mat4 operator*(float value) const; // scalar multiplication
-  Mat4 operator/(float value) const; // scalar division
+  static Quat toQuat(Mat4 const& m);
+
+  // unary arithmetic operators
   Mat4& operator=(const Mat4& var);
+  Mat4& operator+=(float value);
   Mat4& operator+=(const Mat4& var);
+  Mat4& operator-=(float value);
   Mat4& operator-=(const Mat4& var);
+  Mat4& operator*=(float value);
   Mat4& operator*=(const Mat4& var);
-  Mat4& operator*=(float value); // scalar multiplication
-  Mat4& operator/=(float value); // scalar division
-  Mat4 operator-() const; // negation
-  Vec4 operator*(const Vec4& var) const; // matrix-vector multiplication
+  Mat4& operator/=(float value);
 
-  bool operator==(const Mat4& var) const;
-  bool operator!=(const Mat4& var) const;
-  float operator[](int index) const; // indexing operator
-  float& operator[](int index); // indexing operator
-
+  float& operator[](int index);
+  float const& operator[](int index) const;
   // Variables
   float m[4][4];
 };
+// unary operators
+Mat4 operator-(const Mat4& var);
+
+// binary operators
+Mat4 operator+(Mat4 const& var, float const& value);
+Mat4 operator+(float const& value, Mat4 const& var);
+Mat4 operator+(Mat4 const& var1, Mat4 const& var2);
+Mat4 operator-(Mat4 const& var, float const& value);
+Mat4 operator-(float const& value, Mat4 const& var);
+Mat4 operator-(Mat4 const& var1, Mat4 const& var2);
+Mat4 operator*(Mat4 const& var, float const& value);
+Mat4 operator*(float const& value, Mat4 const& var);
+Mat4 operator*(Mat4 const& var1, Mat4 const& var2);
+Mat4 operator/(Mat4 const& var, float const& value);
+Mat4 operator/(float const& value, Mat4 const& var);
+
+// boolean operators
+bool operator==(Mat4 const& var1, Mat4 const& var2);
+bool operator!=(Mat4 const& var1, Mat4 const& var2);
+
 std::ostream& operator<<(std::ostream& os, const Mat4& m);
 
 }

@@ -760,8 +760,8 @@ namespace TDS
 		VkViewport viewport{};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = (float)m_swapChainExtent.width;
-		viewport.height = (float)m_swapChainExtent.height;
+		viewport.width = static_cast<float>(m_swapChainExtent.width);
+		viewport.height = static_cast<float>(m_swapChainExtent.height);
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);

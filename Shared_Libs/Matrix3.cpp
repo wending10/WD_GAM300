@@ -191,6 +191,49 @@ namespace TDS
         return Mat3(v0, v1, v2);
     }
 
+	Quat Mat3::toQuat(Mat3 const& m)
+	{
+		float fourXSquareMinus1 = m.m[0][0] - m.m[1][1] - m.m[2][2];
+		float fourYSquareMinus1 = m.m[1][1] - m.m[0][0] - m.m[2][2];
+		float fourZSquareMinus1 = m.m[2][2] - m.m[0][0] - m.m[1][1];
+		float fourWSquareMinus1 = m.m[0][0] + m.m[1][1] + m.m[2][2];
+
+		int biggestIndex = 0;
+		float fourBiggestSquareMinus1 = fourWSquareMinus1;
+		if (fourXSquareMinus1 > fourBiggestSquareMinus1)
+		{
+			fourBiggestSquareMinus1 = fourXSquareMinus1;
+			biggestIndex = 1;
+		}
+		if (fourYSquareMinus1 > fourBiggestSquareMinus1)
+		{
+			fourBiggestSquareMinus1 = fourYSquareMinus1;
+			biggestIndex = 2;
+		}
+		if (fourZSquareMinus1 > fourBiggestSquareMinus1)
+		{
+			fourBiggestSquareMinus1 = fourZSquareMinus1;
+			biggestIndex = 3;
+		}
+
+		float biggestVal = Mathf::Sqrt(fourBiggestSquareMinus1 + 1.f) * 0.5f;
+		float mult = 0.25f / biggestVal;
+
+		switch (biggestIndex)
+		{
+		case 0:
+			return Quat(biggestVal, (m.m[1][2] - m.m[2][1]) * mult, (m.m[2][0] - m.m[0][2]) * mult, (m.m[0][1] - m.m[1][0]) * mult);
+		case 1:
+			return Quat((m.m[1][2] - m.m[2][1]) * mult, biggestVal, (m.m[0][1] + m.m[1][0]) * mult, (m.m[2][0] + m.m[0][2]) * mult);
+		case 2:
+			return Quat((m.m[2][0] - m.m[0][2]) * mult, (m.m[0][1] + m.m[1][0]) * mult, biggestVal, (m.m[1][2] + m.m[2][1]) * mult);
+		case 3:
+			return Quat((m.m[0][1] - m.m[1][0]) * mult, (m.m[2][0] + m.m[0][2]) * mult, (m.m[1][2] + m.m[2][1]) * mult, biggestVal);
+		default:
+			return Quat();
+        }
+	}
+
     std::string Mat3::ToString()
     {
         std::ostringstream ss;
@@ -210,51 +253,6 @@ namespace TDS
         return Mat3(v0, v1, v2);
     }
 
-    Mat3 Mat3::operator+(const Mat3& var) const
-    {
-        return Mat3(m[0][0] + var.m[0][0], m[0][1] + var.m[0][1], m[0][2] + var.m[0][2],
-                    m[1][0] + var.m[1][0], m[1][1] + var.m[1][1], m[1][2] + var.m[1][2],
-                    m[2][0] + var.m[2][0], m[2][1] + var.m[2][1], m[2][2] + var.m[2][2]);
-    }
-
-    Mat3 Mat3::operator-(const Mat3& var) const
-    {
-        return Mat3(m[0][0] - var.m[0][0], m[0][1] - var.m[0][1], m[0][2] - var.m[0][2],
-                    m[1][0] - var.m[1][0], m[1][1] - var.m[1][1], m[1][2] - var.m[1][2],
-                    m[2][0] - var.m[2][0], m[2][1] - var.m[2][1], m[2][2] - var.m[2][2]);
-    }
-
-    Mat3 Mat3::operator*(const Mat3& var) const
-    {
-        float m00, m01, m02, m10, m11, m12, m20, m21, m22;
-        m00 = m[0][0] * var.m[0][0] + m[1][0] * var.m[0][1] + m[2][0] * var.m[0][2];
-        m01 = m[0][1] * var.m[0][0] + m[1][1] * var.m[0][1] + m[2][1] * var.m[0][2];
-        m02 = m[0][2] * var.m[0][0] + m[1][2] * var.m[0][1] + m[2][2] * var.m[0][2];
-        m10 = m[0][0] * var.m[1][0] + m[1][0] * var.m[1][1] + m[2][0] * var.m[1][2];
-        m11 = m[0][1] * var.m[1][0] + m[1][1] * var.m[1][1] + m[2][1] * var.m[1][2];
-        m12 = m[0][2] * var.m[1][0] + m[1][2] * var.m[1][1] + m[2][2] * var.m[1][2];
-        m20 = m[0][0] * var.m[2][0] + m[1][0] * var.m[2][1] + m[2][0] * var.m[2][2];
-        m21 = m[0][1] * var.m[2][0] + m[1][1] * var.m[2][1] + m[2][1] * var.m[2][2];
-        m22 = m[0][2] * var.m[2][0] + m[1][2] * var.m[2][1] + m[2][2] * var.m[2][2];
-        return Mat3(m00, m01, m02, m10, m11, m12, m20, m21, m22);
-    }
-
-    Mat3 Mat3::operator*(float value) const
-    {
-        return Mat3(m[0][0] * value, m[0][1] * value, m[0][2] * value,
-                    m[1][0] * value, m[1][1] * value, m[1][2] * value,
-                    m[2][0] * value, m[2][1] * value, m[2][2] * value);
-    }
-
-    Mat3 Mat3::operator/(float value) const
-    {
-        if (value == 0)
-            throw std::invalid_argument("Division by zero.");
-        return Mat3(m[0][0] / value, m[0][1] / value, m[0][2] / value,
-                    m[1][0] / value, m[1][1] / value, m[1][2] / value,
-                    m[2][0] / value, m[2][1] / value, m[2][2] / value);
-    }
-
     Mat3& Mat3::operator=(const Mat3& var)
     {
         m[0][0] = var.m[0][0]; m[1][0] = var.m[1][0]; m[2][0] = var.m[2][0];
@@ -263,11 +261,27 @@ namespace TDS
         return *this;
     }
 
+    Mat3& Mat3::operator+=(float value) 
+    {
+        m[0][0] += value; m[1][0] += value; m[2][0] += value;
+        m[0][1] += value; m[1][1] += value; m[2][1] += value;
+        m[0][2] += value; m[1][2] += value; m[2][2] += value;
+        return *this;
+    }
+
     Mat3& Mat3::operator+=(const Mat3& var)
     {
         m[0][0] += var.m[0][0]; m[1][0] += var.m[1][0]; m[2][0] += var.m[2][0];
         m[0][1] += var.m[0][1]; m[1][1] += var.m[1][1]; m[2][1] += var.m[2][1];
         m[0][2] += var.m[0][2]; m[1][2] += var.m[1][2]; m[2][2] += var.m[2][2];
+        return *this;
+    }
+
+    Mat3& Mat3::operator-=(float value) 
+    {
+        m[0][0] -= value; m[1][0] -= value; m[2][0] -= value;
+        m[0][1] -= value; m[1][1] -= value; m[2][1] -= value;
+        m[0][2] -= value; m[1][2] -= value; m[2][2] -= value;
         return *this;
     }
 
@@ -316,50 +330,6 @@ namespace TDS
         return *this;
     }
 
-    Mat3 Mat3::operator-() const
-    {
-        return Mat3(-m[0][0], -m[0][1], -m[0][2],
-                    -m[1][0], -m[1][1], -m[1][2],
-                    -m[2][0], -m[2][1], -m[2][2]);
-    }
-
-    Vec3 Mat3::operator*(const Vec3& v) const
-    {
-        return Vec3(m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z,
-                    m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z,
-                    m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z);
-    }
-
-    bool Mat3::operator==(const Mat3& var) const
-    {
-        return m[0][0] == var.m[0][0] && m[0][1] == var.m[0][1] && m[0][2] == var.m[0][2] &&
-               m[1][0] == var.m[1][0] && m[1][1] == var.m[1][1] && m[1][2] == var.m[1][2] &&
-               m[2][0] == var.m[2][0] && m[2][1] == var.m[2][1] && m[2][2] == var.m[2][2];
-    }
-
-    bool Mat3::operator!=(const Mat3& var) const
-    {
-        return m[0][0] != var.m[0][0] || m[0][1] != var.m[0][1] || m[0][2] != var.m[0][2] ||
-               m[1][0] != var.m[1][0] || m[1][1] != var.m[1][1] || m[1][2] != var.m[1][2] ||
-               m[2][0] != var.m[2][0] || m[2][1] != var.m[2][1] || m[2][2] != var.m[2][2];
-    }
-    float Mat3::operator[](int index) const
-    {
-        switch (index)
-        {
-        case 0: return m[0][0];
-        case 1: return m[0][1];
-        case 2: return m[0][2];
-        case 3: return m[1][0];
-        case 4: return m[1][1];
-        case 5: return m[1][2];
-        case 6: return m[2][0];
-        case 7: return m[2][1];
-        case 8: return m[2][2];
-        default:
-            throw std::out_of_range("Mat3 index out of range");
-        }
-    }
     float& Mat3::operator[](int index)
     {
         switch (index)
@@ -377,6 +347,157 @@ namespace TDS
             throw std::out_of_range("Mat3 index out of range");
         }
     }
+
+    float const& Mat3::operator[](int index) const 
+    {
+        switch (index)
+        {
+        case 0: return m[0][0];
+        case 1: return m[0][1];
+        case 2: return m[0][2];
+        case 3: return m[1][0];
+        case 4: return m[1][1];
+        case 5: return m[1][2];
+        case 6: return m[2][0];
+        case 7: return m[2][1];
+        case 8: return m[2][2];
+        default:
+            throw std::out_of_range("Mat3 index out of range");
+        }
+    }
+
+    Mat3 operator-(const Mat3& var)
+    {
+        return Mat3(-var.m[0][0], -var.m[0][1], -var.m[0][2],
+                    -var.m[1][0], -var.m[1][1], -var.m[1][2],
+                    -var.m[2][0], -var.m[2][1], -var.m[2][2]);
+    }
+
+    Mat3 operator+(Mat3 const& var, float const& value)
+    {
+        return Mat3(
+            var.m[0][0] + value, var.m[0][1] + value, var.m[0][2] + value,
+            var.m[1][0] + value, var.m[1][1] + value, var.m[1][2] + value,
+            var.m[2][0] + value, var.m[2][1] + value, var.m[2][2] + value
+        );
+    }
+
+    Mat3 operator+(float const& value, Mat3 const& var)
+    {
+        return Mat3(
+            var.m[0][0] + value, var.m[0][1] + value, var.m[0][2] + value, 
+            var.m[1][0] + value, var.m[1][1] + value, var.m[1][2] + value,
+            var.m[2][0] + value, var.m[2][1] + value, var.m[2][2] + value
+        );
+    }
+
+    Mat3 operator+(Mat3 const& var1, Mat3 const& var2)
+    {
+        return Mat3(
+            var1.m[0][0] + var2.m[0][0], var1.m[0][1] + var2.m[0][1], var1.m[0][2] + var2.m[0][2], 
+            var1.m[1][0] + var2.m[1][0], var1.m[1][1] + var2.m[1][1], var1.m[1][2] + var2.m[1][2], 
+            var1.m[2][0] + var2.m[2][0], var1.m[2][1] + var2.m[2][1], var1.m[2][2] + var2.m[2][2]
+        );
+    }
+
+    Mat3 operator-(Mat3 const& var, float const& value)
+    {
+        return Mat3(
+            var.m[0][0] - value, var.m[0][1] - value, var.m[0][2] - value, 
+            var.m[1][0] - value, var.m[1][1] - value, var.m[1][2] - value, 
+            var.m[2][0] - value, var.m[2][1] - value, var.m[2][2] - value
+        );
+    }
+
+    Mat3 operator-(float const& value, Mat3 const& var)
+    {
+        return Mat3(
+            value - var.m[0][0], value - var.m[0][1], value - var.m[0][2], 
+            value - var.m[1][0], value - var.m[1][1], value - var.m[1][2], 
+            value - var.m[2][0], value - var.m[2][1], value - var.m[2][2]
+        );
+    }
+
+    Mat3 operator-(Mat3 const& var1, Mat3 const& var2)
+    {
+        return Mat3(
+            var1.m[0][0] - var2.m[0][0], var1.m[0][1] - var2.m[0][1], var1.m[0][2] - var2.m[0][2], 
+            var1.m[1][0] - var2.m[1][0], var1.m[1][1] - var2.m[1][1], var1.m[1][2] - var2.m[1][2], 
+            var1.m[2][0] - var2.m[2][0], var1.m[2][1] - var2.m[2][1], var1.m[2][2] - var2.m[2][2]
+        );
+    }
+
+    Mat3 operator*(Mat3 const& var, float const& value)
+    {
+        return Mat3(
+            var.m[0][0] * value, var.m[0][1] * value, var.m[0][2] * value, 
+            var.m[1][0] * value, var.m[1][1] * value, var.m[1][2] * value, 
+            var.m[2][0] * value, var.m[2][1] * value, var.m[2][2] * value
+        );
+    }
+
+    Mat3 operator*(float const& value, Mat3 const& var)
+    {
+        return Mat3(
+            value * var.m[0][0], value * var.m[0][1], value * var.m[0][2], 
+            value * var.m[1][0], value * var.m[1][1], value * var.m[1][2],
+            value * var.m[2][0], value * var.m[2][1], value * var.m[2][2]
+        );
+    }
+
+    Mat3 operator*(Mat3 const& lhs, Mat3 const& rhs)
+    {
+        float m00, m01, m02,
+            m10, m11, m12, 
+            m20, m21, m22;
+        m00 = lhs.m[0][0] * rhs.m[0][0] + lhs.m[1][0] * rhs.m[0][1] + lhs.m[2][0] * rhs.m[0][2];
+        m01 = lhs.m[0][1] * rhs.m[0][0] + lhs.m[1][1] * rhs.m[0][1] + lhs.m[2][1] * rhs.m[0][2];
+        m02 = lhs.m[0][2] * rhs.m[0][0] + lhs.m[1][2] * rhs.m[0][1] + lhs.m[2][2] * rhs.m[0][2];
+        m10 = lhs.m[0][0] * rhs.m[1][0] + lhs.m[1][0] * rhs.m[1][1] + lhs.m[2][0] * rhs.m[1][2];
+        m11 = lhs.m[0][1] * rhs.m[1][0] + lhs.m[1][1] * rhs.m[1][1] + lhs.m[2][1] * rhs.m[1][2];
+        m12 = lhs.m[0][2] * rhs.m[1][0] + lhs.m[1][2] * rhs.m[1][1] + lhs.m[2][2] * rhs.m[1][2];
+        m20 = lhs.m[0][0] * rhs.m[2][0] + lhs.m[1][0] * rhs.m[2][1] + lhs.m[2][0] * rhs.m[2][2];
+        m21 = lhs.m[0][1] * rhs.m[2][0] + lhs.m[1][1] * rhs.m[2][1] + lhs.m[2][1] * rhs.m[2][2];
+        m22 = lhs.m[0][2] * rhs.m[2][0] + lhs.m[1][2] * rhs.m[2][1] + lhs.m[2][2] * rhs.m[2][2];
+        return Mat3(
+            m00, m01, m02,
+            m10, m11, m12,
+            m20, m21, m22
+        );
+    }
+
+    Mat3 operator/(Mat3 const& var, float const& value)
+    {
+        return Mat3(
+            var.m[0][0] / value, var.m[0][1] / value, var.m[0][2] / value, 
+            var.m[1][0] / value, var.m[1][1] / value, var.m[1][2] / value, 
+            var.m[2][0] / value, var.m[2][1] / value, var.m[2][2] / value
+        );
+    }
+
+    Mat3 operator/(float const& value, Mat3 const& var)
+    {
+        return Mat3(
+            value / var.m[0][0], value / var.m[0][1], value / var.m[0][2], 
+            value / var.m[1][0], value / var.m[1][1], value / var.m[1][2], 
+            value / var.m[2][0], value / var.m[2][1], value / var.m[2][2]
+        );
+    }
+
+    bool operator==(Mat3 const& var1, Mat3 const& var2)
+    {
+        return (
+            var1.m[0][0] == var2.m[0][0] && var1.m[0][1] == var2.m[0][1] && var1.m[0][2] == var2.m[0][2] &&
+            var1.m[1][0] == var2.m[1][0] && var1.m[1][1] == var2.m[1][1] && var1.m[1][2] == var2.m[1][2] &&
+            var1.m[2][0] == var2.m[2][0] && var1.m[2][1] == var2.m[2][1] && var1.m[2][2] == var2.m[2][2]
+        );
+    }
+
+    bool operator!=(Mat3 const& var1, Mat3 const& var2)
+    {
+        return !(var1 == var2);
+    }
+
 
     std::ostream& operator<<(std::ostream& os, const Mat3& var)
     {

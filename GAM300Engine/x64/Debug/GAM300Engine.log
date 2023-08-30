@@ -1,10 +1,14 @@
-﻿  application.cpp
+﻿  main.cpp
+C:\devGam300\GAM300\GAM300Engine\main.cpp(9,33): warning C4100: 'argv': unreferenced formal parameter
+C:\devGam300\GAM300\GAM300Engine\main.cpp(9,14): warning C4100: 'argc': unreferenced formal parameter
+C:\devGam300\GAM300\GAM300Engine\main.cpp(20,72): warning C4100: 'lpCmdLine': unreferenced formal parameter
+C:\devGam300\GAM300\GAM300Engine\main.cpp(20,51): warning C4100: 'hPrevInstance': unreferenced formal parameter
+  application.cpp
+  vulkanDebugger.cpp
   vulkanDevice.cpp
   vulkanInstance.cpp
-  main.cpp
-C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\main.cpp(9,33): warning C4100: 'argv': unreferenced formal parameter
-C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\main.cpp(9,14): warning C4100: 'argc': unreferenced formal parameter
-C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\main.cpp(20,72): warning C4100: 'lpCmdLine': unreferenced formal parameter
-C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\main.cpp(20,51): warning C4100: 'hPrevInstance': unreferenced formal parameter
+  vulkanSwapChain.cpp
+C:\devGam300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp(140,83): warning C4100: 'fullscreen': unreferenced formal parameter
+  windowswindow.cpp
   Generating Code...
-  GAM300Engine.vcxproj -> C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
+  GAM300Engine.vcxproj -> C:\devGam300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe

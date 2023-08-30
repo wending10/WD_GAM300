@@ -208,7 +208,7 @@ namespace TDS
         newMag = Mathf::Min(newMag, Mathf::Max(magCur, magTar));
         newMag = Mathf::Max(newMag, Mathf::Min(magCur, magTar));
 
-        float totalAngle = Angle(current, target) * Mathf::Deg2Rad - maxRadiansDelta;
+        float totalAngle = Angle(current, target) - maxRadiansDelta;
         if (totalAngle <= 0)
             return target.normalize() * newMag;
         else if (totalAngle >= Mathf::PI)
@@ -265,118 +265,177 @@ namespace TDS
         return newVec * (magA + (magB - magA) * t);
     }
 
-    Vec3 Vec3::SmoothDamp(Vec3 current, Vec3 target, Vec3& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+    Vec3& Vec3::operator=(const Vec3& v) 
     {
-        float output_x = 0.0f;
-        float output_y = 0.0f;
-        float output_z = 0.0f;
-
-        // Based on Game Programming Gems 4 Chapter 1.10
-        smoothTime = Mathf::Max(0.0001f, smoothTime);
-        float omega = 2.f / smoothTime;
-
-        float x = omega * deltaTime;
-        float exp = 1.f / (1.f + x + 0.48f * x * x + 0.235f * x * x * x);
-
-        float change_x = current.x - target.x;
-        float change_y = current.y - target.y;
-        float change_z = current.z - target.z;
-        Vec3 originalTo = target;
-
-        // Clamp maximum speed
-        float maxChange = maxSpeed * smoothTime;
-        float maxChangeSq = maxChange * maxChange;
-        float sqDist = change_x * change_x + change_y * change_y + change_z * change_z;
-        if (sqDist > maxChangeSq)
-        {
-            float mag = Mathf::Sqrt(sqDist);
-            change_x = change_x / mag * maxChange;
-            change_y = change_y / mag * maxChange;
-            change_z = change_z / mag * maxChange;
-        }
-
-        target.x = current.x - change_x;
-        target.y = current.y - change_y;
-        target.z = current.z - change_z;
-
-        float temp_x = (currentVelocity.x + omega * change_x) * deltaTime;
-        float temp_y = (currentVelocity.y + omega * change_y) * deltaTime;
-        float temp_z = (currentVelocity.z + omega * change_z) * deltaTime;
-
-        currentVelocity.x = (currentVelocity.x - omega * temp_x) * exp;
-        currentVelocity.y = (currentVelocity.y - omega * temp_y) * exp;
-        currentVelocity.z = (currentVelocity.z - omega * temp_z) * exp;
-
-        output_x = target.x + (change_x + temp_x) * exp;
-        output_y = target.y + (change_y + temp_y) * exp;
-        output_z = target.z + (change_z + temp_z) * exp;
-
-        // Prevent overshooting
-        float origMinusCurrent_x = originalTo.x - current.x;
-        float origMinusCurrent_y = originalTo.y - current.y;
-        float origMinusCurrent_z = originalTo.z - current.z;
-        float outMinusOrig_x = output_x - originalTo.x;
-        float outMinusOrig_y = output_y - originalTo.y;
-        float outMinusOrig_z = output_z - originalTo.z;
-
-        if (origMinusCurrent_x * outMinusOrig_x + origMinusCurrent_y * outMinusOrig_y + origMinusCurrent_z * outMinusOrig_z > 0)
-        {
-            output_x = originalTo.x;
-            output_y = originalTo.y;
-            output_z = originalTo.z;
-
-            currentVelocity.x = (output_x - originalTo.x) / deltaTime;
-            currentVelocity.y = (output_y - originalTo.y) / deltaTime;
-            currentVelocity.z = (output_z - originalTo.z) / deltaTime;
-        }
-        return Vec3(output_x, output_y, output_z);
+        x = v.x;
+        y = v.y;
+        z = v.z;
+        return *this;
     }
 
-    Vec3 Vec3::operator-() { return Vec3(-x, -y, -z); }
-    Vec3 Vec3::operator+(const Vec3& v) { return Vec3(x + v.x, y + v.y, z + v.z); }
-    Vec3 Vec3::operator-(const Vec3& v) { return Vec3(x - v.x, y - v.y, z - v.z); }
-    Vec3 Vec3::operator*(const float scalar) { return Vec3(x * scalar, y * scalar, z * scalar); }
-    Vec3 Vec3::operator/(const float scalar) 
-    { 
-        if (scalar == 0.f) 
+    Vec3& Vec3::operator+=(float scalar) 
+    {
+        x += scalar;
+        y += scalar;
+        z += scalar;
+        return *this;
+    }
+
+    Vec3& Vec3::operator+=(const Vec3& v) 
+    {
+        x += v.x;
+        y += v.y;
+        z += v.z;
+        return *this;
+    }
+
+    Vec3& Vec3::operator-=(float scalar) 
+    {
+        x -= scalar;
+        y -= scalar;
+        z -= scalar;
+        return *this;
+    }
+
+    Vec3& Vec3::operator-=(const Vec3& v) 
+    {
+        x -= v.x;
+        y -= v.y;
+        z -= v.z;
+        return *this;
+    }
+
+    Vec3& Vec3::operator*=(float scalar) 
+    {
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
+        return *this;
+    }
+
+    Vec3& Vec3::operator*=(const Vec3& v) 
+    {
+        x *= v.x;
+        y *= v.y;
+        z *= v.z;
+        return *this;
+    }
+
+    Vec3& Vec3::operator/=(float scalar) 
+    {
+        x /= scalar;
+        y /= scalar;
+        z /= scalar;
+        return *this;
+    }
+
+    Vec3& Vec3::operator/=(const Vec3& v) 
+    {
+        x /= v.x;
+        y /= v.y;
+        z /= v.z;
+        return *this;
+    }
+
+    float& Vec3::operator[](int index) 
+    {
+        switch (index)
         {
-            std::cout << "Division by zero!" << std::endl;
-            return Vec3(0.f, 0.f, 0.f);    
+            case 0: return x;
+            case 1: return y;
+            case 2: return z;
+            default: throw std::out_of_range("Index out of range");
         }
-        return Vec3(x / scalar, y / scalar, z / scalar); 
     }
-    Vec3& Vec3::operator+=(const Vec3& v) { x += v.x; y += v.y; z += v.z; return *this; }
-    Vec3& Vec3::operator-=(const Vec3& v) { x -= v.x; y -= v.y; z -= v.z; return *this; }
-    Vec3& Vec3::operator*=(const float scalar) { x *= scalar; y *= scalar; z *= scalar; return *this; }
-    Vec3& Vec3::operator/=(const float scalar) 
-    { 
-        if (scalar == 0.f)
+
+    float const& Vec3::operator[](int index) const
+    {
+        switch (index)
         {
-            std::cout << "Division by zero!" << std::endl;
-            x = y = z = 0.f;
-            return *this;    
-        } 
-        x /= scalar; y /= scalar; z /= scalar; return *this; 
+            case 0: return x;
+            case 1: return y;
+            case 2: return z;
+            default: throw std::out_of_range("Index out of range");
+        }
     }
-    bool Vec3::operator==(const Vec3& v) { return x == v.x && y == v.y && z == v.z; }
-    bool Vec3::operator!=(const Vec3& v) { return x != v.x || y != v.y || z != v.z; }
-    Vec3& Vec3::operator=(const Vec3& v) { x = v.x; y = v.y; z = v.z; return *this; }
 
     Vec3::operator Vec2() { return Vec2(x, y); }
-    Vec3::operator Vec4() { return Vec4(x, y, z, 0); }
-
-    float& Vec3::operator[](int index) {
-        if (index == 0) return x;
-        else if (index == 1) return y;
-        else if (index == 2) return z;
-        else throw std::out_of_range("Index out of range");
-    }
-    Vec3 operator*(const float scalar, const Vec3& v) { return Vec3(v.x * scalar, v.y * scalar, v.z * scalar); }
+    Vec3::operator Vec4() { return Vec4(x, y, z, 0.f); }
 
     std::ostream& operator<<(std::ostream& os, const Vec3& v)
     {
         os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
         return os;
+    }
+
+    Vec3 operator-(const Vec3& v) 
+    {
+        return Vec3(-v.x, -v.y, -v.z);
+    }
+
+    Vec3 operator+(const Vec3& v, float const& scalar) 
+    {
+        return Vec3(v.x + scalar, v.y + scalar, v.z + scalar);
+    }
+
+    Vec3 operator+(float const& scalar, const Vec3& v) 
+    {
+        return Vec3(v.x + scalar, v.y + scalar, v.z + scalar);
+    }
+
+    Vec3 operator+(const Vec3& v1, const Vec3& v2) 
+    {
+        return Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    }
+
+    Vec3 operator-(const Vec3& v, float const& scalar) 
+    {
+        return Vec3(v.x - scalar, v.y - scalar, v.z - scalar);
+    }
+
+    Vec3 operator-(float const& scalar, const Vec3& v) 
+    {
+        return Vec3(scalar - v.x, scalar - v.y, scalar - v.z);
+    }
+
+    Vec3 operator-(const Vec3& v1, const Vec3& v2) 
+    {
+        return Vec3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+    }
+
+    Vec3 operator*(const Vec3& v, float const& scalar) 
+    {
+        return Vec3(v.x * scalar, v.y * scalar, v.z * scalar);
+    }
+
+    Vec3 operator*(float const& scalar, const Vec3& v) 
+    {
+        return Vec3(v.x * scalar, v.y * scalar, v.z * scalar);
+    }
+
+    Vec3 operator*(const Vec3& v1, const Vec3& v2) 
+    {
+        return Vec3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
+    }
+
+    Vec3 operator/(const Vec3& v, float const& scalar) 
+    {
+        return Vec3(v.x / scalar, v.y / scalar, v.z / scalar);
+    }
+
+    Vec3 operator/(float const& scalar, const Vec3& v) 
+    {
+        return Vec3(scalar / v.x, scalar / v.y, scalar / v.z);
+    }
+
+    bool operator==(const Vec3& v1, const Vec3& v2) 
+    {
+        return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
+    }
+
+    bool operator!=(const Vec3& v1, const Vec3& v2) 
+    {
+        return v1.x != v2.x || v1.y != v2.y || v1.z != v2.z;
     }
 
 }  // namespace WD

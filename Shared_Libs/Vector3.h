@@ -1,12 +1,7 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include "Math.h"
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <stdexcept>
-
+#include "MathCommon.h"
 
 namespace TDS
 {
@@ -93,25 +88,22 @@ public:
     static Vec3 Slerp(Vec3 a, Vec3 b, float t);
     // Spherically interpolates between two vectors.
     static Vec3 SlerpUnclamped(Vec3 a, Vec3 b, float t);
-    // Returns a vector that is made from the largest components of two vectors.
-    static Vec3 SmoothDamp(Vec3 current, Vec3 target, Vec3& currentVelocity, float smoothTime, float maxSpeed, float deltaTime);
     
     // Operators
-    Vec3 operator-();
-    Vec3 operator+(const Vec3& v);
-    Vec3 operator-(const Vec3& v);
-    Vec3 operator*(const float scalar);
-    Vec3 operator/(const float scalar);
-    Vec3& operator+=(const Vec3& v);
-    Vec3& operator-=(const Vec3& v);
-    Vec3& operator*=(const float scalar);
-    Vec3& operator/=(const float scalar);
-    bool operator==(const Vec3& v);
-    bool operator!=(const Vec3& v);
-    float& operator[](int index);
 
-    // Assignment Operators
     Vec3& operator=(const Vec3& v);
+    Vec3& operator+=(float scalar);
+    Vec3& operator+=(const Vec3& v);
+    Vec3& operator-=(float scalar);
+    Vec3& operator-=(const Vec3& v);
+    Vec3& operator*=(float scalar);
+    Vec3& operator*=(const Vec3& v);
+    Vec3& operator/=(float scalar);
+    Vec3& operator/=(const Vec3& v);
+
+    float& operator[](int index);
+    float const& operator[](int index) const;
+    // Assignment Operators
     // Cast Vec3 to Vec2
     operator Vec2(); // Vec3 to Vec2
     operator Vec4(); // Vec3 to Vec4
@@ -125,7 +117,24 @@ public:
     static constexpr float kEpsilon = 0.00001f;
     static constexpr float kEpsilonNormalSqrt = 1e-15f;
 }; 
-Vec3 operator*(const float scalar, const Vec3& v);
+// Operators (unary arithmetic)
+Vec3 operator-(const Vec3& v);
+
+// Operators (binary arithmetic)
+Vec3 operator+(const Vec3& v, float const& scalar);
+Vec3 operator+(float const& scalar, const Vec3& v);
+Vec3 operator+(const Vec3& v1, const Vec3& v2);
+Vec3 operator-(const Vec3&  v, float const& scalar);
+Vec3 operator-(float const& scalar, const Vec3&  v);
+Vec3 operator-(const Vec3&  v1, const Vec3&  v2);
+Vec3 operator*(const Vec3&  v, float const& scalar);
+Vec3 operator*(float const& scalar, const Vec3&  v);
+Vec3 operator*(const Vec3&  v1, const Vec3&  v2);
+Vec3 operator/(const Vec3&  v, float const& scalar);
+Vec3 operator/(float const& scalar, const Vec3&  v);
+
+bool operator==(const Vec3& v1, const Vec3& v2);
+bool operator!=(const Vec3& v1, const Vec3& v2);
 std::ostream& operator<<(std::ostream& os, const Vec3& v);
 
 

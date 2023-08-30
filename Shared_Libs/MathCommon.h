@@ -1,10 +1,13 @@
-#ifndef MATH_H
-#define MATH_H
+#ifndef MATHCOMMON_H
+#define MATHCOMMON_H
 
+#include <cstdarg>
 #include <cmath>
 #include <limits>
-#include <iostream>
-#include <cstdarg>
+#include <string>
+#include <sstream>
+#include <stdexcept>
+#include <iomanip>
 
 #include "Vector2.h"
 #include "Vector3.h"
@@ -16,8 +19,7 @@ namespace TDS
     class Mathf
     {
         public:
-            
-        static float Sin(float f) { return (float)sin(f); }
+        static float Sin(float f) { return sinf(f); }
         static float Cos(float f) { return cosf(f); }
         static float Tan(float f) { return tanf(f); }
         static float Asin(float f) { return asinf(f); }
@@ -27,7 +29,7 @@ namespace TDS
         static float Sqrt(float f) { return sqrtf(f); }
         static float Abs(float f) { return fabsf(f); }
         static int Abs(int value) { return abs(value); }
-        static float Min(float a, float b) { return std::min(a, b); }
+        static float Min(float a, float b) { return fminf(a, b); }
         static float Min(float count, ...)
         {
             if (count == 0) 
@@ -162,8 +164,8 @@ namespace TDS
         static float Sign(float f) { return (f == 0) ? 0 : ((f > 0) ? 1 : -1); }
         
         static constexpr float PI = 3.1415926535897931;
-        static constexpr float Infinity = INFINITY;
-        static constexpr float NegativeInfinity = -INFINITY;
+        //static constexpr float Infinity = INFINITY;
+        //static constexpr float NegativeInfinity = -INFINITY;
         static constexpr float Deg2Rad = PI * 2.0f / 360.0f;
         static constexpr float Rad2Deg = 1.0f / Deg2Rad;
         
@@ -201,16 +203,6 @@ namespace TDS
 
         // Compares two floating point values if they are similar.
         static bool Approximately(float a, float b);
-
-        // Gradually changes a value towards a desired goal over time.
-        static float SmoothDamp(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed);
-        static float SmoothDamp(float current, float target, float& currentVelocity, float smoothTime);
-        static float SmoothDamp(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed = INFINITY, float deltaTime);
-
-        // Gradually changes an angle given in degrees towards a desired goal angle over time.
-        static float SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed);
-        static float SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime);
-        static float SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed = INFINITY, float deltaTime);
 
         // Loops the value t, so that it is never larger than length and never smaller than 0.
         static float Repeat(float t, float length);

@@ -19,7 +19,6 @@
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"
 //#include "vulkanSwapChain.h"
-
 namespace TDS
 {
 	
@@ -69,7 +68,6 @@ namespace TDS
 		//VkInstance		 getVkInstance()const		{ return m_VKhandler; }
 		//VkPhysicalDevice getVkPhysicalDevice()const { return m_PhysDeviceHandle; }
 		VkDevice		 getVkLogicalDevice()const { return m_logicalDevice; }
-
 	private:
 
 		bool			   checkValidationLayerSupport();
@@ -123,7 +121,6 @@ namespace TDS
 		bool	enableValidate{ false };
 
 		//uint32_t m_ImageCount{ 2 };// default double buffer
-
 	};
 
 

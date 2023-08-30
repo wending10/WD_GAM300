@@ -1,4 +1,4 @@
-#include "Math.h"
+#include "MathCommon.h"
 namespace TDS
 {
     float Mathf::Clamp(float value, float min, float max)
@@ -86,70 +86,6 @@ namespace TDS
     {
         //return Abs(b - a) < Max(0.000001f * Max(Abs(a), Abs(b)), Mathf::Epsilon * 100);
         return Abs(a - b ) < Mathf::Epsilon * (1 + (std::max)( Abs(a), Abs(b) ) );
-    }
-
-    float Mathf::SmoothDamp(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed)
-    {
-        float deltaTime = Time::deltaTime();
-        return SmoothDamp(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime);
-    }
-
-    float Mathf::SmoothDamp(float current, float target, float& currentVelocity, float smoothTime)
-    {
-        Mathf mathf;
-        float deltaTime = Time::deltaTime();
-        float maxSpeed = mathf.Infinity;
-        return SmoothDamp(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime);
-    }
-
-    float Mathf::SmoothDamp(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
-    {
-        // Based on Game Programming Gems 4 Chapter 1.10
-        smoothTime = Max(0.0001f, smoothTime);
-        float omega = 2.f / smoothTime;
-
-        float x = omega * deltaTime;
-        float exp = 1.f / (1.f + x + 0.48f * x * x + 0.235f * x * x * x);
-        float change = current - target;
-        float originalTo = target;
-
-        // Clamp maximum speed
-        float maxChange = maxSpeed * smoothTime;
-        change = Clamp(change, -maxChange, maxChange);
-        target = current - change;
-
-        float temp = (currentVelocity + omega * change) * deltaTime;
-        currentVelocity = (currentVelocity - omega * temp) * exp;
-        float output = target + (change + temp) * exp;
-
-        // Prevent overshooting
-        if ((originalTo - current > 0.0f) == (output > originalTo))
-        {
-            output = originalTo;
-            currentVelocity = (output - originalTo) / deltaTime;
-        }
-
-        return output;
-    }
-
-    float Mathf::SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed)
-    {
-        float deltaTime = Time::deltaTime();
-        return SmoothDampAngle(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime);
-    }
-
-    float Mathf::SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime)
-    {
-        Mathf mathf;
-        float deltaTime = Time::deltaTime();
-        float maxSpeed = mathf.Infinity;
-        return SmoothDampAngle(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime);
-    }
-
-    float Mathf::SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
-    {
-        target = current + DeltaAngle(current, target);
-        return SmoothDamp(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime);
     }
 
     float Mathf::Repeat(float t, float length)
