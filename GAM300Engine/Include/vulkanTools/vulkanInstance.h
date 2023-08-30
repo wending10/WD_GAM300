@@ -64,11 +64,11 @@ namespace TDS
 		VulkanInstance(const  WindowsWin& enableWindows);
 		~VulkanInstance();
 		VkResult createInstance(bool enableValidation);
-
+		void	 drawFrame();
 		//getters
 		//VkInstance		 getVkInstance()const		{ return m_VKhandler; }
 		//VkPhysicalDevice getVkPhysicalDevice()const { return m_PhysDeviceHandle; }
-		//VkDevice		 getVkLogicalDevice()const { return m_logicalDevice; }
+		VkDevice		 getVkLogicalDevice()const { return m_logicalDevice; }
 
 	private:
 
@@ -83,6 +83,8 @@ namespace TDS
 		VkPresentModeKHR         chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
 		VkExtent2D				 chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, const WindowsWin& windows);
 		VkShaderModule			 createShaderModule(const std::vector<char>& code);
+		void					 recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+	
 	public://members
 
 
@@ -107,6 +109,11 @@ namespace TDS
 		VkRenderPass		m_RenderPass;
 		VkPipelineLayout	m_pipelineLayout;
 		VkPipeline			m_graphicPipeline;
+		VkCommandPool		m_commandPool;
+		VkCommandBuffer		m_commandBuffer;
+		VkSemaphore			m_imageAvailableSemaphore;
+		VkSemaphore			m_renderFinishedSemaphore;
+		VkFence				m_inFlightFence;
 
 		std::vector<VkImage> m_swapChainImages;
 		std::vector<VkFramebuffer> m_swapChainFramebuffers;
