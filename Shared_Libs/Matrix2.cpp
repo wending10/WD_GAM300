@@ -224,7 +224,7 @@ namespace TDS
         m01 << matrix.m[0][1]; m11 << matrix.m[1][1];
         float maxLength[] = {(float)m00.str().size(), (float)m01.str().size(), (float)m10.str().size(), (float)m11.str().size()};
 
-        int maxLen = Mathf::Max(maxLength, 4);
+        int maxLen = static_cast<decltype (maxLen)> (Mathf::Max(maxLength, 4));
         os  << std::left 
             << "| "  << std::setw(maxLen) << matrix.m[0][0]  << " " << std::setw(maxLen) << matrix.m[1][0] << " |\n"
             << "| "  << std::setw(maxLen) << matrix.m[0][1]  << " " << std::setw(maxLen) << matrix.m[1][1] << " |";

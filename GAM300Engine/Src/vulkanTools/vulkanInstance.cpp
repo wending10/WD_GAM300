@@ -749,7 +749,11 @@ namespace TDS
 		renderPassInfo.renderArea.offset = { 0, 0 };
 		renderPassInfo.renderArea.extent = m_swapChainExtent;
 
-		VkClearValue clearColor = { {{0.0f, 0.0f, 0.0f, 1.0f}} };
+		Vec4 clearColorVal{ 0.0f, 0.0f, 0.0f, 1.0f };
+		VkClearValue clearColor = { {{clearColorVal.x,
+									  clearColorVal.y,
+									 clearColorVal.z,
+									 clearColorVal.w}} };
 		renderPassInfo.clearValueCount = 1;
 		renderPassInfo.pClearValues = &clearColor;
 

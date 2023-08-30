@@ -147,6 +147,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Shared_Libs\MathCommon.cpp" />
+    <ClCompile Include="..\Shared_Libs\Matrix2.cpp" />
+    <ClCompile Include="..\Shared_Libs\Matrix3.cpp" />
+    <ClCompile Include="..\Shared_Libs\Matrix4.cpp" />
+    <ClCompile Include="..\Shared_Libs\Quaternion.cpp" />
+    <ClCompile Include="..\Shared_Libs\Vector2.cpp" />
+    <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
+    <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\application.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
@@ -156,6 +164,15 @@
     <ClCompile Include="Src\windowswindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Shared_Libs\MathCommon.h" />
+    <ClInclude Include="..\Shared_Libs\Matrix2.h" />
+    <ClInclude Include="..\Shared_Libs\Matrix3.h" />
+    <ClInclude Include="..\Shared_Libs\Matrix4.h" />
+    <ClInclude Include="..\Shared_Libs\Quaternion.h" />
+    <ClInclude Include="..\Shared_Libs\TDSMath.h" />
+    <ClInclude Include="..\Shared_Libs\Vector2.h" />
+    <ClInclude Include="..\Shared_Libs\Vector3.h" />
+    <ClInclude Include="..\Shared_Libs\Vector4.h" />
     <ClInclude Include="Include\application.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />

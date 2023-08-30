@@ -19,6 +19,7 @@
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"
 //#include "vulkanSwapChain.h"
+#include "Vector2.h"
 namespace TDS
 {
 	
@@ -119,7 +120,7 @@ namespace TDS
 		const std::vector<const char*> deviceExtensions { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 		std::vector <VkPipelineShaderStageCreateInfo> shaderStages{};
 		bool	enableValidate{ false };
-
+		
 		//uint32_t m_ImageCount{ 2 };// default double buffer
 	};
 

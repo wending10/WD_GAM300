@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Source Files\vulkanTools">
       <UniqueIdentifier>{bab04baa-5efd-41fe-a91e-4dec703cb9f5}</UniqueIdentifier>
     </Filter>
@@ -24,6 +20,10 @@
     </Filter>
     <Filter Include="Header Files\vulkanCore">
       <UniqueIdentifier>{97068d07-b11d-429a-a85a-272cd95e04d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +48,30 @@
     <ClCompile Include="Src\vulkanTools\vulkanSwapChain.cpp">
       <Filter>Source Files\vulkanTools</Filter>
     </ClCompile>
+    <ClCompile Include="..\Shared_Libs\MathCommon.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Matrix2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Matrix3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Matrix4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Quaternion.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Vector4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\application.h">
@@ -67,6 +91,33 @@
     </ClInclude>
     <ClInclude Include="Include\vulkanTools\vulkanSwapChain.h">
       <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\MathCommon.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Matrix2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Matrix3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Matrix4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\TDSMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Vector4.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

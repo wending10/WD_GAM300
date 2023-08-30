@@ -1,0 +1,16 @@
+c:\devgam300\gam300\gam300engine\x64\debug\application.obj
+c:\devgam300\gam300\gam300engine\x64\debug\main.obj
+c:\devgam300\gam300\gam300engine\x64\debug\mathcommon.obj
+c:\devgam300\gam300\gam300engine\x64\debug\matrix2.obj
+c:\devgam300\gam300\gam300engine\x64\debug\matrix3.obj
+c:\devgam300\gam300\gam300engine\x64\debug\matrix4.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vector2.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vector4.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vulkandebugger.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vulkandevice.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vulkaninstance.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vulkanswapchain.obj
+c:\devgam300\gam300\gam300engine\x64\debug\windowswindow.obj
+c:\devgam300\gam300\gam300engine\x64\debug\vc143.idb
+c:\devgam300\gam300\gam300engine\x64\debug\vc143.pdb
+c:\devgam300\gam300\gam300engine\x64\debug\gam300engine.tlog\cl.command.1.tlog

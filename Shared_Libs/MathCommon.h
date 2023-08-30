@@ -8,6 +8,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <iomanip>
+#include <limits>
+
 
 #include "Vector2.h"
 #include "Vector3.h"
@@ -161,11 +163,11 @@ namespace TDS
         static int CeilToInt(float f) { return (int)ceilf(f); }
         static int FloorToInt(float f) { return (int)floorf(f); }
         static int RoundToInt(float f) { return (int)roundf(f); }
-        static float Sign(float f) { return (f == 0) ? 0 : ((f > 0) ? 1 : -1); }
+        static float Sign(float f) { return (f == 0.f) ? 0.f : ((f > 0.f) ? 1.f : -1.f); }
         
-        static constexpr float PI = 3.1415926535897931;
-        //static constexpr float Infinity = INFINITY;
-        //static constexpr float NegativeInfinity = -INFINITY;
+        static constexpr double PI = 3.1415926535897931;
+        static constexpr float Infinity = std::numeric_limits<float>::infinity();
+        static constexpr float NegativeInfinity = -std::numeric_limits<float>::infinity();
         static constexpr float Deg2Rad = PI * 2.0f / 360.0f;
         static constexpr float Rad2Deg = 1.0f / Deg2Rad;
         

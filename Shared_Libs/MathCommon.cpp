@@ -14,11 +14,11 @@ namespace TDS
     float Mathf::Clamp(int value, int min, int max)
     {
         if (value < min)
-            return min;
+            return static_cast<float>(min);
         else if (value > max)
-            return max;
+            return static_cast<float>(max);
         else
-            return value;
+            return static_cast<float>(value);
     }
 
     float Mathf::Clamp01(float value)
