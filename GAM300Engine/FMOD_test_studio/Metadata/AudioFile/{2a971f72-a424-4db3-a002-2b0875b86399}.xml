@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{2a971f72-a424-4db3-a002-2b0875b86399}">
+		<property name="assetPath">
+			<value>Powfu Ft. Beabadoobee-Death Bed.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>173.27020408163264</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{dd785a38-4655-429a-8d58-6b31137068f4}</destination>
+		</relationship>
+	</object>
+</objects>

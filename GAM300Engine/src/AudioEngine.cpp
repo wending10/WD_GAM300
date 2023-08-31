@@ -46,7 +46,7 @@ void AudioEngine::loadSound(SoundInfo &soundInfo) {
         std::cout << "Audio Engine: Sound File was already loaded!\n";
 }
 
-void AudioEngine::playSound(SoundInfo soundInfo) {
+int AudioEngine::playSound(SoundInfo soundInfo) {
     if (soundInfo.isLoaded()) {
         std::cout << "Playing Sound\n";
         FMOD::Channel* channel{nullptr};
@@ -67,11 +67,13 @@ void AudioEngine::playSound(SoundInfo soundInfo) {
         // start audio playback
         ERRCHECK(channel->setPaused(false));
 
+
     }
     else
     {
         std::cout << "Sound not loaded, loading in now." << std::endl;
         loadSound(soundInfo);
+        return playSound(soundInfo);
     }
 
 }

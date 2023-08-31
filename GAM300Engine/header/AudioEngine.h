@@ -69,7 +69,7 @@ public:
     * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
     *                 or any other FMOD-supported audio format)
     */
-    void playSound(SoundInfo soundInfo);
+    int playSound(SoundInfo soundInfo);
     
     /**
      * Stops a looping sound if it's currently playing.
