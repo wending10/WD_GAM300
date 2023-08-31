@@ -505,9 +505,9 @@ namespace TDS
         m00 << var.m[0][0]; m10 << var.m[1][0]; m20 << var.m[2][0];
         m01 << var.m[0][1]; m11 << var.m[1][1]; m21 << var.m[2][1];
         m02 << var.m[0][2]; m12 << var.m[1][2]; m22 << var.m[2][2];
-        float maxLength[] = {(float)m00.str().size(), (float)m01.str().size(), (float)m02.str().size(),
-                             (float)m10.str().size(), (float)m11.str().size(), (float)m12.str().size(),
-                             (float)m20.str().size(), (float)m21.str().size(), (float)m22.str().size()};
+        int maxLength[] = { static_cast<int>(m00.str().size()), static_cast<int>(m01.str().size()), static_cast<int>(m02.str().size()),
+                             static_cast<int>(m10.str().size()), static_cast<int>(m11.str().size()), static_cast<int>(m12.str().size()),
+                             static_cast<int>(m20.str().size()), static_cast<int>(m21.str().size()), static_cast<int>(m22.str().size())};
 
         int maxLen = Mathf::Max(maxLength, 9);
         os << std::left
