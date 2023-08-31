@@ -2,8 +2,6 @@
 #define MATRIX2_H
 
 #include "Vector2.h"
-#include <iomanip>
-
 
 namespace TDS
 {
@@ -50,32 +48,44 @@ class Mat2
     // Return string representation of the matrix.
     std::string ToString();
 
-    // Operators
-    Mat2 operator+(const Mat2& m) const;
-    Mat2 operator-(const Mat2& m) const;
-    Mat2 operator*(const Mat2& m) const;
-    Mat2 operator*(float value) const; // Scalar multiplication
-    Mat2 operator/(float value) const; // Scalar division
-    Mat2& operator=(const Mat2& m);
-    Mat2& operator+=(const Mat2& m);
-    Mat2& operator-=(const Mat2& m);
-    Mat2& operator*=(const Mat2& m);
-    Mat2& operator*=(float value); // Scalar multiplication
-    Mat2& operator/=(float value); // Scalar division
-    Mat2 operator-() const; // Negation
-    Vec2 operator*(const Vec2& v) const; // Matrix-vector multiplication
+    // unary arithmetic operators
+    Mat2& operator=(const Mat2& var);
+    Mat2& operator+=(float value);
+    Mat2& operator+=(const Mat2& var);
+    Mat2& operator-=(float value);
+    Mat2& operator-=(const Mat2& var);
+    Mat2& operator*=(float value);
+    Mat2& operator*=(const Mat2& var);
+    Mat2& operator/=(float value);
 
-    bool operator==(const Mat2& m) const;
-    bool operator!=(const Mat2& m) const;
-    float operator[](int index) const;
     float& operator[](int index);
+    float const& operator[](int index) const;
     // Access using 2D indices
     //  (0,0) (0,1)
     //  (1,0) (1,1)
 
     float m[2][2];
-    
 };
+// unary operators
+Mat2 operator-(const Mat2& var);
+
+// binary operators
+Mat2 operator+(Mat2 const& var, float const& value);
+Mat2 operator+(float const& value, Mat2 const& var);
+Mat2 operator+(Mat2 const& var1, Mat2 const& var2);
+Mat2 operator-(Mat2 const& var, float const& value);
+Mat2 operator-(float const& value, Mat2 const& var);
+Mat2 operator-(Mat2 const& var1, Mat2 const& var2);
+Mat2 operator*(Mat2 const& var, float const& value);
+Mat2 operator*(float const& value, Mat2 const& var);
+Mat2 operator*(Mat2 const& var1, Mat2 const& var2);
+Mat2 operator/(Mat2 const& var, float const& value);
+Mat2 operator/(float const& value, Mat2 const& var);
+
+// boolean operators
+bool operator==(Mat2 const& var1, Mat2 const& var2);
+bool operator!=(Mat2 const& var1, Mat2 const& var2);
+
 std::ostream& operator<<(std::ostream& os, const Mat2& m);
 
 

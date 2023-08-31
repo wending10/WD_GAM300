@@ -21,7 +21,9 @@ namespace TDS
          while (m_isRunning)
          {
              m_isRunning = m_window.processInputEvent();
+             m_pVKInst.get()->drawFrame();
          }
+         vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
      }
      Application::~Application()
      {

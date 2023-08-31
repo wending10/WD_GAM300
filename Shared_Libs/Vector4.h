@@ -1,12 +1,7 @@
 #ifndef VECTOR4_H
 #define VECTOR4_H
 
-#include "Math.h"
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <stdexcept>
-
+#include "MathCommon.h"
 
 namespace TDS
 {
@@ -22,7 +17,7 @@ public:
     Vec4(float data[]); // Constructor with array of values
     Vec4(float newX, float newY, float newZ, float newW); // Constructor with four values
     Vec4(const Vec2& v, float newZ, float newW); // Constructor with Vec2 and two values
-    Vec4(const Vec3& v, float newW); // Constructor with Vec3 and one value
+    Vec4(const Vec3& v, float newW); // Constructor with Vec4 and one value
     Vec4(const float* newX, const float* newY, const float* newZ, const float* newW); // Constructor with four pointers
     ~Vec4();
 
@@ -68,27 +63,22 @@ public:
     void Scale(Vec4 scale);
 
     // Operators
-    Vec4 operator-();
     Vec4& operator=(const Vec4& v);
+    Vec4& operator+=(float scalar);
     Vec4& operator+=(const Vec4& v);
+    Vec4& operator-=(float scalar);
     Vec4& operator-=(const Vec4& v);
-    Vec4& operator+=(const float f);
-    Vec4& operator-=(const float f);
-    Vec4& operator*=(const float f);
-    Vec4& operator/=(const float f);
-    Vec4 operator+(const Vec4& v);
-    Vec4 operator-(const Vec4& v);
-    Vec4 operator+(const float f);
-    Vec4 operator-(const float f);
-    Vec4 operator*(const float f);
-    Vec4 operator/(const float f);
-    bool operator==(const Vec4& v);
-    bool operator!=(const Vec4& v);
+    Vec4& operator*=(float scalar);
+    Vec4& operator*=(const Vec4& v);
+    Vec4& operator/=(float scalar);
+    Vec4& operator/=(const Vec4& v);
+
     float& operator[](int index);
+    float const& operator[](int index) const;
 
     // Casting operators
     operator Vec2(); // Vec4 to Vec2
-    operator Vec3(); // Vec4 to Vec3
+    operator Vec3(); // Vec4 to Vec4
 
     // variables
     float x;
@@ -99,7 +89,25 @@ public:
     static constexpr float kEpsilonNormalSqrt = 1e-15f;
 
 };
-Vec4 operator*(const float scalar, const Vec4& v);
+// Operators (unary arithmetic)
+Vec4 operator-(const Vec4& v);
+
+// Operators (binary arithmetic)
+Vec4 operator+(const Vec4& v, float const& scalar);
+Vec4 operator+(float const& scalar, const Vec4& v);
+Vec4 operator+(const Vec4& v1, const Vec4& v2);
+Vec4 operator-(const Vec4&  v, float const& scalar);
+Vec4 operator-(float const& scalar, const Vec4& v);
+Vec4 operator-(const Vec4&  v1, const Vec4&  v2);
+Vec4 operator*(const Vec4&  v, float const& scalar);
+Vec4 operator*(float const& scalar, const Vec4&  v);
+Vec4 operator*(const Vec4&  v1, const Vec4&  v2);
+Vec4 operator/(const Vec4&  v, float const& scalar);
+Vec4 operator/(float const& scalar, const Vec4&  v);
+
+bool operator==(const Vec4& v1, const Vec4& v2);
+bool operator!=(const Vec4& v1, const Vec4& v2);
+
 std::ostream& operator<<(std::ostream& os, const Vec4& v);
 
 } 

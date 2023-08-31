@@ -54,6 +54,14 @@ namespace TDS
         m[0][3] = v1.w; m[1][3] = v2.w; m[2][3] = v3.w; m[3][3] = v4.w;
     }
 
+    Mat4::Mat4(Mat3 var)
+    {
+        m[0][0] = var.m[0][0]; m[1][0] = var.m[1][0]; m[2][0] = var.m[2][0]; m[3][0] = 0.0f;
+        m[0][1] = var.m[0][1]; m[1][1] = var.m[1][1]; m[2][1] = var.m[2][1]; m[3][1] = 0.0f;
+        m[0][2] = var.m[0][2]; m[1][2] = var.m[1][2]; m[2][2] = var.m[2][2]; m[3][2] = 0.0f;
+        m[0][3] = 0.0f;        m[1][3] = 0.0f;        m[2][3] = 0.0f;        m[3][3] = 1.0f;
+    }
+
     Mat4::~Mat4() {}
 
     Mat4 Mat4::identity()
@@ -144,14 +152,6 @@ namespace TDS
                     (m01 * m22 * m30 - m02 * m21 * m30 + m02 * m20 * m31 - m00 * m22 * m31 - m01 * m20 * m32 + m00 * m21 * m32) * invDet,
                     (m02 * m11 * m30 - m01 * m12 * m30 - m02 * m10 * m31 + m00 * m12 * m31 + m01 * m10 * m32 - m00 * m11 * m32) * invDet,
                     (m01 * m12 * m20 - m02 * m11 * m20 + m02 * m10 * m21 - m00 * m12 * m21 - m01 * m10 * m22 + m00 * m11 * m22) * invDet);
-    }
-
-    bool Mat4::isIdentity()
-    {
-        return (m[0][0] == 1.0f && m[1][0] == 0.0f && m[2][0] == 0.0f && m[3][0] == 0.0f &&
-                m[0][1] == 0.0f && m[1][1] == 1.0f && m[2][1] == 0.0f && m[3][1] == 0.0f &&
-                m[0][2] == 0.0f && m[1][2] == 0.0f && m[2][2] == 1.0f && m[3][2] == 0.0f &&
-                m[0][3] == 0.0f && m[1][3] == 0.0f && m[2][3] == 0.0f && m[3][3] == 1.0f);
     }
 
     Mat4 Mat4::transpose()
@@ -297,6 +297,7 @@ namespace TDS
         result.m[3][0] = -Vec3::Dot(s, eye);
         result.m[3][1] = -Vec3::Dot(u, eye);
         result.m[3][2] = Vec3::Dot(f, eye);
+        return result;
     }
 
     Mat4 Mat4::Ortho(float left, float right, float bottom, float top, float zNear, float zFar)
@@ -340,62 +341,52 @@ namespace TDS
         return Mat4(v1, v2, v3, v4);
     }
 
-    Mat4 Mat4::operator+(const Mat4& var) const
-    {
-        return Mat4(m[0][0] + var.m[0][0], m[0][1] + var.m[0][1], m[0][2] + var.m[0][2], m[0][3] + var.m[0][3],
-                    m[1][0] + var.m[1][0], m[1][1] + var.m[1][1], m[1][2] + var.m[1][2], m[1][3] + var.m[1][3],
-                    m[2][0] + var.m[2][0], m[2][1] + var.m[2][1], m[2][2] + var.m[2][2], m[2][3] + var.m[2][3],
-                    m[3][0] + var.m[3][0], m[3][1] + var.m[3][1], m[3][2] + var.m[3][2], m[3][3] + var.m[3][3]);
-    }
+  	Quat Mat4::toQuat(Mat4 const& m4)
+	{
+		Mat3 m = Mat3(m4.m[0][0], m4.m[0][1], m4.m[0][2],
+			m4.m[1][0], m4.m[1][1], m4.m[1][2],
+			m4.m[2][0], m4.m[2][1], m4.m[2][2]);
 
-    Mat4 Mat4::operator-(const Mat4& var) const
-    {
-        return Mat4(m[0][0] - var.m[0][0], m[0][1] - var.m[0][1], m[0][2] - var.m[0][2], m[0][3] - var.m[0][3],
-                    m[1][0] - var.m[1][0], m[1][1] - var.m[1][1], m[1][2] - var.m[1][2], m[1][3] - var.m[1][3],
-                    m[2][0] - var.m[2][0], m[2][1] - var.m[2][1], m[2][2] - var.m[2][2], m[2][3] - var.m[2][3],
-                    m[3][0] - var.m[3][0], m[3][1] - var.m[3][1], m[3][2] - var.m[3][2], m[3][3] - var.m[3][3]);
-    }
+        float fourXSquareMinus1 = m.m[0][0] - m.m[1][1] - m.m[2][2];
+		float fourYSquareMinus1 = m.m[1][1] - m.m[0][0] - m.m[2][2];
+		float fourZSquareMinus1 = m.m[2][2] - m.m[0][0] - m.m[1][1];
+		float fourWSquareMinus1 = m.m[0][0] + m.m[1][1] + m.m[2][2];
 
-    Mat4 Mat4::operator*(const Mat4& var) const
-    {
-        float m00 = m[0][0] * var.m[0][0] + m[1][0] * var.m[0][1] + m[2][0] * var.m[0][2] + m[3][0] * var.m[0][3];
-        float m01 = m[0][1] * var.m[0][0] + m[1][1] * var.m[0][1] + m[2][1] * var.m[0][2] + m[3][1] * var.m[0][3];
-        float m02 = m[0][2] * var.m[0][0] + m[1][2] * var.m[0][1] + m[2][2] * var.m[0][2] + m[3][2] * var.m[0][3];
-        float m03 = m[0][3] * var.m[0][0] + m[1][3] * var.m[0][1] + m[2][3] * var.m[0][2] + m[3][3] * var.m[0][3];
-        float m10 = m[0][0] * var.m[1][0] + m[1][0] * var.m[1][1] + m[2][0] * var.m[1][2] + m[3][0] * var.m[1][3];
-        float m11 = m[0][1] * var.m[1][0] + m[1][1] * var.m[1][1] + m[2][1] * var.m[1][2] + m[3][1] * var.m[1][3];
-        float m12 = m[0][2] * var.m[1][0] + m[1][2] * var.m[1][1] + m[2][2] * var.m[1][2] + m[3][2] * var.m[1][3];
-        float m13 = m[0][3] * var.m[1][0] + m[1][3] * var.m[1][1] + m[2][3] * var.m[1][2] + m[3][3] * var.m[1][3];
-        float m20 = m[0][0] * var.m[2][0] + m[1][0] * var.m[2][1] + m[2][0] * var.m[2][2] + m[3][0] * var.m[2][3];
-        float m21 = m[0][1] * var.m[2][0] + m[1][1] * var.m[2][1] + m[2][1] * var.m[2][2] + m[3][1] * var.m[2][3];
-        float m22 = m[0][2] * var.m[2][0] + m[1][2] * var.m[2][1] + m[2][2] * var.m[2][2] + m[3][2] * var.m[2][3];
-        float m23 = m[0][3] * var.m[2][0] + m[1][3] * var.m[2][1] + m[2][3] * var.m[2][2] + m[3][3] * var.m[2][3];
-        float m30 = m[0][0] * var.m[3][0] + m[1][0] * var.m[3][1] + m[2][0] * var.m[3][2] + m[3][0] * var.m[3][3];
-        float m31 = m[0][1] * var.m[3][0] + m[1][1] * var.m[3][1] + m[2][1] * var.m[3][2] + m[3][1] * var.m[3][3];
-        float m32 = m[0][2] * var.m[3][0] + m[1][2] * var.m[3][1] + m[2][2] * var.m[3][2] + m[3][2] * var.m[3][3];
-        float m33 = m[0][3] * var.m[3][0] + m[1][3] * var.m[3][1] + m[2][3] * var.m[3][2] + m[3][3] * var.m[3][3];
-        return Mat4(m00, m01, m02, m03,
-                    m10, m11, m12, m13,
-                    m20, m21, m22, m23,
-                    m30, m31, m32, m33);
-    }
+		int biggestIndex = 0;
+		float fourBiggestSquareMinus1 = fourWSquareMinus1;
+		if (fourXSquareMinus1 > fourBiggestSquareMinus1)
+		{
+			fourBiggestSquareMinus1 = fourXSquareMinus1;
+			biggestIndex = 1;
+		}
+		if (fourYSquareMinus1 > fourBiggestSquareMinus1)
+		{
+			fourBiggestSquareMinus1 = fourYSquareMinus1;
+			biggestIndex = 2;
+		}
+		if (fourZSquareMinus1 > fourBiggestSquareMinus1)
+		{
+			fourBiggestSquareMinus1 = fourZSquareMinus1;
+			biggestIndex = 3;
+		}
 
-    Mat4 Mat4::operator*(float value) const
-    {
-        return Mat4(m[0][0] * value, m[0][1] * value, m[0][2] * value, m[0][3] * value,
-                    m[1][0] * value, m[1][1] * value, m[1][2] * value, m[1][3] * value,
-                    m[2][0] * value, m[2][1] * value, m[2][2] * value, m[2][3] * value,
-                    m[3][0] * value, m[3][1] * value, m[3][2] * value, m[3][3] * value);
-    }
+		float biggestVal = Mathf::Sqrt(fourBiggestSquareMinus1 + 1.f) * 0.5f;
+		float mult = 0.25f / biggestVal;
 
-    Mat4 Mat4::operator/(float value) const
-    {
-        if (value == 0.0f) throw std::invalid_argument("Division by zero.");
-        return Mat4(m[0][0] / value, m[0][1] / value, m[0][2] / value, m[0][3] / value,
-                    m[1][0] / value, m[1][1] / value, m[1][2] / value, m[1][3] / value,
-                    m[2][0] / value, m[2][1] / value, m[2][2] / value, m[2][3] / value,
-                    m[3][0] / value, m[3][1] / value, m[3][2] / value, m[3][3] / value);
-    }
+		switch (biggestIndex)
+		{
+		case 0:
+			return Quat(biggestVal, (m.m[1][2] - m.m[2][1]) * mult, (m.m[2][0] - m.m[0][2]) * mult, (m.m[0][1] - m.m[1][0]) * mult);
+		case 1:
+			return Quat((m.m[1][2] - m.m[2][1]) * mult, biggestVal, (m.m[0][1] + m.m[1][0]) * mult, (m.m[2][0] + m.m[0][2]) * mult);
+		case 2:
+			return Quat((m.m[2][0] - m.m[0][2]) * mult, (m.m[0][1] + m.m[1][0]) * mult, biggestVal, (m.m[1][2] + m.m[2][1]) * mult);
+		case 3:
+			return Quat((m.m[0][1] - m.m[1][0]) * mult, (m.m[2][0] + m.m[0][2]) * mult, (m.m[1][2] + m.m[2][1]) * mult, biggestVal);
+		default:
+			return Quat();
+        }
+	}
 
     Mat4& Mat4::operator=(const Mat4& var)
     {
@@ -406,6 +397,15 @@ namespace TDS
         return *this;
     }
 
+    Mat4& Mat4::operator+=(float value)
+    {
+        m[0][0] += value; m[1][0] += value; m[2][0] += value; m[3][0] += value;
+        m[0][1] += value; m[1][1] += value; m[2][1] += value; m[3][1] += value;
+        m[0][2] += value; m[1][2] += value; m[2][2] += value; m[3][2] += value;
+        m[0][3] += value; m[1][3] += value; m[2][3] += value; m[3][3] += value;
+        return *this;
+    }
+
     Mat4& Mat4::operator+=(const Mat4& var)
     {
         m[0][0] += var.m[0][0]; m[1][0] += var.m[1][0]; m[2][0] += var.m[2][0]; m[3][0] += var.m[3][0];
@@ -413,7 +413,16 @@ namespace TDS
         m[0][2] += var.m[0][2]; m[1][2] += var.m[1][2]; m[2][2] += var.m[2][2]; m[3][2] += var.m[3][2];
         m[0][3] += var.m[0][3]; m[1][3] += var.m[1][3]; m[2][3] += var.m[2][3]; m[3][3] += var.m[3][3];
         return *this;
-    }    
+    }
+
+    Mat4& Mat4::operator-=(float value)
+    {
+        m[0][0] -= value; m[1][0] -= value; m[2][0] -= value; m[3][0] -= value;
+        m[0][1] -= value; m[1][1] -= value; m[2][1] -= value; m[3][1] -= value;
+        m[0][2] -= value; m[1][2] -= value; m[2][2] -= value; m[3][2] -= value;
+        m[0][3] -= value; m[1][3] -= value; m[2][3] -= value; m[3][3] -= value;
+        return *this;
+    }
 
     Mat4& Mat4::operator-=(const Mat4& var)
     {
@@ -421,31 +430,6 @@ namespace TDS
         m[0][1] -= var.m[0][1]; m[1][1] -= var.m[1][1]; m[2][1] -= var.m[2][1]; m[3][1] -= var.m[3][1];
         m[0][2] -= var.m[0][2]; m[1][2] -= var.m[1][2]; m[2][2] -= var.m[2][2]; m[3][2] -= var.m[3][2];
         m[0][3] -= var.m[0][3]; m[1][3] -= var.m[1][3]; m[2][3] -= var.m[2][3]; m[3][3] -= var.m[3][3];
-        return *this;
-    }
-
-    Mat4& Mat4::operator*=(const Mat4& var)
-    {
-        float m00 = m[0][0] * var.m[0][0] + m[1][0] * var.m[0][1] + m[2][0] * var.m[0][2] + m[3][0] * var.m[0][3];
-        float m01 = m[0][1] * var.m[0][0] + m[1][1] * var.m[0][1] + m[2][1] * var.m[0][2] + m[3][1] * var.m[0][3];
-        float m02 = m[0][2] * var.m[0][0] + m[1][2] * var.m[0][1] + m[2][2] * var.m[0][2] + m[3][2] * var.m[0][3];
-        float m03 = m[0][3] * var.m[0][0] + m[1][3] * var.m[0][1] + m[2][3] * var.m[0][2] + m[3][3] * var.m[0][3];
-        float m10 = m[0][0] * var.m[1][0] + m[1][0] * var.m[1][1] + m[2][0] * var.m[1][2] + m[3][0] * var.m[1][3];
-        float m11 = m[0][1] * var.m[1][0] + m[1][1] * var.m[1][1] + m[2][1] * var.m[1][2] + m[3][1] * var.m[1][3];
-        float m12 = m[0][2] * var.m[1][0] + m[1][2] * var.m[1][1] + m[2][2] * var.m[1][2] + m[3][2] * var.m[1][3];
-        float m13 = m[0][3] * var.m[1][0] + m[1][3] * var.m[1][1] + m[2][3] * var.m[1][2] + m[3][3] * var.m[1][3];
-        float m20 = m[0][0] * var.m[2][0] + m[1][0] * var.m[2][1] + m[2][0] * var.m[2][2] + m[3][0] * var.m[2][3];
-        float m21 = m[0][1] * var.m[2][0] + m[1][1] * var.m[2][1] + m[2][1] * var.m[2][2] + m[3][1] * var.m[2][3];
-        float m22 = m[0][2] * var.m[2][0] + m[1][2] * var.m[2][1] + m[2][2] * var.m[2][2] + m[3][2] * var.m[2][3];
-        float m23 = m[0][3] * var.m[2][0] + m[1][3] * var.m[2][1] + m[2][3] * var.m[2][2] + m[3][3] * var.m[2][3];
-        float m30 = m[0][0] * var.m[3][0] + m[1][0] * var.m[3][1] + m[2][0] * var.m[3][2] + m[3][0] * var.m[3][3];
-        float m31 = m[0][1] * var.m[3][0] + m[1][1] * var.m[3][1] + m[2][1] * var.m[3][2] + m[3][1] * var.m[3][3];
-        float m32 = m[0][2] * var.m[3][0] + m[1][2] * var.m[3][1] + m[2][2] * var.m[3][2] + m[3][2] * var.m[3][3];
-        float m33 = m[0][3] * var.m[3][0] + m[1][3] * var.m[3][1] + m[2][3] * var.m[3][2] + m[3][3] * var.m[3][3];
-        m[0][0] = m00; m[1][0] = m10; m[2][0] = m20; m[3][0] = m30;
-        m[0][1] = m01; m[1][1] = m11; m[2][1] = m21; m[3][1] = m31;
-        m[0][2] = m02; m[1][2] = m12; m[2][2] = m22; m[3][2] = m32;
-        m[0][3] = m03; m[1][3] = m13; m[2][3] = m23; m[3][3] = m33;
         return *this;
     }
 
@@ -458,9 +442,13 @@ namespace TDS
         return *this;
     }
 
+    Mat4& Mat4::operator*=(Mat4 const& var)
+    {
+        return (*this = *this * var);
+    }
+
     Mat4& Mat4::operator/=(float value)
     {
-        if (value == 0.0f) throw std::invalid_argument("Division by zero.");
         m[0][0] /= value; m[1][0] /= value; m[2][0] /= value; m[3][0] /= value;
         m[0][1] /= value; m[1][1] /= value; m[2][1] /= value; m[3][1] /= value;
         m[0][2] /= value; m[1][2] /= value; m[2][2] /= value; m[3][2] /= value;
@@ -468,87 +456,208 @@ namespace TDS
         return *this;
     }
 
-    Mat4 Mat4::operator-() const
-    {
-        return Mat4(-m[0][0], -m[0][1], -m[0][2], -m[0][3],
-                    -m[1][0], -m[1][1], -m[1][2], -m[1][3],
-                    -m[2][0], -m[2][1], -m[2][2], -m[2][3],
-                    -m[3][0], -m[3][1], -m[3][2], -m[3][3]);
-    }
-
-    Vec4 Mat4::operator*(const Vec4& v) const
-    {
-        float x = m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z + m[3][0] * v.w;
-        float y = m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z + m[3][1] * v.w;
-        float z = m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z + m[3][2] * v.w;
-        float w = m[0][3] * v.x + m[1][3] * v.y + m[2][3] * v.z + m[3][3] * v.w;
-        return Vec4(x, y, z, w);
-    }
-
-    bool Mat4::operator==(const Mat4& var) const
-    {
-        return (m[0][0] == var.m[0][0] && m[1][0] == var.m[1][0] && m[2][0] == var.m[2][0] && m[3][0] == var.m[3][0] &&
-                m[0][1] == var.m[0][1] && m[1][1] == var.m[1][1] && m[2][1] == var.m[2][1] && m[3][1] == var.m[3][1] &&
-                m[0][2] == var.m[0][2] && m[1][2] == var.m[1][2] && m[2][2] == var.m[2][2] && m[3][2] == var.m[3][2] &&
-                m[0][3] == var.m[0][3] && m[1][3] == var.m[1][3] && m[2][3] == var.m[2][3] && m[3][3] == var.m[3][3]);
-    }
-
-    bool Mat4::operator!=(const Mat4& var) const
-    {
-        return (m[0][0] != var.m[0][0] || m[1][0] != var.m[1][0] || m[2][0] != var.m[2][0] || m[3][0] != var.m[3][0] ||
-                m[0][1] != var.m[0][1] || m[1][1] != var.m[1][1] || m[2][1] != var.m[2][1] || m[3][1] != var.m[3][1] ||
-                m[0][2] != var.m[0][2] || m[1][2] != var.m[1][2] || m[2][2] != var.m[2][2] || m[3][2] != var.m[3][2] ||
-                m[0][3] != var.m[0][3] || m[1][3] != var.m[1][3] || m[2][3] != var.m[2][3] || m[3][3] != var.m[3][3]);
-    }
-
-    float Mat4::operator[](int index) const 
-    {
-        switch (index)
-        {
-        case 0: return m[0][0];
-        case 1: return m[0][1];
-        case 2: return m[0][2];
-        case 3: return m[0][3];
-        case 4: return m[1][0];
-        case 5: return m[1][1];
-        case 6: return m[1][2];
-        case 7: return m[1][3];
-        case 8: return m[2][0];
-        case 9: return m[2][1];
-        case 10: return m[2][2];
-        case 11: return m[2][3];
-        case 12: return m[3][0];
-        case 13: return m[3][1];
-        case 14: return m[3][2];
-        case 15: return m[3][3];
-        default: throw std::invalid_argument("Index out of range.");
-        }
-    }
-
     float& Mat4::operator[](int index)
     {
         switch (index)
         {
-        case 0: return m[0][0];
-        case 1: return m[0][1];
-        case 2: return m[0][2];
-        case 3: return m[0][3];
-        case 4: return m[1][0];
-        case 5: return m[1][1];
-        case 6: return m[1][2];
-        case 7: return m[1][3];
-        case 8: return m[2][0];
-        case 9: return m[2][1];
-        case 10: return m[2][2];
-        case 11: return m[2][3];
-        case 12: return m[3][0];
-        case 13: return m[3][1];
-        case 14: return m[3][2];
-        case 15: return m[3][3];
-        default: throw std::invalid_argument("Index out of range.");
+            case 0: return m[0][0];
+            case 1: return m[0][1];
+            case 2: return m[0][2];
+            case 3: return m[0][3];
+            case 4: return m[1][0];
+            case 5: return m[1][1];
+            case 6: return m[1][2];
+            case 7: return m[1][3];
+            case 8: return m[2][0];
+            case 9: return m[2][1];
+            case 10: return m[2][2];
+            case 11: return m[2][3];
+            case 12: return m[3][0];
+            case 13: return m[3][1];
+            case 14: return m[3][2];
+            case 15: return m[3][3];
+            default: throw std::out_of_range("Index out of range");
         }
     }
 
+    float const& Mat4::operator[](int index) const
+    {
+        switch (index)
+        {
+            case 0: return m[0][0];
+            case 1: return m[0][1];
+            case 2: return m[0][2];
+            case 3: return m[0][3];
+            case 4: return m[1][0];
+            case 5: return m[1][1];
+            case 6: return m[1][2];
+            case 7: return m[1][3];
+            case 8: return m[2][0];
+            case 9: return m[2][1];
+            case 10: return m[2][2];
+            case 11: return m[2][3];
+            case 12: return m[3][0];
+            case 13: return m[3][1];
+            case 14: return m[3][2];
+            case 15: return m[3][3];
+            default: throw std::out_of_range("Index out of range");
+        }
+    }
+
+    Mat4 operator-(const Mat4& var)
+    {
+        return Mat4(
+            -var.m[0][0], -var.m[0][1], -var.m[0][2], -var.m[0][3],
+            -var.m[1][0], -var.m[1][1], -var.m[1][2], -var.m[1][3],
+            -var.m[2][0], -var.m[2][1], -var.m[2][2], -var.m[2][3],
+            -var.m[3][0], -var.m[3][1], -var.m[3][2], -var.m[3][3]
+        );
+    }
+
+    Mat4 operator+(Mat4 const& var, float const& value)
+    {
+        return Mat4(
+            var.m[0][0] + value, var.m[0][1] + value, var.m[0][2] + value, var.m[0][3] + value,
+            var.m[1][0] + value, var.m[1][1] + value, var.m[1][2] + value, var.m[1][3] + value,
+            var.m[2][0] + value, var.m[2][1] + value, var.m[2][2] + value, var.m[2][3] + value,
+            var.m[3][0] + value, var.m[3][1] + value, var.m[3][2] + value, var.m[3][3] + value
+        );
+    }
+
+    Mat4 operator+(float const& value, Mat4 const& var)
+    {
+        return Mat4(
+            var.m[0][0] + value, var.m[0][1] + value, var.m[0][2] + value, var.m[0][3] + value,
+            var.m[1][0] + value, var.m[1][1] + value, var.m[1][2] + value, var.m[1][3] + value,
+            var.m[2][0] + value, var.m[2][1] + value, var.m[2][2] + value, var.m[2][3] + value,
+            var.m[3][0] + value, var.m[3][1] + value, var.m[3][2] + value, var.m[3][3] + value
+        );
+    }
+
+    Mat4 operator+(Mat4 const& var1, Mat4 const& var2)
+    {
+        return Mat4(
+            var1.m[0][0] + var2.m[0][0], var1.m[0][1] + var2.m[0][1], var1.m[0][2] + var2.m[0][2], var1.m[0][3] + var2.m[0][3],
+            var1.m[1][0] + var2.m[1][0], var1.m[1][1] + var2.m[1][1], var1.m[1][2] + var2.m[1][2], var1.m[1][3] + var2.m[1][3],
+            var1.m[2][0] + var2.m[2][0], var1.m[2][1] + var2.m[2][1], var1.m[2][2] + var2.m[2][2], var1.m[2][3] + var2.m[2][3],
+            var1.m[3][0] + var2.m[3][0], var1.m[3][1] + var2.m[3][1], var1.m[3][2] + var2.m[3][2], var1.m[3][3] + var2.m[3][3]
+        );
+    }
+
+    Mat4 operator-(Mat4 const& var, float const& value)
+    {
+        return Mat4(
+            var.m[0][0] - value, var.m[0][1] - value, var.m[0][2] - value, var.m[0][3] - value,
+            var.m[1][0] - value, var.m[1][1] - value, var.m[1][2] - value, var.m[1][3] - value,
+            var.m[2][0] - value, var.m[2][1] - value, var.m[2][2] - value, var.m[2][3] - value,
+            var.m[3][0] - value, var.m[3][1] - value, var.m[3][2] - value, var.m[3][3] - value
+        );
+    }
+
+    Mat4 operator-(float const& value, Mat4 const& var)
+    {
+        return Mat4(
+            value - var.m[0][0], value - var.m[0][1], value - var.m[0][2], value - var.m[0][3],
+            value - var.m[1][0], value - var.m[1][1], value - var.m[1][2], value - var.m[1][3],
+            value - var.m[2][0], value - var.m[2][1], value - var.m[2][2], value - var.m[2][3],
+            value - var.m[3][0], value - var.m[3][1], value - var.m[3][2], value - var.m[3][3]
+        );
+    }
+
+    Mat4 operator-(Mat4 const& var1, Mat4 const& var2)
+    {
+        return Mat4(
+            var1.m[0][0] - var2.m[0][0], var1.m[0][1] - var2.m[0][1], var1.m[0][2] - var2.m[0][2], var1.m[0][3] - var2.m[0][3],
+            var1.m[1][0] - var2.m[1][0], var1.m[1][1] - var2.m[1][1], var1.m[1][2] - var2.m[1][2], var1.m[1][3] - var2.m[1][3],
+            var1.m[2][0] - var2.m[2][0], var1.m[2][1] - var2.m[2][1], var1.m[2][2] - var2.m[2][2], var1.m[2][3] - var2.m[2][3],
+            var1.m[3][0] - var2.m[3][0], var1.m[3][1] - var2.m[3][1], var1.m[3][2] - var2.m[3][2], var1.m[3][3] - var2.m[3][3]
+        );
+    }
+
+    Mat4 operator*(Mat4 const& var, float const& value)
+    {
+        return Mat4(
+            var.m[0][0] * value, var.m[0][1] * value, var.m[0][2] * value, var.m[0][3] * value,
+            var.m[1][0] * value, var.m[1][1] * value, var.m[1][2] * value, var.m[1][3] * value,
+            var.m[2][0] * value, var.m[2][1] * value, var.m[2][2] * value, var.m[2][3] * value,
+            var.m[3][0] * value, var.m[3][1] * value, var.m[3][2] * value, var.m[3][3] * value
+        );
+    }
+
+    Mat4 operator*(float const& value, Mat4 const& var)
+    {
+        return Mat4(
+            value * var.m[0][0], value * var.m[0][1], value * var.m[0][2], value * var.m[0][3],
+            value * var.m[1][0], value * var.m[1][1], value * var.m[1][2], value * var.m[1][3],
+            value * var.m[2][0], value * var.m[2][1], value * var.m[2][2], value * var.m[2][3],
+            value * var.m[3][0], value * var.m[3][1], value * var.m[3][2], value * var.m[3][3]
+        );
+    }
+
+    Mat4 operator*(Mat4 const& lhs, Mat4 const& rhs)
+    {
+        float m00, m01, m02, m03,
+            m10, m11, m12, m13,
+            m20, m21, m22, m23,
+            m30, m31, m32, m33;
+        m00 = lhs.m[0][0] * rhs.m[0][0] + lhs.m[1][0] * rhs.m[0][1] + lhs.m[2][0] * rhs.m[0][2] + lhs.m[3][0] * rhs.m[0][3];
+        m01 = lhs.m[0][1] * rhs.m[0][0] + lhs.m[1][1] * rhs.m[0][1] + lhs.m[2][1] * rhs.m[0][2] + lhs.m[3][1] * rhs.m[0][3];
+        m02 = lhs.m[0][2] * rhs.m[0][0] + lhs.m[1][2] * rhs.m[0][1] + lhs.m[2][2] * rhs.m[0][2] + lhs.m[3][2] * rhs.m[0][3];
+        m03 = lhs.m[0][3] * rhs.m[0][0] + lhs.m[1][3] * rhs.m[0][1] + lhs.m[2][3] * rhs.m[0][2] + lhs.m[3][3] * rhs.m[0][3];
+        m10 = lhs.m[0][0] * rhs.m[1][0] + lhs.m[1][0] * rhs.m[1][1] + lhs.m[2][0] * rhs.m[1][2] + lhs.m[3][0] * rhs.m[1][3];
+        m11 = lhs.m[0][1] * rhs.m[1][0] + lhs.m[1][1] * rhs.m[1][1] + lhs.m[2][1] * rhs.m[1][2] + lhs.m[3][1] * rhs.m[1][3];
+        m12 = lhs.m[0][2] * rhs.m[1][0] + lhs.m[1][2] * rhs.m[1][1] + lhs.m[2][2] * rhs.m[1][2] + lhs.m[3][2] * rhs.m[1][3];
+        m13 = lhs.m[0][3] * rhs.m[1][0] + lhs.m[1][3] * rhs.m[1][1] + lhs.m[2][3] * rhs.m[1][2] + lhs.m[3][3] * rhs.m[1][3];
+        m20 = lhs.m[0][0] * rhs.m[2][0] + lhs.m[1][0] * rhs.m[2][1] + lhs.m[2][0] * rhs.m[2][2] + lhs.m[3][0] * rhs.m[2][3];
+        m21 = lhs.m[0][1] * rhs.m[2][0] + lhs.m[1][1] * rhs.m[2][1] + lhs.m[2][1] * rhs.m[2][2] + lhs.m[3][1] * rhs.m[2][3];
+        m22 = lhs.m[0][2] * rhs.m[2][0] + lhs.m[1][2] * rhs.m[2][1] + lhs.m[2][2] * rhs.m[2][2] + lhs.m[3][2] * rhs.m[2][3];
+        m23 = lhs.m[0][3] * rhs.m[2][0] + lhs.m[1][3] * rhs.m[2][1] + lhs.m[2][3] * rhs.m[2][2] + lhs.m[3][3] * rhs.m[2][3];
+        m30 = lhs.m[0][0] * rhs.m[3][0] + lhs.m[1][0] * rhs.m[3][1] + lhs.m[2][0] * rhs.m[3][2] + lhs.m[3][0] * rhs.m[3][3];
+        m31 = lhs.m[0][1] * rhs.m[3][0] + lhs.m[1][1] * rhs.m[3][1] + lhs.m[2][1] * rhs.m[3][2] + lhs.m[3][1] * rhs.m[3][3];
+        m32 = lhs.m[0][2] * rhs.m[3][0] + lhs.m[1][2] * rhs.m[3][1] + lhs.m[2][2] * rhs.m[3][2] + lhs.m[3][2] * rhs.m[3][3];
+        m33 = lhs.m[0][3] * rhs.m[3][0] + lhs.m[1][3] * rhs.m[3][1] + lhs.m[2][3] * rhs.m[3][2] + lhs.m[3][3] * rhs.m[3][3];
+        return Mat4(
+            m00, m01, m02, m03,
+            m10, m11, m12, m13,
+            m20, m21, m22, m23,
+            m30, m31, m32, m33
+        );
+    }
+
+    Mat4 operator/(Mat4 const& var, float const& value)
+    {
+        return Mat4(
+            var.m[0][0] / value, var.m[0][1] / value, var.m[0][2] / value, var.m[0][3] / value,
+            var.m[1][0] / value, var.m[1][1] / value, var.m[1][2] / value, var.m[1][3] / value,
+            var.m[2][0] / value, var.m[2][1] / value, var.m[2][2] / value, var.m[2][3] / value,
+            var.m[3][0] / value, var.m[3][1] / value, var.m[3][2] / value, var.m[3][3] / value
+        );
+    }
+
+    Mat4 operator/(float const& value, Mat4 const& var)
+    {
+        return Mat4(
+            value / var.m[0][0], value / var.m[0][1], value / var.m[0][2], value / var.m[0][3],
+            value / var.m[1][0], value / var.m[1][1], value / var.m[1][2], value / var.m[1][3],
+            value / var.m[2][0], value / var.m[2][1], value / var.m[2][2], value / var.m[2][3],
+            value / var.m[3][0], value / var.m[3][1], value / var.m[3][2], value / var.m[3][3]
+        );
+    }
+
+    bool operator==(Mat4 const& var1, Mat4 const& var2)
+    {
+        return (
+            var1.m[0][0] == var2.m[0][0] && var1.m[0][1] == var2.m[0][1] && var1.m[0][2] == var2.m[0][2] && var1.m[0][3] == var2.m[0][3] &&
+            var1.m[1][0] == var2.m[1][0] && var1.m[1][1] == var2.m[1][1] && var1.m[1][2] == var2.m[1][2] && var1.m[1][3] == var2.m[1][3] &&
+            var1.m[2][0] == var2.m[2][0] && var1.m[2][1] == var2.m[2][1] && var1.m[2][2] == var2.m[2][2] && var1.m[2][3] == var2.m[2][3] &&
+            var1.m[3][0] == var2.m[3][0] && var1.m[3][1] == var2.m[3][1] && var1.m[3][2] == var2.m[3][2] && var1.m[3][3] == var2.m[3][3]
+        );
+    }
+
+    bool operator!=(Mat4 const& var1, Mat4 const& var2)
+    {
+        return !(var1 == var2);
+    }
     std::ostream& operator<<(std::ostream& os, const Mat4& var)
     {
         std::stringstream m00, m01, m02, m03;

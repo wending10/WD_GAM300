@@ -1,2 +1,34 @@
-﻿  vulkanInstance.cpp
-  GAM300Engine.vcxproj -> C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
+﻿  MathCommon.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  Matrix2.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  Matrix3.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\devGam300\GAM300\Shared_Libs\Matrix3.cpp(512,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Matrix4.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\devGam300\GAM300\Shared_Libs\Matrix4.cpp(675,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Quaternion.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\devGam300\GAM300\Shared_Libs\Quaternion.cpp(52,41): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\devGam300\GAM300\Shared_Libs\Quaternion.cpp(146,61): warning C4305: 'argument': truncation from 'const double' to 'float'
+  Vector2.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  Vector3.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  Vector4.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  application.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  vulkanDevice.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  vulkanInstance.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  main.cpp
+C:\devGam300\GAM300\Shared_Libs\MathCommon.h(171,52): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\devGam300\GAM300\GAM300Engine\main.cpp(9,33): warning C4100: 'argv': unreferenced formal parameter
+C:\devGam300\GAM300\GAM300Engine\main.cpp(9,14): warning C4100: 'argc': unreferenced formal parameter
+C:\devGam300\GAM300\GAM300Engine\main.cpp(20,72): warning C4100: 'lpCmdLine': unreferenced formal parameter
+C:\devGam300\GAM300\GAM300Engine\main.cpp(20,51): warning C4100: 'hPrevInstance': unreferenced formal parameter
+  Generating Code...
+  GAM300Engine.vcxproj -> C:\devGam300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe

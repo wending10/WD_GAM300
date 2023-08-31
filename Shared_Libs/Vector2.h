@@ -1,13 +1,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include "Math.h"
-
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <stdexcept>
-
+#include "MathCommon.h"
 
 namespace TDS
 {
@@ -73,27 +67,23 @@ class Vec2
         // Multiplies every component of this vector by the same component of scale.
         void Scale(const Vec2 scale);
         static float SignedAngle(Vec2 from, Vec2 to);
-        static Vec2 SmoothDamp(Vec2 current, Vec2 target, Vec2& currentVelocity, float smoothTime, float maxSpeed, float deltaTime);
 
         // Operators
-        Vec2 operator-();
-        Vec2 operator-(const Vec2& v);
-        Vec2 operator*(const float scalar);
-        Vec2 operator/(const float scalar);
-        Vec2 operator+(const Vec2& v);
-        Vec2& operator+=(const Vec2& v);
-        Vec2& operator-=(const Vec2& v);
-        Vec2& operator*=(const float scalar);
-        Vec2& operator/=(const float scalar);
-        bool operator==(const Vec2& v);
-        bool operator!=(const Vec2& v);
-        float& operator[](int index);
-
-        // Assignment Operators
         Vec2& operator=(const Vec2& v);
+        Vec2& operator+=(float scalar);
+        Vec2& operator+=(const Vec2& v);
+        Vec2& operator-=(float scalar);
+        Vec2& operator-=(const Vec2& v);
+        Vec2& operator*=(float scalar);
+        Vec2& operator*=(const Vec2& v);
+        Vec2& operator/=(float scalar);
+        Vec2& operator/=(const Vec2& v);
+
+        float& operator[](int index);
+        float const& operator[](int index) const;
 
         // Casting Operators
-        operator Vec3(); // Vec2 to Vec3
+        operator Vec3(); // Vec3 to Vec2
         operator Vec4(); // Vec2 to Vec4
 
         // Variables
@@ -103,7 +93,24 @@ class Vec2
         static constexpr float kEpsilonNormalSqrt = 1e-15f;
 };
 
-Vec2 operator*(const float scalar, const Vec2& v);
+// Operators (unary arithmetic)
+Vec2 operator-(const Vec2& v);
+
+// Operators (binary arithmetic)
+Vec2 operator+(const Vec2& v, float const& scalar);
+Vec2 operator+(float const& scalar, const Vec2& v);
+Vec2 operator+(const Vec2& v1, const Vec2& v2);
+Vec2 operator-(const Vec2&  v, float const& scalar);
+Vec2 operator-(float const& scalar, const Vec2&  v);
+Vec2 operator-(const Vec2&  v1, const Vec2&  v2);
+Vec2 operator*(const Vec2&  v, float const& scalar);
+Vec2 operator*(float const& scalar, const Vec2&  v);
+Vec2 operator*(const Vec2&  v1, const Vec2&  v2);
+Vec2 operator/(const Vec2&  v, float const& scalar);
+Vec2 operator/(float const& scalar, const Vec2& v);
+
+bool operator==(const Vec2& v1, const Vec2& v2);
+bool operator!=(const Vec2& v1, const Vec2& v2);
 std::ostream& operator<<(std::ostream& os, const Vec2& v);
 
 

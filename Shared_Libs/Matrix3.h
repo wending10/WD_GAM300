@@ -2,11 +2,12 @@
 #define MATRIX3_H
 
 #include "Vector3.h"
-#include <iomanip>
+#include "Quaternion.h"
 
 
 namespace TDS
 {
+class Quat;
 class Mat3
 {
 public:
@@ -52,40 +53,46 @@ public:
     static Mat3 RotateZ(float angleRadians);
     // Create a scaling matrix.
     static Mat3 Scale(float scaleX, float scaleY, float scaleZ);
-    // Quaternion ToQuaternion(const Mat3& m);
-    //static Mat3 FromQuaternion(const Quaternion& q);
-    // Return string representation of the matrix.
+    static Quat toQuat(Mat3 const& m);
+
     std::string ToString();
 
     // Operators
-    Mat3 operator+(const Mat3& var) const;
-    Mat3 operator-(const Mat3& var) const;
-    Mat3 operator*(const Mat3& var) const;
-    Mat3 operator*(float value) const; // Scalar multiplication
-    Mat3 operator/(float value) const; // Scalar division
     Mat3& operator=(const Mat3& var);
+    Mat3& operator+=(float value);
     Mat3& operator+=(const Mat3& var);
+    Mat3& operator-=(float value);
     Mat3& operator-=(const Mat3& var);
-    Mat3& operator*=(const Mat3& var);
     Mat3& operator*=(float value);
+    Mat3& operator*=(const Mat3& var);
     Mat3& operator/=(float value);
-    Mat3 operator-() const; // Unary minus
-    Vec3 operator*(const Vec3& v) const; // Matrix-vector multiplication
 
-    bool operator==(const Mat3& var) const;
-    bool operator!=(const Mat3& var) const;
-    float operator[](int index) const; // Indexing operator
     float& operator[](int index); // Indexing operator
-
+    float const& operator[](int index) const; // Indexing operator
     // Variables
     float m[3][3];
 };
+// unary operators
+Mat3 operator-(const Mat3& var);
+
+// binary operators
+Mat3 operator+(Mat3 const& var, float const& value);
+Mat3 operator+(float const& value, Mat3 const& var);
+Mat3 operator+(Mat3 const& var1, Mat3 const& var2);
+Mat3 operator-(Mat3 const& var, float const& value);
+Mat3 operator-(float const& value, Mat3 const& var);
+Mat3 operator-(Mat3 const& var1, Mat3 const& var2);
+Mat3 operator*(Mat3 const& var, float const& value);
+Mat3 operator*(float const& value, Mat3 const& var);
+Mat3 operator*(Mat3 const& var1, Mat3 const& var2);
+Mat3 operator/(Mat3 const& var, float const& value);
+Mat3 operator/(float const& value, Mat3 const& var);
+
+// boolean operators
+bool operator==(Mat3 const& var1, Mat3 const& var2);
+bool operator!=(Mat3 const& var1, Mat3 const& var2);
+
 std::ostream& operator<<(std::ostream& os, const Mat3& m);
-
-
-
-
-
 } // namespace WD
 
 

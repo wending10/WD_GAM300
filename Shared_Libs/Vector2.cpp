@@ -150,97 +150,89 @@ namespace TDS
         return unsignedAngle * sign;
     }
 
-    Vec2 Vec2::SmoothDamp(Vec2 current, Vec2 target, Vec2& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+    Vec2& Vec2::operator=(const Vec2& v) 
     {
-        smoothTime = Mathf::Max(0.0001f, smoothTime);
-        float omega = 2.f / smoothTime;
-
-        float x = omega * deltaTime;
-        float exp = 1.f / (1.f + x + 0.48f * x * x + 0.235f * x * x * x);
-
-        float changeX = current.x - target.x;
-        float changeY = current.y - target.y;
-        Vec2 originalTo = target;
-
-        // Clamp maximum speed
-        float maxChange = maxSpeed * smoothTime;
-        float maxChangeSq = maxChange * maxChange;
-        float sqDist = changeX * changeX + changeY * changeY;
-        if (sqDist > maxChangeSq)
-        {
-            float mag = Mathf::Sqrt(sqDist);
-            changeX = changeX / mag * maxChange;
-            changeY = changeY / mag * maxChange;
-        }
-
-        target.x = current.x - changeX;
-        target.y = current.y - changeY;
-
-        float tempX = (currentVelocity.x + omega * changeX) * deltaTime;
-        float tempY = (currentVelocity.y + omega * changeY) * deltaTime;
-
-        currentVelocity.x = (currentVelocity.x - omega * tempX) * exp;
-        currentVelocity.y = (currentVelocity.y - omega * tempY) * exp;
-
-        float outputX = target.x + (changeX + tempX) * exp;
-        float outputY = target.y + (changeY + tempY) * exp;
-
-        // Prevent overshooting
-        float origMinusCurrentX = originalTo.x - current.x;
-        float origMinusCurrentY = originalTo.y - current.y;
-        float outMinusOrigX = outputX - originalTo.x;
-        float outMinusOrigY = outputY - originalTo.y;
-
-        if (origMinusCurrentX * outMinusOrigX + origMinusCurrentY * outMinusOrigY > 0)
-        {
-            outputX = originalTo.x;
-            outputY = originalTo.y;
-
-            currentVelocity.x = (outputX - originalTo.x) / deltaTime;
-            currentVelocity.y = (outputY - originalTo.y) / deltaTime;
-        }
-        return Vec2(outputX, outputY);
+        x = v.x;
+        y = v.y;
+        return *this;
     }
 
-    Vec2 Vec2::operator-() { return Vec2(-x, -y); }
-    Vec2 Vec2::operator-(const Vec2& v) { return Vec2(x - v.x, y - v.y); }
-    Vec2 Vec2::operator*(const float scalar) { return Vec2(x * scalar, y * scalar); }
-    Vec2 Vec2::operator/(const float scalar) 
+    Vec2& Vec2::operator+=(float scalar) 
     {
-        if (scalar == 0)
-        {
-            std::cout << "Division By Zero!" << std::endl;
-            return Vec2::zero();
-        }
-        return Vec2(x / scalar, y / scalar);     
+        x += scalar;
+        y += scalar;
+        return *this;
     }
-    Vec2 Vec2::operator+(const Vec2& v) { return Vec2(x + v.x, y + v.y); }
-    Vec2& Vec2::operator+=(const Vec2& v) { x += v.x; y += v.y; return *this; }
-    Vec2& Vec2::operator-=(const Vec2& v) { x -= v.x; y -= v.y; return *this; }
-    Vec2& Vec2::operator*=(const float scalar) { x *= scalar; y *= scalar; return *this; }
-    Vec2& Vec2::operator/=(const float scalar) 
-    { 
-        if (scalar == 0)
-        {
-            std::cout << "Division By Zero!" << std::endl;
-            x = y = 0;
-            return *this;
-        }
-        x /= scalar; 
-        y /= scalar; 
-        return *this; 
-    }
-    bool Vec2::operator==(const Vec2& v) { return x == v.x && y == v.y; }
-    bool Vec2::operator!=(const Vec2& v) { return x != v.x || y != v.y; }
-    float& Vec2::operator[](int index)
+
+    Vec2& Vec2::operator+=(const Vec2& v) 
     {
-        if (index == 0) return x;
-        else if (index == 1) return y;
-        else throw std::out_of_range("Index out of range");
+        x += v.x;
+        y += v.y;
+        return *this;
     }
-    
-    Vec2& Vec2::operator=(const Vec2& v) { x = v.x; y = v.y; return *this; }
-    Vec2 operator*(const float scalar, const Vec2& v) { return Vec2(v.x * scalar, v.y * scalar); }
+
+    Vec2& Vec2::operator-=(float scalar) 
+    {
+        x -= scalar;
+        y -= scalar;
+        return *this;
+    }
+
+    Vec2& Vec2::operator-=(const Vec2& v) 
+    {
+        x -= v.x;
+        y -= v.y;
+        return *this;
+    }
+
+    Vec2& Vec2::operator*=(float scalar) 
+    {
+        x *= scalar;
+        y *= scalar;
+        return *this;
+    }
+
+    Vec2& Vec2::operator*=(const Vec2& v) 
+    {
+        x *= v.x;
+        y *= v.y;
+        return *this;
+    }
+
+    Vec2& Vec2::operator/=(float scalar) 
+    {
+        x /= scalar;
+        y /= scalar;
+        return *this;
+    }
+
+    Vec2& Vec2::operator/=(const Vec2& v) 
+    {
+        x /= v.x;
+        y /= v.y;
+        return *this;
+    }
+
+    float& Vec2::operator[](int index) 
+    {
+        switch (index)
+        {
+            case 0: return x;
+            case 1: return y;
+            default: throw std::out_of_range("Index out of range");
+        }
+    }
+
+    float const& Vec2::operator[](int index) const
+    {
+        switch (index)
+        {
+            case 0: return x;
+            case 1: return y;
+            default: throw std::out_of_range("Index out of range");
+        }
+    }
+
     Vec2::operator Vec3() { return Vec3(x, y, 0); }
     Vec2::operator Vec4() { return Vec4(x, y, 0, 0); }
 
@@ -249,5 +241,76 @@ namespace TDS
         os << "(" << v.x << ", " << v.y << ")";
         return os;
     }
+
+    Vec2 operator-(const Vec2& v) 
+    {
+        return Vec2(-v.x, -v.y);
+    }
+
+    Vec2 operator+(const Vec2& v, float const& scalar) 
+    {
+        return Vec2(v.x + scalar, v.y + scalar);
+    }
+
+    Vec2 operator+(float const& scalar, const Vec2& v) 
+    {
+        return Vec2(v.x + scalar, v.y + scalar);
+    }
+
+    Vec2 operator+(const Vec2& v1, const Vec2& v2) 
+    {
+        return Vec2(v1.x + v2.x, v1.y + v2.y);
+    }
+
+    Vec2 operator-(const Vec2& v, float const& scalar) 
+    {
+        return Vec2(v.x - scalar, v.y - scalar);
+    }
+
+    Vec2 operator-(float const& scalar, const Vec2& v) 
+    {
+        return Vec2(scalar - v.x, scalar - v.y);
+    }
+
+    Vec2 operator-(const Vec2& v1, const Vec2& v2) 
+    {
+        return Vec2(v1.x - v2.x, v1.y - v2.y);
+    }
+
+    Vec2 operator*(const Vec2& v, float const& scalar) 
+    {
+        return Vec2(v.x * scalar, v.y * scalar);
+    }
+
+    Vec2 operator*(float const& scalar, const Vec2& v) 
+    {
+        return Vec2(v.x * scalar, v.y * scalar);
+    }
+
+    Vec2 operator*(const Vec2& v1, const Vec2& v2) 
+    {
+        return Vec2(v1.x * v2.x, v1.y * v2.y);
+    }
+
+    Vec2 operator/(const Vec2& v, float const& scalar) 
+    {
+        return Vec2(v.x / scalar, v.y / scalar);
+    }
+
+    Vec2 operator/(float const& scalar, const Vec2& v) 
+    {
+        return Vec2(scalar / v.x, scalar / v.y);
+    }
+
+    bool operator==(const Vec2& v1, const Vec2& v2) 
+    {
+        return v1.x == v2.x && v1.y == v2.y;
+    }
+
+    bool operator!=(const Vec2& v1, const Vec2& v2) 
+    {
+        return v1.x != v2.x || v1.y != v2.y;
+    }
+
 
 }  // namespace WD

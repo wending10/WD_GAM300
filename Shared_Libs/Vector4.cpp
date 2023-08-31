@@ -120,7 +120,6 @@ namespace TDS
     Vec4 Vec4::Scale(Vec4 a, Vec4 b) { return Vec4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w); }
     void Vec4::Scale(Vec4 scale) { x *= scale.x; y *= scale.y; z *= scale.z; w *= scale.w; }    
 
-    Vec4 Vec4::operator-() { return Vec4(-x, -y, -z, -w); }
     Vec4& Vec4::operator=(const Vec4& v)
     {
         x = v.x;
@@ -129,6 +128,16 @@ namespace TDS
         w = v.w;
         return *this;
     }
+
+    Vec4& Vec4::operator+=(float scalar)
+    {
+        x += scalar;
+        y += scalar;
+        z += scalar;
+        w += scalar;
+        return *this;
+    }
+
     Vec4& Vec4::operator+=(const Vec4& v)
     {
         x += v.x;
@@ -137,7 +146,17 @@ namespace TDS
         w += v.w;
         return *this;
     }
-    Vec4& Vec4::operator-=(const Vec4& v)
+
+    Vec4& Vec4::operator-=(float scalar) 
+    {
+        x -= scalar;
+        y -= scalar;
+        z -= scalar;
+        w -= scalar;
+        return *this;
+    }
+
+    Vec4& Vec4::operator-=(const Vec4& v) 
     {
         x -= v.x;
         y -= v.y;
@@ -145,64 +164,43 @@ namespace TDS
         w -= v.w;
         return *this;
     }
-    Vec4& Vec4::operator+=(const float f)
+
+    Vec4& Vec4::operator*=(float scalar) 
     {
-        x += f;
-        y += f;
-        z += f;
-        w += f;
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
+        w *= scalar;
         return *this;
     }
 
-    Vec4& Vec4::operator-=(const float f)
+    Vec4& Vec4::operator*=(const Vec4& v) 
     {
-        x -= f;
-        y -= f;
-        z -= f;
-        w -= f;
+        x *= v.x;
+        y *= v.y;
+        z *= v.z;
+        w *= v.w;
         return *this;
     }
 
-    Vec4& Vec4::operator*=(const float f)
+    Vec4& Vec4::operator/=(float scalar) 
     {
-        x *= f;
-        y *= f;
-        z *= f;
-        w *= f;
+        x /= scalar;
+        y /= scalar;
+        z /= scalar;
+        w /= scalar;
         return *this;
     }
 
-    Vec4& Vec4::operator/=(const float f)
+    Vec4& Vec4::operator/=(const Vec4& v) 
     {
-        if (f == 0)
-        {
-            std::cout << "Divide by zero!" << std::endl;
-            x = y = z = w = 0;
-            return *this;
-        }
-        x /= f;
-        y /= f;
-        z /= f;
-        w /= f;
+        x /= v.x;
+        y /= v.y;
+        z /= v.z;
+        w /= v.w;
         return *this;
     }
 
-    Vec4 Vec4::operator+(const Vec4& v) { return Vec4(x + v.x, y + v.y, z + v.z, w + v.w); }
-    Vec4 Vec4::operator-(const Vec4& v) { return Vec4(x - v.x, y - v.y, z - v.z, w - v.w); }
-    Vec4 Vec4::operator+(const float f) { return Vec4(x + f, y + f, z + f, w + f); }
-    Vec4 Vec4::operator-(const float f) { return Vec4(x - f, y - f, z - f, w - f); }
-    Vec4 Vec4::operator*(const float f) { return Vec4(x * f, y * f, z * f, w * f); }
-    Vec4 Vec4::operator/(const float f) 
-    { 
-        if (f == 0)
-        {
-            std::cout << "Divide by zero!" << std::endl;
-            return Vec4::zero();
-        }        
-        return Vec4(x / f, y / f, z / f, w / f); 
-    }
-    bool Vec4::operator==(const Vec4& v) { return x == v.x && y == v.y && z == v.z && w == v.w; }
-    bool Vec4::operator!=(const Vec4& v) { return x != v.x || y != v.y || z != v.z || w != v.w; }
     float& Vec4::operator[](int index)
     {
         switch (index)
@@ -211,12 +209,85 @@ namespace TDS
         case 1: return y;
         case 2: return z;
         case 3: return w;
-        default: throw std::out_of_range("Vec4 index out of range");
+        default: throw std::out_of_range("Vec4 index out of range.");
         }
     }
 
+    float const& Vec4::operator[](int index) const
+    {
+        switch (index)
+        {
+        case 0: return x;
+        case 1: return y;
+        case 2: return z;
+        case 3: return w;
+        default: throw std::out_of_range("Vec4 index out of range.");
 
-    Vec4 operator*(const float scalar, const Vec4& v) { return Vec4(v.x * scalar, v.y * scalar, v.z * scalar, v.w * scalar); }
+        }
+    }
+
+    Vec4 operator-(const Vec4& v) { return Vec4(-v.x, -v.y, -v.z, -v.w); }
+    Vec4 operator+(const Vec4& v, float const& scalar)
+    {
+        return Vec4(v.x + scalar, v.y + scalar, v.z + scalar, scalar);
+    }
+    Vec4 operator+(float const& scalar, const Vec4& v)
+    {
+        return Vec4(scalar + v.x, scalar + v.y, scalar + v.z, scalar + v.w);
+    }
+    Vec4 operator+(const Vec4& lhs, const Vec4& rhs)
+    {
+        return Vec4(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
+    }
+    Vec4 operator-(const Vec4& v, float const& scalar)
+    {
+        return Vec4(v.x - scalar, v.y - scalar, v.z - scalar, v.w - scalar);
+    }
+    Vec4 operator-(float const& scalar, const Vec4& v)
+    {
+        return Vec4(scalar - v.x, scalar - v.y, scalar - v.z, scalar - v.w);
+    }
+
+    Vec4 operator-(const Vec4& lhs, const Vec4& rhs)
+    {
+        return Vec4(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
+    }
+
+    Vec4 operator*(const Vec4& v, float const& scalar)
+    {
+        return Vec4(v.x * scalar, v.y * scalar, v.z * scalar, v.w * scalar);
+    }
+
+    Vec4 operator*(float const& scalar, const Vec4& v)
+    {
+        return Vec4(scalar * v.x, scalar * v.y, scalar * v.z, scalar * v.w);
+    }
+
+    Vec4 operator*(const Vec4& lhs, const Vec4& rhs)
+    {
+        return Vec4(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z, lhs.w * rhs.w);
+    }
+
+    Vec4 operator/(const Vec4& v, float const& scalar)
+    {
+        return Vec4(v.x / scalar, v.y / scalar, v.z / scalar, v.w / scalar);
+    }
+
+    Vec4 operator/(float const& scalar, const Vec4& v)
+    {
+        return Vec4(scalar / v.x, scalar / v.y, scalar / v.z, scalar / v.w);
+    }
+
+    bool operator==(const Vec4& lhs, const Vec4& rhs)
+    {
+        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+    }
+
+    bool operator!=(const Vec4& lhs, const Vec4& rhs)
+    {
+        return !(lhs == rhs);
+    }
+
     std::ostream& operator<<(std::ostream& os, const Vec4& v) 
     {
         os << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
