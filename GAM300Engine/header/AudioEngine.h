@@ -60,7 +60,7 @@ public:
      * Only reads the audio file and loads into the audio engine
      * if the sound file has already been added to the cache
      */
-    void loadSound(SoundInfo soundInfo);
+    void loadSound(SoundInfo &soundInfo);
 
     /**
     * Plays a sound file using FMOD's low level audio system. If the sound file has not been

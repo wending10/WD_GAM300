@@ -29,7 +29,7 @@ void AudioEngine::update() {
     ERRCHECK(studioSystem->update()); // also updates the low level system
 }
 
-void AudioEngine::loadSound(SoundInfo soundInfo) {
+void AudioEngine::loadSound(SoundInfo &soundInfo) {
     if (!soundInfo.isLoaded()) {
         std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
         FMOD::Sound* sound;
@@ -47,7 +47,7 @@ void AudioEngine::loadSound(SoundInfo soundInfo) {
 }
 
 void AudioEngine::playSound(SoundInfo soundInfo) {
-    if (!soundInfo.isLoaded()) {
+    if (soundInfo.isLoaded()) {
         std::cout << "Playing Sound\n";
         FMOD::Channel* channel{nullptr};
         // start play in 'paused' state
