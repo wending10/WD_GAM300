@@ -12,7 +12,7 @@ namespace TDS
          m_pVKInst = std::make_shared<VulkanInstance>(m_window);
 	 }
 
-     void Application::Initalize()
+     void Application::Initialize()
      {
          
      }

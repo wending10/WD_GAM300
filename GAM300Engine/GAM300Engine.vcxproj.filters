@@ -25,6 +25,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ecs">
+      <UniqueIdentifier>{ae66f285-0767-448f-ade8-2bf0ccf1f623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\eventmanager">
+      <UniqueIdentifier>{6e6a9487-578f-4712-a956-e436851157f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,6 +124,18 @@
     </ClInclude>
     <ClInclude Include="..\Shared_Libs\Vector4.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ecs\ecs.h">
+      <Filter>Header Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ecs\ecs.hpp">
+      <Filter>Header Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\eventmanager\eventmanager.h">
+      <Filter>Header Files\eventmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\eventmanager\eventmanager.hpp">
+      <Filter>Header Files\eventmanager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     const wchar_t classname[] = L"TDSWindowClass"; //class name
 
     g_Application = new TDS::Application(hInstance,nCmdShow,classname);
-    g_Application->Initalize();
+    g_Application->Initialize();
     g_Application->Update();
     g_Application->~Application();
     delete g_Application;

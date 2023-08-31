@@ -1,2 +1,3 @@
 C:\Users\h.xinxiang\Desktop\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
 C:\devGam300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
