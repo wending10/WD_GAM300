@@ -1,9 +1,9 @@
 ﻿  editor.cpp
-editor.obj : error LNK2019: unresolved external symbol "struct ImGuiContext * __cdecl ImGui::CreateContext(struct ImFontAtlas *)" (?CreateContext@ImGui@@YAPEAUImGuiContext@@PEAUImFontAtlas@@@Z) referenced in function "void __cdecl editorInitialize(void)" (?editorInitialize@@YAXXZ)
-editor.obj : error LNK2019: unresolved external symbol "struct ImGuiIO & __cdecl ImGui::GetIO(void)" (?GetIO@ImGui@@YAAEAUImGuiIO@@XZ) referenced in function "void __cdecl editorInitialize(void)" (?editorInitialize@@YAXXZ)
-editor.obj : error LNK2019: unresolved external symbol "void __cdecl ImGui::NewFrame(void)" (?NewFrame@ImGui@@YAXXZ) referenced in function "void __cdecl editorUpdate(void)" (?editorUpdate@@YAXXZ)
-editor.obj : error LNK2019: unresolved external symbol "void __cdecl ImGui::StyleColorsDark(struct ImGuiStyle *)" (?StyleColorsDark@ImGui@@YAXPEAUImGuiStyle@@@Z) referenced in function "void __cdecl editorInitialize(void)" (?editorInitialize@@YAXXZ)
-editor.obj : error LNK2019: unresolved external symbol "unsigned int __cdecl ImGui::DockSpaceOverViewport(struct ImGuiViewport const *,int,struct ImGuiWindowClass const *)" (?DockSpaceOverViewport@ImGui@@YAIPEBUImGuiViewport@@HPEBUImGuiWindowClass@@@Z) referenced in function "void __cdecl editorUpdate(void)" (?editorUpdate@@YAXXZ)
-editor.obj : error LNK2019: unresolved external symbol "bool __cdecl ImGui::DebugCheckVersionAndDataLayout(char const *,unsigned __int64,unsigned __int64,unsigned __int64,unsigned __int64,unsigned __int64,unsigned __int64)" (?DebugCheckVersionAndDataLayout@ImGui@@YA_NPEBD_K11111@Z) referenced in function "void __cdecl editorInitialize(void)" (?editorInitialize@@YAXXZ)
-MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
-C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\x64\Debug\GAM300Editor.exe : fatal error LNK1120: 7 unresolved externals
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.hpp(137,66): error C3861: 'm_ecs': identifier not found
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.hpp(137,78): error C3861: 'm_funcSet': identifier not found
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.hpp(139,9): error C3861: 'm_ecs': identifier not found
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.hpp(139,9): error C2065: 'm_ecs': undeclared identifier
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.hpp(913,17): error C3861: 'entitiesList': identifier not found
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.h(246,45): message : This diagnostic occurred in the compiler generated function 'std::vector<TDS::ComponentTypeID,std::allocator<TDS::ComponentTypeID>> TDS::ECS::getEntitiesWith(void)'
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.hpp(913,17): error C2065: 'entitiesList': undeclared identifier
+C:\Users\goruo\OneDrive\Documents\GitHub\GAM300\GAM300Engine\Include\ecs\ecs.h(246,45): message : This diagnostic occurred in the compiler generated function 'std::vector<TDS::ComponentTypeID,std::allocator<TDS::ComponentTypeID>> TDS::ECS::getEntitiesWith(void)'
