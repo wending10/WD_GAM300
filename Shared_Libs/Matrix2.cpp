@@ -222,7 +222,7 @@ namespace TDS
         std::stringstream m00, m01, m10, m11;
         m00 << matrix.m[0][0]; m10 << matrix.m[1][0];
         m01 << matrix.m[0][1]; m11 << matrix.m[1][1];
-        float maxLength[] = {(float)m00.str().size(), (float)m01.str().size(), (float)m10.str().size(), (float)m11.str().size()};
+        int maxLength[] = {static_cast<int>(m00.str().size()), static_cast<int>(m01.str().size()), static_cast<int>(m10.str().size()), static_cast<int>(m11.str().size())};
 
         int maxLen = static_cast<decltype (maxLen)> (Mathf::Max(maxLength, 4));
         os  << std::left 
