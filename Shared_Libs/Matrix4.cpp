@@ -668,10 +668,10 @@ namespace TDS
         m01 << var.m[0][1]; m11 << var.m[1][1]; m21 << var.m[2][1]; m31 << var.m[3][1];
         m02 << var.m[0][2]; m12 << var.m[1][2]; m22 << var.m[2][2]; m32 << var.m[3][2];
         m03 << var.m[0][3]; m13 << var.m[1][3]; m23 << var.m[2][3]; m33 << var.m[3][3];
-        float maxLength[] = { (float)m00.str().size(), (float)m01.str().size(), (float)m02.str().size(), (float)m03.str().size(),
-                              (float)m10.str().size(), (float)m11.str().size(), (float)m12.str().size(), (float)m13.str().size(),
-                              (float)m20.str().size(), (float)m21.str().size(), (float)m22.str().size(), (float)m23.str().size(),
-                              (float)m30.str().size(), (float)m31.str().size(), (float)m32.str().size(), (float)m33.str().size() };
+        int maxLength[] = { static_cast<int>(m00.str().size()), static_cast<int>(m01.str().size()), static_cast<int>(m02.str().size()), static_cast<int>(m03.str().size()),
+                              static_cast<int>(m10.str().size()), static_cast<int>(m11.str().size()), static_cast<int>(m12.str().size()), static_cast<int>(m13.str().size()),
+                              static_cast<int>(m20.str().size()), static_cast<int>(m21.str().size()), static_cast<int>(m22.str().size()), static_cast<int>(m23.str().size()),
+                              static_cast<int>(m30.str().size()), static_cast<int>(m31.str().size()), static_cast<int>(m32.str().size()), static_cast<int>(m33.str().size()) };
         int maxLen = Mathf::Max(maxLength, 16);
         os  << std::left
             << "| " << std::setw(maxLen) << var.m[0][0] << " " << std::setw(maxLen) << var.m[1][0] << " " << std::setw(maxLen) << var.m[2][0] << " " << std::setw(maxLen) << var.m[3][0] << " |" << std::endl

@@ -165,7 +165,7 @@ namespace TDS
         static int RoundToInt(float f) { return (int)roundf(f); }
         static float Sign(float f) { return (f == 0.f) ? 0.f : ((f > 0.f) ? 1.f : -1.f); }
         
-        static constexpr double PI = 3.1415926535897931;
+        static constexpr float PI = 3.1415926535897931f;
         static constexpr float Infinity = std::numeric_limits<float>::infinity();
         static constexpr float NegativeInfinity = -std::numeric_limits<float>::infinity();
         static constexpr float Deg2Rad = PI * 2.0f / 360.0f;
