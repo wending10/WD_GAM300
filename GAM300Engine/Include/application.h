@@ -13,7 +13,7 @@ namespace TDS
 	{
 	public:
 	
-	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname);
+	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc);
 		~Application();
 		
 		void   Initialize();
@@ -21,7 +21,7 @@ namespace TDS
 		void   Render() {}
 		void   Exit() {}
 
-
+		void handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	private:
 		Application(const Application&);

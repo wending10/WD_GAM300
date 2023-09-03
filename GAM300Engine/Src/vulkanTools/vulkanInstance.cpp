@@ -127,74 +127,11 @@ namespace TDS
 		}
 		//swapchain setup
 		{
-			
-		   SwapChainSupportDetails swapChainSupport = querySwapChainSupport(m_PhysDeviceHandle);
-		   
-		   VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-		   VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-		   VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, _Windows);
-		   
-		   uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
-		   if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
-		   	   imageCount = swapChainSupport.capabilities.maxImageCount;
-		   
-
-			VkSwapchainCreateInfoKHR SwapChainInfo{};
-
-			SwapChainInfo.sType = { VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR };
-			SwapChainInfo.pNext = { nullptr };
-			SwapChainInfo.flags = { 0 };
-			SwapChainInfo.surface = { m_Surface };
-			SwapChainInfo.minImageCount = { imageCount };
-			SwapChainInfo.imageFormat = { surfaceFormat.format };
-			SwapChainInfo.imageColorSpace = { surfaceFormat.colorSpace };
-			SwapChainInfo.imageExtent =
-			{
-			  { static_cast<decltype(VkExtent2D::width)>(_Windows.getWidth()) },
-			  { static_cast<decltype(VkExtent2D::height)>(_Windows.getHeight()) }
-			};
-			SwapChainInfo.imageArrayLayers = { 1 };
-			SwapChainInfo.imageUsage = { VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT };
-			SwapChainInfo.imageSharingMode = { VK_SHARING_MODE_EXCLUSIVE };
-			SwapChainInfo.preTransform = { VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR };
-			SwapChainInfo.compositeAlpha = { VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR };
-			SwapChainInfo.presentMode = { presentMode };
-			SwapChainInfo.clipped = VK_TRUE;
-			SwapChainInfo.oldSwapchain = VK_NULL_HANDLE;  // reused here :^D
-
-			if (vkCreateSwapchainKHR(m_logicalDevice, &SwapChainInfo, nullptr, &m_SwapChain) != VK_SUCCESS) {
-				throw std::runtime_error("failed to create swap chain!");
-			}
-			vkGetSwapchainImagesKHR(m_logicalDevice, m_SwapChain, &imageCount, nullptr);
-			m_swapChainImages.resize(imageCount);
-			vkGetSwapchainImagesKHR(m_logicalDevice, m_SwapChain, &imageCount, m_swapChainImages.data());
-
-			m_swapChainImageFormat = surfaceFormat.format;
-			m_swapChainExtent = extent;
+			createSwapChain(_Windows);
 		}
 		//image View
 		{
-			swapChainImageViews.resize(m_swapChainImages.size());
-			for (size_t i = 0; i < m_swapChainImages.size(); i++) {
-				VkImageViewCreateInfo createInfo{};
-				createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-				createInfo.image = m_swapChainImages[i];
-				createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-				createInfo.format = m_swapChainImageFormat;
-				createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-				createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-				createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-				createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-				createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-				createInfo.subresourceRange.baseMipLevel = 0;
-				createInfo.subresourceRange.levelCount = 1;
-				createInfo.subresourceRange.baseArrayLayer = 0;
-				createInfo.subresourceRange.layerCount = 1;
-
-				if (vkCreateImageView(m_logicalDevice, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS) {
-					throw std::runtime_error("failed to create image views!");
-				}
-			}
+			createImageViews();
 		}
 		//render pass
 		{
@@ -352,26 +289,7 @@ namespace TDS
 
 		//framebuffers
 		{
-			m_swapChainFramebuffers.resize(swapChainImageViews.size());
-
-			for (size_t i = 0; i < swapChainImageViews.size(); i++) {
-				VkImageView attachments[] = {
-					swapChainImageViews[i]
-				};
-
-				VkFramebufferCreateInfo framebufferInfo{};
-				framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-				framebufferInfo.renderPass = m_RenderPass;
-				framebufferInfo.attachmentCount = 1;
-				framebufferInfo.pAttachments = attachments;
-				framebufferInfo.width = m_swapChainExtent.width;
-				framebufferInfo.height = m_swapChainExtent.height;
-				framebufferInfo.layers = 1;
-
-				if (vkCreateFramebuffer(m_logicalDevice, &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]) != VK_SUCCESS) {
-					throw std::runtime_error("failed to create framebuffer!");
-				}
-			}
+			createFrameBuffer();
 		}
 
 		//command pool
@@ -390,18 +308,26 @@ namespace TDS
 
 		//command buffer
 		{
+			m_commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
+
 			VkCommandBufferAllocateInfo allocInfo{};
 			allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 			allocInfo.commandPool = m_commandPool;
 			allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-			allocInfo.commandBufferCount = 1;
+			allocInfo.commandBufferCount = static_cast<uint32_t>(m_commandBuffers.size());
 
-			if (vkAllocateCommandBuffers(m_logicalDevice, &allocInfo, &m_commandBuffer) != VK_SUCCESS) {
+			if (vkAllocateCommandBuffers(m_logicalDevice, &allocInfo, m_commandBuffers.data()) != VK_SUCCESS) {
 				throw std::runtime_error("failed to allocate command buffers!");
 			}
 		}
 		//create sync object
 		{
+			//all need to resize as per frame needed
+			m_imageAvailableSemaphore.resize(MAX_FRAMES_IN_FLIGHT);
+			m_renderFinishedSemaphore.resize(MAX_FRAMES_IN_FLIGHT);
+			m_inFlightFence.resize(MAX_FRAMES_IN_FLIGHT);
+
+
 			VkSemaphoreCreateInfo semaphoreInfo{};
 			semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
@@ -409,38 +335,39 @@ namespace TDS
 			fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 			fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-			if (vkCreateSemaphore(m_logicalDevice, &semaphoreInfo, nullptr, &m_imageAvailableSemaphore) != VK_SUCCESS ||
-				vkCreateSemaphore(m_logicalDevice, &semaphoreInfo, nullptr, &m_renderFinishedSemaphore) != VK_SUCCESS ||
-				vkCreateFence(m_logicalDevice, &fenceInfo, nullptr, &m_inFlightFence) != VK_SUCCESS) {
-				throw std::runtime_error("failed to create synchronization objects for a frame!");
+			for (size_t i{0}; i < MAX_FRAMES_IN_FLIGHT; i++)
+			{
+				if (vkCreateSemaphore(m_logicalDevice, &semaphoreInfo, nullptr, &m_imageAvailableSemaphore[i]) != VK_SUCCESS ||
+					vkCreateSemaphore(m_logicalDevice, &semaphoreInfo, nullptr, &m_renderFinishedSemaphore[i]) != VK_SUCCESS ||
+					vkCreateFence(m_logicalDevice, &fenceInfo, nullptr, &m_inFlightFence[i]) != VK_SUCCESS) 
+					{
+						throw std::runtime_error("failed to create synchronization objects for a frame!");
+					}
 			}
-
 		}
 
 	}
 
 	VulkanInstance::~VulkanInstance()
 	{
-		vkDestroySemaphore(m_logicalDevice, m_renderFinishedSemaphore, nullptr);
-		vkDestroySemaphore(m_logicalDevice, m_imageAvailableSemaphore, nullptr);
-		vkDestroyFence(m_logicalDevice, m_inFlightFence, nullptr);
+		cleanupSwapChain();
 
-		vkDestroyCommandPool(m_logicalDevice, m_commandPool, nullptr);
-
-		for (const auto& framebuffer : m_swapChainFramebuffers)
+		for (size_t i{ 0 }; i < MAX_FRAMES_IN_FLIGHT; i++)
 		{
-			vkDestroyFramebuffer(m_logicalDevice, framebuffer, nullptr);
+			vkDestroySemaphore(m_logicalDevice, m_renderFinishedSemaphore[i], nullptr);
+			vkDestroySemaphore(m_logicalDevice, m_imageAvailableSemaphore[i], nullptr);
+			vkDestroyFence(m_logicalDevice, m_inFlightFence[i], nullptr);
 		}
+		vkDestroyCommandPool(m_logicalDevice, m_commandPool, nullptr);// command pool will free command buffers for us.
+
 		vkDestroyPipeline(m_logicalDevice, m_graphicPipeline, nullptr);
 		vkDestroyPipelineLayout(m_logicalDevice, m_pipelineLayout, nullptr);
+
 		vkDestroyRenderPass(m_logicalDevice, m_RenderPass, nullptr);
-		
-		for (auto imageView : swapChainImageViews) {
-			vkDestroyImageView(m_logicalDevice, imageView, nullptr);
-		}
-		
-		vkDestroySwapchainKHR(m_logicalDevice, m_SwapChain, nullptr);
+
+
 		vkDestroyDevice(m_logicalDevice, nullptr);
+
 		if(enableValidate)
 			TDS::Debug::freeDebugger(m_VKhandler);
 
@@ -783,34 +710,45 @@ namespace TDS
 			throw std::runtime_error("failed to record command buffer!");
 		}
 	}
-	void VulkanInstance::drawFrame()
+	void VulkanInstance::drawFrame(const WindowsWin& _Windows)
 	{
-		vkWaitForFences(m_logicalDevice, 1, &m_inFlightFence, VK_TRUE, UINT64_MAX);
-		vkResetFences(m_logicalDevice, 1, &m_inFlightFence);
+		vkWaitForFences(m_logicalDevice, 1, &m_inFlightFence[m_currentFrame], VK_TRUE, UINT64_MAX);
+		
 
 		uint32_t imageIndex;
-		vkAcquireNextImageKHR(m_logicalDevice, m_SwapChain, UINT64_MAX, m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+		if (VkResult result{ vkAcquireNextImageKHR(m_logicalDevice, m_SwapChain, UINT64_MAX, m_imageAvailableSemaphore[m_currentFrame], VK_NULL_HANDLE, &imageIndex) };
+			result == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			recreateSwapChain(_Windows);
+			return;
+		}
+		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+		{
+			throw std::runtime_error("failed to acquire swap chain image!");
+		}
+		// Only reset the fence if we are submitting work
+		vkResetFences(m_logicalDevice, 1, &m_inFlightFence[m_currentFrame]);
 
-		vkResetCommandBuffer(m_commandBuffer, /*VkCommandBufferResetFlagBits*/ 0);
-		recordCommandBuffer(m_commandBuffer, imageIndex);
+		vkResetCommandBuffer(m_commandBuffers[m_currentFrame], /*VkCommandBufferResetFlagBits*/ 0);
+		recordCommandBuffer(m_commandBuffers[m_currentFrame], imageIndex);
 
 		VkSubmitInfo submitInfo{};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphore };
+		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphore[m_currentFrame] };
 		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
 		submitInfo.pWaitDstStageMask = waitStages;
 
 		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &m_commandBuffer;
+		submitInfo.pCommandBuffers = &m_commandBuffers[m_currentFrame];
 
-		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphore };
+		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphore[m_currentFrame] };
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 
-		if (vkQueueSubmit(m_graphicQueue, 1, &submitInfo, m_inFlightFence) != VK_SUCCESS) {
+		if (vkQueueSubmit(m_graphicQueue, 1, &submitInfo, m_inFlightFence[m_currentFrame]) != VK_SUCCESS) {
 			throw std::runtime_error("failed to submit draw command buffer!");
 		}
 
@@ -826,7 +764,160 @@ namespace TDS
 
 		presentInfo.pImageIndices = &imageIndex;
 
-		vkQueuePresentKHR(m_presentQueue, &presentInfo);
+		if (VkResult result{ vkQueuePresentKHR(m_presentQueue, &presentInfo) };
+			result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || framebufferResized)
+		{
+			framebufferResized = false;
+			recreateSwapChain(_Windows);
+		}
+		else if (result != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to present swap chain image!");
+		}
+
+		//advance to the next frame
+		m_currentFrame = (m_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+	}
+
+	void VulkanInstance::recreateSwapChain(const WindowsWin& _Windows)
+	{
+		
+		vkDeviceWaitIdle(m_logicalDevice); //should not touch resources that may still be in use
+
+
+		//maybe touching on recreate the renderpass in the future, for now just make it simple
+
+		cleanupSwapChain();
+
+		createSwapChain(_Windows);
+		createImageViews();
+		createFrameBuffer();
+	}
+
+	void VulkanInstance::cleanupSwapChain()
+	{
+		//clean up framebuffers
+		for (const auto& framebuffer : m_swapChainFramebuffers)
+		{
+			vkDestroyFramebuffer(m_logicalDevice, framebuffer, nullptr);
+		}
+
+		//clean up imageView
+		for (auto imageView : swapChainImageViews) {
+			vkDestroyImageView(m_logicalDevice, imageView, nullptr);
+		}
+
+		//clean up SwapChain
+		vkDestroySwapchainKHR(m_logicalDevice, m_SwapChain, nullptr);
+	}
+
+	void VulkanInstance::createSwapChain(const WindowsWin& _Windows)
+	{
+		SwapChainSupportDetails swapChainSupport = querySwapChainSupport(m_PhysDeviceHandle);
+
+		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
+		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+		VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, _Windows);
+
+		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+		if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
+			imageCount = swapChainSupport.capabilities.maxImageCount;
+
+
+		VkSwapchainCreateInfoKHR SwapChainInfo{};
+
+		SwapChainInfo.sType = { VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR };
+		SwapChainInfo.pNext = { nullptr };
+		SwapChainInfo.flags = { 0 };
+		SwapChainInfo.surface = { m_Surface };
+		SwapChainInfo.minImageCount = { imageCount };
+		SwapChainInfo.imageFormat = { surfaceFormat.format };
+		SwapChainInfo.imageColorSpace = { surfaceFormat.colorSpace };
+		SwapChainInfo.imageExtent =
+		{
+		  { static_cast<decltype(VkExtent2D::width)>(_Windows.getWidth()) },
+		  { static_cast<decltype(VkExtent2D::height)>(_Windows.getHeight()) }
+		};
+		SwapChainInfo.imageArrayLayers = { 1 };
+		SwapChainInfo.imageUsage = { VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT };
+
+		QueueFamilyIndices indices = findQueueFamilies(m_PhysDeviceHandle);
+		uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+
+		if (indices.graphicsFamily != indices.presentFamily) {
+			SwapChainInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+			SwapChainInfo.queueFamilyIndexCount = 2;
+			SwapChainInfo.pQueueFamilyIndices = queueFamilyIndices;
+		}
+		else {
+			SwapChainInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		}
+
+
+		SwapChainInfo.preTransform = swapChainSupport.capabilities.currentTransform;
+		SwapChainInfo.compositeAlpha = { VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR };
+		SwapChainInfo.presentMode = { presentMode };
+		SwapChainInfo.clipped = VK_TRUE;
+		SwapChainInfo.oldSwapchain = nullptr;  // reused here :^D
+
+		if (vkCreateSwapchainKHR(m_logicalDevice, &SwapChainInfo, nullptr, &m_SwapChain) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create swap chain!");
+		}
+		vkGetSwapchainImagesKHR(m_logicalDevice, m_SwapChain, &imageCount, nullptr);
+		m_swapChainImages.resize(imageCount);
+		vkGetSwapchainImagesKHR(m_logicalDevice, m_SwapChain, &imageCount, m_swapChainImages.data());
+
+		m_swapChainImageFormat = surfaceFormat.format;
+		m_swapChainExtent = extent;
+	}
+
+	void VulkanInstance::createImageViews()
+	{
+		swapChainImageViews.resize(m_swapChainImages.size());
+		for (size_t i = 0; i < m_swapChainImages.size(); i++) {
+			VkImageViewCreateInfo createInfo{};
+			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			createInfo.image = m_swapChainImages[i];
+			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+			createInfo.format = m_swapChainImageFormat;
+			createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			createInfo.subresourceRange.baseMipLevel = 0;
+			createInfo.subresourceRange.levelCount = 1;
+			createInfo.subresourceRange.baseArrayLayer = 0;
+			createInfo.subresourceRange.layerCount = 1;
+
+			if (vkCreateImageView(m_logicalDevice, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS) {
+				throw std::runtime_error("failed to create image views!");
+			}
+		}
+	}
+
+	void VulkanInstance::createFrameBuffer()
+	{
+		m_swapChainFramebuffers.resize(swapChainImageViews.size());
+
+		for (size_t i = 0; i < swapChainImageViews.size(); i++) {
+			VkImageView attachments[] = {
+				swapChainImageViews[i]
+			};
+
+			VkFramebufferCreateInfo framebufferInfo{};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = m_RenderPass;
+			framebufferInfo.attachmentCount = 1;
+			framebufferInfo.pAttachments = attachments;
+			framebufferInfo.width = m_swapChainExtent.width;
+			framebufferInfo.height = m_swapChainExtent.height;
+			framebufferInfo.layers = 1;
+
+			if (vkCreateFramebuffer(m_logicalDevice, &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]) != VK_SUCCESS) {
+				throw std::runtime_error("failed to create framebuffer!");
+			}
+		}
 	}
 
 }//namespace TDS

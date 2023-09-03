@@ -17,11 +17,20 @@ int main(int argc, const char** argv) {
 
 TDS::Application* g_Application {nullptr};
 
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)				
+{																							
+    if (g_Application != NULL)																
+    {																						
+        g_Application->handleMessages(hWnd, uMsg, wParam, lParam);								
+    }																						
+    return (DefWindowProc(hWnd, uMsg, wParam, lParam));										
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
     
     const wchar_t classname[] = L"TDSWindowClass"; //class name
 
-    g_Application = new TDS::Application(hInstance,nCmdShow,classname);
+    g_Application = new TDS::Application(hInstance,nCmdShow,classname, WndProc);
     g_Application->Initialize();
     g_Application->Update();
     g_Application->~Application();
