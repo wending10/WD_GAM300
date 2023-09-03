@@ -9,25 +9,133 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
+    <Filter Include="Source Files\vulkanTools">
+      <UniqueIdentifier>{bab04baa-5efd-41fe-a91e-4dec703cb9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\windows">
+      <UniqueIdentifier>{bdd5d9ec-9c60-4fdd-baac-9a0bbb1dece0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\windows">
+      <UniqueIdentifier>{73b01578-c164-4098-a147-c027dcbf7f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\vulkanCore">
+      <UniqueIdentifier>{97068d07-b11d-429a-a85a-272cd95e04d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ecs">
+      <UniqueIdentifier>{ae66f285-0767-448f-ade8-2bf0ccf1f623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\eventmanager">
+      <UniqueIdentifier>{6e6a9487-578f-4712-a956-e436851157f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AudioEngine.cpp">
+    <ClCompile Include="Src\application.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\windowswindow.cpp">
+      <Filter>Source Files\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\vulkanTools\vulkanSwapChain.cpp">
+      <Filter>Source Files\vulkanTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\MathCommon.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Matrix2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Matrix3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Matrix4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Quaternion.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared_Libs\Vector4.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\AudioEngine.h">
+    <ClInclude Include="Include\application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header\SoundInfo.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Include\windowswindow.h">
+      <Filter>Header Files\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanInstance.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanDebugger.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanDevice.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\vulkanTools\vulkanSwapChain.h">
+      <Filter>Header Files\vulkanCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\MathCommon.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Matrix2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Matrix3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Matrix4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\TDSMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\Vector4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ecs\ecs.h">
+      <Filter>Header Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ecs\ecs.hpp">
+      <Filter>Header Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\eventmanager\eventmanager.h">
+      <Filter>Header Files\eventmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\eventmanager\eventmanager.hpp">
+      <Filter>Header Files\eventmanager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

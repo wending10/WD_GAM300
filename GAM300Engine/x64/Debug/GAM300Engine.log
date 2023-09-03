@@ -1,9 +1,0 @@
-﻿  AudioEngine.cpp
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(49,49): error C2556: 'int AudioEngine::playSound(SoundInfo)': overloaded function differs only by return type from 'void AudioEngine::playSound(SoundInfo)'
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\header\AudioEngine.h(72): message : see declaration of 'AudioEngine::playSound'
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(49,18): error C2371: 'AudioEngine::playSound': redefinition; different basic types
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\header\AudioEngine.h(72): message : see declaration of 'AudioEngine::playSound'
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(75,9): error C2065: 'playSound': undeclared identifier
-  main.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Generating Code...
