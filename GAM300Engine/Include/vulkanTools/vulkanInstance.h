@@ -14,6 +14,7 @@
 #include <limits>
 #include <algorithm>
 #include <fstream>
+#include <array>
 
 #include "windowswindow.h"
 #include "vulkanTools/vulkanDebugger.h"
@@ -60,6 +61,40 @@ namespace TDS
 			std::vector<VkPresentModeKHR> presentModes{};
 		};
 
+		struct Vertex
+		{
+			Vec2 pos;
+			Vec3 color;
+
+			static VkVertexInputBindingDescription getBindingDescription() 
+			{
+				VkVertexInputBindingDescription bindingDescription{};
+				bindingDescription.binding = 0;
+				bindingDescription.stride = sizeof(Vertex);
+				bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX; //or can per instance (VK_VERTEX_INPUT_RATE_INSTANCE)
+
+				return bindingDescription;
+			}
+			static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() 
+			{
+				std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+				//pos which now is vec 2
+				attributeDescriptions[0].binding = 0;
+				attributeDescriptions[0].location = 0;
+				attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT; //r32g32 using 2 floats
+				attributeDescriptions[0].offset = offsetof(Vertex, pos);
+
+				//color which now is vec3
+				attributeDescriptions[1].binding = 0;
+				attributeDescriptions[1].location = 1;
+				attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;//using 3 floats
+				attributeDescriptions[1].offset = offsetof(Vertex, color);
+
+				return attributeDescriptions;
+			}
+			
+		};
+
 	public://functions
 
 		VulkanInstance(const  WindowsWin& enableWindows);
@@ -76,7 +111,7 @@ namespace TDS
 		bool			   isDeviceSuitable(VkPhysicalDevice device);
 		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 
-
+		//to be moved to other file
 		bool					 checkDeviceExtensionSupport(VkPhysicalDevice device);
 		SwapChainSupportDetails  querySwapChainSupport(const VkPhysicalDevice& device);
 		VkSurfaceFormatKHR		 chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -90,6 +125,12 @@ namespace TDS
 		void					 cleanupSwapChain();
 		void					 createImageViews();
 		void					 createFrameBuffer();
+		
+		//to be removed
+		void					 createBuffers(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer,
+											   VkDeviceMemory& buffermemory);
+		void					 createVertexBuffer();
+		uint32_t				 findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties);
 	public://members
 
 
@@ -129,11 +170,9 @@ namespace TDS
 		VkPipelineLayout	m_pipelineLayout;
 		VkPipeline			m_graphicPipeline;
 		VkCommandPool		m_commandPool;
-		//VkCommandBuffer		m_commandBuffer;
-		//VkSemaphore			m_imageAvailableSemaphore;
-		//VkSemaphore			m_renderFinishedSemaphore;
-		//VkFence				m_inFlightFence;
 
+		VkBuffer			m_vertexBuffer; //use it in rendering commands, does not depend on swapchain
+		VkDeviceMemory		m_vertexBufferMemory;// store the handle to the memory 
 
 
 		std::vector<VkImage>		   m_swapChainImages;
@@ -143,7 +182,12 @@ namespace TDS
 		std::vector <VkPipelineShaderStageCreateInfo> shaderStages{};
 		bool	enableValidate{ false };
 		
-		//uint32_t m_ImageCount{ 2 };// default double buffer
+		const std::vector<Vertex> vertices
+		{
+			{{0.0f, -0.5f}, { 1.0f, 0.0f, 0.0f }},
+			{ {0.5f, 0.5f}, {0.0f, 1.0f, 0.0f} },
+			{ {-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f} }
+		};
 	};
 
 

@@ -193,8 +193,15 @@ namespace TDS
 			
 			VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 			vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-			vertexInputInfo.vertexBindingDescriptionCount = 0;
-			vertexInputInfo.vertexAttributeDescriptionCount = 0;
+
+			//get the 2 descriptions from struct vertex
+			auto bindingDescription = Vertex::getBindingDescription();
+			auto attributeDescription = Vertex::getAttributeDescriptions();
+			vertexInputInfo.vertexBindingDescriptionCount = 1;
+			vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescription.size());
+			
+			vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+			vertexInputInfo.pVertexAttributeDescriptions = attributeDescription.data();
 
 			VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
 			inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -305,7 +312,9 @@ namespace TDS
 				throw std::runtime_error("failed to create command pool!");
 			}
 		}
-
+		{
+			createVertexBuffer();
+		}
 		//command buffer
 		{
 			m_commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
@@ -352,19 +361,21 @@ namespace TDS
 	{
 		cleanupSwapChain();
 
+		vkDestroyPipeline(m_logicalDevice, m_graphicPipeline, nullptr);
+		vkDestroyPipelineLayout(m_logicalDevice, m_pipelineLayout, nullptr);
+		vkDestroyRenderPass(m_logicalDevice, m_RenderPass, nullptr);
+
+		vkDestroyBuffer(m_logicalDevice, m_vertexBuffer, nullptr);
+		vkFreeMemory(m_logicalDevice, m_vertexBufferMemory, nullptr);
+
 		for (size_t i{ 0 }; i < MAX_FRAMES_IN_FLIGHT; i++)
 		{
 			vkDestroySemaphore(m_logicalDevice, m_renderFinishedSemaphore[i], nullptr);
 			vkDestroySemaphore(m_logicalDevice, m_imageAvailableSemaphore[i], nullptr);
 			vkDestroyFence(m_logicalDevice, m_inFlightFence[i], nullptr);
 		}
+
 		vkDestroyCommandPool(m_logicalDevice, m_commandPool, nullptr);// command pool will free command buffers for us.
-
-		vkDestroyPipeline(m_logicalDevice, m_graphicPipeline, nullptr);
-		vkDestroyPipelineLayout(m_logicalDevice, m_pipelineLayout, nullptr);
-
-		vkDestroyRenderPass(m_logicalDevice, m_RenderPass, nullptr);
-
 
 		vkDestroyDevice(m_logicalDevice, nullptr);
 
@@ -688,6 +699,7 @@ namespace TDS
 
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicPipeline);
 
+
 		VkViewport viewport{};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
@@ -702,7 +714,14 @@ namespace TDS
 		scissor.extent = m_swapChainExtent;
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
-		vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+
+		//binding vertex buffer
+		VkBuffer vertexBuffers[] = { m_vertexBuffer };
+		VkDeviceSize offsets[] = { 0 };
+
+		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+
+		vkCmdDraw(commandBuffer, static_cast<uint32_t>(vertices.size()), 1, 0, 0);
 
 		vkCmdEndRenderPass(commandBuffer);
 
@@ -919,5 +938,75 @@ namespace TDS
 			}
 		}
 	}
+
+	void VulkanInstance::createVertexBuffer()
+	{
+		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+
+		createBuffers(bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, 
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 
+			m_vertexBuffer, m_vertexBufferMemory);
+
+		//Filling the vertex buffer
+		void* data;
+		vkMapMemory(m_logicalDevice, m_vertexBufferMemory, 0, bufferSize, 0, &data);
+		memcpy(data, vertices.data(), (size_t)bufferSize);
+		vkUnmapMemory(m_logicalDevice, m_vertexBufferMemory);
+
+	}
+	uint32_t VulkanInstance::findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties)
+	{
+		//query info about the available types of memory 
+		VkPhysicalDeviceMemoryProperties memProperties;
+		vkGetPhysicalDeviceMemoryProperties(m_PhysDeviceHandle, &memProperties);
+
+		for (uint32_t i{ 0 }; i < memProperties.memoryTypeCount; i++)
+		{
+			if ((typeFiler & (1 << i)) && 
+				(memProperties.memoryTypes[i].propertyFlags & properties) == properties)
+			{
+				return i;
+			}
+		}
+		throw std::runtime_error("failed to find suitable memory type!");
+	}
+
+	void VulkanInstance::createBuffers(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer,
+									   VkDeviceMemory& buffermemory)
+	{
+
+		VkBufferCreateInfo bufferInfo{};
+		bufferInfo.sType		= VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferInfo.size			= size;									 //size of buffer in bytes
+		bufferInfo.usage		= usage;								 //use for other usage cause use | (other usage)
+		bufferInfo.sharingMode	= VK_SHARING_MODE_EXCLUSIVE;			 //can own by a specific queue family but for now graphics queue only
+		bufferInfo.flags		= 0;									 // to configure sparse buffer memory not relevant now
+
+		if (vkCreateBuffer(m_logicalDevice, &bufferInfo, nullptr, &buffer))
+		{
+			throw std::runtime_error("failed to create vertex buffer!");
+		}
+
+
+		//Memory Requirements
+		VkMemoryRequirements memRequirements;
+		vkGetBufferMemoryRequirements(m_logicalDevice, buffer, &memRequirements);
+
+		//Memory Allocation
+		VkMemoryAllocateInfo allocInfo{};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memRequirements.size;
+		allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
+
+
+		if (vkAllocateMemory(m_logicalDevice, &allocInfo, nullptr, &buffermemory) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to allocate vertex buffer memory!");
+		}
+
+		vkBindBufferMemory(m_logicalDevice, buffer, buffermemory, 0);
+	}
+
+
 
 }//namespace TDS
