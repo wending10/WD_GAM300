@@ -31,6 +31,12 @@
     <Filter Include="Header Files\eventmanager">
       <UniqueIdentifier>{6e6a9487-578f-4712-a956-e436851157f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{b9ff275f-5203-4fdb-84d5-666d8a3e9fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{d6194f90-a372-451d-9f6e-a6b5edbc21b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="..\Shared_Libs\Vector4.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AudioEngine.cpp">
+      <Filter>Source Files\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,17 +134,26 @@
     <ClInclude Include="..\Shared_Libs\Vector4.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ecs\ecs.h">
-      <Filter>Header Files\ecs</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ecs\ecs.hpp">
-      <Filter>Header Files\ecs</Filter>
-    </ClInclude>
     <ClInclude Include="Include\eventmanager\eventmanager.h">
       <Filter>Header Files\eventmanager</Filter>
     </ClInclude>
     <ClInclude Include="Include\eventmanager\eventmanager.hpp">
       <Filter>Header Files\eventmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\fmod\AudioEngine.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\fmod\SoundInfo.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ecs\ecs.h">
+      <Filter>Header Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ecs\ecs.hpp">
+      <Filter>Header Files\ecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

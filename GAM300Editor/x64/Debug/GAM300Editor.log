@@ -1,0 +1,10 @@
+﻿  editor.cpp
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(137,66): error C3861: 'm_ecs': identifier not found
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(137,78): error C3861: 'm_funcSet': identifier not found
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(139,9): error C3861: 'm_ecs': identifier not found
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(139,9): error C2065: 'm_ecs': undeclared identifier
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(159,13): error C3861: 'DoAction': identifier not found
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(913,17): error C3861: 'entitiesList': identifier not found
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.h(246,45): message : This diagnostic occurred in the compiler generated function 'std::vector<TDS::ComponentTypeID,std::allocator<TDS::ComponentTypeID>> TDS::ECS::getEntitiesWith(void)'
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.hpp(913,17): error C2065: 'entitiesList': undeclared identifier
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\ecs\ecs.h(246,45): message : This diagnostic occurred in the compiler generated function 'std::vector<TDS::ComponentTypeID,std::allocator<TDS::ComponentTypeID>> TDS::ECS::getEntitiesWith(void)'

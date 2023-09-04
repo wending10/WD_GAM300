@@ -2,7 +2,7 @@
 /// @file AudioEngine.cpp
 /// @author Tear Drop Studio
 ///
-#include "../header/AudioEngine.h"
+#include "fmod/AudioEngine.h"
 #include <FMOD/fmod_errors.h>
 #include <iostream>
 
