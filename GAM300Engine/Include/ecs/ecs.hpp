@@ -251,8 +251,6 @@ namespace TDS
 
         mComponentMap.emplace(componentTypeId, new Component<C>);
         mComponentMap[componentTypeId]->setName(name);
-
-        systemCount++;
     }
 
     // --registerSystem--
