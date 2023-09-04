@@ -58,6 +58,8 @@ public:
     static Vec3 Lerp(const Vec3 a, const Vec3 b, float t);
     // Linearly interpolates between two without clamping the interpolant.
     static Vec3 LerpUnclamped(const Vec3 a, const Vec3 b, float t);
+	// Magnitude of the vector.
+	static float Magnitude(const Vec3 vector);
     // Returns a vector that is made from the largest components of two vectors.
     static Vec3 Max(const Vec3 lhs, const Vec3 rhs);
     // Returns a vector that is made from the smallest components of two vectors.

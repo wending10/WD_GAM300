@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,7 +135,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +157,13 @@
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\application.cpp" />
+    <ClCompile Include="Src\Geometry\AABB.cpp" />
+    <ClCompile Include="Src\Geometry\Geometry.cpp" />
+    <ClCompile Include="Src\Geometry\Line.cpp" />
+    <ClCompile Include="Src\Geometry\Plane.cpp" />
+    <ClCompile Include="Src\Geometry\Ray.cpp" />
+    <ClCompile Include="Src\Geometry\Sphere.cpp" />
+    <ClCompile Include="Src\Geometry\Triangle.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp" />
@@ -174,6 +181,13 @@
     <ClInclude Include="..\Shared_Libs\Vector3.h" />
     <ClInclude Include="..\Shared_Libs\Vector4.h" />
     <ClInclude Include="Include\application.h" />
+    <ClInclude Include="Include\Geometry\AABB.h" />
+    <ClInclude Include="Include\Geometry\Geometry.h" />
+    <ClInclude Include="Include\Geometry\Line.h" />
+    <ClInclude Include="Include\Geometry\Plane.h" />
+    <ClInclude Include="Include\Geometry\Ray.h" />
+    <ClInclude Include="Include\Geometry\Sphere.h" />
+    <ClInclude Include="Include\Geometry\Triangle.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />
     <ClInclude Include="Include\vulkanTools\vulkanInstance.h" />
