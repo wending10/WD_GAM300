@@ -109,6 +109,11 @@ namespace TDS
         return Vec3(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t); 
     }
 
+    float Vec3::Magnitude(const Vec3 vector)
+    {
+		return (Mathf::Sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
+    }
+
     Vec3 Vec3::Max(const Vec3 lhs, const Vec3 rhs) 
     { 
         return Vec3(Mathf::Max(lhs.x, rhs.x), Mathf::Max(lhs.y, rhs.y), Mathf::Max(lhs.z, rhs.z)); 
