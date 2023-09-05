@@ -312,9 +312,15 @@ namespace TDS
 				throw std::runtime_error("failed to create command pool!");
 			}
 		}
+		//vertexBuffer
 		{
 			createVertexBuffer();
 		}
+		//Indexbuffer
+		{
+			createIndexBuffer();
+		}
+
 		//command buffer
 		{
 			m_commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
@@ -939,21 +945,55 @@ namespace TDS
 		}
 	}
 
+	//use a host visible buffer as temp buffer and use a device local as actual vertex buffer
 	void VulkanInstance::createVertexBuffer()
 	{
 		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
 
-		createBuffers(bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, 
+		VkBuffer stagingBuffer;
+		VkDeviceMemory stagingBufferMemory;
+
+
+		createBuffers(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,//Buffer used as source in a memory transfer operation 
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, 
-			m_vertexBuffer, m_vertexBufferMemory);
+			stagingBuffer, stagingBufferMemory);
+
 
 		//Filling the vertex buffer
 		void* data;
-		vkMapMemory(m_logicalDevice, m_vertexBufferMemory, 0, bufferSize, 0, &data);
+		vkMapMemory(m_logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
 		memcpy(data, vertices.data(), (size_t)bufferSize);
-		vkUnmapMemory(m_logicalDevice, m_vertexBufferMemory);
+		vkUnmapMemory(m_logicalDevice, stagingBufferMemory);
+
+		createBuffers(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_vertexBuffer, m_vertexBufferMemory);
+
+		copyBuffer(stagingBuffer, m_vertexBuffer, bufferSize);
+
+		vkDestroyBuffer(m_logicalDevice, stagingBuffer, nullptr);
+		vkFreeMemory(m_logicalDevice, stagingBufferMemory, nullptr);
 
 	}
+
+	void VulkanInstance::createIndexBuffer()
+	{
+		VkDeviceSize buffersize = sizeof(indices[0]) * indices.size();
+
+		VkBuffer stagingBuffer;
+		VkDeviceMemory stagingbufferMemory;
+		createBuffers(buffersize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_COHERENT_BIT |
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, stagingBuffer, stagingbufferMemory);
+
+
+		void* data;
+		vkMapMemory(m_logicalDevice, stagingbufferMemory, 0, buffersize, 0, &data);
+		memcpy(data, indices.data(), (size_t)buffersize);
+		vkUnmapMemory(m_logicalDevice, stagingbufferMemory);
+
+	
+
+
+	}
+
 	uint32_t VulkanInstance::findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties)
 	{
 		//query info about the available types of memory 
@@ -998,8 +1038,11 @@ namespace TDS
 		allocInfo.allocationSize = memRequirements.size;
 		allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
-
-		if (vkAllocateMemory(m_logicalDevice, &allocInfo, nullptr, &buffermemory) != VK_SUCCESS)
+		//The right way to allocate memory for a large number of objects at the same time is to create a custom allocator that splits up a 
+		// single allocation among many different objects by using the offset parameters that we've seen in many functions.
+		//You can either implement such an allocator yourself, or use the VulkanMemoryAllocator library provided by the GPUOpen initiative
+	
+		if (vkAllocateMemory(m_logicalDevice, &allocInfo, nullptr, &buffermemory) != VK_SUCCESS)//cant call this everytime  
 		{
 			throw std::runtime_error("failed to allocate vertex buffer memory!");
 		}
@@ -1008,5 +1051,52 @@ namespace TDS
 	}
 
 
+	//copy contents from one buffer to another
+	void VulkanInstance::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
+	{
+		//command buffers execute memory transfer operation 
+		//You may wish to create a separate command pool for these kinds of short-lived 
+		//buffers, because the implementation may be able to apply memory allocation optimizations. You should use the VK_COMMAND_POOL_CREATE_TRANSIENT_BIT flag during command pool generation in that case.
+		VkCommandBufferAllocateInfo allocInfo{};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;                   
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		allocInfo.commandPool = m_commandPool;
+		allocInfo.commandBufferCount = 1;
+
+		VkCommandBuffer commandBuffer;
+		vkAllocateCommandBuffers(m_logicalDevice, &allocInfo, &commandBuffer);
+
+		//using command buffer once and wait with returning from the function until 
+		// the copy operation has finished executing
+		VkCommandBufferBeginInfo beginInfo{};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+
+			//only contains the copy command
+			VkBufferCopy copyRegion{};
+			copyRegion.srcOffset = 0; //optional
+			copyRegion.dstOffset = 0; //optional
+			copyRegion.size = size;
+			vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+
+		vkEndCommandBuffer(commandBuffer);
+
+		VkSubmitInfo submitInfo{};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+		//2 method to wait for transfer to complete
+		//1. vkQueuWaitIdle
+		//2. vkWaitForFences // allow to schedule multiple transfer simultaneously and wait for all to complete instead of executing one at a time
+		vkQueueSubmit(m_graphicQueue, 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(m_graphicQueue);
+
+		//clean up command buffer
+		vkFreeCommandBuffers(m_logicalDevice, m_commandPool, 1, &commandBuffer);
+
+	}
+	 
 
 }//namespace TDS

@@ -130,8 +130,11 @@ namespace TDS
 		void					 createBuffers(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer,
 											   VkDeviceMemory& buffermemory);
 		void					 createVertexBuffer();
+		void					 createIndexBuffer();
 		uint32_t				 findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties);
-	public://members
+		void					 copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+
+public://members
 
 
 		static constexpr decltype(VkApplicationInfo::apiVersion) apiVersion		{ VK_API_VERSION_1_3 };
@@ -171,9 +174,13 @@ namespace TDS
 		VkPipeline			m_graphicPipeline;
 		VkCommandPool		m_commandPool;
 
+		//handle vertex
 		VkBuffer			m_vertexBuffer; //use it in rendering commands, does not depend on swapchain
 		VkDeviceMemory		m_vertexBufferMemory;// store the handle to the memory 
 
+		//handle indices
+		VkBuffer			m_indexBuffer;
+		VkDeviceMemory		m_IndexBufferMemory;
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;
@@ -184,9 +191,15 @@ namespace TDS
 		
 		const std::vector<Vertex> vertices
 		{
-			{{0.0f, -0.5f}, { 1.0f, 0.0f, 0.0f }},
-			{ {0.5f, 0.5f}, {0.0f, 1.0f, 0.0f} },
-			{ {-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f} }
+			{{-0.5f, -0.5f}, { 1.0f, 0.0f, 0.0f }},
+			{ {0.5f, -0.5f}, {0.0f, 1.0f, 0.0f} },
+			{ {0.5f, 0.5f}, {0.0f, 0.0f, 1.0f} },
+			{ {-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f} }
+		};
+
+		const std::vector<uint16_t> indices//uint16_t 65535 unique vertices
+		{
+			0, 1, 2, 2, 3, 0
 		};
 	};
 
