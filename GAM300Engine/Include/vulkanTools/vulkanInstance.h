@@ -197,7 +197,7 @@ public://members
 			{ {-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f} }
 		};
 
-		const std::vector<uint16_t> indices//uint16_t 65535 unique vertices
+		const std::vector<uint16_t> m_indices//uint16_t 65535 unique vertices
 		{
 			0, 1, 2, 2, 3, 0
 		};

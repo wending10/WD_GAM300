@@ -371,8 +371,13 @@ namespace TDS
 		vkDestroyPipelineLayout(m_logicalDevice, m_pipelineLayout, nullptr);
 		vkDestroyRenderPass(m_logicalDevice, m_RenderPass, nullptr);
 
+		vkDestroyBuffer(m_logicalDevice, m_indexBuffer, nullptr);
+		vkFreeMemory(m_logicalDevice, m_IndexBufferMemory, nullptr);
+
 		vkDestroyBuffer(m_logicalDevice, m_vertexBuffer, nullptr);
 		vkFreeMemory(m_logicalDevice, m_vertexBufferMemory, nullptr);
+
+
 
 		for (size_t i{ 0 }; i < MAX_FRAMES_IN_FLIGHT; i++)
 		{
@@ -726,8 +731,14 @@ namespace TDS
 		VkDeviceSize offsets[] = { 0 };
 
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+		//not possible to use different indices for each vertex attribute, so we do still have 
+		//to completely duplicate vertex data even if just one attribute varies.
+		vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer, 0, VK_INDEX_TYPE_UINT16); //can be VK_INDEX_TYPE_UINT32
 
-		vkCmdDraw(commandBuffer, static_cast<uint32_t>(vertices.size()), 1, 0, 0);
+		//this one is like opengl draw array
+		//vkCmdDraw(commandBuffer, static_cast<uint32_t>(vertices.size()), 1, 0, 0);
+		//this one is like opengl draw index
+		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);//3rd parameter instance count is for instancing
 
 		vkCmdEndRenderPass(commandBuffer);
 
@@ -976,7 +987,7 @@ namespace TDS
 
 	void VulkanInstance::createIndexBuffer()
 	{
-		VkDeviceSize buffersize = sizeof(indices[0]) * indices.size();
+		VkDeviceSize buffersize = sizeof(m_indices[0]) * m_indices.size();
 
 		VkBuffer stagingBuffer;
 		VkDeviceMemory stagingbufferMemory;
@@ -986,11 +997,16 @@ namespace TDS
 
 		void* data;
 		vkMapMemory(m_logicalDevice, stagingbufferMemory, 0, buffersize, 0, &data);
-		memcpy(data, indices.data(), (size_t)buffersize);
+		memcpy(data, m_indices.data(), (size_t)buffersize);
 		vkUnmapMemory(m_logicalDevice, stagingbufferMemory);
 
-	
+		createBuffers(buffersize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_indexBuffer, m_IndexBufferMemory);
 
+		copyBuffer(stagingBuffer, m_indexBuffer, buffersize);
+
+		vkDestroyBuffer(m_logicalDevice, stagingBuffer, nullptr);
+		vkFreeMemory(m_logicalDevice, stagingbufferMemory, nullptr);
 
 	}
 
