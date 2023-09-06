@@ -166,7 +166,7 @@ namespace TDS
 			}
 
 		}
-		//uniform buffer??
+		
 		{
 			createDescriptorSetLayout();
 		}
@@ -223,7 +223,7 @@ namespace TDS
 			rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
 			rasterizer.lineWidth = 1.0f;
 			rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-			rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+			rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; //carefull with face
 			rasterizer.depthBiasEnable = VK_FALSE;
 
 			VkPipelineMultisampleStateCreateInfo multisampling{};
@@ -303,6 +303,9 @@ namespace TDS
 			createFrameBuffer();
 		}
 
+
+
+
 		//command pool
 		{
 			QueueFamilyIndices queueFamilyIndices = findQueueFamilies(m_PhysDeviceHandle);
@@ -324,6 +327,17 @@ namespace TDS
 		{
 			createIndexBuffer();
 		}
+		//create UniformBuffer();
+		{
+			createUniformBuffers();
+		}
+
+		//create descriptorPool
+		{
+			createDescriptorPool();
+			createDescriptorSets();
+		}
+
 
 		//command buffer
 		{
@@ -380,6 +394,8 @@ namespace TDS
 			vkDestroyBuffer(m_logicalDevice, uniformBuffers[i], nullptr);
 			vkFreeMemory(m_logicalDevice,uniformBuffersMemory[i], nullptr);
 		}
+
+		vkDestroyDescriptorPool(m_logicalDevice, m_descriptorPool, nullptr);
 
 		vkDestroyDescriptorSetLayout(m_logicalDevice,m_descriptorSetLayout, nullptr);
 
@@ -747,6 +763,11 @@ namespace TDS
 		//to completely duplicate vertex data even if just one attribute varies.
 		vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer, 0, VK_INDEX_TYPE_UINT16); //can be VK_INDEX_TYPE_UINT32
 
+		// bind the right descriptor set for each frame to the descriptors in the shader 
+		//with vkCmdBindDescriptorSets
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, 
+			m_pipelineLayout, 0, 1, &m_descriptorSets[m_currentFrame], 0, nullptr);
+
 		//this one is like opengl draw array
 		//vkCmdDraw(commandBuffer, static_cast<uint32_t>(vertices.size()), 1, 0, 0);
 		//this one is like opengl draw index
@@ -838,11 +859,11 @@ namespace TDS
 		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 
 		UniformBufferObject ubo{};
-		ubo.model = Mat4(1.f) * Mat4::Rotate(Vec3(0.f, 0.f, 1.f), time * 90.f * Mathf::Deg2Rad);
-		ubo.view = Mat4::LookAt(Vec3(2.f, 2.f, 2.f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
-		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad, 
-					static_cast<float>(m_swapChainExtent.width / m_swapChainExtent.height), 0.1f, 10.f);
-		ubo.proj.m[1][1] *= -1;
+		//ubo.model = Mat4(1.f); //* Mat4::Rotate(Vec3(0.f, 0.f, 1.f),  90.f);
+		//ubo.view = Mat4(1.f);//Mat4::LookAt(Vec3(2.f, 2.f, 2.f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
+		//ubo.proj = Mat4(1.f);//Mat4::Perspective(45.f * Mathf::Deg2Rad, 
+					//static_cast<float>(m_swapChainExtent.width / m_swapChainExtent.height), 0.1f, 10.f);
+		//ubo.proj.m[1][1] *= -1;
 
 		memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 
@@ -1189,8 +1210,64 @@ namespace TDS
 			throw std::runtime_error("failed to create descriptor set layout!");
 		}
 
+	}
+	void VulkanInstance::createDescriptorPool()
+	{
+		//describe which descriptor types our descriptor sets are going to contain and how many of them
+		VkDescriptorPoolSize poolSize{};
+		poolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		poolSize.descriptorCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+
+		//allocate one of these descriptors for every frame
+		VkDescriptorPoolCreateInfo poolInfo{};
+		poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		poolInfo.poolSizeCount = 1;
+		poolInfo.pPoolSizes = &poolSize;
+
+		//specify the maximum number of descriptor sets that may be allocated
+		poolInfo.maxSets = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+
+		if (vkCreateDescriptorPool(m_logicalDevice, &poolInfo, nullptr, &m_descriptorPool) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create descriptor pool!");
+		}
+
+	}
+
+	//descriptor pool to allocate from, the number of descriptor sets to allocate, 
+	//and the descriptor layout to base them on
+	void VulkanInstance::createDescriptorSets()
+	{
+		std::vector<VkDescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT, m_descriptorSetLayout);
+		VkDescriptorSetAllocateInfo allocInfo{};
+		allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		allocInfo.descriptorPool = m_descriptorPool;
+		allocInfo.descriptorSetCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+		allocInfo.pSetLayouts = layouts.data();
+
+		m_descriptorSets.resize(MAX_FRAMES_IN_FLIGHT);
+		if (vkAllocateDescriptorSets(m_logicalDevice, &allocInfo, m_descriptorSets.data()) != VK_SUCCESS) {
+			throw std::runtime_error("failed to allocate descriptor sets!");
+		}
 
 
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) 
+		{
+			VkDescriptorBufferInfo bufferInfo{};
+			bufferInfo.buffer = uniformBuffers[i];
+			bufferInfo.offset = 0;
+			bufferInfo.range = sizeof(UniformBufferObject);
+
+			VkWriteDescriptorSet descriptorWrite{};
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = m_descriptorSets[i];
+			descriptorWrite.dstBinding = 0;
+			descriptorWrite.dstArrayElement = 0;
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorWrite.descriptorCount = 1;
+			descriptorWrite.pBufferInfo = &bufferInfo;
+
+			vkUpdateDescriptorSets(m_logicalDevice, 1, &descriptorWrite, 0, nullptr);
+		}
 	}
 
 }//namespace TDS

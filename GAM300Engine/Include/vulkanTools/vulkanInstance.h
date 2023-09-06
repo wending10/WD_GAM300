@@ -141,6 +141,8 @@ namespace TDS
 		void					 createVertexBuffer();
 		void					 createIndexBuffer();
 		void					 createUniformBuffers();
+		void					 createDescriptorPool();
+		void					 createDescriptorSets();
 		uint32_t				 findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties);
 		void					 copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
@@ -204,6 +206,9 @@ public://members
 		std::vector<VkBuffer>		uniformBuffers;
 		std::vector<VkDeviceMemory> uniformBuffersMemory;
 		std::vector<void*>			uniformBuffersMapped;
+
+		VkDescriptorPool			 m_descriptorPool;
+		std::vector<VkDescriptorSet> m_descriptorSets;
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;
