@@ -166,7 +166,10 @@ namespace TDS
 			}
 
 		}
-
+		//uniform buffer??
+		{
+			createDescriptorSetLayout();
+		}
 
 		//graphics pipeline???
 		{
@@ -260,7 +263,8 @@ namespace TDS
 
 			VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
 			pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-			pipelineLayoutInfo.setLayoutCount = 0;
+			pipelineLayoutInfo.setLayoutCount = 1;
+			pipelineLayoutInfo.pSetLayouts = &m_descriptorSetLayout;
 			pipelineLayoutInfo.pushConstantRangeCount = 0;
 
 			if (vkCreatePipelineLayout(m_logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout) != VK_SUCCESS) {
@@ -370,6 +374,14 @@ namespace TDS
 		vkDestroyPipeline(m_logicalDevice, m_graphicPipeline, nullptr);
 		vkDestroyPipelineLayout(m_logicalDevice, m_pipelineLayout, nullptr);
 		vkDestroyRenderPass(m_logicalDevice, m_RenderPass, nullptr);
+
+		for (size_t i{ 0 }; i < MAX_FRAMES_IN_FLIGHT; i++)
+		{
+			vkDestroyBuffer(m_logicalDevice, uniformBuffers[i], nullptr);
+			vkFreeMemory(m_logicalDevice,uniformBuffersMemory[i], nullptr);
+		}
+
+		vkDestroyDescriptorSetLayout(m_logicalDevice,m_descriptorSetLayout, nullptr);
 
 		vkDestroyBuffer(m_logicalDevice, m_indexBuffer, nullptr);
 		vkFreeMemory(m_logicalDevice, m_IndexBufferMemory, nullptr);
@@ -762,6 +774,9 @@ namespace TDS
 		{
 			throw std::runtime_error("failed to acquire swap chain image!");
 		}
+
+		updateUniformBuffer(m_currentFrame);
+
 		// Only reset the fence if we are submitting work
 		vkResetFences(m_logicalDevice, 1, &m_inFlightFence[m_currentFrame]);
 
@@ -813,6 +828,24 @@ namespace TDS
 
 		//advance to the next frame
 		m_currentFrame = (m_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+	}
+
+	void VulkanInstance::updateUniformBuffer(uint32_t currentImage)
+	{
+		static auto startTime = std::chrono::high_resolution_clock::now();
+
+		auto currentTime = std::chrono::high_resolution_clock::now();
+		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+		UniformBufferObject ubo{};
+		ubo.model = Mat4(1.f) * Mat4::Rotate(Vec3(0.f, 0.f, 1.f), time * 90.f * Mathf::Deg2Rad);
+		ubo.view = Mat4::LookAt(Vec3(2.f, 2.f, 2.f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
+		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad, 
+					static_cast<float>(m_swapChainExtent.width / m_swapChainExtent.height), 0.1f, 10.f);
+		ubo.proj.m[1][1] *= -1;
+
+		memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
+
 	}
 
 	void VulkanInstance::recreateSwapChain(const WindowsWin& _Windows)
@@ -1010,6 +1043,29 @@ namespace TDS
 
 	}
 
+	//uniformbuffers
+	void VulkanInstance::createUniformBuffers()
+	{
+		VkDeviceSize buffersize = sizeof(UniformBufferObject);
+		//we don't want to update the buffer in preparation of the next frame while a previous one is still reading from it! 
+		//Thus, we need to have as many uniform buffers as we have frames in flight, 
+		//and write to a uniform buffer that is not currently being read by the GPU
+		uniformBuffers.resize(MAX_FRAMES_IN_FLIGHT);
+		uniformBuffersMemory.resize(MAX_FRAMES_IN_FLIGHT);
+		uniformBuffersMapped.resize(MAX_FRAMES_IN_FLIGHT);
+
+		for (size_t i{ 0 }; i < MAX_FRAMES_IN_FLIGHT; i++)
+		{
+
+			createBuffers(buffersize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+				VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, uniformBuffers[i], uniformBuffersMemory[i]);
+
+			vkMapMemory(m_logicalDevice, uniformBuffersMemory[i], 0, buffersize, 0, &uniformBuffersMapped[i]);
+
+		}
+
+	}
+
 	uint32_t VulkanInstance::findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties)
 	{
 		//query info about the available types of memory 
@@ -1113,6 +1169,28 @@ namespace TDS
 		vkFreeCommandBuffers(m_logicalDevice, m_commandPool, 1, &commandBuffer);
 
 	}
-	 
+	void VulkanInstance::createDescriptorSetLayout()
+	{
+		VkDescriptorSetLayoutBinding uboLayoutBinding{};
+		uboLayoutBinding.binding = 0; //location 0?
+		uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER; // what we describing now is a uniform buffer?
+		uboLayoutBinding.descriptorCount = 1; //one uniform buffer for now
+		uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;// referencing the descriptor from the vertex shader for now but can putcan be a combination of VkShaderStageFlagBits values  or VK_SHADER_STAGE_ALL_GRAPHICS  
+		uboLayoutBinding.pImmutableSamplers = nullptr; //optional (only relevant for image sampling
+
+		//create descriptor layout
+		VkDescriptorSetLayoutCreateInfo layoutInfo{};
+		layoutInfo.sType		= VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		layoutInfo.bindingCount = 1;
+		layoutInfo.pBindings	= &uboLayoutBinding;
+
+		if (vkCreateDescriptorSetLayout(m_logicalDevice, &layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to create descriptor set layout!");
+		}
+
+
+
+	}
 
 }//namespace TDS

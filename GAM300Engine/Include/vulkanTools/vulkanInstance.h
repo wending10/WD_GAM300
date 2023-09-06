@@ -15,11 +15,14 @@
 #include <algorithm>
 #include <fstream>
 #include <array>
+#include <chrono>//to be moved
 
 #include "windowswindow.h"
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"
-#include "Vector2.h"//for testing
+//#include "Vector2.h"//for testing
+#include "TDSMath.h"
+
 namespace TDS
 {
 	
@@ -94,6 +97,12 @@ namespace TDS
 			}
 			
 		};
+		struct UniformBufferObject
+		{
+			Mat4 model;
+			Mat4 view;
+			Mat4 proj;
+		};
 
 	public://functions
 
@@ -131,8 +140,15 @@ namespace TDS
 											   VkDeviceMemory& buffermemory);
 		void					 createVertexBuffer();
 		void					 createIndexBuffer();
+		void					 createUniformBuffers();
 		uint32_t				 findMemoryType(const uint32_t& typeFiler, VkMemoryPropertyFlags properties);
 		void					 copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+
+		//provide details about every descriptor binding used in the shaders for pipeline creation
+		void					 createDescriptorSetLayout();
+
+		//to be removed
+		void					 updateUniformBuffer(uint32_t currentImage);
 
 public://members
 
@@ -159,20 +175,21 @@ public://members
 
 
 		std::vector<VkImageView> swapChainImageViews;
-		VkInstance			m_VKhandler;
-		VkPhysicalDevice	m_PhysDeviceHandle{ VK_NULL_HANDLE }; //where selected graphic card is stored
-		VkDevice			m_logicalDevice;
-		VkQueue				m_graphicQueue;	
-		VkQueue				m_presentQueue;
-		VkSurfaceKHR		m_Surface{};
-		VkSwapchainKHR		m_SwapChain{};
-		VkFormat			m_swapChainImageFormat;
-		VkExtent2D			m_swapChainExtent;
-		VkSurfaceFormatKHR  m_VKSurfaceFormat{};
-		VkRenderPass		m_RenderPass;
-		VkPipelineLayout	m_pipelineLayout;
-		VkPipeline			m_graphicPipeline;
-		VkCommandPool		m_commandPool;
+		VkInstance				m_VKhandler;
+		VkPhysicalDevice		m_PhysDeviceHandle{ VK_NULL_HANDLE }; //where selected graphic card is stored
+		VkDevice				m_logicalDevice;
+		VkQueue					m_graphicQueue;	
+		VkQueue					m_presentQueue;
+		VkSurfaceKHR			m_Surface{};
+		VkSwapchainKHR			m_SwapChain{};
+		VkFormat				m_swapChainImageFormat;
+		VkExtent2D				m_swapChainExtent;
+		VkSurfaceFormatKHR		m_VKSurfaceFormat{};
+		VkRenderPass			m_RenderPass;
+		VkDescriptorSetLayout	m_descriptorSetLayout;
+		VkPipelineLayout		m_pipelineLayout;
+		VkPipeline				m_graphicPipeline;
+		VkCommandPool			m_commandPool;
 
 		//handle vertex
 		VkBuffer			m_vertexBuffer; //use it in rendering commands, does not depend on swapchain
@@ -181,6 +198,12 @@ public://members
 		//handle indices
 		VkBuffer			m_indexBuffer;
 		VkDeviceMemory		m_IndexBufferMemory;
+
+		//handle uniform buffers
+		//copy new data to the uniform buffer every frame
+		std::vector<VkBuffer>		uniformBuffers;
+		std::vector<VkDeviceMemory> uniformBuffersMemory;
+		std::vector<void*>			uniformBuffersMapped;
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;
@@ -201,6 +224,7 @@ public://members
 		{
 			0, 1, 2, 2, 3, 0
 		};
+
 	};
 
 
