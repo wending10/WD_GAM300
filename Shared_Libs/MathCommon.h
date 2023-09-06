@@ -168,7 +168,7 @@ namespace TDS
         static constexpr float PI = 3.1415926535897931f;
         static constexpr float Infinity = std::numeric_limits<float>::infinity();
         static constexpr float NegativeInfinity = -std::numeric_limits<float>::infinity();
-        static constexpr float Deg2Rad = PI * 2.0f / 360.0f;
+        static constexpr float Deg2Rad = PI  / 180.0f;
         static constexpr float Rad2Deg = 1.0f / Deg2Rad;
         
         // Max number of decimals to display when converting to string

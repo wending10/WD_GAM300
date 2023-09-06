@@ -223,7 +223,7 @@ namespace TDS
 			rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
 			rasterizer.lineWidth = 1.0f;
 			rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-			rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; //carefull with face
+			rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; //careful with face
 			rasterizer.depthBiasEnable = VK_FALSE;
 
 			VkPipelineMultisampleStateCreateInfo multisampling{};
@@ -859,11 +859,11 @@ namespace TDS
 		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 
 		UniformBufferObject ubo{};
-		//ubo.model = Mat4(1.f); //* Mat4::Rotate(Vec3(0.f, 0.f, 1.f),  90.f);
-		//ubo.view = Mat4(1.f);//Mat4::LookAt(Vec3(2.f, 2.f, 2.f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
-		//ubo.proj = Mat4(1.f);//Mat4::Perspective(45.f * Mathf::Deg2Rad, 
-					//static_cast<float>(m_swapChainExtent.width / m_swapChainExtent.height), 0.1f, 10.f);
-		//ubo.proj.m[1][1] *= -1;
+		ubo.model = Mat4();// Mat4::Rotate(Vec3(0.f, 0.f, 1.f), time * 45.f);
+		ubo.view = Mat4::LookAt(Vec3(2.0f, 2.0f, 2.0f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
+		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad,
+			static_cast<float>(m_swapChainExtent.width) / static_cast<float>(m_swapChainExtent.height), 0.1f, 10.f);
+		ubo.proj.m[1][1] *= -1;
 
 		memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 
@@ -1265,6 +1265,8 @@ namespace TDS
 			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 			descriptorWrite.descriptorCount = 1;
 			descriptorWrite.pBufferInfo = &bufferInfo;
+			descriptorWrite.pImageInfo = nullptr; // Optional
+			descriptorWrite.pTexelBufferView = nullptr; // Optional
 
 			vkUpdateDescriptorSets(m_logicalDevice, 1, &descriptorWrite, 0, nullptr);
 		}

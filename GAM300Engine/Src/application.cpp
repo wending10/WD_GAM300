@@ -28,7 +28,7 @@ namespace TDS
         case WM_SIZE: //for resize of window may need it for fullscreen?
             m_window.setWidth(LOWORD(lParam));
             m_window.setHeight(HIWORD(lParam));
-
+            break;
 
         }
      }
