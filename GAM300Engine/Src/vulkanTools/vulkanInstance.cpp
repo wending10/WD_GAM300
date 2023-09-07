@@ -409,6 +409,8 @@ namespace TDS
 
 		vkDestroyDescriptorPool(m_logicalDevice, m_descriptorPool, nullptr);
 
+		vkDestroyImageView(m_logicalDevice, m_textureImageView, nullptr);
+
 		vkDestroyImage(m_logicalDevice, m_textureImage, nullptr);
 		vkFreeMemory(m_logicalDevice, m_textureImageMemory, nullptr);
 
@@ -983,7 +985,7 @@ namespace TDS
 	{
 		swapChainImageViews.resize(m_swapChainImages.size());
 		for (size_t i = 0; i < m_swapChainImages.size(); i++) {
-			VkImageViewCreateInfo createInfo{};
+		/*	VkImageViewCreateInfo createInfo{};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 			createInfo.image = m_swapChainImages[i];
 			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
@@ -1000,6 +1002,11 @@ namespace TDS
 
 			if (vkCreateImageView(m_logicalDevice, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS) {
 				throw std::runtime_error("failed to create image views!");
+			}*/
+
+			//texture testing
+			for (uint32_t i = 0; i < m_swapChainImages.size(); i++) {
+				swapChainImageViews[i] = createImageView(m_swapChainImages[i], m_swapChainImageFormat);
 			}
 		}
 	}
@@ -1487,21 +1494,28 @@ namespace TDS
 
 	void VulkanInstance::createTextureImageView()
 	{
+		m_textureImageView = createImageView(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB);
+	}
+
+	VkImageView VulkanInstance::createImageView(VkImage image, VkFormat format)
+	{
 		VkImageViewCreateInfo viewInfo{};
 		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		viewInfo.image = m_textureImage;
+		viewInfo.image = image;
 		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		viewInfo.format = VK_FORMAT_R8G8B8A8_SRGB;
+		viewInfo.format = format;
 		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		viewInfo.subresourceRange.baseMipLevel = 0;
 		viewInfo.subresourceRange.levelCount = 1;
 		viewInfo.subresourceRange.baseArrayLayer = 0;
 		viewInfo.subresourceRange.layerCount = 1;
 
-		if (vkCreateImageView(m_logicalDevice, &viewInfo, nullptr, &m_textureImageView) != VK_SUCCESS) {
+		VkImageView imageView;
+		if (vkCreateImageView(m_logicalDevice, &viewInfo, nullptr, &imageView) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create texture image view!");
 		}
-	}
 
+		return imageView;
+	}
 
 }//namespace TDS
