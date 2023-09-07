@@ -50,7 +50,7 @@ void audiotest()
 
 	audioeng.init();
 
-	SoundInfo test_track{ "../GAM300Game/Assets/AudioFiles/Songs/test.flac" };
+	SoundInfo test_track{ "../assets/audioFiles/Songs/test.flac" };
 	test_track.setVolume(80.f);
 	test_track.set3DCoords(-2.f, 0.f, 1.f);
 

@@ -6,6 +6,13 @@
   Vector2.cpp
   Vector3.cpp
   Vector4.cpp
+  application.cpp
+  vulkanDebugger.cpp
+  vulkanDevice.cpp
+  vulkanInstance.cpp
+  vulkanSwapChain.cpp
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp(140,83): warning C4100: 'fullscreen': unreferenced formal parameter
+  windowswindow.cpp
   main.cpp
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\fmod\SoundInfo.h(86,26): warning C4100: 'vol': unreferenced formal parameter
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(13,33): warning C4100: 'argv': unreferenced formal parameter
@@ -16,7 +23,6 @@ C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(49,14): w
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(46,16): warning C4189: 'sys': local variable is initialized but not referenced
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(47,7): warning C4189: 'check': local variable is initialized but not referenced
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(45,15): warning C4189: 'x': local variable is initialized but not referenced
-  application.cpp
   AudioEngine.cpp
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\fmod\SoundInfo.h(86,26): warning C4100: 'vol': unreferenced formal parameter
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(174,56): warning C4100: 'instanceIndex': unreferenced formal parameter
@@ -24,12 +30,6 @@ C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cp
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(183,56): warning C4100: 'instanceIndex': unreferenced formal parameter
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(195,61): warning C4100: 'instance': unreferenced formal parameter
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(237,50): warning C4100: 'file': unreferenced formal parameter
-  vulkanDebugger.cpp
-  vulkanDevice.cpp
-  vulkanInstance.cpp
-  vulkanSwapChain.cpp
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp(140,83): warning C4100: 'fullscreen': unreferenced formal parameter
-  windowswindow.cpp
   Generating Code...
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(79): warning C4715: 'AudioEngine::playSound': not all control paths return a value
   GAM300Engine.vcxproj -> C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
