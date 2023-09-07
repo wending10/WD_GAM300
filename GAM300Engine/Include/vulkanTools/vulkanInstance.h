@@ -17,10 +17,10 @@
 #include <array>
 #include <chrono>//to be moved
 
+
 #include "windowswindow.h"
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"
-//#include "Vector2.h"//for testing
 #include "TDSMath.h"
 
 namespace TDS
@@ -152,6 +152,18 @@ namespace TDS
 		//to be removed
 		void					 updateUniformBuffer(uint32_t currentImage);
 
+
+		//texture loading thingy
+		void					 createTextureImage();
+		void					 createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling,
+								 VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
+		//helper function
+		VkCommandBuffer			 beginSingleTimeCommands();
+		VkImageView				 createImageView(VkImage image, VkFormat format);
+		void					 endSingleTimeCommands(VkCommandBuffer commandBuffer);
+		void					 transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+		void					 copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
+		void					 createTextureImageView();
 public://members
 
 
@@ -209,6 +221,11 @@ public://members
 
 		VkDescriptorPool			 m_descriptorPool;
 		std::vector<VkDescriptorSet> m_descriptorSets;
+
+		//texture
+		VkImage						 m_textureImage;
+		VkDeviceMemory				 m_textureImageMemory;
+		VkImageView					 m_textureImageView;
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;

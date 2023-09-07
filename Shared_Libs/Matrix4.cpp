@@ -262,7 +262,7 @@ namespace TDS
 
     Mat4 Mat4::Frustum(float left, float right, float bottom, float top, float zNear, float zFar)
     {
-        Mat4 result(0.f);
+        Mat4 result{};
         result.m[0][0] = 2.0f * zNear / (right - left);
         result.m[1][1] = 2.0f * zNear / (top - bottom);
         result.m[2][0] = (right + left) / (right - left);
@@ -284,7 +284,7 @@ namespace TDS
         Vec3 s = Vec3::Cross(f, up).normalize();
         Vec3 u = Vec3::Cross(s, f);
 
-        Mat4 result(1.f);
+        Mat4 result{};
         result.m[0][0] = s.x;
         result.m[1][0] = s.y;
         result.m[2][0] = s.z;
