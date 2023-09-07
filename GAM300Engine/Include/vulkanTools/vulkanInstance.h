@@ -157,6 +157,10 @@ namespace TDS
 		void					 createTextureImage();
 		void					 createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling,
 								 VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
+		void					 createTextureSampler();
+		
+		
+		
 		//helper function
 		VkCommandBuffer			 beginSingleTimeCommands();
 		VkImageView				 createImageView(VkImage image, VkFormat format);
@@ -164,8 +168,9 @@ namespace TDS
 		void					 transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
 		void					 copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
 		void					 createTextureImageView();
-public://members
+	
 
+	public://members
 
 		static constexpr decltype(VkApplicationInfo::apiVersion) apiVersion		{ VK_API_VERSION_1_3 };
 		std::vector<std::string> supportedInstanceExtensions{};
@@ -226,6 +231,8 @@ public://members
 		VkImage						 m_textureImage;
 		VkDeviceMemory				 m_textureImageMemory;
 		VkImageView					 m_textureImageView;
+		VkSampler					 m_textureSampler;
+
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;
