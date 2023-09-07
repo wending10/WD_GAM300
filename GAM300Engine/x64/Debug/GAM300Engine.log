@@ -1,36 +1,10 @@
-﻿  MathCommon.cpp
-  Matrix2.cpp
-  Matrix3.cpp
-  Matrix4.cpp
-  Quaternion.cpp
-  Vector2.cpp
-  Vector3.cpp
-  Vector4.cpp
-  application.cpp
-  vulkanDebugger.cpp
-  vulkanDevice.cpp
-  vulkanInstance.cpp
-  vulkanSwapChain.cpp
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Src\vulkanTools\vulkanSwapChain.cpp(140,83): warning C4100: 'fullscreen': unreferenced formal parameter
-  windowswindow.cpp
-  main.cpp
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\fmod\SoundInfo.h(86,26): warning C4100: 'vol': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(13,33): warning C4100: 'argv': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(13,14): warning C4100: 'argc': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(27,72): warning C4100: 'lpCmdLine': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(27,51): warning C4100: 'hPrevInstance': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(49,14): warning C4189: 'channels': local variable is initialized but not referenced
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(46,16): warning C4189: 'sys': local variable is initialized but not referenced
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(47,7): warning C4189: 'check': local variable is initialized but not referenced
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\main.cpp(45,15): warning C4189: 'x': local variable is initialized but not referenced
-  AudioEngine.cpp
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\fmod\SoundInfo.h(86,26): warning C4100: 'vol': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(174,56): warning C4100: 'instanceIndex': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(176,10): warning C4189: 'eventInstance': local variable is initialized but not referenced
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(183,56): warning C4100: 'instanceIndex': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(195,61): warning C4100: 'instance': unreferenced formal parameter
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(237,50): warning C4100: 'file': unreferenced formal parameter
-  Generating Code...
-C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(79): warning C4715: 'AudioEngine::playSound': not all control paths return a value
+﻿  AudioEngine.cpp
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\fmod\SoundInfo.h(94,26): warning C4100: 'vol': unreferenced formal parameter
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(188,56): warning C4100: 'instanceIndex': unreferenced formal parameter
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(190,10): warning C4189: 'eventInstance': local variable is initialized but not referenced
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(197,56): warning C4100: 'instanceIndex': unreferenced formal parameter
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(209,61): warning C4100: 'instance': unreferenced formal parameter
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(251,50): warning C4100: 'file': unreferenced formal parameter
+C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(81): warning C4715: 'AudioEngine::playSound': not all control paths return a value
   GAM300Engine.vcxproj -> C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
   0 File(s) copied

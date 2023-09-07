@@ -69,12 +69,12 @@ public:
     * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
     *                 or any other FMOD-supported audio format)
     */
-    int playSound(SoundInfo soundInfo);
+    int playSound(SoundInfo &soundInfo);
     
     /**
      * Stops a looping sound if it's currently playing.
      */
-    void stopSound(SoundInfo soundInfo);
+    void stopSound(SoundInfo &soundInfo);
 
     /**
      * Method that updates the volume of a soundloop that is playing. This can be used to create audio 'fades'
@@ -204,10 +204,12 @@ private:
     static const unsigned int MAX_AUDIO_CHANNELS = 1024; 
     
     // Units per meter.  I.e feet would = 3.28.  centimeters would = 100.
-    const float DISTANCEFACTOR = 1.0f;  
+    const float DISTANCEFACTOR = 100.0f;  
  
     // Listener head position, initialized to default value
     FMOD_VECTOR listenerpos = { 0.0f, 0.0f, -1.0f * DISTANCEFACTOR };
+
+    FMOD_VECTOR listenervelocity = { 0.f, 0.f, 0.f * DISTANCEFACTOR };
     
     // Listener forward vector, initialized to default value
     FMOD_VECTOR forward     = { 0.0f, 0.0f, 1.0f };

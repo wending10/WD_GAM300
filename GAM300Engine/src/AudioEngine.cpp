@@ -14,6 +14,7 @@ void AudioEngine::init() {
    ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
    ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_SURROUND, 0));
    ERRCHECK(lowLevelSystem->set3DSettings(1.0, DISTANCEFACTOR, 0.5f));
+   ERRCHECK(lowLevelSystem->set3DNumListeners(1));
    ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
    ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
    //ERRCHECK(FMOD::System_Create()) //I don't think need this
@@ -22,6 +23,7 @@ void AudioEngine::init() {
 
 void AudioEngine::deactivate() {
     lowLevelSystem->close();
+    lowLevelSystem->release();
     studioSystem->release();
 }
 
@@ -30,7 +32,7 @@ void AudioEngine::update() {
 }
 
 void AudioEngine::loadSound(SoundInfo &soundInfo) {
-    if (!soundInfo.isLoaded()) {
+    if (!soundLoaded(soundInfo)) {
         std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
         FMOD::Sound* sound;
         ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
@@ -40,18 +42,19 @@ void AudioEngine::loadSound(SoundInfo &soundInfo) {
         unsigned int msLength = 0;
         ERRCHECK(sounds[soundInfo.getUniqueID()]->getLength(&msLength, FMOD_TIMEUNIT_MS));
         //soundInfo.setMSLength(msLength);
-        soundInfo.setLoaded(SOUND_LOADED);
+        soundInfo.setState(SOUND_LOADED);
     }
     else
         std::cout << "Audio Engine: Sound File was already loaded!\n";
 }
 
-int AudioEngine::playSound(SoundInfo soundInfo) {
-    if (soundInfo.isLoaded()) {
+int AudioEngine::playSound(SoundInfo &soundInfo) {
+    if (soundLoaded(soundInfo)) {
         std::cout << "Playing Sound\n";
         FMOD::Channel* channel{nullptr};
         // start play in 'paused' state
         ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
+        soundInfo.setState(SOUND_PLAYING);
 
         if (soundInfo.is3D())
             set3dChannelPosition(soundInfo, channel);
@@ -66,8 +69,6 @@ int AudioEngine::playSound(SoundInfo soundInfo) {
 
         // start audio playback
         ERRCHECK(channel->setPaused(false));
-
-
     }
     else
     {
@@ -78,10 +79,11 @@ int AudioEngine::playSound(SoundInfo soundInfo) {
 
 }
 
-void AudioEngine::stopSound(SoundInfo soundInfo) {
+void AudioEngine::stopSound(SoundInfo &soundInfo) {
     if (soundIsPlaying(soundInfo)) {
         ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
         loopsPlaying.erase(soundInfo.getUniqueID());
+        soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
     }
     else
         std::cout << "Audio Engine: Can't stop a looping sound that's not playing!\n";
@@ -123,7 +125,18 @@ void AudioEngine::update3DSoundPosition(SoundInfo soundInfo) {
 }
 
 bool AudioEngine::soundIsPlaying(SoundInfo soundInfo) {
-    return soundInfo.isLoop() && loopsPlaying.count(soundInfo.getUniqueID());
+    int channelnum{ 0 };
+
+    ERRCHECK(lowLevelSystem->getChannelsPlaying(&channelnum));
+    
+    if (soundInfo.isPlaying() && channelnum <= MAX_AUDIO_CHANNELS)
+    {
+        return true;
+    }
+
+    return false;
+    
+    //return (soundInfo.isLoop() || soundInfo.isPlaying()) && soundInfo.isLoaded() && loopsPlaying.count(soundInfo.getUniqueID());
 }
 
 void AudioEngine::set3DListenerPosition(float posX, float posY, float posZ, float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ) {

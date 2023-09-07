@@ -52,10 +52,13 @@ void audiotest()
 
 	SoundInfo test_track{ "../assets/audioFiles/Songs/test.flac" };
 	test_track.setVolume(80.f);
-	test_track.set3DCoords(-2.f, 0.f, 1.f);
+	test_track.set3DCoords(-500.f, 0.f, 1.f);
+
+	audioeng.set3DListenerPosition(0.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 1.f, 0.f);
 
 	audioeng.loadSound(test_track);
 	audioeng.playSound(test_track);
+	audioeng.update3DSoundPosition(test_track);
 
 	/*audioeng.loadFMODStudioEvent("testing phase");
 	audioeng.playEvent("testing phase");*/
@@ -65,7 +68,6 @@ void audiotest()
 	while (i)
 	{
 		audioeng.update();
-
 
 		//std::cout << audioeng.soundIsPlaying(test_track) << std::endl;
 		

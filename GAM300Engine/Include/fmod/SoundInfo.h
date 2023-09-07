@@ -11,6 +11,7 @@ enum SOUND_STATE
     SOUND_ERR = 0,
     SOUND_LOADED,
     SOUND_UNLOAD,
+    SOUND_PLAYING
 };
 
 struct SoundInfo {
@@ -19,7 +20,9 @@ struct SoundInfo {
 
     const char* filePath;
 
-    bool isitLoop, isit3D, isitLoaded;
+    bool isitLoop, isit3D;
+    
+    SOUND_STATE whatState;
 
     std::array<float, 3> posVec; //!!!!!!!To be replaced when vec container is used
 
@@ -32,7 +35,7 @@ struct SoundInfo {
 
     bool isLoaded()
     {
-        return isitLoaded;
+        return (whatState == SOUND_LOADED);
     }
 
     bool is3D()
@@ -43,6 +46,11 @@ struct SoundInfo {
     bool isLoop()
     {
         return isitLoop;
+    }
+
+    bool isPlaying()
+    {
+        return (whatState == SOUND_PLAYING);
     }
 
     unsigned int getUniqueID()
@@ -100,9 +108,9 @@ struct SoundInfo {
         MSLength = len;
     }
 
-    void setLoaded(SOUND_STATE setting)
+    void setState(SOUND_STATE setting)
     {
-        isitLoaded = setting;
+        whatState = setting;
     }
 
     void setLoop(bool condition)
@@ -115,8 +123,8 @@ struct SoundInfo {
         isit3D = condition;
     }
 
-    SoundInfo(const char* _filePath = "", bool _isLoop = false, bool _is3D = false, bool _isLoaded = false, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
-        : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitLoaded(_isLoaded), posVec{_x, _y, _z}, volume(_volume), ReverbAmount(_reverbamount)  //!!!!!!!To be replaced when vec container is used
+    SoundInfo(const char* _filePath = "", bool _isLoop = false, bool _is3D = false, SOUND_STATE _theState = SOUND_UNLOAD, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
+        : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), whatState(_theState), posVec{_x, _y, _z}, volume(_volume), ReverbAmount(_reverbamount)  //!!!!!!!To be replaced when vec container is used
     {
         uniqueID = counter++; //Change UID to include time when added
     }
