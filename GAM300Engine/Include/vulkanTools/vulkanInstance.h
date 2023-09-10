@@ -17,7 +17,11 @@
 #include <array>
 #include <chrono>//to be moved
 
-
+//assimp to be moved
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+//assimp
 #include "windowswindow.h"
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"
@@ -66,9 +70,9 @@ namespace TDS
 
 		struct Vertex
 		{
-			Vec2 pos;
+			Vec3 pos;
 			Vec3 color;
-
+			Vec2 texCoord;
 			static VkVertexInputBindingDescription getBindingDescription() 
 			{
 				VkVertexInputBindingDescription bindingDescription{};
@@ -78,13 +82,13 @@ namespace TDS
 
 				return bindingDescription;
 			}
-			static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() 
+			static std::array<VkVertexInputAttributeDescription, 3> getAttributeDescriptions() 
 			{
-				std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+				std::array<VkVertexInputAttributeDescription, 3> attributeDescriptions{};
 				//pos which now is vec 2
 				attributeDescriptions[0].binding = 0;
 				attributeDescriptions[0].location = 0;
-				attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT; //r32g32 using 2 floats
+				attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT; //r32g32 using 2 floats
 				attributeDescriptions[0].offset = offsetof(Vertex, pos);
 
 				//color which now is vec3
@@ -92,6 +96,11 @@ namespace TDS
 				attributeDescriptions[1].location = 1;
 				attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;//using 3 floats
 				attributeDescriptions[1].offset = offsetof(Vertex, color);
+
+				attributeDescriptions[2].binding = 0;
+				attributeDescriptions[2].location = 2;
+				attributeDescriptions[2].format = VK_FORMAT_R32G32_SFLOAT;
+				attributeDescriptions[2].offset = offsetof(Vertex, texCoord);
 
 				return attributeDescriptions;
 			}
@@ -159,17 +168,29 @@ namespace TDS
 								 VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 		void					 createTextureSampler();
 		
-		
+		//depth buffer
+		void					 createDepthResource();
+
+		//load models obj
+		void					 loadModel();
+		//helper function to process the aiscene
+		void					 processNode(aiNode* node, const aiScene* scene);
+
+		void					 processMesh(aiMesh* mesh, const aiScene* scene);
 		
 		//helper function
 		VkCommandBuffer			 beginSingleTimeCommands();
-		VkImageView				 createImageView(VkImage image, VkFormat format);
+		VkImageView				 createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectflags);
 		void					 endSingleTimeCommands(VkCommandBuffer commandBuffer);
 		void					 transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
 		void					 copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
 		void					 createTextureImageView();
-	
 
+
+		//helper function to find the most to less desirable depth format
+		VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+		VkFormat findDepthFormat();
+		bool	 hasStencilComponent(VkFormat format); //to tell if chose depth formats comes with stencil component?
 	public://members
 
 		static constexpr decltype(VkApplicationInfo::apiVersion) apiVersion		{ VK_API_VERSION_1_3 };
@@ -233,6 +254,12 @@ namespace TDS
 		VkImageView					 m_textureImageView;
 		VkSampler					 m_textureSampler;
 
+		//depthBuffer thing
+		VkImage						 m_depthImage;
+		VkDeviceMemory				 m_depthImageMemory;
+		VkImageView					 m_depthImageView;
+
+
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;
@@ -241,18 +268,14 @@ namespace TDS
 		std::vector <VkPipelineShaderStageCreateInfo> shaderStages{};
 		bool	enableValidate{ false };
 		
-		const std::vector<Vertex> vertices
-		{
-			{{-0.5f, -0.5f}, { 1.0f, 0.0f, 0.0f }},
-			{ {0.5f, -0.5f}, {0.0f, 1.0f, 0.0f} },
-			{ {0.5f, 0.5f}, {0.0f, 0.0f, 1.0f} },
-			{ {-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f} }
-		};
+		std::vector<Vertex> vertices
+		{};
 
-		const std::vector<uint16_t> m_indices//uint16_t 65535 unique vertices
-		{
-			0, 1, 2, 2, 3, 0
-		};
+		 std::vector<uint32_t> m_indices// can be uint16_t == 65535 unique vertices
+		{};
+
+		std::string_view TEXTURE_PATH = "../assets/textures/viking_room.png";
+		std::string_view MODEL_PATH = "../assets/models/viking_room.obj";
 
 	};
 
