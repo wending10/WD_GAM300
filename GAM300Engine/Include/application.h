@@ -17,7 +17,7 @@ namespace TDS
 	{
 	public:
 	
-	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname);
+	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc);
 		~Application();
 
 		static constexpr int ENTITY_COUNT = 5;
@@ -32,6 +32,8 @@ namespace TDS
 
 		static void HelloWorld();
 
+		void handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    
 	private:
 		// Function Pointers to CoreCLR functions
 		coreclr_initialize_ptr      initializeCoreClr = nullptr;

@@ -93,6 +93,7 @@ class Mat4
 
   static Quat toQuat(Mat4 const& m);
 
+  static Mat4 Rotate(const Vec3& axis, float angleDegress);
   // unary arithmetic operators
   Mat4& operator=(const Mat4& var);
   Mat4& operator+=(float value);

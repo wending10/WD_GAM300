@@ -28,11 +28,13 @@ namespace TDS
      uint32_t	getWidth()  const noexcept;
 	 uint32_t	getHeight() const noexcept;
 
-	 bool		registerWindow();
-	 bool		createWindow();
-	 bool		processInputEvent();
+	 void		setWidth(const uint32_t& _value) { m_Width = _value; }
+	 void		setHeight(const uint32_t& _value) { m_Height = _value; }
+	 
 
-	 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	 bool		registerWindow(const WNDPROC& wndproc);
+	 bool		createWindow(const WNDPROC& wndproc);
+	 bool		processInputEvent();
 	
 	 HWND		getWindowHandler() const { return m_handleWindows; }
 	 HINSTANCE	getHInstance()	   const { return m_hInstance;     }
@@ -51,10 +53,10 @@ namespace TDS
 
 	private:	//variables
 
-		HWND	  m_handleWindows {};
-		HINSTANCE m_hInstance	  {};
 		int		  m_Width		  {};
 		int		  m_Height		  {};
+		HWND	  m_handleWindows {};
+		HINSTANCE m_hInstance	  {};
 		int		  m_cmdshow		  {};
 
 		std::wstring_view  m_classname	{};

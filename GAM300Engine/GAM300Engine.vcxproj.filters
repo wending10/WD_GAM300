@@ -31,6 +31,17 @@
     <Filter Include="Header Files\eventmanager">
       <UniqueIdentifier>{6e6a9487-578f-4712-a956-e436851157f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{688c5041-2d98-465e-a0a0-8a3d8eb7f132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{186a4028-fff4-42b1-88b3-038379876fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\camera">
+      <UniqueIdentifier>{6db60734-4474-4b5e-86a0-ee2ed8ea98d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{b2c15cdd-ad4e-48cf-b881-14e1e8099a3c}</UniqueIdentifier>
     <Filter Include="Source Files\Geometry">
       <UniqueIdentifier>{5eee0b3a-a8ba-4e71-9594-59e6e78931c0}</UniqueIdentifier>
     </Filter>
@@ -84,6 +95,11 @@
     <ClCompile Include="..\Shared_Libs\Vector4.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Input.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\camera\camera.cpp">
+      <Filter>Source Files\camera</Filter>
     <ClCompile Include="Src\Geometry\AABB.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
@@ -206,6 +222,11 @@
     <ClInclude Include="Include\eventmanager\eventmanager.hpp">
       <Filter>Header Files\eventmanager</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Input.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\camera\camera.h">
+      <Filter>Header Files\camera</Filter>
     <ClInclude Include="Include\dotnet\ImportExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
