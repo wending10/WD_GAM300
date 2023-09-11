@@ -280,8 +280,8 @@ namespace TDS
 		 std::vector<uint32_t> m_indices// can be uint16_t == 65535 unique vertices
 		{};
 
-		std::string_view TEXTURE_PATH = "../assets/textures/viking_room.png";
-		std::string_view MODEL_PATH = "../assets/models/viking_room.obj";
+		std::string_view TEXTURE_PATH = "../assets/textures/SpiderTex.jpg";
+		std::string_view MODEL_PATH = "../assets/models/spider.obj";
 
 
 		//to be removed

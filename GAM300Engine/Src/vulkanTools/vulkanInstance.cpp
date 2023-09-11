@@ -1677,7 +1677,7 @@ namespace TDS
 		//read file via assimp
 		Assimp::Importer importer;
 
-		//importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, true); // telling assimp to normalize for us but take note that assimp normalize is form (-1 to 1)
+		importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, true); // telling assimp to normalize for us but take note that assimp normalize is form (-1 to 1)
 
 		const aiScene* scene = importer.ReadFile(MODEL_PATH.data(), aiProcess_FlipUVs |
 			aiProcess_GenUVCoords |

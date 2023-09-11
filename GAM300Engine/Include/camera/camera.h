@@ -10,23 +10,33 @@ namespace TDS
 	{
 	public:
 
-		Mat4 viewMatrix;
-		Mat4 projectionMatrix;
+		TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 8.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
 
-
-
+		//using lookat and Euler Angles
+		Mat4 GetViewMatrix() const;
 
 	private:
+		
+		//camera attributes
+		Vec3	m_position{};
+		Vec3	m_front{};
+		Vec3	m_Up{};
+		Vec3	m_Right{};
+		Vec3	m_Down{};
+		Vec3	m_WorldUp{};
 
-		float fov{};
-		float znear{};
-		float zfar{};
+		//euler angles
+		float	m_Yaw{};
+		float	m_Pitch{};
 
-		Vec3 position{};
-		void updateViewMatrix()
-		{
+		//option to toggle with
+		float	m_Speed{};
+		float	m_mouseSensitivity{}; //should it be in input???
+		float	m_ZoomLevel{};
+		float	m_Width{};
+		float	m_Height{};
 
-		}
+		void updateViewMatrix();
 	};
 
 
