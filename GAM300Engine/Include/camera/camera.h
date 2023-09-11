@@ -10,6 +10,8 @@ namespace TDS
 	{
 	public:
 
+		Mat4 viewMatrix;
+		Mat4 projectionMatrix;
 
 
 
@@ -20,7 +22,7 @@ namespace TDS
 		float znear{};
 		float zfar{};
 
-
+		Vec3 position{};
 		void updateViewMatrix()
 		{
 
