@@ -5,6 +5,11 @@ namespace TDS
 	TDSCamera::TDSCamera(float Yaw, float pitch, Vec3 position, Vec3 up)
 	{
 
+		m_Position = position;
+		m_WorldUp = up;
+		m_Yaw = Yaw;
+		m_Pitch = pitch;
+		updateViewMatrix();
 	}
 
 

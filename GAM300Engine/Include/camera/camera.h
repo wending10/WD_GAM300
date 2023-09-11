@@ -10,7 +10,7 @@ namespace TDS
 	{
 	public:
 
-		TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 8.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
+		TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 2.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
 
 		//using lookat and Euler Angles
 		Mat4 GetViewMatrix() const;
@@ -18,9 +18,9 @@ namespace TDS
 	private:
 		
 		//camera attributes
-		Vec3	m_position{};
-		Vec3	m_front{};
-		Vec3	m_Up{};
+		Vec3	m_Position{};
+		Vec3	m_Front{};
+		Vec3	m_Up{0.f,0.f,1.f};
 		Vec3	m_Right{};
 		Vec3	m_Down{};
 		Vec3	m_WorldUp{};

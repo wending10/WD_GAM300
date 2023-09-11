@@ -958,7 +958,7 @@ namespace TDS
 		
 		UniformBufferObject ubo{};
 		ubo.model = Mat4::Rotate(Vec3(0.f, 0.f, 1.f), time * val);
-		ubo.view = Mat4::LookAt(Vec3(2.0f, 2.0f, 2.0f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
+		ubo.view = camera.GetViewMatrix();//Mat4::LookAt(Vec3(2.0f, 2.0f, 2.0f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
 		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad,
 			static_cast<float>(m_swapChainExtent.width) / static_cast<float>(m_swapChainExtent.height), 0.1f, 10.f);
 		ubo.proj.m[1][1] *= -1;
