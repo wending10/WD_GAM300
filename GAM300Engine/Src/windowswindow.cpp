@@ -27,25 +27,7 @@ namespace TDS
 		return static_cast<uint32_t>(m_Height);
 	}
 
-	LRESULT WindowsWin::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-	{
-		//ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); for imgui implementation
-		//can extern  some imgui wndproc handler | tbc
-		switch (uMsg) 
-		{
-			
-			case WM_DESTROY:
-				PostQuitMessage(0);
-				break;
-			case WM_PAINT:
-				break;
-			
-			
-		}
-
-		return DefWindowProc(hwnd, uMsg, wParam, lParam);
-	}
-	bool WindowsWin::registerWindow() 
+	bool WindowsWin::registerWindow(const WNDPROC& wndproc)
 	{
 		if (WNDCLASS checkClass{}; GetClassInfo(m_hInstance, L"TDSWindowClass", &checkClass))
 		{
@@ -54,7 +36,7 @@ namespace TDS
 		WNDCLASSEX windowclass{};
 		windowclass.cbSize = sizeof(decltype(windowclass));
 		windowclass.style  = CS_HREDRAW | CS_VREDRAW;
-		windowclass.lpfnWndProc = WindowProc;
+		windowclass.lpfnWndProc = wndproc;
 		windowclass.cbClsExtra = 0;
 		windowclass.cbWndExtra = 0;
 		windowclass.hInstance = m_hInstance;
@@ -68,9 +50,9 @@ namespace TDS
 		return RegisterClassEx(&windowclass) ? true : false;
 	}
 
-	bool WindowsWin::createWindow()
+	bool WindowsWin::createWindow(const WNDPROC& wndproc)
 	{
-		if (false == registerWindow())
+		if (false == registerWindow(wndproc))
 		{
 			std::cerr << "Failed to register window class\n";
 			return false;
@@ -91,11 +73,7 @@ namespace TDS
 			static_cast<decltype(windowRect.left)>(screenWidth / 2 + m_Width / 2),
 			static_cast<decltype(windowRect.left)>(screenHeight / 2 + m_Height / 2));
 
-		DWORD style = (WS_OVERLAPPED | 
-			WS_CAPTION | 
-			WS_SYSMENU | 
-			WS_MINIMIZEBOX | 
-			WS_MAXIMIZEBOX); // WS_THICKFRAME to resize will include it next time
+		DWORD style = WS_OVERLAPPEDWINDOW; // WS_THICKFRAME to resize will include it next time
 
 		AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 

@@ -5,7 +5,7 @@
 *.slo
 *.lo
 *.o
-*.obj
+//*.obj
 
 # Precompiled Headers
 *.gch
@@ -14,7 +14,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+//*.dll
 
 # Fortran module files
 *.mod
@@ -24,7 +24,7 @@
 *.lai
 *.la
 *.a
-*.lib
+//*.lib
 
 # Executables
 *.exe
@@ -36,6 +36,7 @@
 *.opendb
 GAM300Engine/.vs/GAM300Engine/v16/.suo
 *.vs
+*x64
 GAM300Engine/.vs/GAM300Engine/v17/.suo
 /GAM300Editor/x64/Debug
 /GAM300Engine/bin/Debug-x64/net6.0
