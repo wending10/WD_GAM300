@@ -17,10 +17,15 @@ namespace ScriptAPI
         System::Reflection::Assembly::LoadFrom("ManagedScripts.dll");
 
 		scripts = gcnew System::Collections::Generic::SortedList<int,ScriptList^>();
-		for (auto i : TDS::ecs.getEntities())
+
+        for (int i = 0; i < TDS::Application::ENTITY_COUNT; ++i)
+        {
+            scripts->Add(i,gcnew ScriptList());
+        }
+		/*for (auto i : TDS::ecs.getEntities())
 		{
 			scripts->Add(i,gcnew ScriptList());
-		}
+		}*/
 
         updateScriptTypeList();
 		System::Console::WriteLine("Hello Engine Interface Init!");
@@ -62,9 +67,8 @@ namespace ScriptAPI
 
     void EngineInterface::ExecuteUpdate()
     {
-        for (auto i : TDS::ecs.getEntities())
+        for (int i = 0; i < scripts->Count; i++)
         {
-            // Update each script
             for each (Script ^ script in scripts[i])
             {
                 script->Update();

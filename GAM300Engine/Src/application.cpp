@@ -6,7 +6,7 @@
 #include <sstream>
 #include <filesystem>
 #include "application.h"
-#include "sceneManager/sceneManager.h"
+//#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
@@ -19,8 +19,9 @@ namespace TDS
 
      void Application::Initialize()
      {
-         auto& sceneManager = SceneManager::GetInstance();
-         sceneManager->Init();
+         /*auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();*/
+         Run();
      }
 
      void Application::Run()
@@ -49,16 +50,12 @@ namespace TDS
 
          // Step 2: Initialize
          init();// Step 1: Get Functions
+         addScript(0, "Test");
 
-         //addScript(0, "Test");
+         //ecs.registerEntity(ecs.getNewID());
 
-         // Load
-         while (true)
+         for (int i = 0; i < 15; ++i)
          {
-             if (GetKeyState(VK_ESCAPE) & 0x8000)
-                 break;
-
-             // Step 4: Run the Update loop for our scripts
              executeUpdate();
          }
 
@@ -69,7 +66,6 @@ namespace TDS
      {
          while (m_isRunning)
          {
-             Run();
              m_isRunning = m_window.processInputEvent();
              m_pVKInst.get()->drawFrame();
          }

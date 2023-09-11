@@ -3,7 +3,7 @@
 #include "application.h"
 #include "ecs/ecs.h"
 
-TDS::ECS TDS::ecs;
+//TDS::ECS TDS::ecs;
 
 #if _DEBUG
 #pragma comment( linker, "/subsystem:console" )

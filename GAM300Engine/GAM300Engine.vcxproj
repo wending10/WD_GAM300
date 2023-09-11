@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>C:\sandbox\GAM300\Dependencies\dotnet\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>C:\sandbox\GAM300\Dependencies\dotnet\include;C:\sandbox\GAM300\Dependencies;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
