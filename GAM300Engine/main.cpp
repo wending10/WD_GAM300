@@ -1,8 +1,9 @@
 #pragma warning(disable : 28251)
 
-
 #include "application.h"
+#include "ecs/ecs.h"
 
+TDS::ECS TDS::ecs;
 
 #if _DEBUG
 #pragma comment( linker, "/subsystem:console" )
@@ -12,8 +13,6 @@ int main(int argc, const char** argv) {
 #else
 #pragma comment( linker, "/subsystem:windows" )
 #endif
-
-
 
 TDS::Application* g_Application {nullptr};
 

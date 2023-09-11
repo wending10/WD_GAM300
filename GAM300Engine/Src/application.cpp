@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "application.h"
+#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
@@ -14,7 +15,8 @@ namespace TDS
 
      void Application::Initialize()
      {
-         
+         auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();
      }
      void Application::Update()
      {

@@ -12,6 +12,8 @@
 #include <iostream>
 #include <chrono>
 
+#include "components/IComponent.h"
+
 // reference: https://indiegamedev.net/2020/05/19/an-entity-component-system-with-data-locality-in-cpp/
 namespace TDS
 {
@@ -58,7 +60,7 @@ namespace TDS
         // (data is stored by component, then entity ID, not by entityID first)
         std::vector<ComponentData>          componentData;
 
-        // vector of sizes of each component data
+        // vector of sizes of each component total data used
         std::vector<std::size_t>            componentDataSize;
 
         // vector of entity IDs that are under this archetype
@@ -140,7 +142,7 @@ namespace TDS
     // COMPONENT CLASS ====================================================================================
     //templated child class
     template<class C>
-    class ECSComponent : public ComponentBase
+    class Component : public ComponentBase
     {
     public:
         // Set name of component
@@ -225,6 +227,12 @@ namespace TDS
         // Gets the archetype class pointer of the given archetype ID
         Archetype*                          getArchetype(const ArchetypeID& id);
 
+        // Gets all archetypes
+        ArchetypesArray                     getAllArchetypes();
+
+        // Gets archetype ID
+        ArchetypeID                         getArchetypeID(EntityID& id);
+
         // Add a component to the entity, and (optionally) put in the values for each variable in the component
         //template<typename C, typename... Args>
         //C*                                addComponent(const EntityID& entityId, Args&&... args);
@@ -233,6 +241,9 @@ namespace TDS
         template<typename C>
         C*                                  addComponent(const EntityID& entityId);
 
+        // Add components to a new entity by archetype
+        void                                addComponents(const EntityID& entityId, ArchetypeID archetype);
+
         // Remove a component from the entity
         template<typename C>
         void                                removeComponent(const EntityID& entityId);
@@ -240,6 +251,10 @@ namespace TDS
         // Get a component data from the entity
         template<typename C>
         C*                                  getComponent(const EntityID& entityId);
+
+        // Get a component data from the entity
+        template<class C>
+        C*                                  getComponent(const EntityID& entityId, Record& record);
 
         // Get entities with a certain component in the angle bracket
         template<typename C>
@@ -257,15 +272,23 @@ namespace TDS
         // Getting all registered components
         std::vector<std::string>            getAllRegisteredComponents();
 
+        // Getting number of components
+        std::uint32_t                       getNumberOfComponents();
+
         // Get components of a certain entity
         std::vector<std::string>            getEntityComponents(const EntityID& entityId);
+        
+        // Get components of a certain entity
+        std::vector<IComponent*>            getEntityComponentsBase(const EntityID& entityId);
 
         // Getting all registered entities
         std::vector<EntityID>               getEntities();
 
     private:
 
-        int                                 systemCount = 0;
+        std::uint32_t                       systemCount = 0;
+
+        std::uint32_t                       componentCount = 0;
 
         EntityArchetypeMap                  mEntityArchetypeMap;
 
@@ -302,16 +325,6 @@ namespace TDS
     private:
         EntityID                            mID;
         ECS&                                mECS;
-    };
-
-    // COMPONENT ==========================================================================================
-    // Base class for components
-    class Component
-    {
-    public:
-        virtual void serialize();
-
-    private:
     };
 }
 
