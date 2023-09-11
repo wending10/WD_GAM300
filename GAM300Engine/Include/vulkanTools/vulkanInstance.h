@@ -20,10 +20,11 @@
 #include "vulkanTools/vulkanDevice.h"
 //#include "vulkanSwapChain.h"
 #include "Vector2.h"
+#include"dotnet/ImportExport.h"
 namespace TDS
 {
 	
-	class VulkanInstance
+	class DLL_API VulkanInstance
 	{
 
 		static std::vector<char> readFile(const std::string& filename) {
@@ -42,7 +43,7 @@ namespace TDS
 			file.close();
 
 			return buffer;
-	}
+		}
 	struct QueueFamilyIndices
 	{
 		std::optional<uint32_t> graphicsFamily;

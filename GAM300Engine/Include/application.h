@@ -9,7 +9,9 @@
 #include <stdexcept>
 #include "dotnet/include/coreclrhost.h" 
 #include <iomanip>
+#include "ecs/ecs.h"
 
+static class TDS::ECS TDS::ecs;
 
 namespace TDS
 {
@@ -19,11 +21,16 @@ namespace TDS
 	
 	    Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname);
 		~Application();
+
+		static constexpr int ENTITY_COUNT = 5;
+		static constexpr int MIN_ENTITY_ID = 0;
+		static constexpr int MAX_ENTITY_ID = ENTITY_COUNT - 1;
 		
 		void   Initialize();
 		void   Update();
 		void   Render() {}
 		void   Exit() {}
+		void   Run();
 
 		static void HelloWorld();
 

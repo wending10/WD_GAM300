@@ -105,6 +105,9 @@
     <ClCompile Include="Src\Geometry\Triangle.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="Include\ecs\ecs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\application.h">
@@ -165,9 +168,6 @@
       <Filter>Header Files\eventmanager</Filter>
     </ClInclude>
     <ClInclude Include="Include\dotnet\ImportExport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Geometry\AABB.h">
