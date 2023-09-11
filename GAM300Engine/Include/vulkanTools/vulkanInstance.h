@@ -14,6 +14,7 @@
 #include <limits>
 #include <algorithm>
 #include <fstream>
+#include <optional>
 #include <array>
 #include <chrono>//to be moved
 
