@@ -24,12 +24,11 @@ namespace TDS
 
     // --add--
     // Adding a new component, with component values
-    // args - values of the component variables (IN ORDER)
     // Return - pointer to the entity's new component data
-    template<typename C, typename... Args>
-    inline C* Entity::add(Args&&... args)
+    template<typename C>
+    inline C* Entity::add()
     {
-        return mECS.addComponent<C>(mID, std::forward<Args>(args)...);
+        return mECS.addComponent<C>(mID);
     }
 
     // --add--
@@ -70,7 +69,7 @@ namespace TDS
     }
 
     // --constructData--
-    // Allocating new memory for the data
+    // 7Allocating new memory for the data
     // data - pointer to the new memory for the data
     template<class C>
     void Component<C>::constructData(unsigned char* data) const
@@ -134,9 +133,9 @@ namespace TDS
     // ecs - THE ecs
     // layer - layer to put the system under
     template<class... Cs>
-    System<Cs...>::System(ECS& ecs, const std::uint8_t& layer) : m_ecs(ecs), m_funcSet(false)
+    System<Cs...>::System(ECS& ecs, const std::uint8_t& layer) : mECS(ecs), mFuncSet(false)
     {
-        m_ecs.RegisterSystem(layer, this);
+        mECS.registerSystem(layer, this);
     }
 
     // --getKey--
@@ -156,7 +155,7 @@ namespace TDS
     void System<Cs...>::doAction(const float elapsedMilliseconds, Archetype* archetype)
     {
         if (mFuncSet)
-            DoAction<0>(elapsedMilliseconds,
+            doAction<0>(elapsedMilliseconds,
                 archetype->type,
                 archetype->entityIds,
                 archetype->componentData);
@@ -187,7 +186,7 @@ namespace TDS
             ("System was executed against an incorrect Archetype");
         }
 
-        DoAction<Index + 1>(elapsedMilliseconds,
+        doAction<Index + 1>(elapsedMilliseconds,
             archeTypeIds,
             entityIDs,
             t,
@@ -210,7 +209,7 @@ namespace TDS
             T& t,
             Ts... ts)
     {
-        m_func(elapsedMilliseconds, entityIDs, ts...);
+        mFunc(elapsedMilliseconds, entityIDs, ts...);
     }
 
     // ECS ==========================================================================================
@@ -252,7 +251,7 @@ namespace TDS
         mComponentMap.emplace(componentTypeId, new Component<C>);
         mComponentMap[componentTypeId]->setName(name);
 
-        systemCount++;
+        ++componentCount;
     }
 
     // --registerSystem--
@@ -262,7 +261,7 @@ namespace TDS
     inline void ECS::registerSystem(const std::uint8_t& layer, SystemBase* system)
     {
         ++systemCount;
-        mSystems[layer].push_back(system);
+        mSystems[layer].emplace_back(system);
     }
 
     // --registerEntity--
@@ -279,12 +278,16 @@ namespace TDS
     // --addComponent--
     // Add a component to the entity, and (optionally) put in the values for each variable in the component
     // entityId - entityID of the entity
-    // args - values of the variables in the component (IN ORDER)
     // Return - pointer to the entity's component data
-    template<typename C, typename... Args>
-    inline C* ECS::addComponent(const EntityID& entityID, Args&&... args)
+
+    // args - values of the variables in the component (IN ORDER)
+    //template<typename C, typename... Args>
+    //inline C* ECS::addComponent(const EntityID& entityID, Args&&... args)
+
+    template<typename C>
+    inline C* ECS::addComponent(const EntityID& entityID)
     {
-        // no safety checks
+        // add safety checks
 
         ComponentTypeID newCompTypeId = Component<C>::getTypeID();
 
@@ -307,7 +310,7 @@ namespace TDS
 
             // Copy the ArchetypeID to add in the new component
             ArchetypeID newArchetypeId = oldArchetype->type;
-            ///newArchetypeId.push_back(newCompTypeId);
+            ///newArchetypeId.emplace_back(newCompTypeId);
             newArchetypeId[newCompTypeId] = 1;
             ///std::sort(newArchetypeId.begin(), newArchetypeId.end());
 
@@ -332,7 +335,7 @@ namespace TDS
                 std::size_t newSize = currentSize + newCompDataSize;
                 if (newSize > newArchetype->componentDataSize[j])
                 {
-                    newArchetype->componentDataSize[j] *= 2;
+                    //newArchetype->componentDataSize[j] *= 2;
                     newArchetype->componentDataSize[j] += newCompDataSize;
                     unsigned char* newData = new unsigned char[newArchetype->componentDataSize[j]];
                     for (std::size_t e = 0; e < newArchetype->entityIds.size(); ++e)
@@ -369,9 +372,12 @@ namespace TDS
                     }
                 }
 
+                //newComponent
+                //    = new (&newArchetype->componentData[j][currentSize])
+                //    C(std::forward<Args>(args)...);
                 newComponent
                     = new (&newArchetype->componentData[j][currentSize])
-                    C(std::forward<Args>(args)...);
+                    C();
 
             cnt:;
             }
@@ -436,7 +442,7 @@ namespace TDS
         else
         {
             ///ArchetypeID newArchetypeId(1, newCompTypeId);
-            ArchetypeID newArchetypeId(systemCount, 0);
+            ArchetypeID newArchetypeId(componentCount, 0);
             newArchetypeId[newCompTypeId] = 1;
 
             const ComponentBase* const newComp = mComponentMap[newCompTypeId];
@@ -461,12 +467,15 @@ namespace TDS
                 newArchetype->componentData[newCompTypeId] = newData;
             }
 
+            //newComponent
+            //    = new (&newArchetype->componentData[newCompTypeId][currentSize])
+            //    C(std::forward<Args>(args)...);
             newComponent
                 = new (&newArchetype->componentData[newCompTypeId][currentSize])
-                C(std::forward<Args>(args)...);
+                C();
         }
 
-        newArchetype->entityIds.push_back(entityID);
+        newArchetype->entityIds.emplace_back(entityID);
         record.index = newArchetype->entityIds.size() - 1;
         record.archetype = newArchetype;
 
@@ -506,22 +515,32 @@ namespace TDS
 
         Archetype* newArchetype = getArchetype(newArchetypeId);
 
+        // For each component in archetype
         for (std::size_t j = 0; j < newArchetypeId.size(); ++j)
         {
+            // No component
             if (!newArchetypeId[j])
             {
                 continue;
             }
 
+            // New component base pointer 
             const ComponentBase* const newComp = mComponentMap[(unsigned int)j];
-
+            // Size of new component base pointer
             const std::size_t& newCompDataSize = newComp->getSize();
 
+            // Current size of the component in the new archetype
             std::size_t currentSize = newArchetype->entityIds.size() * newCompDataSize;
+            // New size of the component in the new archetype
             std::size_t newSize = currentSize + newCompDataSize;
+
+            // If the new size is more than the current component data capacity
+            // Making space for new component in new archetype
             if (newSize > newArchetype->componentDataSize[j])
             {
+                // Increase capacity (size) like a vector (MAY CHANGE)
                 newArchetype->componentDataSize[j] *= 2;
+                // ??
                 newArchetype->componentDataSize[j] += newCompDataSize;
                 unsigned char* newData = new unsigned char[newSize];
                 for (std::size_t e = 0; e < newArchetype->entityIds.size(); ++e)
@@ -535,8 +554,10 @@ namespace TDS
                 newArchetype->componentData[j] = newData;
             }
 
+            // currentSize gives back pointer to the end of the component data
             newComp->constructData(&newArchetype->componentData[j][currentSize]);
 
+            // Old archetype (to delete the component)
             ArchetypeID oldArchetypeId = oldArchetype->type;
 
             for (std::size_t i = 0; i < oldArchetype->type.size(); ++i)
@@ -546,8 +567,10 @@ namespace TDS
                     continue;
                 }
 
+                // Found the matching component
                 if (i == j)
                 {
+                    // Size of the component data
                     const std::size_t& oldCompDataSize
                         = mComponentMap[(unsigned int)i]->getSize();
 
@@ -621,7 +644,7 @@ namespace TDS
                 oldArchetype->entityIds.end(),
                 entityId), oldArchetype->entityIds.end());
 
-        newArchetype->entityIds.push_back(entityId);
+        newArchetype->entityIds.emplace_back(entityId);
         record.index = newArchetype->entityIds.size() - 1;
         record.archetype = newArchetype;
     }
@@ -634,6 +657,7 @@ namespace TDS
     inline C* ECS::getComponent(const EntityID& entityId)
     {
         ComponentTypeID compTypeId = Component<C>::getTypeID();
+
         if (!mEntityArchetypeMap.contains(entityId))
             return nullptr; // it doesn't exist
 
@@ -800,24 +824,41 @@ namespace TDS
         // Archetype doesn't exist, so create a new one
         Archetype* newArchetype = new Archetype;
         newArchetype->type = id;
-        mArchetypes.push_back(newArchetype);
+        mArchetypes.reserve(mArchetypes.size() + 1);
+        mArchetypes.emplace_back(newArchetype);
 
         // Add an empty array for each component in the type
         for (ArchetypeID::size_type i = 0; i < id.size(); ++i)
         {
             if (newArchetype->type[i])
             {
-                newArchetype->componentData.push_back(new unsigned char[0]);
-                newArchetype->componentDataSize.push_back(1);
+                newArchetype->componentData.emplace_back(new unsigned char[0]);
             }
             else
             {
-                newArchetype->componentData.push_back(nullptr);
-                newArchetype->componentDataSize.push_back(0);
+                newArchetype->componentData.emplace_back(nullptr);
             }
+            newArchetype->componentDataSize.emplace_back(0);
         }
 
         return newArchetype;
+    }
+
+    // --getNumberOfArchetypes--
+    // Gets the total number of archetypes
+    // Return - vector of archetypes
+    inline std::vector<Archetype*> ECS::getAllArchetypes()
+    {
+        return mArchetypes;
+    }
+
+    // --getArchetypeID--
+    // Gets archetype ID
+    // id - entityID
+    // Return - archetype ID
+    inline ArchetypeID ECS::getArchetypeID(EntityID& id)
+    {
+        return mEntityArchetypeMap[id].archetype->type;
     }
 
     // --~ECS--
@@ -855,9 +896,17 @@ namespace TDS
         std::vector<std::string> componentNames;
         for (auto i : mComponentMap)
         {
-            componentNames.push_back((i.second)->getName());
+            componentNames.emplace_back((i.second)->getName());
         }
         return componentNames;
+    }
+
+    // --getNumberOfComponents--
+    // Getting number of components
+    // Return - total number of components
+    inline std::uint32_t ECS::getNumberOfComponents()
+    {
+        return componentCount;
     }
 
     // --getEntities--
@@ -866,9 +915,9 @@ namespace TDS
     inline std::vector<EntityID> ECS::getEntities()
     {
         std::vector<EntityID> entityIDs;
-        for (auto i : mEntityArchetypeMap)
+        for (auto& i : mEntityArchetypeMap)
         {
-            entityIDs.push_back(i.first);
+            entityIDs.emplace_back(i.first);
         }
         return entityIDs;
     }
@@ -894,8 +943,39 @@ namespace TDS
             }
 
             auto it = mComponentMap.find(i);
-            components.push_back(it->second->getName());
+            components.emplace_back(it->second->getName());
         }
+        return components;
+    }
+
+    // --getEntityComponentsBase--
+    // Get components of a certain entity
+    // entityId - entityID given
+    // Return - list of names of the components the entity has
+    inline std::vector<IComponent*> ECS::getEntityComponentsBase(const EntityID& entityId)
+    {
+        std::vector<IComponent*> components;
+
+        if (!mEntityArchetypeMap.contains(entityId))
+            return components; // it doesn't exist
+
+        Record& record = mEntityArchetypeMap[entityId];
+
+        if (!record.archetype)
+            return components; // there's no components anyway    
+
+        for (int i = 0; i < record.archetype->type.size(); ++i)
+        {
+            if (!(record.archetype->type[i]))
+            {
+                continue;
+            }
+
+            auto it = mComponentMap.find(i);
+
+            components.emplace_back(reinterpret_cast<IComponent*>(record.archetype->componentData[i] + mComponentMap[i]->getSize() * record.index));
+        }
+
         return components;
     }
 
@@ -905,13 +985,17 @@ namespace TDS
     template<class C>
     inline std::vector<EntityID> ECS::getEntitiesWith()
     {
+        std::vector<EntityID> entitiesList;
+
         for (auto i : ecs.getEntities())
         {
             C* theType = ecs.getComponent<C>(i);
             if (theType)
             {
-                entitiesList.push_back(i);
+                entitiesList.emplace_back(i);
             }
         }
+
+        return entitiesList;
     }
 }

@@ -12,6 +12,8 @@
 #include <iostream>
 #include <chrono>
 
+#include "components/IComponent.h"
+
 // reference: https://indiegamedev.net/2020/05/19/an-entity-component-system-with-data-locality-in-cpp/
 namespace TDS
 {
@@ -58,17 +60,13 @@ namespace TDS
         // (data is stored by component, then entity ID, not by entityID first)
         std::vector<ComponentData>          componentData;
 
-        // vector of sizes of each component data
+        // vector of sizes of each component total data used
         std::vector<std::size_t>            componentDataSize;
 
         // vector of entity IDs that are under this archetype
         // entities with Physics, and entities with Physics and Collision are under 2 different archetypes
         std::vector<EntityID>               entityIds;
     };
-
-
-    //base class helps us by allowing child class to store any type of component
-    //by having a non-template base-class we can store any templated version of the child class using a pointer and polymorphism.
 
     // SYSTEM BASE CLASS ==================================================================================
     // Base system class for system class 
@@ -229,9 +227,22 @@ namespace TDS
         // Gets the archetype class pointer of the given archetype ID
         Archetype*                          getArchetype(const ArchetypeID& id);
 
+        // Gets all archetypes
+        ArchetypesArray                     getAllArchetypes();
+
+        // Gets archetype ID
+        ArchetypeID                         getArchetypeID(EntityID& id);
+
         // Add a component to the entity, and (optionally) put in the values for each variable in the component
-        template<typename C, typename... Args>
-        C*                                  addComponent(const EntityID& entityId, Args&&... args);
+        //template<typename C, typename... Args>
+        //C*                                addComponent(const EntityID& entityId, Args&&... args);
+
+        // Add a component to the entity
+        template<typename C>
+        C*                                  addComponent(const EntityID& entityId);
+
+        // Add components to a new entity by archetype
+        void                                addComponents(const EntityID& entityId, ArchetypeID archetype);
 
         // Remove a component from the entity
         template<typename C>
@@ -240,6 +251,10 @@ namespace TDS
         // Get a component data from the entity
         template<typename C>
         C*                                  getComponent(const EntityID& entityId);
+
+        // Get a component data from the entity
+        template<class C>
+        C*                                  getComponent(const EntityID& entityId, Record& record);
 
         // Get entities with a certain component in the angle bracket
         template<typename C>
@@ -257,15 +272,23 @@ namespace TDS
         // Getting all registered components
         std::vector<std::string>            getAllRegisteredComponents();
 
+        // Getting number of components
+        std::uint32_t                       getNumberOfComponents();
+
         // Get components of a certain entity
         std::vector<std::string>            getEntityComponents(const EntityID& entityId);
+        
+        // Get components of a certain entity
+        std::vector<IComponent*>            getEntityComponentsBase(const EntityID& entityId);
 
         // Getting all registered entities
         std::vector<EntityID>               getEntities();
 
     private:
 
-        int                                 systemCount = 0;
+        std::uint32_t                       systemCount = 0;
+
+        std::uint32_t                       componentCount = 0;
 
         EntityArchetypeMap                  mEntityArchetypeMap;
 
@@ -289,8 +312,8 @@ namespace TDS
         explicit                            Entity(ECS& ecs = ecs);
 
         // Adding a new component, with component values
-        template<typename C, typename... Args>
-        C*                                  add(Args&&... args);
+        template<typename C>
+        C*                                  add();
 
         // Adding a new component overload, move component data
         template<typename C>

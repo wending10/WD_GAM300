@@ -15,11 +15,11 @@
 #include <windows.h>
 
 #include <string>
-
+#include "dotnet/ImportExport.h"
 
 namespace TDS
 {
-	class WindowsWin
+	class DLL_API WindowsWin
 	{
 	public:		//functions
 				WindowsWin(HINSTANCE hInstance, int nCmdShow, const wchar_t* className);

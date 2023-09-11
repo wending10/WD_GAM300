@@ -26,11 +26,14 @@
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"
 #include "TDSMath.h"
+//#include "vulkanSwapChain.h"
+#include "Vector2.h"
+#include "dotnet/ImportExport.h"
 
 namespace TDS
 {
 	
-	class VulkanInstance
+	class DLL_API VulkanInstance
 	{
 
 		static std::vector<char> readFile(const std::string& filename) 
@@ -50,6 +53,16 @@ namespace TDS
 			file.close();
 
 			return buffer;
+
+		}
+	struct QueueFamilyIndices
+	{
+		std::optional<uint32_t> graphicsFamily;
+		std::optional<uint32_t>	presentFamily;
+		bool isComplete()
+		{
+			return graphicsFamily.has_value() &&
+				   presentFamily.has_value();
 		}
 		struct QueueFamilyIndices
 		{

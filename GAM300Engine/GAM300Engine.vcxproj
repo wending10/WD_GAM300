@@ -79,6 +79,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(SolutionDir)..\Dependencies\assimp\lib\Debug;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>C:\sandbox\GAM300\Dependencies\dotnet\include;C:\sandbox\GAM300\Dependencies;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -116,10 +118,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_USRDLL;DLL_API_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +130,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\Libs;$(SolutionDir)..\Libs\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -138,6 +145,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,10 +165,18 @@
     <ClCompile Include="..\Shared_Libs\Vector2.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
+    <ClCompile Include="Include\ecs\ecs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\application.cpp" />
     <ClCompile Include="Src\camera\camera.cpp" />
     <ClCompile Include="Src\Input.cpp" />
+    <ClCompile Include="Src\Geometry\AABB.cpp" />
+    <ClCompile Include="Src\Geometry\Geometry.cpp" />
+    <ClCompile Include="Src\Geometry\Line.cpp" />
+    <ClCompile Include="Src\Geometry\Plane.cpp" />
+    <ClCompile Include="Src\Geometry\Ray.cpp" />
+    <ClCompile Include="Src\Geometry\Sphere.cpp" />
+    <ClCompile Include="Src\Geometry\Triangle.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp" />
@@ -180,6 +196,14 @@
     <ClInclude Include="Include\application.h" />
     <ClInclude Include="Include\camera\camera.h" />
     <ClInclude Include="Include\Input.h" />
+    <ClInclude Include="Include\dotnet\ImportExport.h" />
+    <ClInclude Include="Include\Geometry\AABB.h" />
+    <ClInclude Include="Include\Geometry\Geometry.h" />
+    <ClInclude Include="Include\Geometry\Line.h" />
+    <ClInclude Include="Include\Geometry\Plane.h" />
+    <ClInclude Include="Include\Geometry\Ray.h" />
+    <ClInclude Include="Include\Geometry\Sphere.h" />
+    <ClInclude Include="Include\Geometry\Triangle.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />
     <ClInclude Include="Include\vulkanTools\vulkanInstance.h" />
