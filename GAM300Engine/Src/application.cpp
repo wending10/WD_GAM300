@@ -69,13 +69,10 @@ namespace TDS
      }
      void Application::Update()
      {
-         while (m_isRunning)
+         //m_isRunning = m_window.processInputEvent(); //process event after rendering????
+         while (m_window.processInputEvent())
          {
              m_pVKInst.get()->drawFrame(m_window);
-             m_isRunning = m_window.processInputEvent(); //process event after rendering????
-             if (Input::isMouseScrollDown())
-                 std::cout << "scrolling mouse up\n";
-
 
 
 

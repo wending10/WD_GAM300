@@ -277,6 +277,9 @@ namespace TDS
 		std::string_view TEXTURE_PATH = "../assets/textures/viking_room.png";
 		std::string_view MODEL_PATH = "../assets/models/viking_room.obj";
 
+
+		//to be removed
+		float val{ 45.f };
 	};
 
 
