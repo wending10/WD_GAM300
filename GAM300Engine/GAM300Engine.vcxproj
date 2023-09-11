@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>C:\sandbox\GAM300\Dependencies;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>C:\sandbox\GAM300\Dependencies\dotnet\include;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -128,7 +128,8 @@
       <AdditionalDependencies>vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "C:\sandbox\GAM300\Dependencies\dotnet\bin" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,6 +161,7 @@
     <ClCompile Include="..\Shared_Libs\Vector2.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
+    <ClCompile Include="Include\ecs\ecs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\application.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />

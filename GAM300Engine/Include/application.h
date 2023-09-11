@@ -9,7 +9,9 @@
 #include <stdexcept>
 #include "dotnet/include/coreclrhost.h" 
 #include <iomanip>
+#include "ecs/ecs.h"
 
+static class TDS::ECS TDS::ecs;
 
 namespace TDS
 {
@@ -24,6 +26,7 @@ namespace TDS
 		void   Update();
 		void   Render() {}
 		void   Exit() {}
+		void   Run();
 
 		static void HelloWorld();
 

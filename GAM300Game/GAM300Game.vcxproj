@@ -78,12 +78,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(OutDir)</LibraryPath>
     <IncludePath>$(SolutionDir)GAM300Engine;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)Dependencies\dotnet\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(OutDir);$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>C:\sandbox\GAM300\Dependencies\dotnet\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -119,14 +121,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\GAM300Engine\x64\Debug;$(SolutionDir)..\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GAM300Engine.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "$(OutDir)net7.0" "$(OutDir)"
-rmdir /s /q "$(OutDir)net7.0"</Command>
+      <Command>xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
+rmdir /s /q "$(OutDir)net6.0"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +151,7 @@ rmdir /s /q "$(OutDir)net7.0"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="gameMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,6 @@
 
 #include "application.h"
 
-
 #if _DEBUG
 #pragma comment( linker, "/subsystem:console" )
 int main(int argc, const char** argv) {

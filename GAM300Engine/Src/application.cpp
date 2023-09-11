@@ -4,8 +4,8 @@
 #include <vector>
 #include <array>
 #include <sstream>
+#include <filesystem>
 #include "application.h"
-
 
 namespace TDS
 {
@@ -18,24 +18,55 @@ namespace TDS
 
      void Application::Initialize()
      {
+     }
+
+     void Application::Run()
+     {
          startScriptEngine();
 
-         // Get the function
-         void(*hwFunc)(void) = GetFunctionPtr<void(*)(void)>
+         // Step 1: Get Functions
+         auto init = GetFunctionPtr<void(*)(void)>
              (
-                 "ScriptAPI",                 // Name of the Assembly
-                 "ScriptAPI.EngineInterface", // Full name of the class
-                 "HelloWorld"                 // Name of the function
+                 "ScriptAPI",
+                 "ScriptAPI.EngineInterface",
+                 "Init"
              );
-         // Call it
-         hwFunc();
+         auto addScript = GetFunctionPtr<bool(*)(int, const char*)>
+             (
+                 "ScriptAPI",
+                 "ScriptAPI.EngineInterface",
+                 "AddScriptViaName"
+             );
+         auto executeUpdate = GetFunctionPtr<void(*)(void)>
+             (
+                 "ScriptAPI",
+                 "ScriptAPI.EngineInterface",
+                 "ExecuteUpdate"
+             );
+
+         // Step 2: Initialize
+         init();// Step 1: Get Functions
+
+         //addScript(0, "Test");
+
+         // Load
+         while (true)
+         {
+             if (GetKeyState(VK_ESCAPE) & 0x8000)
+                 break;
+
+             // Step 4: Run the Update loop for our scripts
+             executeUpdate();
+         }
 
          stopScriptEngine();
      }
+
      void Application::Update()
      {
          while (m_isRunning)
          {
+             Run();
              m_isRunning = m_window.processInputEvent();
              m_pVKInst.get()->drawFrame();
          }
@@ -60,9 +91,13 @@ namespace TDS
          PathRemoveFileSpecA(runtimePath.data());
          // Since PathRemoveFileSpecA() removes from data(), the size is not updated, so we must manually update it
          runtimePath.resize(std::strlen(runtimePath.data()));
+
+         std::filesystem::current_path(runtimePath);
+
          // Construct the CoreCLR path
          std::string coreClrPath(runtimePath); // Works
          coreClrPath += "\\coreclr.dll";
+         
          // Load the CoreCLR DLL
          coreClr = LoadLibraryExA(coreClrPath.c_str(), nullptr, 0);
          if (!coreClr)

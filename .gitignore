@@ -37,3 +37,10 @@
 GAM300Engine/.vs/GAM300Engine/v16/.suo
 *.vs
 GAM300Engine/.vs/GAM300Engine/v17/.suo
+/GAM300Editor/x64/Debug
+/GAM300Engine/bin/Debug-x64/net6.0
+/GAM300Engine/x64
+/GAM300Game/x64/Debug
+/ManagedScripts/obj
+/ScriptAPI/obj
+/ScriptAPI/x64
