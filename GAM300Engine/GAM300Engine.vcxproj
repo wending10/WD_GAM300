@@ -159,6 +159,7 @@
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\application.cpp" />
+    <ClCompile Include="Src\camera\camera.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp" />
@@ -177,12 +178,12 @@
     <ClInclude Include="..\Shared_Libs\Vector3.h" />
     <ClInclude Include="..\Shared_Libs\Vector4.h" />
     <ClInclude Include="Include\application.h" />
+    <ClInclude Include="Include\camera\camera.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />
     <ClInclude Include="Include\vulkanTools\vulkanInstance.h" />
     <ClInclude Include="Include\vulkanTools\vulkanSwapChain.h" />
-    <ClInclude Include="application.h" />
     <ClInclude Include="Include\ecs\ecs.h" />
     <ClInclude Include="Include\ecs\ecs.hpp" />
     <ClInclude Include="Include\eventmanager\eventmanager.h" />

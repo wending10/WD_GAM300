@@ -938,6 +938,7 @@ namespace TDS
 			throw std::runtime_error("failed to present swap chain image!");
 		}
 
+
 		//advance to the next frame
 		m_currentFrame = (m_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 	}
@@ -949,15 +950,14 @@ namespace TDS
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 		
-		//just for testing input
+		//just for testing input will be removed
 		if (Input::isMouseScrollUp())
 		{
-			if(val == std::is_signed<float>())
-				val *= -1;
+			val *= time;
 		}
 		
 		UniformBufferObject ubo{};
-		ubo.model = Mat4::Rotate(Vec3(0.f, 0.f, 1.f), val * time);
+		ubo.model = Mat4::Rotate(Vec3(0.f, 0.f, 1.f), val);
 		ubo.view = Mat4::LookAt(Vec3(2.0f, 2.0f, 2.0f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
 		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad,
 			static_cast<float>(m_swapChainExtent.width) / static_cast<float>(m_swapChainExtent.height), 0.1f, 10.f);
