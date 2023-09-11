@@ -24,19 +24,15 @@ namespace TDS
 	****************************************************************************/
 	void SceneManager::Init()
 	{
-		ecs.registerComponent<CameraComponent>("CameraComponent");
-		ecs.registerComponent<Collider>("Collider");
-		ecs.registerComponent<NameTag>("NameTag");
-		ecs.registerComponent<PlayerAttributes>("PlayerAttributes");
-		ecs.registerComponent<RigidBody>("RigidBody");
-		ecs.registerComponent<Sprite>("Sprite");
-		ecs.registerComponent<Tag>("Tag");
-		ecs.registerComponent<Transform>("Transform");
-		ecs.registerComponent<WinData>("WinData");
-		//ecs.registerComponent<Audio>();
-		//ecs.registerComponent<HUDComponent>();
-		//ecs.registerComponent<Attributes>();
-		//ecs.registerComponent<EnemyAttributes>();
+		ECS::registerComponent<CameraComponent>("CameraComponent");
+		ECS::registerComponent<Collider>("Collider");
+		ECS::registerComponent<NameTag>("NameTag");
+		ECS::registerComponent<PlayerAttributes>("PlayerAttributes");
+		ECS::registerComponent<RigidBody>("RigidBody");
+		ECS::registerComponent<Sprite>("Sprite");
+		ECS::registerComponent<Tag>("Tag");
+		ECS::registerComponent<Transform>("Transform");
+		ECS::registerComponent<WinData>("WinData");
 
 		// Setting default scene
 		//sceneDeserialize();
@@ -45,43 +41,43 @@ namespace TDS
 		//allScenes.emplace_back("MainMenu");
 		//startScene = "MainMenu";
 
-		//EntityID entity1 = ecs.getNewID();
-		//ecs.registerEntity(entity1);
-		//ecs.addComponent<NameTag>(entity1);
-		//ecs.getComponent<NameTag>(entity1)->SetNameTag("entity1");
+		//EntityID entity1 = ECS::getNewID();
+		//ECS::registerEntity(entity1);
+		//ECS::addComponent<NameTag>(entity1);
+		//ECS::getComponent<NameTag>(entity1)->SetNameTag("entity1");
 
-		//EntityID entity2 = ecs.getNewID();
-		//ecs.registerEntity(entity2);
-		//ecs.addComponent<NameTag>(entity2);
-		//ecs.getComponent<NameTag>(entity2)->SetNameTag("entity2");
-		//ecs.addComponent<Transform>(entity2);
-		//ecs.getComponent<Transform>(entity2)->SetPosition(Vec3{2.f, 3.f, 4.f});
-		//ecs.getComponent<Transform>(entity2)->SetScale(Vec3{2.f, 3.f, 4.f});
+		//EntityID entity2 = ECS::getNewID();
+		//ECS::registerEntity(entity2);
+		//ECS::addComponent<NameTag>(entity2);
+		//ECS::getComponent<NameTag>(entity2)->SetNameTag("entity2");
+		//ECS::addComponent<Transform>(entity2);
+		//ECS::getComponent<Transform>(entity2)->SetPosition(Vec3{2.f, 3.f, 4.f});
+		//ECS::getComponent<Transform>(entity2)->SetScale(Vec3{2.f, 3.f, 4.f});
 
-		//ecs.addComponent<Transform>(entity1);
+		//ECS::addComponent<Transform>(entity1);
 
-		//EntityID entity3 = ecs.getNewID();
-		//ecs.registerEntity(entity3);
-		//ecs.addComponent<NameTag>(entity3);
-		//ecs.getComponent<NameTag>(entity3)->SetNameTag("entity3");
-		//ecs.addComponent<Transform>(entity3);
-		//ecs.getComponent<Transform>(entity3)->SetPosition(Vec3{ 2.f, 3.f, 4.f });
-		//ecs.getComponent<Transform>(entity3)->SetScale(Vec3{ 2.f, 3.f, 4.f });
-		//ecs.addComponent<PlayerAttributes>(entity3);
+		//EntityID entity3 = ECS::getNewID();
+		//ECS::registerEntity(entity3);
+		//ECS::addComponent<NameTag>(entity3);
+		//ECS::getComponent<NameTag>(entity3)->SetNameTag("entity3");
+		//ECS::addComponent<Transform>(entity3);
+		//ECS::getComponent<Transform>(entity3)->SetPosition(Vec3{ 2.f, 3.f, 4.f });
+		//ECS::getComponent<Transform>(entity3)->SetScale(Vec3{ 2.f, 3.f, 4.f });
+		//ECS::addComponent<PlayerAttributes>(entity3);
 
 		
 		DeserializeFromFile(std::filesystem::current_path().parent_path().string() + "\\assets\\scenes\\MainMenu.json");
 
 		std::cout << "ECS: " << std::endl;
-		for (auto entity : ecs.getEntities())
+		for (auto entity : ECS::getEntities())
 		{
 			std::cout << entity << std::endl;
 
-			if (NameTag* nametag = ecs.getComponent<NameTag>(entity))
+			if (NameTag* nametag = ECS::getComponent<NameTag>(entity))
 			{
 				std::cout << nametag->GetNameTag() << std::endl;
 			}
-			if (Transform* transform = ecs.getComponent<Transform>(entity))
+			if (Transform* transform = ECS::getComponent<Transform>(entity))
 			{
 				std::cout << transform->GetPosition() << std::endl;
 				std::cout << transform->GetScale() << std::endl;
@@ -96,7 +92,7 @@ namespace TDS
 
 	bool SceneManager::Deserialize(const rapidjson::Value& obj)
 	{
-		ecs.removeAllEntities();
+		ECS::removeAllEntities();
 
 		//auto archetypeSizeObject = obj.MemberBegin();
 
@@ -113,8 +109,8 @@ namespace TDS
 			auto hmmmm = theItr->name.GetString();
 			auto hmm = theItr->value.GetObject();
 
-			EntityID newEntity = ecs.getNewID();
-			ecs.registerEntity(newEntity);
+			EntityID newEntity = ECS::getNewID();
+			ECS::registerEntity(newEntity);
 
 			for (auto& m : theItr->value.GetObject())
 			{
@@ -159,109 +155,100 @@ namespace TDS
 	****************************************************************************/
 	bool SceneManager::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
 	{
-		writer->StartObject();
+	//	writer->StartObject();
 
-		// Serialize archetype sizes first
-		writer->String("Archetype Sizes", static_cast<rapidjson::SizeType>(std::string("Archetype Sizes").length()), false);
+	//	// Serialize archetype sizes first
+	//	writer->String("Archetype Sizes", static_cast<rapidjson::SizeType>(std::string("Archetype Sizes").length()), false);
 
-		writer->StartObject();
+	//	writer->StartObject();
 
-		for (Archetype* a : ecs.getAllArchetypes())
-		{
-			if (!a->entityIds.size())
-			{
-				continue;	// there is no entities under this archetype
-			}
+	//	for (Archetype* a : ECS::getAllArchetypes())
+	//	{
+	//		if (!a->entityIds.size())
+	//		{
+	//			continue;	// there is no entities under this archetype
+	//		}
 
-			std::unordered_map<std::uint32_t, std::uint32_t> archetypeSizes;
+	//		std::unordered_map<std::uint32_t, std::uint32_t> archetypeSizes;
 
-			std::string archetype = "";
+	//		std::string archetype = "";
 
-			for (int i = 0; i < ecs.getNumberOfComponents(); ++i)
-			{
-				if (a->componentData[i])
-				{
-					archetype += "1";
-					archetypeSizes[i] = a->componentDataSize[i];
-				}
-				else
-				{
-					archetype += "0";
-				}
-			}
+	//		for (int i = 0; i < ECS::getNumberOfComponents(); ++i)
+	//		{
+	//			if (a->componentData[i])
+	//			{
+	//				archetype += "1";
+	//				archetypeSizes[i] = a->componentDataSize[i];
+	//			}
+	//			else
+	//			{
+	//				archetype += "0";
+	//			}
+	//		}
 
-			writer->String(archetype.c_str(), static_cast<rapidjson::SizeType>(archetype.length()), false);
+	//		writer->String(archetype.c_str(), static_cast<rapidjson::SizeType>(archetype.length()), false);
 
-			// Start of data sizes
-			writer->StartObject();
+	//		// Start of data sizes
+	//		writer->StartObject();
 
-			for (auto archetypeSizeMap = archetypeSizes.begin(); archetypeSizeMap != archetypeSizes.end(); ++archetypeSizeMap)
-			{
-				writer->Key(std::to_string(archetypeSizeMap->first).c_str());
-				writer->Int(archetypeSizeMap->second);
-			}
+	//		for (auto archetypeSizeMap = archetypeSizes.begin(); archetypeSizeMap != archetypeSizes.end(); ++archetypeSizeMap)
+	//		{
+	//			writer->Key(std::to_string(archetypeSizeMap->first).c_str());
+	//			writer->Int(archetypeSizeMap->second);
+	//		}
 
-			writer->EndObject();
+	//		writer->EndObject();
 
-		}
+	//	}
 
-		// End of archetype sizes
-		writer->EndObject();
+	//	// End of archetype sizes
+	//	writer->EndObject();
 
-		// =======================================================
-		// Serialize entity data
-		writer->String("Entity Data", static_cast<rapidjson::SizeType>(std::string("Entity Data").length()), false);
-		writer->StartObject();
+	//	// =======================================================
+	//	// Serialize entity data
+	//	writer->String("Entity Data", static_cast<rapidjson::SizeType>(std::string("Entity Data").length()), false);
+	//	writer->StartObject();
 
-		std::string entityNo = "EntityNo";
-		std::string component = "Component";
+	//	std::string entityNo = "EntityNo";
+	//	std::string component = "Component";
 
-		std::vector<EntityID> entityList = ecs.getEntities();
+	//	std::vector<EntityID> entityList = ECS::getEntities();
 
-		for (int i = 0; i < entityList.size(); ++i)
-		{
-			writer->String(std::to_string(i).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
-			writer->StartObject();
+	//	for (int i = 0; i < entityList.size(); ++i)
+	//	{
+	//		writer->String(std::to_string(i).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
+	//		writer->StartObject();
 
-			std::string archetypeIDString = "";
-			for (auto componentID : ecs.getArchetypeID(entityList[i]))
-			{
-				archetypeIDString += std::to_string(componentID);
-			}
+	//		std::string archetypeIDString = "";
+	//		for (auto componentID : ECS::getArchetypeID(entityList[i]))
+	//		{
+	//			archetypeIDString += std::to_string(componentID);
+	//		}
 
-			writer->Key("ArchetypeID");
-			writer->String(archetypeIDString.c_str());
+	//		writer->Key("ArchetypeID");
+	//		writer->String(archetypeIDString.c_str());
 
-			std::vector<std::string> componentStrings = ecs.getEntityComponents(entityList[i]);
-			int j = 0;
-			for (IComponent* component : ecs.getEntityComponentsBase(entityList[i]))
-			{
-				writer->String(componentStrings[j].c_str(), static_cast<rapidjson::SizeType>(componentStrings[j].length()), false);
-				writer->StartObject();
+	//		std::vector<std::string> componentStrings = ECS::getEntityComponents(entityList[i]);
+	//		int j = 0;
+	//		for (IComponent* component : ECS::getEntityComponentsBase(entityList[i]))
+	//		{
+	//			writer->String(componentStrings[j].c_str(), static_cast<rapidjson::SizeType>(componentStrings[j].length()), false);
+	//			
+	//			writer->StartObject();
+	//			component->Serialize(writer);
+	//			writer->EndObject();
 
-				//if (componentStrings[j] == "Transform")
-				//{
-				//	ecs.getComponent<Transform>(entityList[i])->Serialize(writer);
-				//}
-				//else if (componentStrings[j] == "NameTag")
-				//{
-				//	ecs.getComponent<NameTag>(entityList[i])->Serialize(writer);
-				//}
+	//			++j;
+	//		}
 
-				component->Serialize(writer);
-				writer->EndObject();
+	//		writer->EndObject();
+	//	}
 
-				++j;
-			}
+	//	// End of entity data
+	//	writer->EndObject();
 
-			writer->EndObject();
-		}
-
-		// End of entity data
-		writer->EndObject();
-
-		// End of file
-		writer->EndObject();
+	//	// End of file
+	//	writer->EndObject();
 
 		return true;
 	}

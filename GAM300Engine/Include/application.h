@@ -11,8 +11,6 @@
 #include <iomanip>
 #include "ecs/ecs.h"
 
-static class TDS::ECS TDS::ecs;
-
 namespace TDS
 {
 	class DLL_API Application

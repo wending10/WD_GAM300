@@ -14,7 +14,7 @@
 #include <limits>
 #include <algorithm>
 #include <fstream>
-
+#include <optional>
 #include "windowswindow.h"
 #include "vulkanTools/vulkanDebugger.h"
 #include "vulkanTools/vulkanDevice.h"

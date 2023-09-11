@@ -17,9 +17,9 @@ namespace TDS
     // --Entity Constructor--
     // Making a new entity
     // theecs - reference to the ECS class
-    inline Entity::Entity(ECS& theecs) : mID(theecs.getNewID()), mECS(theecs)
+    inline Entity::Entity() : mID(ECS::getNewID())
     {
-        mECS.registerEntity(mID);
+        ECS::registerEntity(mID);
     }
 
     // --add--
@@ -28,7 +28,7 @@ namespace TDS
     template<typename C>
     inline C* Entity::add()
     {
-        return mECS.addComponent<C>(mID);
+        return ECS::addComponent<C>(mID);
     }
 
     // --add--
@@ -38,7 +38,7 @@ namespace TDS
     template<typename C>
     inline C* Entity::add(C&& c)
     {
-        return mECS.addComponent<C>(mID, std::forward<C>(c));
+        return ECS::addComponent<C>(mID, std::forward<C>(c));
     }
 
     // --getID--
@@ -211,13 +211,11 @@ namespace TDS
     {
         mFunc(elapsedMilliseconds, entityIDs, ts...);
     }
-
+    
     // ECS ==========================================================================================
     // --ECS Constructor--
     inline ECS::ECS()
-        :
-        mEntityIdCounter(1)
-    {}
+    { }
 
     // --getNewID--
     // Get new entity ID 
@@ -430,7 +428,7 @@ namespace TDS
                     entityID);
 
             std::for_each(willBeRemoved, oldArchetype->entityIds.end(),
-                [this, &oldArchetype](const EntityID& eid)
+                [&oldArchetype](const EntityID& eid)
                 {
                     Record& moveR = mEntityArchetypeMap[eid];
                     --moveR.index;
@@ -744,7 +742,7 @@ namespace TDS
                 entityId);
 
         std::for_each(willBeRemoved, oldArchetype->entityIds.end(),
-            [this, &oldArchetype, &entityId](const EntityID& eid)
+            [&oldArchetype, &entityId](const EntityID& eid)
             {
                 if (eid == entityId)
                     return; // no need to adjust our removing one
@@ -759,13 +757,13 @@ namespace TDS
     // Remove the all of entities
     inline void ECS::removeAllEntities()
     {
-        std::vector<EntityID> entities = ecs.getEntities();
+        std::vector<EntityID> entities = getEntities();
 
         for (auto& i : entities)
         {
             removeEntity(i);
         }
-        mEntityIdCounter = static_cast<int>(ecs.getEntities().size()) + 1;
+        mEntityIdCounter = static_cast<int>(getEntities().size()) + 1;
     }
 
     // --setIDCounter--
@@ -956,8 +954,8 @@ namespace TDS
     {
         std::vector<IComponent*> components;
 
-        if (!mEntityArchetypeMap.contains(entityId))
-            return components; // it doesn't exist
+        //if (!mEntityArchetypeMap.contains(entityId))
+        //    return components; // it doesn't exist
 
         Record& record = mEntityArchetypeMap[entityId];
 
@@ -987,9 +985,9 @@ namespace TDS
     {
         std::vector<EntityID> entitiesList;
 
-        for (auto i : ecs.getEntities())
+        for (auto i : getEntities())
         {
-            C* theType = ecs.getComponent<C>(i);
+            C* theType = getComponent<C>(i);
             if (theType)
             {
                 entitiesList.emplace_back(i);

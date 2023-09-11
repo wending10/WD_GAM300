@@ -206,32 +206,32 @@ namespace TDS
                                             ~ECS();
 
         // Get new entity ID 
-        EntityID                            getNewID();
+        static EntityID                     getNewID();
 
         // Get the total number of systems
-        int                                 getSystemCount();
+        static int                          getSystemCount();
 
         // Get the total number of systems
         template<class C>
-        void                                registerComponent(std::string name);
+        static void                         registerComponent(std::string name);
 
         // Register a new system
-        void                                registerSystem(const std::uint8_t& layer, SystemBase* system);
+        static void                         registerSystem(const std::uint8_t& layer, SystemBase* system);
 
         // Register a new entity
-        void                                registerEntity(const EntityID entityId);
+        static void                         registerEntity(const EntityID entityId);
 
         // Run all the systems of a certain layer
-        void                                runSystems(const std::uint8_t& layer, const float elapsedMilliseconds);
+        static void                         runSystems(const std::uint8_t& layer, const float elapsedMilliseconds);
 
         // Gets the archetype class pointer of the given archetype ID
-        Archetype*                          getArchetype(const ArchetypeID& id);
+        static Archetype*                   getArchetype(const ArchetypeID& id);
 
         // Gets all archetypes
-        ArchetypesArray                     getAllArchetypes();
+        static ArchetypesArray              getAllArchetypes();
 
         // Gets archetype ID
-        ArchetypeID                         getArchetypeID(EntityID& id);
+        static ArchetypeID                  getArchetypeID(EntityID& id);
 
         // Add a component to the entity, and (optionally) put in the values for each variable in the component
         //template<typename C, typename... Args>
@@ -239,69 +239,67 @@ namespace TDS
 
         // Add a component to the entity
         template<typename C>
-        C*                                  addComponent(const EntityID& entityId);
+        static C*                            addComponent(const EntityID& entityId);
 
         // Add components to a new entity by archetype
-        void                                addComponents(const EntityID& entityId, ArchetypeID archetype);
+        //static void                                addComponents(const EntityID& entityId, ArchetypeID archetype);
 
         // Remove a component from the entity
         template<typename C>
-        void                                removeComponent(const EntityID& entityId);
+        static void                          removeComponent(const EntityID& entityId);
 
         // Get a component data from the entity
         template<typename C>
-        C*                                  getComponent(const EntityID& entityId);
+        static C*                            getComponent(const EntityID& entityId);
 
         // Get a component data from the entity
         template<class C>
-        C*                                  getComponent(const EntityID& entityId, Record& record);
+        static C*                            getComponent(const EntityID& entityId, Record& record);
 
         // Get entities with a certain component in the angle bracket
         template<typename C>
-        std::vector<EntityID>               getEntitiesWith();
+        static std::vector<EntityID>         getEntitiesWith();
 
         // Remove the entity, by removing all its component and data
-        void                                removeEntity(const EntityID& entityId);
+        static void                          removeEntity(const EntityID& entityId);
 
         // Remove the all of entities
-        void                                removeAllEntities();
+        static void                          removeAllEntities();
 
         // Set the entity ID counter
-        void                                setIDCounter(int counter);
+        static void                          setIDCounter(int counter);
 
         // Getting all registered components
-        std::vector<std::string>            getAllRegisteredComponents();
+        static std::vector<std::string>      getAllRegisteredComponents();
 
         // Getting number of components
-        std::uint32_t                       getNumberOfComponents();
+        static std::uint32_t                 getNumberOfComponents();
 
         // Get components of a certain entity
-        std::vector<std::string>            getEntityComponents(const EntityID& entityId);
+        static std::vector<std::string>      getEntityComponents(const EntityID& entityId);
         
         // Get components of a certain entity
-        std::vector<IComponent*>            getEntityComponentsBase(const EntityID& entityId);
+        static std::vector<IComponent*>      getEntityComponentsBase(const EntityID& entityId);
 
         // Getting all registered entities
-        std::vector<EntityID>               getEntities();
+        static std::vector<EntityID>         getEntities();
 
     private:
 
-        std::uint32_t                       systemCount = 0;
+        static std::uint32_t                 systemCount;
 
-        std::uint32_t                       componentCount = 0;
+        static std::uint32_t                 componentCount;
 
-        EntityArchetypeMap                  mEntityArchetypeMap;
+        static EntityArchetypeMap            mEntityArchetypeMap;
 
-        ArchetypesArray                     mArchetypes;
+        static ArchetypesArray               mArchetypes;
 
-        EntityID                            mEntityIdCounter;
+        static EntityID                      mEntityIdCounter;
 
-        SystemsArrayMap                     mSystems;
+        static SystemsArrayMap               mSystems;
 
-        ComponentTypeIDBaseMap              mComponentMap;
+        static ComponentTypeIDBaseMap        mComponentMap;
     };
-
-    extern ECS ecs;
 
     // ENTITY =============================================================================================
     //wrapper for entity ID
@@ -309,7 +307,7 @@ namespace TDS
     {
     public:
         // Making a new entity
-        explicit                            Entity(ECS& ecs = ecs);
+        explicit                            Entity();
 
         // Adding a new component, with component values
         template<typename C>
@@ -324,7 +322,6 @@ namespace TDS
 
     private:
         EntityID                            mID;
-        ECS&                                mECS;
     };
 }
 

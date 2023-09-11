@@ -88,6 +88,8 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>GAM300Engine.lib;%(AdditionalDependencies);GAM300Engine.lib</AdditionalDependencies>

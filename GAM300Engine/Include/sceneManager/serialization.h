@@ -1,10 +1,10 @@
 #ifndef SERIALIZATION
 #define SERIALIZATION
 
-#include <rapidJSON/rapidjson.h>
-#include <rapidJSON/document.h>
-#include <rapidJSON/stringbuffer.h>
-#include <rapidJSON/prettywriter.h>
+#include "rapidJSON/rapidjson.h"
+#include "rapidJSON/document.h"
+#include "rapidJSON/stringbuffer.h"
+#include "rapidJSON/prettywriter.h"
 
 namespace TDS
 {
