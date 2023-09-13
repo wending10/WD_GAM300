@@ -285,7 +285,6 @@ namespace TDS
 
 
 		//to be removed
-		float val{ 45.f };
 		TDSCamera camera{ -90.0f ,0.f};
 	};
 

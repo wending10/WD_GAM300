@@ -32,6 +32,8 @@ namespace TDS
 		m_Up = Vec3::Normalize(Vec3::Cross(m_Right, m_Front));
 
 		m_Down = -m_Up;
+
+		Input::wheelDelta = 0;
 	}
 
 	void TDSCamera::UpdateCamera(float deltaTime)
@@ -51,6 +53,8 @@ namespace TDS
 			if(keys.right)
 				m_Position += m_Right * CameraSpeed;
 		}
+
+		translate(Vec3(0.f,0.f,static_cast<float>(Input::wheelDelta * 0.005f)));
 		updateViewMatrix();
 	}
 
@@ -88,5 +92,10 @@ namespace TDS
 			keys.right	= false;
 		}
 		return false;
+	}
+
+	void TDSCamera::translate(Vec3 deltaWheel)
+	{
+		m_Position += deltaWheel;
 	}
 }

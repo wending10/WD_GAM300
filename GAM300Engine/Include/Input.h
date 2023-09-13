@@ -117,6 +117,7 @@ namespace TDS
 
 		static KeyStatus keystatus;
 		static uint32_t keyCode;
+		static short wheelDelta;
 	private:
 		static keyboardInputMap keyboard;
 		static mouseInputMap mouse;

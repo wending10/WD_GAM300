@@ -47,6 +47,8 @@ namespace TDS
 		float	m_Height{};
 
 		void updateViewMatrix();
+		void translate(Vec3 deltaWheel); // act like zoom?
+
 	};
 
 
