@@ -87,7 +87,13 @@ namespace TDS
 		{
 			bool wasDown, isDown;
 		};
-
+		enum class KeyStatus
+		{
+			IDLE,
+			PRESSED,
+			RELEASED,
+			REPEATED
+		};
 		struct keyboardInputMap
 		{
 			keyState keys[TDS_MAX_KEYS];
@@ -109,10 +115,11 @@ namespace TDS
 			mousePosition position;
 		};
 
+		static KeyStatus keystatus;
+		static uint32_t keyCode;
 	private:
 		static keyboardInputMap keyboard;
 		static mouseInputMap mouse;
-
 	public:
 		static keyState GetKeyState(uint32_t keycode);
 

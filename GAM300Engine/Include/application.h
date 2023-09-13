@@ -95,7 +95,6 @@ namespace TDS
 		WindowsWin						 m_window;
 		bool							 m_isRunning{ true };
 		std::shared_ptr <VulkanInstance> m_pVKInst;
-
 	};//class application
 
 

@@ -12,7 +12,7 @@ namespace TDS
 		updateViewMatrix();
 	}
 
-
+	
 	Mat4 TDSCamera::GetViewMatrix() const
 	{
 		return Mat4::LookAt(m_Position, m_Position + m_Front, m_Up);
@@ -34,4 +34,59 @@ namespace TDS
 		m_Down = -m_Up;
 	}
 
+	void TDSCamera::UpdateCamera(float deltaTime)
+	{
+		if (moving())
+		{
+			float CameraSpeed = m_Speed * deltaTime;
+			if (keys.up)
+			{
+				m_Position += m_Front * CameraSpeed;
+
+			}
+			if(keys.down)
+				m_Position -= m_Front * CameraSpeed;
+			if(keys.left)
+				m_Position -= m_Right * CameraSpeed;
+			if(keys.right)
+				m_Position += m_Right * CameraSpeed;
+		}
+		updateViewMatrix();
+	}
+
+
+	bool TDSCamera::moving()
+	{
+		if (Input::keystatus == Input::KeyStatus::PRESSED || Input::keystatus == Input::KeyStatus::REPEATED)
+		{
+			switch (Input::keyCode)
+			{
+				case TDS_W:
+					return keys.up = true;
+					break;
+
+				case TDS_A:
+					return keys.left = true;
+					break;
+
+				case TDS_S:
+					return keys.down = true;
+					break;
+
+				case TDS_D:
+					return keys.right = true;
+
+				default:
+					return false;
+			}
+		}
+		else
+		{
+			keys.up		= false;		  
+			keys.left	= false;				  
+			keys.down	= false;			  
+			keys.right	= false;
+		}
+		return false;
+	}
 }

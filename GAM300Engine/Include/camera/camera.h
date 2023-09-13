@@ -15,8 +15,18 @@ namespace TDS
 		//using lookat and Euler Angles
 		Mat4 GetViewMatrix() const;
 
+		void UpdateCamera(float deltaTime);
+
+		bool moving();
+
 	private:
 		
+		struct {
+			bool left	{ false };
+			bool right	{ false };
+			bool up		{ false };
+			bool down	{ false };
+		}keys;
 		//camera attributes
 		Vec3	m_Position{};
 		Vec3	m_Front{};
@@ -30,7 +40,7 @@ namespace TDS
 		float	m_Pitch{};
 
 		//option to toggle with
-		float	m_Speed{};
+		float	m_Speed{1.0f};
 		float	m_mouseSensitivity{}; //should it be in input???
 		float	m_ZoomLevel{};
 		float	m_Width{};
