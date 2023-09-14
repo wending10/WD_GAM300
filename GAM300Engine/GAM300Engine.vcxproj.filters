@@ -1,297 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Source Files\vulkanTools">
-      <UniqueIdentifier>{bab04baa-5efd-41fe-a91e-4dec703cb9f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\windows">
-      <UniqueIdentifier>{bdd5d9ec-9c60-4fdd-baac-9a0bbb1dece0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\windows">
-      <UniqueIdentifier>{73b01578-c164-4098-a147-c027dcbf7f4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\vulkanCore">
-      <UniqueIdentifier>{97068d07-b11d-429a-a85a-272cd95e04d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\ecs">
-      <UniqueIdentifier>{ae66f285-0767-448f-ade8-2bf0ccf1f623}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\eventmanager">
-      <UniqueIdentifier>{6e6a9487-578f-4712-a956-e436851157f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{688c5041-2d98-465e-a0a0-8a3d8eb7f132}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{186a4028-fff4-42b1-88b3-038379876fb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\camera">
-      <UniqueIdentifier>{6db60734-4474-4b5e-86a0-ee2ed8ea98d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\camera">
-      <UniqueIdentifier>{b2c15cdd-ad4e-48cf-b881-14e1e8099a3c}</UniqueIdentifier>
-    <Filter Include="Source Files\Geometry">
-      <UniqueIdentifier>{5eee0b3a-a8ba-4e71-9594-59e6e78931c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Geometry">
-      <UniqueIdentifier>{a28162a9-687d-45c0-85fd-c970f51f4736}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Shared_Libs\MathCommon.cpp" />
+    <ClCompile Include="..\Shared_Libs\Matrix2.cpp" />
+    <ClCompile Include="..\Shared_Libs\Matrix3.cpp" />
+    <ClCompile Include="..\Shared_Libs\Matrix4.cpp" />
+    <ClCompile Include="..\Shared_Libs\Quaternion.cpp" />
+    <ClCompile Include="..\Shared_Libs\Vector2.cpp" />
+    <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
+    <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
+    <ClCompile Include="Include\ecs\ecs.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Src\application.cpp" />
+    <ClCompile Include="Src\components\cameraComponent.cpp" />
+    <ClCompile Include="Src\components\collider.cpp" />
+    <ClCompile Include="Src\components\componentHelperFunctions.cpp" />
+    <ClCompile Include="Src\components\nameTag.cpp" />
+    <ClCompile Include="Src\components\playerAttributes.cpp" />
+    <ClCompile Include="Src\components\rigidBody.cpp" />
+    <ClCompile Include="Src\components\sprite.cpp" />
+    <ClCompile Include="Src\components\tag.cpp" />
+    <ClCompile Include="Src\components\transform.cpp" />
+    <ClCompile Include="Src\components\winData.cpp" />
+    <ClCompile Include="Src\camera\camera.cpp" />
+    <ClCompile Include="Src\Input.cpp" />
+    <ClCompile Include="Src\Geometry\AABB.cpp" />
+    <ClCompile Include="Src\Geometry\Geometry.cpp" />
+    <ClCompile Include="Src\Geometry\Line.cpp" />
+    <ClCompile Include="Src\Geometry\Plane.cpp" />
+    <ClCompile Include="Src\Geometry\Ray.cpp" />
+    <ClCompile Include="Src\Geometry\Sphere.cpp" />
+    <ClCompile Include="Src\Geometry\Triangle.cpp" />
+    <ClCompile Include="Src\memoryManager\memoryManager.cpp" />
+    <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
+    <ClCompile Include="Src\sceneManager\serialization.cpp" />
+    <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
+    <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp" />
+    <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp" />
+    <ClCompile Include="Src\vulkanTools\vulkanSwapChain.cpp" />
+    <ClCompile Include="Src\windowswindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\windowswindow.cpp">
-      <Filter>Source Files\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp">
-      <Filter>Source Files\vulkanTools</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp">
-      <Filter>Source Files\vulkanTools</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp">
-      <Filter>Source Files\vulkanTools</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\vulkanTools\vulkanSwapChain.cpp">
-      <Filter>Source Files\vulkanTools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\MathCommon.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Matrix2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Matrix3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Matrix4.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Quaternion.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Vector2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Vector3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared_Libs\Vector4.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Input.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\camera\camera.cpp">
-      <Filter>Source Files\camera</Filter>
-    <ClCompile Include="Src\Geometry\AABB.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Geometry\Geometry.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Geometry\Line.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Geometry\Plane.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Geometry\Ray.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Geometry\Sphere.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Geometry\Triangle.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ecs\ecs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\cameraComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\collider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\componentHelperFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\nameTag.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\playerAttributes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\rigidBody.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\tag.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\components\winData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\memoryManager\memoryManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\sceneManager\sceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\sceneManager\serialization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Include\application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\windowswindow.h">
-      <Filter>Header Files\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\vulkanTools\vulkanInstance.h">
-      <Filter>Header Files\vulkanCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\vulkanTools\vulkanDebugger.h">
-      <Filter>Header Files\vulkanCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\vulkanTools\vulkanDevice.h">
-      <Filter>Header Files\vulkanCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\vulkanTools\vulkanSwapChain.h">
-      <Filter>Header Files\vulkanCore</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\MathCommon.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Matrix2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Matrix3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Matrix4.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Quaternion.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\TDSMath.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Vector2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Vector3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared_Libs\Vector4.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ecs\ecs.h">
-      <Filter>Header Files\ecs</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ecs\ecs.hpp">
-      <Filter>Header Files\ecs</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\eventmanager\eventmanager.h">
-      <Filter>Header Files\eventmanager</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\eventmanager\eventmanager.hpp">
-      <Filter>Header Files\eventmanager</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Input.h">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\camera\camera.h">
-      <Filter>Header Files\camera</Filter>
-    <ClInclude Include="Include\dotnet\ImportExport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\AABB.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\Geometry.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\Line.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\Plane.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\Ray.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\Sphere.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Geometry\Triangle.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\cameraComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\collider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\components.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\iComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\nameTag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\playerAttributes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\rigidBody.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\tag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\components\winData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\memoryManager\memoryManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\sceneManager\sceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\sceneManager\serialization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="..\Shared_Libs\MathCommon.h" />
+    <ClInclude Include="..\Shared_Libs\Matrix2.h" />
+    <ClInclude Include="..\Shared_Libs\Matrix3.h" />
+    <ClInclude Include="..\Shared_Libs\Matrix4.h" />
+    <ClInclude Include="..\Shared_Libs\Quaternion.h" />
+    <ClInclude Include="..\Shared_Libs\TDSMath.h" />
+    <ClInclude Include="..\Shared_Libs\Vector2.h" />
+    <ClInclude Include="..\Shared_Libs\Vector3.h" />
+    <ClInclude Include="..\Shared_Libs\Vector4.h" />
+    <ClInclude Include="Include\application.h" />
+    <ClInclude Include="Include\components\cameraComponent.h" />
+    <ClInclude Include="Include\components\collider.h" />
+    <ClInclude Include="Include\components\components.h" />
+    <ClInclude Include="Include\components\iComponent.h" />
+    <ClInclude Include="Include\components\nameTag.h" />
+    <ClInclude Include="Include\components\playerAttributes.h" />
+    <ClInclude Include="Include\components\rigidBody.h" />
+    <ClInclude Include="Include\components\sprite.h" />
+    <ClInclude Include="Include\components\tag.h" />
+    <ClInclude Include="Include\components\transform.h" />
+    <ClInclude Include="Include\components\winData.h" />
+    <ClInclude Include="Include\camera\camera.h" />
+    <ClInclude Include="Include\Input.h" />
+    <ClInclude Include="Include\dotnet\ImportExport.h" />
+    <ClInclude Include="Include\Geometry\AABB.h" />
+    <ClInclude Include="Include\Geometry\Geometry.h" />
+    <ClInclude Include="Include\Geometry\Line.h" />
+    <ClInclude Include="Include\Geometry\Plane.h" />
+    <ClInclude Include="Include\Geometry\Ray.h" />
+    <ClInclude Include="Include\Geometry\Sphere.h" />
+    <ClInclude Include="Include\Geometry\Triangle.h" />
+    <ClInclude Include="Include\memoryManager\memoryManager.h" />
+    <ClInclude Include="Include\sceneManager\sceneManager.h" />
+    <ClInclude Include="Include\sceneManager\serialization.h" />
+    <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
+    <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />
+    <ClInclude Include="Include\vulkanTools\vulkanInstance.h" />
+    <ClInclude Include="Include\vulkanTools\vulkanSwapChain.h" />
+    <ClInclude Include="Include\ecs\ecs.h" />
+    <ClInclude Include="Include\ecs\ecs.hpp" />
+    <ClInclude Include="Include\eventmanager\eventmanager.h" />
+    <ClInclude Include="Include\eventmanager\eventmanager.hpp" />
+    <ClInclude Include="Include\windowswindow.h" />
   </ItemGroup>
 </Project>

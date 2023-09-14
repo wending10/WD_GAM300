@@ -60,12 +60,24 @@ namespace TDS
         case WM_SYSKEYDOWN:
         case WM_SYSKEYUP:
         case WM_KEYDOWN:
-        case WM_KEYUP:
         {
             uint32_t VKcode = wParam;
+            WORD keyflags = HIWORD(lParam);
+            if (!(keyflags & KF_REPEAT))
+            {
+                Input::keystatus = Input::KeyStatus::PRESSED;
+            }
+            else if(keyflags & KF_REPEAT)
+              Input::keystatus = Input::KeyStatus::REPEATED;
+
             bool wasDown = (lParam & (1 << 30)) != 0;
             bool isDown = (lParam & (1 << 31)) == 0;
             Input::processKeyboardInput(VKcode, wasDown, isDown);
+        }break;
+        case WM_KEYUP:
+        {
+            Input::keystatus = Input::KeyStatus::RELEASED;
+            Input::keystatus = Input::KeyStatus::IDLE;
         }break;
         }
      }
@@ -116,13 +128,10 @@ namespace TDS
 
      void Application::Update()
      {
-         //m_isRunning = m_window.processInputEvent(); //process event after rendering????
          while (m_window.processInputEvent())
          {
              m_pVKInst.get()->drawFrame(m_window);
-
-
-
+           
              Input::scrollStop();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());

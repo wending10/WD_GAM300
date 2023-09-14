@@ -2,13 +2,13 @@
 #define APPLICATION
 
 #include <iostream>
+#include <stdexcept>
+#include <iomanip>
 
 #include "windowswindow.h"
 #include "vulkanTools/vulkanInstance.h"
 #include "dotnet/ImportExport.h"
-#include <stdexcept>
 #include "dotnet/include/coreclrhost.h" 
-#include <iomanip>
 #include "ecs/ecs.h"
 
 namespace TDS
@@ -95,7 +95,6 @@ namespace TDS
 		WindowsWin						 m_window;
 		bool							 m_isRunning{ true };
 		std::shared_ptr <VulkanInstance> m_pVKInst;
-
 	};//class application
 
 

@@ -949,16 +949,11 @@ namespace TDS
 		
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-		
-		//just for testing input will be removed
-		/*if (Input::isMouseScrollUp())
-		{
-			val *= time;
-		}*/
+		camera.UpdateCamera(time/1000.f);
 		
 		UniformBufferObject ubo{};
-		ubo.model = Mat4::Rotate(Vec3(0.f, 0.f, 1.f), time * val);
-		ubo.view = Mat4::LookAt(Vec3(2.0f, 2.0f, 2.0f), Vec3(0.f, 0.f, 0.f), Vec3(0.f, 0.f, 1.f));
+		ubo.model = Mat4();
+		ubo.view = camera.GetViewMatrix();
 		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad,
 			static_cast<float>(m_swapChainExtent.width) / static_cast<float>(m_swapChainExtent.height), 0.1f, 10.f);
 		ubo.proj.m[1][1] *= -1;
@@ -974,7 +969,6 @@ namespace TDS
 
 
 		//maybe touching on recreate the renderpass in the future, for now just make it simple
-
 		cleanupSwapChain();
 
 		createSwapChain(_Windows);
@@ -1677,7 +1671,7 @@ namespace TDS
 		//read file via assimp
 		Assimp::Importer importer;
 
-		//importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, true); // telling assimp to normalize for us but take note that assimp normalize is form (-1 to 1)
+		importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, true); // telling assimp to normalize for us but take note that assimp normalize is form (-1 to 1)
 
 		const aiScene* scene = importer.ReadFile(MODEL_PATH.data(), aiProcess_FlipUVs |
 			aiProcess_GenUVCoords |
