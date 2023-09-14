@@ -79,12 +79,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(SolutionDir)..\Dependencies\assimp\lib\Debug;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(SolutionDir)..\Dependencies\dotnet\include;$(SolutionDir)..\Dependencies;$(SolutionDir)..\Dependencies\assimp\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)Dependencies\dotnet\include;$(SolutionDir)Dependencies\assimp\include;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir).bin\$(Configuration)-$(Platform)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(SolutionDir)..\Dependencies\assimp\lib\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir).bin\$(Configuration)-$(Platform)</OutDir>
+    <ExternalIncludePath>$(SolutionDir)Dependencies\dotnet\include;$(SolutionDir)Dependencies\assimp\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,8 +133,9 @@
       <AdditionalDependencies>vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /s /r /y /q "$(SolutionDir)..\Dependencies\dotnet\bin" "$(OutDir)"
+xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
+rmdir /s /q "$(OutDir)net6.0"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,7 +144,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_USRDLL;DLL_API_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -155,8 +159,9 @@
       <AdditionalDependencies>vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /s /r /y /q "$(SolutionDir)..\Dependencies\dotnet\bin" "$(OutDir)"
+xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
+rmdir /s /q "$(OutDir)net6.0"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
