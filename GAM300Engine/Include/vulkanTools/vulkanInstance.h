@@ -34,7 +34,7 @@
 namespace TDS
 {
 	
-	class DLL_API VulkanInstance
+	class /*DLL_API*/ VulkanInstance
 	{
 
 		static std::vector<char> readFile(const std::string& filename) 
@@ -56,7 +56,7 @@ namespace TDS
 			return buffer;
 
 		}
-	
+
 		struct QueueFamilyIndices
 		{
 			std::optional<uint32_t> graphicsFamily;
@@ -73,7 +73,6 @@ namespace TDS
 			std::vector<VkSurfaceFormatKHR> formats{};
 			std::vector<VkPresentModeKHR> presentModes{};
 		};
-
 		struct Vertex
 		{
 			Vec3 pos;
