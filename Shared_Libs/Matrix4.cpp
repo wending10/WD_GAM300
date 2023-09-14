@@ -385,6 +385,7 @@ namespace TDS
 
         return result;
     }
+#if 0 // unsure if correct implementation
   	Quat Mat4::toQuat(Mat4 const& m4)
 	{
 		Mat3 m = Mat3(m4.m[0][0], m4.m[0][1], m4.m[0][2],
@@ -431,6 +432,17 @@ namespace TDS
 			return Quat();
         }
 	}
+#endif
+    Quat Mat4::toQuat(Mat4 const& m)
+    {
+        Vec3 up = Vec3::Normalize(Vec3(m[4], m[5], m[6]));
+        Vec3 forward = Vec3::Normalize(Vec3(m[8], m[9], m[10]));
+        Vec3 right = Vec3::Cross(up, forward);
+        up = Vec3::Cross(forward, right);
+
+        return Quat::lookRotation(forward, up);
+
+    }
 
     Mat4& Mat4::operator=(const Mat4& var)
     {
