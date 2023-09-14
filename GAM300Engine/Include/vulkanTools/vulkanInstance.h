@@ -30,7 +30,7 @@
 //#include "vulkanSwapChain.h"
 #include "Vector2.h"
 #include "dotnet/ImportExport.h"
-
+#include "camera/camera.h"
 namespace TDS
 {
 	
@@ -56,6 +56,7 @@ namespace TDS
 			return buffer;
 
 		}
+
 		struct QueueFamilyIndices
 		{
 			std::optional<uint32_t> graphicsFamily;
@@ -278,12 +279,12 @@ namespace TDS
 		 std::vector<uint32_t> m_indices// can be uint16_t == 65535 unique vertices
 		{};
 
-		std::string_view TEXTURE_PATH = "../assets/textures/viking_room.png";
-		std::string_view MODEL_PATH = "../assets/models/viking_room.obj";
+		std::string_view TEXTURE_PATH = "../assets/textures/SpiderTex.jpg";
+		std::string_view MODEL_PATH = "../assets/models/spider.obj";
 
 
 		//to be removed
-		float val{ 45.f };
+		TDSCamera camera{ -90.0f ,0.f};
 	};
 
 

@@ -4,6 +4,9 @@ namespace TDS
 {
 	Input::keyboardInputMap Input::keyboard;
 	Input::mouseInputMap	Input::mouse;
+	Input::KeyStatus		Input::keystatus;
+	uint32_t				Input::keyCode;
+	short					Input::wheelDelta;
 
 	Input::keyState Input::GetKeyState(uint32_t keycode)
 	{
@@ -37,6 +40,7 @@ namespace TDS
 			if (VKcode >= 'A' && VKcode <= 'Z')
 			{
 				uint32_t TDCkeycode = VKcode - 'A';
+				keyCode = VKcode - 'A';
 				keyboard.keys[TDCkeycode].isDown = isDown;
 				keyboard.keys[TDCkeycode].wasDown = wasDown;
 			}
@@ -211,7 +215,8 @@ namespace TDS
 
 	void Input::processMouseScroll(WPARAM _wParam)
 	{
-		if (GET_WHEEL_DELTA_WPARAM(_wParam) > 0)
+		wheelDelta = GET_WHEEL_DELTA_WPARAM(_wParam);
+		if (wheelDelta > 0)
 		{
 			mouse.buttons[TDS_MOUSE_SCROLL].isScrollUp = true;
 			mouse.buttons[TDS_MOUSE_SCROLL].isScrollDown = false;

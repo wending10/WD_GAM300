@@ -6,8 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
-    <PlatformTarget>ARM64</PlatformTarget>
-    <BaseOutputPath>C:\sandbox\GAM300\GAM300Engine\x64\Debug</BaseOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutputPath>
