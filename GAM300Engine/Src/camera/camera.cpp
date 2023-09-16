@@ -38,10 +38,10 @@ namespace TDS
 
 	void TDSCamera::UpdateCamera(float deltaTime)
 	{
-		(void)deltaTime;
+	
 		if (moving())
 		{
-			float CameraSpeed = m_Speed * 0.0067f;
+			float CameraSpeed = m_Speed * deltaTime;
 			if (keys.up)
 			{
 				m_Position += m_Front * CameraSpeed;

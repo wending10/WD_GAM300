@@ -39,6 +39,15 @@
     <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanSwapChain.cpp" />
     <ClCompile Include="Src\windowswindow.cpp" />
+    <ClCompile Include="Src\vulkanTools\vmaSetup.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_demo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -84,5 +93,7 @@
     <ClInclude Include="Include\eventmanager\eventmanager.h" />
     <ClInclude Include="Include\eventmanager\eventmanager.hpp" />
     <ClInclude Include="Include\windowswindow.h" />
+    <ClInclude Include="Include\vulkanTools\vmaSetup.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
   </ItemGroup>
 </Project>

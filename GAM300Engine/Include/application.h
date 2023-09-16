@@ -34,6 +34,8 @@ namespace TDS
 
 		void handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     
+
+		bool initImgui();
 	private:
 		// Function Pointers to CoreCLR functions
 		coreclr_initialize_ptr      initializeCoreClr = nullptr;
