@@ -5,8 +5,10 @@
 #include <array>
 #include <sstream>
 #include <filesystem>
+
 #include "application.h"
 #include "Input.h"
+#include "imguiHelper/ImguiHelper.h"
 //#include "sceneManager/sceneManager.h"
 
 namespace TDS
@@ -19,7 +21,8 @@ namespace TDS
 	 }
      void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
      {
-         //ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); for imgui implementation
+         IMGUI_WIN32_WNDPROCHANDLER_FORWARD_DECLARATION;
+         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
          //can extern  some imgui wndproc handler | tbc
 
         switch (uMsg)
@@ -128,16 +131,55 @@ namespace TDS
 
      void Application::Update()
      {
+         auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
-             m_pVKInst.get()->drawFrame(m_window);
-           
+             float DeltaTime;
+             {
+                 auto                         Now = std::chrono::system_clock::now();
+                 std::chrono::duration<float> ElapsedSeconds = Now - Clock;
+                 DeltaTime = ElapsedSeconds.count();
+                 Clock = Now;
+             }
+             //imgui helper
+             {//docking 
+                 imguiHelper::Update();
+                 ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                     ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+                     ImGuiWindowFlags_NoBackground;
+
+                 ImGuiViewport* viewport = ImGui::GetMainViewport();
+                 ImGui::SetNextWindowPos(viewport->WorkPos);
+                 ImGui::SetNextWindowSize(viewport->WorkSize);
+                 ImGui::SetNextWindowViewport(viewport->ID);
+
+                 ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+                 ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+                 ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+                 ImGui::Begin("DockSpace", 0, window_flags);
+
+                 ImGui::PopStyleVar(3);
+
+                 ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+                 ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+                 ImGui::End();
+             }
+             ImGui::ShowDemoWindow();
+
+             m_pVKInst.get()->drawFrame(m_window, DeltaTime);
+            
+
              Input::scrollStop();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
+         imguiHelper::Exit();
      }
      Application::~Application()
      {
+         
          m_window.~WindowsWin();
      }
 
@@ -240,6 +282,70 @@ namespace TDS
                  << "Failed to shut down CoreCLR. Error 0x" << RESULT << "\n";
              throw std::runtime_error(oss.str());
          }
+     }
+
+     bool Application::initImgui()
+     {
+         VkDescriptorPoolSize pool_sizes[] =
+         {
+             { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+             { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+             { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+             { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+             { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+         };
+
+         VkDescriptorPoolCreateInfo pool_info = {};
+         pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+         pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+         pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
+         pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+         pool_info.pPoolSizes = pool_sizes;
+
+         vkCreateDescriptorPool(m_pVKInst.get()->m_logicalDevice, &pool_info, nullptr
+           , &m_pVKInst.get()->m_ImguiDescriptorPool);
+
+         ImGui_ImplVulkan_InitInfo initInfo{};
+
+         initInfo.Instance = m_pVKInst.get()->m_VKhandler;
+         initInfo.PhysicalDevice = m_pVKInst.get()->m_PhysDeviceHandle;
+         initInfo.Device = m_pVKInst.get()->m_logicalDevice;
+         initInfo.QueueFamily = m_pVKInst.get()->findQueueFamilies(initInfo.PhysicalDevice).graphicsFamily.value();
+         initInfo.Queue = m_pVKInst.get()->m_graphicQueue;
+         initInfo.PipelineCache = VK_NULL_HANDLE;
+
+         
+
+
+         initInfo.DescriptorPool = m_pVKInst.get()->m_ImguiDescriptorPool;
+         initInfo.Subpass = 0;
+         initInfo.MinImageCount = 2;
+         initInfo.ImageCount = 2;
+         initInfo.MSAASamples = m_pVKInst.get()->m_msaaSamples;
+         initInfo.Allocator = nullptr;
+         initInfo.CheckVkResultFn = nullptr;
+
+         imguiHelper::initializeImgui(initInfo, m_pVKInst.get()->m_RenderPass, m_window.getWindowHandler());
+
+         if (VkCommandBuffer FCB{ m_pVKInst.get()->beginSingleTimeCommands() }; FCB != nullptr)
+         {
+             imguiHelper::createFont(FCB);
+             m_pVKInst.get()->endSingleTimeCommands(FCB);
+         }
+         else
+         {
+             std::cerr << "failed to create command buffer for imgui font creation\n";
+             return false;
+         }
+
+         return true;
+
      }
 
 }// end TDS

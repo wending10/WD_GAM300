@@ -10,7 +10,7 @@ namespace TDS
 	{
 	public:
 
-		TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 2.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
+		TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 3.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
 
 		//using lookat and Euler Angles
 		Mat4 GetViewMatrix() const;
@@ -19,6 +19,7 @@ namespace TDS
 
 		bool moving();
 
+		float m_Fov{45.f};
 	private:
 		
 		struct {
@@ -38,17 +39,17 @@ namespace TDS
 		//euler angles
 		float	m_Yaw{};
 		float	m_Pitch{};
-
+		
 		//option to toggle with
 		float	m_Speed{1.0f};
-		float	m_mouseSensitivity{}; //should it be in input???
+		float	m_mouseSensitivity{0.1f}; //should it be in input???
 		float	m_ZoomLevel{};
 		float	m_Width{};
 		float	m_Height{};
 
 		void updateViewMatrix();
-		void translate(Vec3 deltaWheel); // act like zoom?
-
+		void translate(const float& deltaWheel); // act like zoom?
+		void ProcessMouseMovement(float mousex, float mousey);
 	};
 
 

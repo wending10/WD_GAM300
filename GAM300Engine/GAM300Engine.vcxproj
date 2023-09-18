@@ -165,6 +165,13 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\Shared_Libs\MathCommon.cpp" />
     <ClCompile Include="..\Shared_Libs\Matrix2.cpp" />
     <ClCompile Include="..\Shared_Libs\Matrix3.cpp" />
@@ -188,6 +195,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\components\transform.cpp" />
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\camera\camera.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
@@ -201,6 +209,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\Model\ModelTransform.cpp" />
     <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
     <ClCompile Include="Src\sceneManager\serialization.cpp" />
+    <ClCompile Include="Src\vulkanTools\vmaSetup.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp" />
@@ -231,6 +240,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\components\transform.h" />
     <ClInclude Include="Include\components\winData.h" />
     <ClInclude Include="Include\camera\camera.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
@@ -245,6 +255,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\sceneManager\sceneManager.h" />
     <ClInclude Include="Include\sceneManager\serialization.h" />
+    <ClInclude Include="Include\vulkanTools\vmaSetup.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />
     <ClInclude Include="Include\vulkanTools\vulkanInstance.h" />
