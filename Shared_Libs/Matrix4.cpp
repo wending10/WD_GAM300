@@ -262,7 +262,7 @@ namespace TDS
 
     Mat4 Mat4::Frustum(float left, float right, float bottom, float top, float zNear, float zFar)
     {
-        Mat4 result(0.f);
+        Mat4 result{};
         result.m[0][0] = 2.0f * zNear / (right - left);
         result.m[1][1] = 2.0f * zNear / (top - bottom);
         result.m[2][0] = (right + left) / (right - left);
@@ -284,7 +284,7 @@ namespace TDS
         Vec3 s = Vec3::Cross(f, up).normalize();
         Vec3 u = Vec3::Cross(s, f);
 
-        Mat4 result(1.f);
+        Mat4 result{};
         result.m[0][0] = s.x;
         result.m[1][0] = s.y;
         result.m[2][0] = s.z;
@@ -340,7 +340,52 @@ namespace TDS
         Vec4 v4(vec.x, vec.y, vec.z, 1.f);
         return Mat4(v1, v2, v3, v4);
     }
+    Mat4 Mat4::Rotate(const Vec3& axis, float angleDegrees)
+    {
+        Mat4 result;
 
+        float angleRadians = angleDegrees * 3.14159265359f / 180.0f;
+        float c = cos(angleRadians);
+        float s = sin(angleRadians);
+        float t = 1.0f - c;
+
+        float x = axis.x;
+        float y = axis.y;
+        float z = axis.z;
+
+        // Normalize the axis
+        float length = sqrt(x * x + y * y + z * z);
+        if (length != 0.0f)
+        {
+            x /= length;
+            y /= length;
+            z /= length;
+        }
+
+        // Rotation matrix elements
+        result.m[0][0] = t * x * x + c;
+        result.m[0][1] = t * x * y + s * z;
+        result.m[0][2] = t * x * z - s * y;
+        result.m[0][3] = 0.0f;
+
+        result.m[1][0] = t * x * y - s * z;
+        result.m[1][1] = t * y * y + c;
+        result.m[1][2] = t * y * z + s * x;
+        result.m[1][3] = 0.0f;
+
+        result.m[2][0] = t * x * z + s * y;
+        result.m[2][1] = t * y * z - s * x;
+        result.m[2][2] = t * z * z + c;
+        result.m[2][3] = 0.0f;
+
+        result.m[3][0] = 0.0f;
+        result.m[3][1] = 0.0f;
+        result.m[3][2] = 0.0f;
+        result.m[3][3] = 1.0f;
+
+        return result;
+    }
+#if 0 // unsure if correct implementation
   	Quat Mat4::toQuat(Mat4 const& m4)
 	{
 		Mat3 m = Mat3(m4.m[0][0], m4.m[0][1], m4.m[0][2],
@@ -387,6 +432,17 @@ namespace TDS
 			return Quat();
         }
 	}
+#endif
+    Quat Mat4::toQuat(Mat4 const& m)
+    {
+        Vec3 up = Vec3::Normalize(Vec3(m[4], m[5], m[6]));
+        Vec3 forward = Vec3::Normalize(Vec3(m[8], m[9], m[10]));
+        Vec3 right = Vec3::Cross(up, forward);
+        up = Vec3::Cross(forward, right);
+
+        return Quat::lookRotation(forward, up);
+
+    }
 
     Mat4& Mat4::operator=(const Mat4& var)
     {

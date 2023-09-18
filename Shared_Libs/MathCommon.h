@@ -61,7 +61,9 @@ namespace TDS
             }
             return min;
         }
-        static int Min(int a, int b) { return std::min(a, b); }
+
+        static int Min(int a, int b) { return (std::min)(a, b); }
+
         static int Min(int count, ...)
         {
             if (count == 0)
@@ -122,7 +124,9 @@ namespace TDS
             }
             return max;
         }
-        static int Max(int a, int b) { return std::max(a, b); }
+
+        static int Max(int a, int b) { return (std::max)(a, b); }
+
         static int Max(int count, ...)
         {
             if (count == 0)
@@ -168,13 +172,13 @@ namespace TDS
         static constexpr float PI = 3.1415926535897931f;
         static constexpr float Infinity = std::numeric_limits<float>::infinity();
         static constexpr float NegativeInfinity = -std::numeric_limits<float>::infinity();
-        static constexpr float Deg2Rad = PI * 2.0f / 360.0f;
+        static constexpr float Deg2Rad = PI  / 180.0f;
         static constexpr float Rad2Deg = 1.0f / Deg2Rad;
         
         // Max number of decimals to display when converting to string
         const int kMaxDecimals = 15; 
         // A tiny floating point value (Read Only).
-        static constexpr float Epsilon = std::numeric_limits<float>::epsilon() * 100;
+        static constexpr float Epsilon = std::numeric_limits<float>::epsilon();
         
         // Clamps a value between a minimum float and maximum float value.
         static float Clamp(float value, float min, float max);
