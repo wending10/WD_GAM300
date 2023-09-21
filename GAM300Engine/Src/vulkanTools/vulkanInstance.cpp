@@ -5,6 +5,8 @@
 #include "vulkanTools/vulkanInstance.h"
 #include "Input.h"
 
+#include "vulkanTools/vmaSetup.h"
+#include "imguiHelper/ImguiHelper.h"
 namespace TDS
 {
 	VulkanInstance::VulkanInstance(const WindowsWin& _Windows)
@@ -71,6 +73,7 @@ namespace TDS
 			for (const auto& device : devices) {
 				if (isDeviceSuitable(device)) {
 					m_PhysDeviceHandle = device;
+					m_msaaSamples = getMaxUsableSampleCount();
 					break;
 				}
 			}
@@ -103,6 +106,7 @@ namespace TDS
 			}
 			VkPhysicalDeviceFeatures deviceFeatures{};
 			deviceFeatures.samplerAnisotropy = VK_TRUE;
+			//deviceFeatures.sampleRateShading = VK_TRUE; // enable sample shading feature will affect performace cost
 
 			VkDeviceCreateInfo createInfo{};
 			  createInfo.sType				     = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -142,22 +146,33 @@ namespace TDS
 		{
 			VkAttachmentDescription colorAttachment{};
 			colorAttachment.format = m_swapChainImageFormat;
-			colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+			colorAttachment.samples = m_msaaSamples;
 			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 			colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 			VkAttachmentDescription depthAttachment{};
 			depthAttachment.format = findDepthFormat();
-			depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+			depthAttachment.samples = m_msaaSamples;
 			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;		//dont care about depth data??
 			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 			depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+			//resolve multisampled color image into regular attachment
+			VkAttachmentDescription colorAttachmentResolve{};
+			colorAttachmentResolve.format = m_swapChainImageFormat;
+			colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+			colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
 
 			VkAttachmentReference colorAttachmentRef{};
@@ -168,11 +183,17 @@ namespace TDS
 			depthAttachmentRef.attachment = 1;
 			depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
+			VkAttachmentReference colorAttachmentResolveRef{};
+			colorAttachmentResolveRef.attachment = 2;
+			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
 			VkSubpassDescription subpass{};
 			subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 			subpass.colorAttachmentCount = 1;
 			subpass.pColorAttachments = &colorAttachmentRef;
 			subpass.pDepthStencilAttachment = &depthAttachmentRef;
+			subpass.pResolveAttachments = &colorAttachmentResolveRef;
+
 
 			VkSubpassDependency dependency{}; //refering to both attachments
 			dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
@@ -184,7 +205,7 @@ namespace TDS
 
 
 			//will be more for stencil or ????
-			std::array<VkAttachmentDescription, 2> attachments = { colorAttachment, depthAttachment };
+			std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment , colorAttachmentResolve};
 
 			VkRenderPassCreateInfo renderPassInfo{};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
@@ -200,7 +221,8 @@ namespace TDS
 			}
 
 		}
-		
+
+
 		{
 			createDescriptorSetLayout();
 		}
@@ -262,8 +284,9 @@ namespace TDS
 
 			VkPipelineMultisampleStateCreateInfo multisampling{};
 			multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-			multisampling.sampleShadingEnable = VK_FALSE;
-			multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+			multisampling.sampleShadingEnable = VK_FALSE;//VK_TRUE; // enable sample shading in the pipeline come with additional performance cost
+			multisampling.rasterizationSamples = m_msaaSamples;
+			//multisampling.minSampleShading = .2f; // min fraction for sample shading; closer to one is smoother
 
 			//depthStencil
 			VkPipelineDepthStencilStateCreateInfo depthStencil{};
@@ -348,8 +371,10 @@ namespace TDS
 			vkDestroyShaderModule(m_logicalDevice, vertShaderModule, nullptr);
 
 		}
-
-
+		//msaa
+		{
+			createColorResource();
+		}
 		//depth buffer must call before framebuffers cause of depth image view
 		{
 			createDepthResource();
@@ -468,7 +493,7 @@ namespace TDS
 			vkDestroyBuffer(m_logicalDevice, uniformBuffers[i], nullptr);
 			vkFreeMemory(m_logicalDevice,uniformBuffersMemory[i], nullptr);
 		}
-
+		vkDestroyDescriptorPool(m_logicalDevice, m_ImguiDescriptorPool, nullptr);
 		vkDestroyDescriptorPool(m_logicalDevice, m_descriptorPool, nullptr);
 
 		vkDestroySampler(m_logicalDevice, m_textureSampler, nullptr);
@@ -829,7 +854,7 @@ namespace TDS
 
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicPipeline);
 
-
+		
 		VkViewport viewport{};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
@@ -864,17 +889,21 @@ namespace TDS
 		//this one is like opengl draw index
 		vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(m_indices.size()), 1, 0, 0, 0);//3rd parameter instance count is for instancing
 
+		//imgui draw
+		imguiHelper::Draw(commandBuffer);
+		
+		
 		vkCmdEndRenderPass(commandBuffer);
 
 		if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
 			throw std::runtime_error("failed to record command buffer!");
 		}
 	}
-	void VulkanInstance::drawFrame(const WindowsWin& _Windows)
+	void VulkanInstance::drawFrame(const WindowsWin& _Windows, float deltaTime)
 	{
+		
 		vkWaitForFences(m_logicalDevice, 1, &m_inFlightFence[m_currentFrame], VK_TRUE, UINT64_MAX);
 		
-
 		uint32_t imageIndex;
 		if (VkResult result{ vkAcquireNextImageKHR(m_logicalDevice, m_SwapChain, UINT64_MAX, m_imageAvailableSemaphore[m_currentFrame], VK_NULL_HANDLE, &imageIndex) };
 			result == VK_ERROR_OUT_OF_DATE_KHR)
@@ -887,14 +916,21 @@ namespace TDS
 			throw std::runtime_error("failed to acquire swap chain image!");
 		}
 
-		updateUniformBuffer(m_currentFrame);
+		updateUniformBuffer(m_currentFrame, deltaTime);
+
+
+		
 
 		// Only reset the fence if we are submitting work
 		vkResetFences(m_logicalDevice, 1, &m_inFlightFence[m_currentFrame]);
 
 		vkResetCommandBuffer(m_commandBuffers[m_currentFrame], /*VkCommandBufferResetFlagBits*/ 0);
-		recordCommandBuffer(m_commandBuffers[m_currentFrame], imageIndex);
 
+		recordCommandBuffer(m_commandBuffers[m_currentFrame], imageIndex);
+		
+		
+		
+		
 		VkSubmitInfo submitInfo{};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
@@ -938,23 +974,19 @@ namespace TDS
 			throw std::runtime_error("failed to present swap chain image!");
 		}
 
-
+		
 		//advance to the next frame
 		m_currentFrame = (m_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 	}
 
-	void VulkanInstance::updateUniformBuffer(uint32_t currentImage)
+	void VulkanInstance::updateUniformBuffer(uint32_t currentImage , float deltaTime)
 	{
-		static auto startTime = std::chrono::high_resolution_clock::now();
-		
-		auto currentTime = std::chrono::high_resolution_clock::now();
-		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-		camera.UpdateCamera(time/1000.f);
+		camera.UpdateCamera(deltaTime);
 		
 		UniformBufferObject ubo{};
 		ubo.model = Mat4();
 		ubo.view = camera.GetViewMatrix();
-		ubo.proj = Mat4::Perspective(45.f * Mathf::Deg2Rad,
+		ubo.proj = Mat4::Perspective(camera.m_Fov * Mathf::Deg2Rad,
 			static_cast<float>(m_swapChainExtent.width) / static_cast<float>(m_swapChainExtent.height), 0.1f, 10.f);
 		ubo.proj.m[1][1] *= -1;
 
@@ -973,15 +1005,22 @@ namespace TDS
 
 		createSwapChain(_Windows);
 		createImageViews();
+		createColorResource();
 		createDepthResource(); //The resolution of the depth buffer should change when the window is resized to match the new color attachment resolution
 		createFrameBuffer();
 	}
 
 	void VulkanInstance::cleanupSwapChain()
 	{
+		//depth
 		vkDestroyImageView(m_logicalDevice, m_depthImageView, nullptr);
 		vkDestroyImage(m_logicalDevice, m_depthImage, nullptr);
 		vkFreeMemory(m_logicalDevice, m_depthImageMemory, nullptr);
+
+		//color msaa
+		vkDestroyImageView(m_logicalDevice, m_colorImageView, nullptr);
+		vkDestroyImage(m_logicalDevice, m_colorImage, nullptr);
+		vkFreeMemory(m_logicalDevice, m_colorImageMemory, nullptr);
 
 		//clean up framebuffers
 		for (const auto& framebuffer : m_swapChainFramebuffers)
@@ -1063,7 +1102,7 @@ namespace TDS
 		swapChainImageViews.resize(m_swapChainImages.size());
 		for (size_t i = 0; i < m_swapChainImages.size(); i++) 
 		{
-			swapChainImageViews[i] = createImageView(m_swapChainImages[i], m_swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT);
+			swapChainImageViews[i] = createImageView(m_swapChainImages[i], m_swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1);
 			
 		}
 	}
@@ -1074,10 +1113,11 @@ namespace TDS
 
 		for (size_t i = 0; i < swapChainImageViews.size(); i++) 
 		{
-			std::array<VkImageView, 2> attachments
+			std::array<VkImageView, 3> attachments
 			{
-			   swapChainImageViews[i],
-			   m_depthImageView				
+			   m_colorImageView,
+			   m_depthImageView,				
+			   swapChainImageViews[i]
 			};
 
 			VkFramebufferCreateInfo framebufferInfo{};
@@ -1232,14 +1272,6 @@ namespace TDS
 	//copy contents from one buffer to another
 	void VulkanInstance::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
 	{
-		//command buffers execute memory transfer operation 
-		//You may wish to create a separate command pool for these kinds of short-lived 
-		//buffers, because the implementation may be able to apply memory allocation optimizations. You should use the VK_COMMAND_POOL_CREATE_TRANSIENT_BIT flag during command pool generation in that case.
-		/*VkCommandBufferAllocateInfo allocInfo{};
-		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;                   
-		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = m_commandPool;
-		allocInfo.commandBufferCount = 1;*/
 
 		VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 		VkBufferCopy copyRegion{};
@@ -1247,38 +1279,7 @@ namespace TDS
 		vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 
 		endSingleTimeCommands(commandBuffer);
-		//vkAllocateCommandBuffers(m_logicalDevice, &allocInfo, &commandBuffer);
-
-		//using command buffer once and wait with returning from the function until 
-		// the copy operation has finished executing
-		//VkCommandBufferBeginInfo beginInfo{};
-		//beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		//beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-
-		//vkBeginCommandBuffer(commandBuffer, &beginInfo);
-
-		//	//only contains the copy command
-		//	VkBufferCopy copyRegion{};
-		//	copyRegion.srcOffset = 0; //optional
-		//	copyRegion.dstOffset = 0; //optional
-		//	copyRegion.size = size;
-		//	vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
-
-		//vkEndCommandBuffer(commandBuffer);
-
-		//VkSubmitInfo submitInfo{};
-		//submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		//submitInfo.commandBufferCount = 1;
-		//submitInfo.pCommandBuffers = &commandBuffer;
-		////2 method to wait for transfer to complete
-		////1. vkQueuWaitIdle
-		////2. vkWaitForFences // allow to schedule multiple transfer simultaneously and wait for all to complete instead of executing one at a time
-		//vkQueueSubmit(m_graphicQueue, 1, &submitInfo, VK_NULL_HANDLE);
-		//vkQueueWaitIdle(m_graphicQueue);
-
-		////clean up command buffer
-		//vkFreeCommandBuffers(m_logicalDevice, m_commandPool, 1, &commandBuffer);
-
+	
 	}
 	void VulkanInstance::createDescriptorSetLayout()
 	{
@@ -1389,6 +1390,7 @@ namespace TDS
 		{
 			throw std::runtime_error("failed to load texture image!");
 		}
+		m_mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1; //add 1 so that the original image has a miplevel//std::log2 tell how many time can it be divide by 2
 
 		VkDeviceSize imagesize = texWidth * texHeight * 4;
 
@@ -1408,22 +1410,122 @@ namespace TDS
 
 		vkUnmapMemory(m_logicalDevice, stagingBufferMemory);
 		
-		createImage(texWidth , texHeight, VK_FORMAT_R8G8B8A8_SRGB,
-			VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, 
+		createImage(texWidth , texHeight, m_mipLevels, VK_SAMPLE_COUNT_1_BIT,VK_FORMAT_R8G8B8A8_SRGB,
+			VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT| VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_textureImage, m_textureImageMemory);
 		
-		transitionImageLayout(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+		transitionImageLayout(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels);
 
 		copyBufferToImage(stagingBuffer, m_textureImage, texWidth , texHeight);
 
-		transitionImageLayout(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 
-			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+		/*transitionImageLayout(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 
+			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels);*/
 
 		vkDestroyBuffer(m_logicalDevice, stagingBuffer, nullptr);
 		vkFreeMemory(m_logicalDevice, stagingBufferMemory, nullptr);
 
+
+		//generate mipmaps
+
+		generateMipmaps(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB,texWidth, texHeight, m_mipLevels);
 	}
-	void VulkanInstance::createImage(uint32_t width, uint32_t height, VkFormat format, 
+
+	void VulkanInstance::generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels)
+	{
+		// Check if image format supports linear blitting
+		VkFormatProperties formatProperties;
+		vkGetPhysicalDeviceFormatProperties(m_PhysDeviceHandle, imageFormat, &formatProperties);
+
+		if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT)) {
+			throw std::runtime_error("texture image format does not support linear blitting!");
+		}
+
+
+
+		VkCommandBuffer commandBuffer = beginSingleTimeCommands();
+
+		VkImageMemoryBarrier barrier{};
+		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+		barrier.image = image;
+		barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		barrier.subresourceRange.baseArrayLayer = 0;
+		barrier.subresourceRange.layerCount = 1;
+		barrier.subresourceRange.levelCount = 1;
+
+		int32_t mipWidth = texWidth;
+		int32_t mipHeight = texHeight;
+
+		//barrier. subresource.miplevel, oldlayout, newlayout, srcAccessmask and dstAccessmask will changed each transition
+		for (uint32_t i{ 1 }; i < mipLevels; i++) //start with 1 is it because of the plus one in createTexture image
+		{
+			barrier.subresourceRange.baseMipLevel = i - 1;
+			barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+			barrier.newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+			barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+
+			vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT,
+				0, 0, nullptr, 0, nullptr, 1, &barrier);
+
+			//blit command will wait on this transition
+			VkImageBlit blit{};
+			blit.srcOffsets[0] = { 0,0,0 };
+			blit.srcOffsets[1] = { mipWidth, mipHeight, 1 };
+			blit.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			blit.srcSubresource.mipLevel = i - 1;
+			blit.srcSubresource.baseArrayLayer = 0;
+			blit.srcSubresource.layerCount = 1;
+			blit.dstOffsets[0] = { 0,0,0 };
+			blit.dstOffsets[1] = { mipWidth > 1 ? mipWidth / 2 : 1, mipHeight > 1 ? mipHeight / 2 : 1, 1 };
+			blit.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			blit.dstSubresource.mipLevel = i;
+			blit.dstSubresource.baseArrayLayer = 0;
+			blit.dstSubresource.layerCount = 1;
+			vkCmdBlitImage(commandBuffer,
+				image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+				image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+				1, &blit,
+				VK_FILTER_LINEAR);
+
+			//tell the shaders
+			barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+			barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			vkCmdPipelineBarrier(commandBuffer,
+				VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
+				0, nullptr,
+				0, nullptr,
+				1, &barrier);
+
+			if (mipWidth > 1) mipWidth /= 2;
+			if (mipHeight > 1) mipHeight /= 2;
+
+		}
+
+		//transitions the last mip level
+		//not handled by the loop, since the last mip level is never blitted from.
+		barrier.subresourceRange.baseMipLevel = mipLevels - 1;
+		barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+		barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+		vkCmdPipelineBarrier(commandBuffer,
+			VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
+			0, nullptr,
+			0, nullptr,
+			1, &barrier);
+
+		endSingleTimeCommands(commandBuffer);
+
+
+	}
+
+
+	void VulkanInstance::createImage(uint32_t width, uint32_t height, uint32_t miplevels, VkSampleCountFlagBits numSamples, VkFormat format,
 		VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory)
 	{
 		VkImageCreateInfo imageInfo{};
@@ -1432,7 +1534,7 @@ namespace TDS
 		imageInfo.extent.width = width;
 		imageInfo.extent.height = height;
 		imageInfo.extent.depth = 1;
-		imageInfo.mipLevels = 1;
+		imageInfo.mipLevels = miplevels;
 		imageInfo.arrayLayers = 1;
 		//Vulkan supports many possible image formats, but we should use the same format for the 
 		//texels as the pixels in the buffer, otherwise the copy operation will fail.
@@ -1440,7 +1542,7 @@ namespace TDS
 		imageInfo.tiling = tiling;//one of two values
 		imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;//or VK_IMAGE_LAYOUT_PREINITIALIZED
 		imageInfo.usage = usage;
-		imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageInfo.samples = numSamples;
 		imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		imageInfo.flags = 0; // Optional (is related to multisampling) (some optional flags for images that are related to sparse images)
 
@@ -1500,7 +1602,7 @@ namespace TDS
 		vkFreeCommandBuffers(m_logicalDevice , m_commandPool, 1, &commandBuffer);
 	}
 
-	void VulkanInstance::transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout)
+	void VulkanInstance::transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipmaps)
 	{
 		VkCommandBuffer commandBuffer = beginSingleTimeCommands(); // one time command
 
@@ -1513,7 +1615,7 @@ namespace TDS
 		barrier.image = image;
 		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		barrier.subresourceRange.baseMipLevel = 0;
-		barrier.subresourceRange.levelCount = 1;
+		barrier.subresourceRange.levelCount = mipmaps;
 		barrier.subresourceRange.baseArrayLayer = 0;
 		barrier.subresourceRange.layerCount = 1;
 
@@ -1575,10 +1677,10 @@ namespace TDS
 
 	void VulkanInstance::createTextureImageView()
 	{
-		m_textureImageView = createImageView(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+		m_textureImageView = createImageView(m_textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels);
 	}
 
-	VkImageView VulkanInstance::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectflags)
+	VkImageView VulkanInstance::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectflags, uint32_t mipmaps)
 	{
 		VkImageViewCreateInfo viewInfo{};
 		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -1587,7 +1689,7 @@ namespace TDS
 		viewInfo.format = format;
 		viewInfo.subresourceRange.aspectMask = aspectflags; //VK_IMAGE_ASPECT_COLOR_BIT; 
 		viewInfo.subresourceRange.baseMipLevel = 0;
-		viewInfo.subresourceRange.levelCount = 1;
+		viewInfo.subresourceRange.levelCount = mipmaps;
 		viewInfo.subresourceRange.baseArrayLayer = 0;
 		viewInfo.subresourceRange.layerCount = 1;
 
@@ -1620,9 +1722,25 @@ namespace TDS
 		samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 		samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 
+		samplerInfo.minLod = 0.f;
+		samplerInfo.maxLod = static_cast<float>(m_mipLevels);
+		samplerInfo.mipLodBias = 0.f;
+
 		if (vkCreateSampler(m_logicalDevice, &samplerInfo, nullptr, &m_textureSampler) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create texture sampler!");
 		}
+	}
+
+	void VulkanInstance::createColorResource()
+	{
+		VkFormat colorFormat = m_swapChainImageFormat;
+
+		createImage(m_swapChainExtent.width, m_swapChainExtent.height, 1, m_msaaSamples, colorFormat,
+			VK_IMAGE_TILING_OPTIMAL,
+			VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+			m_colorImage, m_colorImageMemory);
+
+		m_colorImageView = createImageView(m_colorImage, colorFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1);
 	}
 
 	void VulkanInstance::createDepthResource()
@@ -1630,10 +1748,10 @@ namespace TDS
 		VkFormat lookfordepthFormat = findDepthFormat();
 
 		//create image
-		createImage(m_swapChainExtent.width, m_swapChainExtent.height, lookfordepthFormat, VK_IMAGE_TILING_OPTIMAL,
+		createImage(m_swapChainExtent.width, m_swapChainExtent.height,1, m_msaaSamples ,lookfordepthFormat, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_depthImage, m_depthImageMemory);
 		//create image view
-		m_depthImageView = createImageView(m_depthImage, lookfordepthFormat, VK_IMAGE_ASPECT_DEPTH_BIT);
+		m_depthImageView = createImageView(m_depthImage, lookfordepthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1);
 
 	}
 		
@@ -1748,7 +1866,7 @@ namespace TDS
 			}
 
 			vertex.texCoord = texVec;
-			vertex.color = { 1.f,1.f ,1.f };
+			vertex.color = { 1.f, 1.f ,1.f };
 			vertices.push_back(vertex);
 		}
 
@@ -1762,5 +1880,25 @@ namespace TDS
 		}
 
 	}
+
+	VkSampleCountFlagBits VulkanInstance::getMaxUsableSampleCount()
+	{
+		//get the gpu propertoies
+		VkPhysicalDeviceProperties physicalDeviceProperties;
+		vkGetPhysicalDeviceProperties(m_PhysDeviceHandle, &physicalDeviceProperties);
+
+		VkSampleCountFlags counts = physicalDeviceProperties.limits.framebufferColorSampleCounts &
+									physicalDeviceProperties.limits.framebufferDepthSampleCounts;
+
+		if (counts & VK_SAMPLE_COUNT_64_BIT) { return VK_SAMPLE_COUNT_64_BIT; }
+		if (counts & VK_SAMPLE_COUNT_32_BIT) { return VK_SAMPLE_COUNT_32_BIT; }
+		if (counts & VK_SAMPLE_COUNT_16_BIT) { return VK_SAMPLE_COUNT_16_BIT; }
+		if (counts & VK_SAMPLE_COUNT_8_BIT) { return VK_SAMPLE_COUNT_8_BIT; }
+		if (counts & VK_SAMPLE_COUNT_4_BIT) { return VK_SAMPLE_COUNT_4_BIT; }
+		if (counts & VK_SAMPLE_COUNT_2_BIT) { return VK_SAMPLE_COUNT_2_BIT; }
+
+		return VK_SAMPLE_COUNT_1_BIT;
+	}
+
 
 }//namespace TDS

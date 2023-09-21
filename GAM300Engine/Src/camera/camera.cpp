@@ -1,5 +1,5 @@
 #include "camera/camera.h"
-
+#include<iostream>
 namespace TDS
 {
 	TDSCamera::TDSCamera(float Yaw, float pitch, Vec3 position, Vec3 up)
@@ -38,13 +38,13 @@ namespace TDS
 
 	void TDSCamera::UpdateCamera(float deltaTime)
 	{
+	
 		if (moving())
 		{
 			float CameraSpeed = m_Speed * deltaTime;
 			if (keys.up)
 			{
 				m_Position += m_Front * CameraSpeed;
-
 			}
 			if(keys.down)
 				m_Position -= m_Front * CameraSpeed;
@@ -54,7 +54,38 @@ namespace TDS
 				m_Position += m_Right * CameraSpeed;
 		}
 
-		translate(Vec3(0.f,0.f,static_cast<float>(Input::wheelDelta * 0.005f)));
+		translate(static_cast<float>(Input::wheelDelta * 0.005f));
+
+		static Input::mousePosition mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+		
+		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT))
+		{
+			if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+			{
+				mouse = Input::getMousePosition();
+			}
+
+			if (!Input::isMouseButtonReleased(TDS_MOUSE_LEFT))
+			{
+				float GetMousex = mouse.x;
+				float GetMousey = mouse.y;
+
+				float getNewMousex = Input::getMousePosition().x;
+				float getNewMousey = Input::getMousePosition().y;
+
+				float offsetx = getNewMousex - GetMousex;
+				float offsety = GetMousey - getNewMousey;
+
+				ProcessMouseMovement(offsetx, offsety);
+
+				mouse = Input::getMousePosition();
+			}
+
+		}
+		else
+		{
+			mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+		}
 		updateViewMatrix();
 	}
 
@@ -94,8 +125,30 @@ namespace TDS
 		return false;
 	}
 
-	void TDSCamera::translate(Vec3 deltaWheel)
+	void TDSCamera::translate(const float& deltaWheel)
 	{
-		m_Position += deltaWheel;
+		m_Fov -= deltaWheel;
+		if (m_Fov < 1.f)
+			m_Fov = 1.f;
+		if (m_Fov > 45.f)
+			m_Fov = 45.f;
+	}
+
+	void TDSCamera::ProcessMouseMovement(float  offsetX, float offsetY)
+	{
+		offsetX *= m_mouseSensitivity;
+		offsetY *= m_mouseSensitivity;
+
+		m_Yaw += offsetX;
+		m_Pitch += offsetY;
+
+		//prevent from out of bound
+		if (m_Pitch > 89.f)
+			m_Pitch = 89.f;
+		if (m_Pitch < -89.f)
+			m_Pitch = -89.f;
+
+		updateViewMatrix();
+
 	}
 }
