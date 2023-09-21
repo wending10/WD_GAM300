@@ -189,6 +189,9 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="Include\ecs\ecs.cpp" />
+    <ClCompile Include="Include\GraphicsResource\Model.cpp" />
+    <ClCompile Include="Include\Identifier\GUID.cpp" />
+    <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\Animation\Pose.cpp" />
     <ClCompile Include="Src\application.cpp" />
@@ -252,6 +255,13 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\components\transform.h" />
     <ClInclude Include="Include\components\winData.h" />
     <ClInclude Include="Include\camera\camera.h" />
+    <ClInclude Include="Include\GraphicsResource\Geom.h" />
+    <ClInclude Include="Include\GraphicsResource\GraphicsResourceDefines.h" />
+    <ClInclude Include="Include\GraphicsResource\Material.h" />
+    <ClInclude Include="Include\GraphicsResource\Model.h" />
+    <ClInclude Include="Include\GraphicsResource\VertexInfo.h" />
+    <ClInclude Include="Include\Identifier\GUID.h" />
+    <ClInclude Include="Include\Identifier\Identifier.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
@@ -266,6 +276,9 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\pch.h" />
+    <ClInclude Include="Include\ResourceManagement\Resource.h" />
+    <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
+    <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
     <ClInclude Include="Include\sceneManager\sceneManager.h" />
     <ClInclude Include="Include\sceneManager\serialization.h" />
     <ClInclude Include="Include\vulkanTools\vmaSetup.h" />
