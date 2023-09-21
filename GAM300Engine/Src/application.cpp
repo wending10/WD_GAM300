@@ -10,6 +10,8 @@
 #include "Input.h"
 #include "imguiHelper/ImguiHelper.h"
 #include "sceneManager/sceneManager.h"
+#include "Logger/Logger.h"
+//#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
@@ -18,6 +20,7 @@ namespace TDS
      {
          m_window.createWindow(wndproc);
          m_pVKInst = std::make_shared<VulkanInstance>(m_window);
+         Log::Init();
 	 }
      void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
      {
@@ -94,6 +97,8 @@ namespace TDS
      void Application::Run()
      {
          startScriptEngine();
+        
+         //startScriptEngine();
 
          // Step 1: Get Functions
          auto init = GetFunctionPtr<void(*)(void)>
@@ -126,11 +131,12 @@ namespace TDS
              executeUpdate();
          }
 
-         stopScriptEngine();
+         //stopScriptEngine();
      }
 
      void Application::Update()
      {
+         TDS_INFO("Hello, {}!", "World");
          auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
@@ -146,12 +152,12 @@ namespace TDS
              imguiHelper::Update();
 
              m_pVKInst.get()->drawFrame(m_window, DeltaTime);
-            
              Input::scrollStop();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
          imguiHelper::Exit();
      }
+  
      Application::~Application()
      {
          
