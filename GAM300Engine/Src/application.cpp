@@ -8,11 +8,11 @@
 
 #include "application.h"
 #include "Input.h"
-<<<<<<< HEAD
 #include "imguiHelper/ImguiHelper.h"
-=======
 #include "Logger/Logger.h"
->>>>>>> upstream/main
+#include "imguiHelper/ImguiHelper.h"
+#include "sceneManager/sceneManager.h"
+#include "Logger/Logger.h"
 //#include "sceneManager/sceneManager.h"
 
 namespace TDS
@@ -91,9 +91,9 @@ namespace TDS
      }
      void Application::Initialize()
      {
-         /*auto& sceneManager = SceneManager::GetInstance();
-         sceneManager->Init();*/
-         Run();
+         auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();
+         //Run();
      }
 
      void Application::Run()
@@ -138,7 +138,7 @@ namespace TDS
 
      void Application::Update()
      {
-<<<<<<< HEAD
+         TDS_INFO("Hello, {}!", "World");
          auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
@@ -149,49 +149,22 @@ namespace TDS
                  DeltaTime = ElapsedSeconds.count();
                  Clock = Now;
              }
-             //imgui helper
-             {//docking 
-                 imguiHelper::Update();
-                 ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-                     ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
-                     ImGuiWindowFlags_NoBackground;
 
-                 ImGuiViewport* viewport = ImGui::GetMainViewport();
-                 ImGui::SetNextWindowPos(viewport->WorkPos);
-                 ImGui::SetNextWindowSize(viewport->WorkSize);
-                 ImGui::SetNextWindowViewport(viewport->ID);
-
-                 ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-                 ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-                 ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-
-                 ImGui::Begin("DockSpace", 0, window_flags);
-
-                 ImGui::PopStyleVar(3);
-
-                 ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-                 ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
-
-                 ImGui::End();
-             }
-             ImGui::ShowDemoWindow();
+             //Imgui helper
+             imguiHelper::Update();
 
              m_pVKInst.get()->drawFrame(m_window, DeltaTime);
-            
-=======
          TDS_INFO("Hello, {}!", "World");
          while (m_window.processInputEvent())
          {
              m_pVKInst.get()->drawFrame(m_window);
->>>>>>> upstream/main
-
+             
              Input::scrollStop();
-
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
          imguiHelper::Exit();
      }
+  
      Application::~Application()
      {
          
@@ -346,11 +319,11 @@ namespace TDS
          initInfo.Allocator = nullptr;
          initInfo.CheckVkResultFn = nullptr;
 
-         imguiHelper::initializeImgui(initInfo, m_pVKInst.get()->m_RenderPass, m_window.getWindowHandler());
+         imguiHelper::InitializeImgui(initInfo, m_pVKInst.get()->m_RenderPass, m_window.getWindowHandler());
 
          if (VkCommandBuffer FCB{ m_pVKInst.get()->beginSingleTimeCommands() }; FCB != nullptr)
          {
-             imguiHelper::createFont(FCB);
+             imguiHelper::ImguiCreateFont(FCB);
              m_pVKInst.get()->endSingleTimeCommands(FCB);
          }
          else
