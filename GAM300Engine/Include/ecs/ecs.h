@@ -78,6 +78,8 @@ namespace TDS
         virtual ArchetypeID                 getKey() const = 0;
 
         virtual void                        doAction(const float elapsedTime, Archetype* archetype) = 0;
+
+        virtual void                        initialiseAction() = 0;
     };
 
     // SYSTEM CLASS =======================================================================================
@@ -86,17 +88,19 @@ namespace TDS
     {
     public:
         // Making a new system
-                                            System(ECS& ecs, const std::uint8_t& layer);
+                                            System(const std::uint8_t& layer);
 
         // Getting the archetype ID based on the components given
         virtual ArchetypeID                 getKey() const override;
 
         // TYPEDEF
         typedef std::function<void(const float, const std::vector<EntityID>&, Cs*...)> 
-                                            Func;
+                                            RunFunc;
+        typedef std::function<void(void)> 
+                                            InitFunc;
 
         // Setting the update function in the mFunc function pointer 
-        void                                action(Func func);
+        void                                action(InitFunc initFunc, RunFunc runFunc);
 
     protected:
         // Filtering out the entities that satisfies the given archetype
@@ -121,8 +125,10 @@ namespace TDS
         virtual void                        doAction(const float elapsedMilliseconds,
                                                 Archetype* archetype) override;
 
-        ECS& mECS;
-        Func mFunc;
+        void                                initialiseAction();
+
+        InitFunc mInitFunc;
+        RunFunc mRunFunc;
         bool mFuncSet;
     };
 
@@ -221,6 +227,9 @@ namespace TDS
         // Register a new entity
         static void                         registerEntity(const EntityID entityId);
 
+        // Initialize all the systems of a certain layer
+        static void                         initializeSystems(const std::uint8_t& layer);
+
         // Run all the systems of a certain layer
         static void                         runSystems(const std::uint8_t& layer, const float elapsedMilliseconds);
 
@@ -252,9 +261,9 @@ namespace TDS
         template<typename C>
         static C*                            getComponent(const EntityID& entityId);
 
-        // Get a component data from the entity
-        template<class C>
-        static C*                            getComponent(const EntityID& entityId, Record& record);
+        //// Get a component data from the entity
+        //template<class C>
+        //static C*                            getComponent(const EntityID& entityId, Record& record);
 
         // Get entities with a certain component in the angle bracket
         template<typename C>

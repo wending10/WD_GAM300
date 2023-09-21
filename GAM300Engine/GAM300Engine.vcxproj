@@ -203,7 +203,10 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\components\transform.cpp" />
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\camera\camera.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
@@ -252,7 +255,11 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\components\transform.h" />
     <ClInclude Include="Include\components\winData.h" />
     <ClInclude Include="Include\camera\camera.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiAssetBrowser.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
@@ -278,6 +285,9 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\eventmanager\eventmanager.h" />
     <ClInclude Include="Include\eventmanager\eventmanager.hpp" />
     <ClInclude Include="Include\windowswindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
