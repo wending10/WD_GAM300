@@ -52,6 +52,7 @@
     <ClCompile Include="Src\Model\Skeleton.cpp" />
     <ClCompile Include="Src\Model\ModelTransform.cpp" />
     <ClCompile Include="Src\pch.cpp" />
+    <ClCompile Include="Src\Physics\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -103,5 +104,6 @@
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\pch.h" />
+    <ClInclude Include="Include\Physics\PhysicsSystem.h" />
   </ItemGroup>
 </Project>
