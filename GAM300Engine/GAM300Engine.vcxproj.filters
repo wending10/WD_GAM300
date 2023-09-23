@@ -52,14 +52,14 @@
     <ClCompile Include="Src\Model\Skeleton.cpp" />
     <ClCompile Include="Src\Model\ModelTransform.cpp" />
     <ClCompile Include="Src\pch.cpp" />
-<<<<<<< Updated upstream
-=======
+    <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
     <ClCompile Include="Src\Logger\Logger.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
     <ClCompile Include="Include\Identifier\GUID.cpp" />
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -111,8 +111,13 @@
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\pch.h" />
-<<<<<<< Updated upstream
-=======
+    <ClInclude Include="Include\imguiHelper\ImguiAssetBrowser.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
     <ClInclude Include="Include\Logger\Logger.h" />
     <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
     <ClInclude Include="Include\Identifier\GUID.h" />
@@ -125,6 +130,5 @@
     <ClInclude Include="Include\ResourceManagement\Resource.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
->>>>>>> Stashed changes
   </ItemGroup>
 </Project>
