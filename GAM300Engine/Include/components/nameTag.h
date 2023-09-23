@@ -10,8 +10,8 @@ namespace TDS
 	public:
 		NameTag();
 		~NameTag() = default;
-		virtual bool Deserialize(const rapidjson::Value& obj) = 0;
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const = 0;
+		virtual bool Deserialize(const rapidjson::Value& obj);
+		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 		virtual void ImGuiDisplay();
 
