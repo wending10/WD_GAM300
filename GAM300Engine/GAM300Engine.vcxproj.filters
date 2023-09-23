@@ -57,6 +57,9 @@
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
     <ClCompile Include="Src\Logger\Logger.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
+    <ClCompile Include="Include\Identifier\GUID.cpp" />
+    <ClCompile Include="Include\GraphicsResource\Model.cpp" />
+    <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -117,5 +120,15 @@
     <None Include="imgui.ini" />
     <ClInclude Include="Include\Logger\Logger.h" />
     <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
+    <ClInclude Include="Include\Identifier\GUID.h" />
+    <ClInclude Include="Include\Identifier\Identifier.h" />
+    <ClInclude Include="Include\GraphicsResource\Geom.h" />
+    <ClInclude Include="Include\GraphicsResource\GraphicsResourceDefines.h" />
+    <ClInclude Include="Include\GraphicsResource\Material.h" />
+    <ClInclude Include="Include\GraphicsResource\Model.h" />
+    <ClInclude Include="Include\GraphicsResource\VertexInfo.h" />
+    <ClInclude Include="Include\ResourceManagement\Resource.h" />
+    <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
+    <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
   </ItemGroup>
 </Project>
