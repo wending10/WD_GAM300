@@ -55,6 +55,8 @@
     <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
+    <ClCompile Include="Src\Logger\Logger.cpp" />
+    <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -113,5 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
+    <ClInclude Include="Include\Logger\Logger.h" />
+    <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
   </ItemGroup>
 </Project>

@@ -129,6 +129,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\assimp\include;$(SolutionDir)..\Dependencies\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -207,6 +208,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
+    <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
@@ -215,6 +217,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\Geometry\Ray.cpp" />
     <ClCompile Include="Src\Geometry\Sphere.cpp" />
     <ClCompile Include="Src\Geometry\Triangle.cpp" />
+    <ClCompile Include="Src\Logger\Logger.cpp" />
     <ClCompile Include="Src\memoryManager\memoryManager.cpp" />
     <ClCompile Include="Src\Model\Skeleton.cpp" />
     <ClCompile Include="Src\Model\ModelTransform.cpp" />
@@ -260,6 +263,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+    <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
@@ -269,6 +273,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\Geometry\Ray.h" />
     <ClInclude Include="Include\Geometry\Sphere.h" />
     <ClInclude Include="Include\Geometry\Triangle.h" />
+    <ClInclude Include="Include\Logger\Logger.h" />
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
