@@ -122,9 +122,10 @@ namespace TDS
     // Setting the update function in the mFunc function pointer 
     // func - update function as function pointer 
     template<class... Cs>
-    void System<Cs...>::action(Func func)
+    void System<Cs...>::action(InitFunc initFunc, RunFunc runFunc)
     {
-        mFunc = func;
+        mInitFunc = initFunc;
+        mRunFunc = runFunc;
         mFuncSet = true;
     }
 
@@ -133,9 +134,9 @@ namespace TDS
     // ecs - THE ecs
     // layer - layer to put the system under
     template<class... Cs>
-    System<Cs...>::System(ECS& ecs, const std::uint8_t& layer) : mECS(ecs), mFuncSet(false)
+    System<Cs...>::System(const std::uint8_t& layer) : mFuncSet(false)
     {
-        mECS.registerSystem(layer, this);
+        ECS::registerSystem(layer, this);
     }
 
     // --getKey--
@@ -159,6 +160,13 @@ namespace TDS
                 archetype->type,
                 archetype->entityIds,
                 archetype->componentData);
+    }
+
+    template<class... Cs>
+    void System<Cs...>::initialiseAction()
+    {
+        if (mFuncSet)
+            mInitFunc();
     }
 
     // --doAction--
@@ -209,7 +217,7 @@ namespace TDS
             T& t,
             Ts... ts)
     {
-        mFunc(elapsedMilliseconds, entityIDs, ts...);
+        mRunFunc(elapsedMilliseconds, entityIDs, ts...);
     }
     
     // ECS ==========================================================================================
@@ -772,6 +780,17 @@ namespace TDS
     inline void ECS::setIDCounter(int counter)
     {
         mEntityIdCounter = counter;
+    }
+
+    // --initializeSystems--
+    // Initializes all the systems of a certain layer
+    // layer - layer with all the systems to run
+    inline void ECS::initializeSystems(const std::uint8_t& layer)
+    {
+        for (SystemBase* system : mSystems[layer])
+        {
+            system->initialiseAction();
+        }
     }
 
     // --runSystems--

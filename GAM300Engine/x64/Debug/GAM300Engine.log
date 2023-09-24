@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿  AudioEngine.cpp
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\Include\fmod\SoundInfo.h(94,26): warning C4100: 'vol': unreferenced formal parameter
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(188,56): warning C4100: 'instanceIndex': unreferenced formal parameter
@@ -9,9 +9,8 @@ C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cp
 C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\src\AudioEngine.cpp(81): warning C4715: 'AudioEngine::playSound': not all control paths return a value
   GAM300Engine.vcxproj -> C:\Users\Chong Sheng\Documents\SiT\GAM300\GAM300\GAM300Engine\x64\Debug\GAM300Engine.exe
   0 File(s) copied
-=======
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   GAM300Engine.vcxproj -> C:\Users\mattc\Downloads\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.exe
   224 File(s) copied
   6 File(s) copied
->>>>>>> upstream/main
+﻿
