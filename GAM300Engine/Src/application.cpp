@@ -89,8 +89,8 @@ namespace TDS
      }
      void Application::Initialize()
      {
-         auto& sceneManager = SceneManager::GetInstance();
-         sceneManager->Init();
+         /*auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();*/
          //Run();
      }
 
