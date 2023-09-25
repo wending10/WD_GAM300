@@ -5,8 +5,12 @@
 #include <array>
 #include <sstream>
 #include <filesystem>
+
 #include "application.h"
 #include "Input.h"
+#include "imguiHelper/ImguiHelper.h"
+#include "sceneManager/sceneManager.h"
+#include "Logger/Logger.h"
 //#include "sceneManager/sceneManager.h"
 
 namespace TDS
@@ -16,10 +20,12 @@ namespace TDS
      {
          m_window.createWindow(wndproc);
          m_pVKInst = std::make_shared<VulkanInstance>(m_window);
+         Log::Init();
 	 }
      void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
      {
-         //ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); for imgui implementation
+         IMGUI_WIN32_WNDPROCHANDLER_FORWARD_DECLARATION;
+         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
          //can extern  some imgui wndproc handler | tbc
 
         switch (uMsg)
@@ -102,6 +108,8 @@ namespace TDS
      void Application::Run()
      {
          startScriptEngine();
+        
+         //startScriptEngine();
 
          // Step 1: Get Functions
          auto init = GetFunctionPtr<void(*)(void)>
@@ -126,16 +134,29 @@ namespace TDS
 
          while (m_window.processInputEvent())
          {
-             m_pVKInst.get()->drawFrame(m_window);
-           
+             float DeltaTime;
+             {
+                 auto                         Now = std::chrono::system_clock::now();
+                 std::chrono::duration<float> ElapsedSeconds = Now - Clock;
+                 DeltaTime = ElapsedSeconds.count();
+                 Clock = Now;
+             }
+
+             //Imgui helper
+             imguiHelper::Update();
+
+             m_pVKInst.get()->drawFrame(m_window, DeltaTime);
              Input::scrollStop();
              executeUpdate();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
          stopScriptEngine();
+         imguiHelper::Exit();
      }
+  
      Application::~Application()
      {
+         
          m_window.~WindowsWin();
      }
 
@@ -242,6 +263,70 @@ namespace TDS
                  << "Failed to shut down CoreCLR. Error 0x" << RESULT << "\n";
              throw std::runtime_error(oss.str());
          }
+     }
+
+     bool Application::initImgui()
+     {
+         VkDescriptorPoolSize pool_sizes[] =
+         {
+             { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+             { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+             { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+             { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+             { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+             { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+             { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+         };
+
+         VkDescriptorPoolCreateInfo pool_info = {};
+         pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+         pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+         pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
+         pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+         pool_info.pPoolSizes = pool_sizes;
+
+         vkCreateDescriptorPool(m_pVKInst.get()->m_logicalDevice, &pool_info, nullptr
+           , &m_pVKInst.get()->m_ImguiDescriptorPool);
+
+         ImGui_ImplVulkan_InitInfo initInfo{};
+
+         initInfo.Instance = m_pVKInst.get()->m_VKhandler;
+         initInfo.PhysicalDevice = m_pVKInst.get()->m_PhysDeviceHandle;
+         initInfo.Device = m_pVKInst.get()->m_logicalDevice;
+         initInfo.QueueFamily = m_pVKInst.get()->findQueueFamilies(initInfo.PhysicalDevice).graphicsFamily.value();
+         initInfo.Queue = m_pVKInst.get()->m_graphicQueue;
+         initInfo.PipelineCache = VK_NULL_HANDLE;
+
+         
+
+
+         initInfo.DescriptorPool = m_pVKInst.get()->m_ImguiDescriptorPool;
+         initInfo.Subpass = 0;
+         initInfo.MinImageCount = 2;
+         initInfo.ImageCount = 2;
+         initInfo.MSAASamples = m_pVKInst.get()->m_msaaSamples;
+         initInfo.Allocator = nullptr;
+         initInfo.CheckVkResultFn = nullptr;
+
+         imguiHelper::InitializeImgui(initInfo, m_pVKInst.get()->m_RenderPass, m_window.getWindowHandler());
+
+         if (VkCommandBuffer FCB{ m_pVKInst.get()->beginSingleTimeCommands() }; FCB != nullptr)
+         {
+             imguiHelper::ImguiCreateFont(FCB);
+             m_pVKInst.get()->endSingleTimeCommands(FCB);
+         }
+         else
+         {
+             std::cerr << "failed to create command buffer for imgui font creation\n";
+             return false;
+         }
+
+         return true;
+
      }
 
 }// end TDS

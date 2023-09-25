@@ -126,6 +126,11 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\assimp\include;$(SolutionDir)..\Dependencies\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +155,10 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -167,6 +176,13 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\Shared_Libs\MathCommon.cpp" />
     <ClCompile Include="..\Shared_Libs\Matrix2.cpp" />
     <ClCompile Include="..\Shared_Libs\Matrix3.cpp" />
@@ -176,6 +192,9 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="Include\ecs\ecs.cpp" />
+    <ClCompile Include="Include\GraphicsResource\Model.cpp" />
+    <ClCompile Include="Include\Identifier\GUID.cpp" />
+    <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\Animation\Pose.cpp" />
     <ClCompile Include="Src\application.cpp" />
@@ -190,6 +209,11 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\components\transform.cpp" />
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\camera\camera.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
+    <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
@@ -198,11 +222,18 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\Geometry\Ray.cpp" />
     <ClCompile Include="Src\Geometry\Sphere.cpp" />
     <ClCompile Include="Src\Geometry\Triangle.cpp" />
+    <ClCompile Include="Src\Logger\Logger.cpp" />
     <ClCompile Include="Src\memoryManager\memoryManager.cpp" />
     <ClCompile Include="Src\Model\Skeleton.cpp" />
     <ClCompile Include="Src\Model\ModelTransform.cpp" />
+    <ClCompile Include="Src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
     <ClCompile Include="Src\sceneManager\serialization.cpp" />
+    <ClCompile Include="Src\vulkanTools\vmaSetup.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDevice.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanInstance.cpp" />
@@ -233,6 +264,19 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\components\transform.h" />
     <ClInclude Include="Include\components\winData.h" />
     <ClInclude Include="Include\camera\camera.h" />
+    <ClInclude Include="Include\GraphicsResource\Geom.h" />
+    <ClInclude Include="Include\GraphicsResource\GraphicsResourceDefines.h" />
+    <ClInclude Include="Include\GraphicsResource\Material.h" />
+    <ClInclude Include="Include\GraphicsResource\Model.h" />
+    <ClInclude Include="Include\GraphicsResource\VertexInfo.h" />
+    <ClInclude Include="Include\Identifier\GUID.h" />
+    <ClInclude Include="Include\Identifier\Identifier.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiAssetBrowser.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+    <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
@@ -242,11 +286,18 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\Geometry\Ray.h" />
     <ClInclude Include="Include\Geometry\Sphere.h" />
     <ClInclude Include="Include\Geometry\Triangle.h" />
+    <ClInclude Include="Include\Logger\Logger.h" />
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
+    <ClInclude Include="Include\pch.h" />
+    <ClInclude Include="Include\Physics\PhysicsSystem.h" />
+    <ClInclude Include="Include\ResourceManagement\Resource.h" />
+    <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
+    <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
     <ClInclude Include="Include\sceneManager\sceneManager.h" />
     <ClInclude Include="Include\sceneManager\serialization.h" />
+    <ClInclude Include="Include\vulkanTools\vmaSetup.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDevice.h" />
     <ClInclude Include="Include\vulkanTools\vulkanInstance.h" />
@@ -256,6 +307,9 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\eventmanager\eventmanager.h" />
     <ClInclude Include="Include\eventmanager\eventmanager.hpp" />
     <ClInclude Include="Include\windowswindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

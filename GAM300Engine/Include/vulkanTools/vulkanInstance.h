@@ -123,16 +123,16 @@ namespace TDS
 		VulkanInstance(const  WindowsWin& enableWindows);
 		~VulkanInstance();
 		VkResult createInstance(bool enableValidation);
-		void	 drawFrame(const WindowsWin& _Windows);
+		void	 drawFrame(const WindowsWin& _Windows, float deltaTime);
 		//getters
 		//VkInstance		 getVkInstance()const		{ return m_VKhandler; }
 		//VkPhysicalDevice getVkPhysicalDevice()const { return m_PhysDeviceHandle; }
 		VkDevice		 getVkLogicalDevice()const { return m_logicalDevice; }
+		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 	private:
 
 		bool			   checkValidationLayerSupport();
 		bool			   isDeviceSuitable(VkPhysicalDevice device);
-		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 
 		//to be moved to other file
 		bool					 checkDeviceExtensionSupport(VkPhysicalDevice device);
@@ -164,17 +164,21 @@ namespace TDS
 		void					 createDescriptorSetLayout();
 
 		//to be removed
-		void					 updateUniformBuffer(uint32_t currentImage);
+		void					 updateUniformBuffer(uint32_t currentImage, float deltaTime);
 
 
 		//texture loading thingy
 		void					 createTextureImage();
-		void					 createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling,
+		void					 createImage(uint32_t width, uint32_t height, uint32_t miplevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling,
 								 VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 		void					 createTextureSampler();
 		
+
+		//mipmap
+		void					 generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
 		//depth buffer
 		void					 createDepthResource();
+		void					 createColorResource();
 
 		//load models obj
 		void					 loadModel();
@@ -182,12 +186,12 @@ namespace TDS
 		void					 processNode(aiNode* node, const aiScene* scene);
 
 		void					 processMesh(aiMesh* mesh, const aiScene* scene);
-		
+public:
 		//helper function
 		VkCommandBuffer			 beginSingleTimeCommands();
-		VkImageView				 createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectflags);
+		VkImageView				 createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectflags, uint32_t mipmaps);
 		void					 endSingleTimeCommands(VkCommandBuffer commandBuffer);
-		void					 transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+		void					 transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipmaps);
 		void					 copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
 		void					 createTextureImageView();
 
@@ -196,7 +200,12 @@ namespace TDS
 		VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 		VkFormat findDepthFormat();
 		bool	 hasStencilComponent(VkFormat format); //to tell if chose depth formats comes with stencil component?
-	public://members
+	
+		//query on max sample bit we can use
+		VkSampleCountFlagBits	 getMaxUsableSampleCount();
+
+
+public://members
 
 		static constexpr decltype(VkApplicationInfo::apiVersion) apiVersion		{ VK_API_VERSION_1_3 };
 		std::vector<std::string> supportedInstanceExtensions{};
@@ -204,13 +213,14 @@ namespace TDS
 
 		bool framebufferResized { false };
 	
-	private:
+	public:
 
 		//frames processed concurrently
 		const int MAX_FRAMES_IN_FLIGHT { 2 };	//maybe set as a macro, will see
 
 		uint32_t  m_currentFrame{ 0 }; //keep track to make sure using the right objects every frame
 
+		VkDescriptorPool			  m_ImguiDescriptorPool;
 
 		/*Each frame should have its own command buffer, set of semaphores, and fence*/
 		std::vector <VkCommandBuffer> m_commandBuffers;
@@ -218,7 +228,7 @@ namespace TDS
 		std::vector <VkSemaphore>	  m_renderFinishedSemaphore;
 		std::vector <VkFence>		  m_inFlightFence;
 
-
+	
 		std::vector<VkImageView> swapChainImageViews;
 		VkInstance				m_VKhandler;
 		VkPhysicalDevice		m_PhysDeviceHandle{ VK_NULL_HANDLE }; //where selected graphic card is stored
@@ -254,6 +264,7 @@ namespace TDS
 		std::vector<VkDescriptorSet> m_descriptorSets;
 
 		//texture
+		uint32_t					 m_mipLevels; //precalculated : level 0 is original image anything above it is reffered to as mip chain
 		VkImage						 m_textureImage;
 		VkDeviceMemory				 m_textureImageMemory;
 		VkImageView					 m_textureImageView;
@@ -264,7 +275,11 @@ namespace TDS
 		VkDeviceMemory				 m_depthImageMemory;
 		VkImageView					 m_depthImageView;
 
-
+		//multi sampling anti-aliasing aka remove the stairs effect
+		VkSampleCountFlagBits		 m_msaaSamples { VK_SAMPLE_COUNT_1_BIT }; //1 bit = no msaa
+		VkImage						 m_colorImage;
+		VkDeviceMemory				 m_colorImageMemory;
+		VkImageView					 m_colorImageView;
 
 		std::vector<VkImage>		   m_swapChainImages;
 		std::vector<VkFramebuffer>	   m_swapChainFramebuffers;
