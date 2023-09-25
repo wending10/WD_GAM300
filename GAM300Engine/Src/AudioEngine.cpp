@@ -3,7 +3,7 @@
 /// @author Tear Drop Studio
 ///
 #include "fmod/AudioEngine.h"
-#include <FMOD/fmod_errors.h>
+#include <fmod/fmod_errors.h>
 #include <iostream>
 
 AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),

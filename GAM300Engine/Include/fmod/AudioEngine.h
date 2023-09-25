@@ -10,8 +10,8 @@
 /// @author Ross Hoyt
 /// @dependencies FMOD Studio & Core
 /// 
-#include <FMOD/fmod_studio.hpp>
-#include <FMOD/fmod.hpp>
+#include <fmod/fmod_studio.hpp>
+#include <fmod/fmod.hpp>
 #include <iostream>
 #include <string>
 #include <vector>

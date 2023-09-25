@@ -60,6 +60,7 @@
     <ClCompile Include="Include\Identifier\GUID.cpp" />
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
+    <ClCompile Include="src\AudioEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -115,6 +116,8 @@
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+    <ClInclude Include="Include\fmod\AudioEngine.h" />
+    <ClInclude Include="Include\fmod\SoundInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
