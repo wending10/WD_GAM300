@@ -194,6 +194,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Include\ecs\ecs.cpp" />
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\Identifier\GUID.cpp" />
+    <ClCompile Include="Src\Physics\CollisionSystem.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Src\Animation\Pose.cpp" />
@@ -291,6 +292,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\pch.h" />
+    <ClInclude Include="Include\Physics\CollisionSystem.h" />
     <ClInclude Include="Include\Physics\PhysicsSystem.h" />
     <ClInclude Include="Include\ResourceManagement\Resource.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
