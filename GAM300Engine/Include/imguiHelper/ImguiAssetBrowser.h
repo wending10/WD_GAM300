@@ -13,6 +13,11 @@ namespace TDS
 		void update();
 
 	private:
+		float thumbnail_size = 80;
+		float padding = 10.f;
+		std::string path1;
+		std::string selectedpath;
+		std::filesystem::path m_curr_path;
 	};
 }
 
