@@ -11,10 +11,15 @@
 #include "imguiHelper/ImguiHelper.h"
 #include "sceneManager/sceneManager.h"
 #include "Logger/Logger.h"
+#include "imguiHelper/ImguiConsole.h" //to print logs to imgui console
+
 //#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
+    //editor console instance for printing logs
+    //EditorConsole* consoleLog;
+
      Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
      {
@@ -136,6 +141,7 @@ namespace TDS
 
      void Application::Update()
      {
+         //consoleLog->AddLog("Writing from SpeedLog:");
          TDS_INFO("Hello, {}!", "World");
          auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())

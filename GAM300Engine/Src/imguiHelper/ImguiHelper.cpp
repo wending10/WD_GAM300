@@ -3,6 +3,7 @@
 #include "imguiHelper/ImguiProperties.h"
 #include "imguiHelper/ImguiAssetBrowser.h"
 #include "imguiHelper/ImguiConsole.h"
+#include "imguiHelper/ImguiToolbar.h"
 
 #include "imguiHelper/ImguiFunctionHelper.h"
 
@@ -21,6 +22,7 @@ namespace TDS
 			m_instance->panels[PanelTypes::PROPERTIES] = std::make_shared<Properties>();
 			m_instance->panels[PanelTypes::ASSETBROWSER] = std::make_shared<AssetBrowser>();
 			m_instance->panels[PanelTypes::CONSOLE] = std::make_shared<EditorConsole>();
+			m_instance->panels[PanelTypes::TOOLBAR] = std::make_shared<Toolbar>();
 		}
 		return m_instance;
 	}
@@ -72,9 +74,9 @@ namespace TDS
 		colors[ImGuiCol_Header] = ImVec4(0.00f, 0.00f, 0.00f, 0.52f);
 		colors[ImGuiCol_HeaderHovered] = ImVec4(0.00f, 0.00f, 0.00f, 0.36f);
 		colors[ImGuiCol_HeaderActive] = ImVec4(0.20f, 0.22f, 0.23f, 0.33f);
-		colors[ImGuiCol_Separator] = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
-		colors[ImGuiCol_SeparatorHovered] = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
-		colors[ImGuiCol_SeparatorActive] = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
+		colors[ImGuiCol_Separator] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+		colors[ImGuiCol_SeparatorHovered] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+		colors[ImGuiCol_SeparatorActive] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
 		colors[ImGuiCol_ResizeGrip] = ImVec4(0.28f, 0.28f, 0.28f, 0.29f);
 		colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.44f, 0.44f, 0.44f, 0.29f);
 		colors[ImGuiCol_ResizeGripActive] = ImVec4(0.40f, 0.44f, 0.47f, 1.00f);
