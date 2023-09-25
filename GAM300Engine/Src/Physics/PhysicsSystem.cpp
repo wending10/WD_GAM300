@@ -2,20 +2,21 @@
 
 namespace TDS
 {
-	System<Transform, RigidBody, Collider> _PhysicsSystem(1);
-		
+	System<Transform, RigidBody> _PhysicsSystem(1);
 	void PhysicsSystem::PhysicsSystemInit()
 	{
 		
 	}
 
-	void PhysicsSystem::PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody, Collider* _collider)
+	void PhysicsSystem::PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody)
 	{
-		// need fix timestep
+		//TODO: need fix timestep
+		// Physics loop
 		for (int i = 0; i < entities.size(); ++i)
 		{
 			NewtonianPhysics(_transform[i], _rigidbody[i]);
 		}
+		
 	}
 
 	Vec3 PhysicsSystem::CalculateTotalForce(RigidBody _rigidbody)
@@ -26,21 +27,19 @@ namespace TDS
 		return totalForce;
 	}
 
-	Vec3 PhysicsSystem::NewtonianPhysics(Transform _transform, RigidBody _rigidbody)
+	void PhysicsSystem::NewtonianPhysics(Transform _transform, RigidBody _rigidbody)
 	{
 		Vec3 totalForce = CalculateTotalForce(_rigidbody);
 		Vec3 acceleration	= totalForce * _rigidbody.GetInverseMass();
 		_rigidbody.SetAcceleration(acceleration);
 		
-		Vec3 velocity		= _rigidbody.GetVel();
+		Vec3 velocity		= _rigidbody.GetLinearVel();
 		velocity			+= acceleration * fixedDt/*dt*/;
-		_rigidbody.SetVel(velocity);
+		_rigidbody.SetLinearVel(velocity);
 		
 		Vec3 position		= _transform.GetPosition();
 		position			+= velocity * fixedDt/*dt*/;
 		_transform.SetPosition(position);
-		
-		return position;
 	}
 
 	

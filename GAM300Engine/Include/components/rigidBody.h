@@ -19,10 +19,15 @@ namespace TDS
 		Vec3& GetAcceleration() { return mAcceleration; }
 		void SetAcceleration(Vec3 acceleration) { mAcceleration = acceleration; }
 
-		Vec3& GetVel() { return mVelocity; }
-		void SetVel(Vec3 velocity) { mVelocity = velocity; }
-		void SetVel(float velocityX, float velocityY) { mVelocity = Vec3(velocityX, velocityY); }
+		Vec3& GetLinearVel() { return mLinearVelocity; }
+		void SetLinearVel(Vec3 velocity) { mLinearVelocity = velocity; }
+		void SetLinearVel(float velocityX, float velocityY) { mLinearVelocity = Vec3(velocityX, velocityY); }
+		
+		Vec3& GetAngularVel() { return mAngularVelocity; }
+		void SetAngularVel(Vec3 velocity) { mAngularVelocity = velocity; }
+		void SetAngularVel(float velocityX, float velocityY) { mAngularVelocity = Vec3(velocityX, velocityY); }
 
+		
 		Vec3& GetInputForce() { return mInputForce; }
 		void SetInputForce(Vec3 inputForce) { mInputForce = inputForce; }
 		void SetInputForce(float inputForceX, float inputForceY) { mInputForce = Vec3(inputForceX, inputForceY); }
@@ -50,7 +55,8 @@ namespace TDS
 
 	private:
 		Vec3 mAcceleration;
-		Vec3 mVelocity;
+		Vec3 mLinearVelocity;
+		Vec3 mAngularVelocity;
 		Vec3 mDirection;
 		Vec3 mNextPosition;
 		Vec3 mInputForce;
