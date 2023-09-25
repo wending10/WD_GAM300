@@ -12,7 +12,8 @@ namespace TDS {
 						   mOffset			(Vec3(0.0f, 0.0f, 0.0f)),
 						   mHit				(0),
 						   mRadius			(0.0f),
-						   mIsAlive			(true)
+						   mIsAlive			(true),
+						   mCollision		(false)
 	{ }
 
 	/*!*************************************************************************
