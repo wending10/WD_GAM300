@@ -12,8 +12,9 @@ namespace TDS
 							 mInputForce	(Vec3(0.0f, 0.0f, 0.0f)),
 							 mFriction		(0.0f),
 							 mRestitution	(0.0f),
-						     mMass(1.0f),
-							 mGravity(-10.0f)
+						     mMass			(1.0f),
+							 mInverseMass	(1.0f),
+							 mGravity		(10.0f)
 	{ }
 
 	/*!*************************************************************************
@@ -89,10 +90,10 @@ namespace TDS
 
 	void RigidBody::ImGuiDisplay()
 	{
-		ImguiVec2Input("Acceleration", mAcceleration);
-		ImguiVec2Input("Velocity", mVelocity);
-		ImguiVec2Input("Direction", mDirection);
-		ImguiVec2Input("Next Position", mNextPosition);
+		ImguiVec3Input("Acceleration", mAcceleration);
+		ImguiVec3Input("Velocity", mVelocity);
+		ImguiVec3Input("Direction", mDirection);
+		ImguiVec3Input("Next Position", mNextPosition);
 		ImguiFloatInput("Friction", mFriction);
 		ImguiFloatInput("Restitution", mRestitution);
 	}

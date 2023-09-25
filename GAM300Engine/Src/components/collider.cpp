@@ -5,7 +5,7 @@ namespace TDS {
 	/*!*************************************************************************
 	Constructor for collider component
 	****************************************************************************/
-	Collider::Collider() : mColliderType	(ColliderType::none),
+	Collider::Collider() : mColliderType	(ColliderType::NONE),
 						   mCollisionNormal (Vec3(0.0f, 0.0f, 0.0f)),
 						   mMin				(Vec3(0.0f, 0.0f, 0.0f)),
 						   mMax				(Vec3(0.0f, 0.0f, 0.0f)),
@@ -112,10 +112,10 @@ namespace TDS {
 			ImGui::EndCombo();
 		}
 
-		ImguiVec2Input("Collision Normal", mCollisionNormal);
-		ImguiVec2Input("Min", mMin);
-		ImguiVec2Input("Max", mMax);
-		ImguiVec2Input("Offset", mOffset);
+		ImguiVec3Input("Collision Normal", mCollisionNormal);
+		ImguiVec3Input("Min", mMin);
+		ImguiVec3Input("Max", mMax);
+		ImguiVec3Input("Offset", mOffset);
 		ImguiIntInput("Hit", mHit);
 		ImguiFloatInput("Radius", mRadius);
 		ImguiBoolInput("Is Alive", mIsAlive);

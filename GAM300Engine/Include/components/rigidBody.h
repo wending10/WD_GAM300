@@ -14,6 +14,8 @@ namespace TDS
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
+		void ImGuiDisplay();
+
 		Vec3& GetAcceleration() { return mAcceleration; }
 		void SetAcceleration(Vec3 acceleration) { mAcceleration = acceleration; }
 
@@ -39,7 +41,8 @@ namespace TDS
 		void SetRestitution(float restitution) { mRestitution = restitution; }
 
 		float& GetMass() { return mMass; }
-		void SetMass(float mass) { mMass = mass; }
+		float& GetInverseMass() { return mInverseMass; }
+		void SetMass(float mass) { mMass = mass; mInverseMass = 1.0f / mass; }
 
 		float& GetGravity() { return mGravity; }
 		void SetGravity(float gravity) { mGravity = gravity; }
@@ -56,6 +59,7 @@ namespace TDS
 		float mFriction;
 		float mRestitution;
 		float mMass;
+		float mInverseMass;
 		float mGravity;
 	};
 
