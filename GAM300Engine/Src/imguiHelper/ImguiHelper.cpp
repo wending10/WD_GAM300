@@ -4,6 +4,7 @@
 #include "imguiHelper/ImguiAssetBrowser.h"
 #include "imguiHelper/ImguiConsole.h"
 #include "imguiHelper/ImguiToolbar.h"
+#include "imguiHelper/ImguiProfiler.h"
 
 #include "imguiHelper/ImguiFunctionHelper.h"
 
@@ -23,6 +24,7 @@ namespace TDS
 			m_instance->panels[PanelTypes::ASSETBROWSER] = std::make_shared<AssetBrowser>();
 			m_instance->panels[PanelTypes::CONSOLE] = std::make_shared<EditorConsole>();
 			m_instance->panels[PanelTypes::TOOLBAR] = std::make_shared<Toolbar>();
+			m_instance->panels[PanelTypes::PROFILER] = std::make_shared<Profiler>();
 		}
 		return m_instance;
 	}

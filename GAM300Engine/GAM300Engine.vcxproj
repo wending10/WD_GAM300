@@ -212,6 +212,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiConsole.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiProfiler.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiToolBar.cpp" />
@@ -276,6 +277,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiConsole.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiProfiler.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
     <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
     <ClInclude Include="Include\imguiHelper\ImguiToolbar.h" />
