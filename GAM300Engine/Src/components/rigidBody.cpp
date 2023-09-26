@@ -11,11 +11,12 @@ namespace TDS
 							 mDirection			(Vec3(0.0f, 0.0f, 0.0f)),
 							 mNextPosition		(Vec3(0.0f, 0.0f, 0.0f)),
 							 mInputForce		(Vec3(0.0f, 0.0f, 0.0f)),
+							 mNormalizedForce	(Vec3(0.0f, 0.0f, 0.0f)),
 							 mFriction			(0.0f),
 							 mRestitution		(0.0f),
 						     mMass				(1.0f),
 							 mInverseMass		(1.0f),
-							 mGravity			(10.0f)
+							 mGravity			(0.0f)
 	{ }
 
 	/*!*************************************************************************
@@ -27,10 +28,12 @@ namespace TDS
 		mLinearVelocity		= Vec3(obj["linearvelocityX"].GetFloat(), obj["linearvelocityY"].GetFloat(), obj["linearvelocityZ"].GetFloat());
 		mAngularVelocity	= Vec3(obj["angularvelocityX"].GetFloat(), obj["angularvelocityY"].GetFloat(), obj["angularvelocityZ"].GetFloat());
 		mDirection			= Vec3(obj["directionX"].GetFloat(), obj["directionY"].GetFloat(), obj["directionZ"].GetFloat());
+		mInputForce			= Vec3(obj["inputForceX"].GetFloat(), obj["inputForceY"].GetFloat(), obj["inputForceZ"].GetFloat());
 		mNextPosition		= Vec3(obj["nextPositionX"].GetFloat(), obj["nextPositionY"].GetFloat(), obj["nextPositionZ"].GetFloat());
 		mFriction			= obj["friction"].GetFloat();
 		mRestitution		= obj["restitution"].GetFloat();
 		mMass				= obj["mass"].GetFloat();
+		mInverseMass		= obj["inversemass"].GetFloat();
 		mGravity			= obj["gravity"].GetFloat();
 		return true;
 	}

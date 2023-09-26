@@ -21,8 +21,8 @@ namespace TDS
 
 	private:
 		Vec3 CalculateTotalForce(RigidBody _collider);
+		void SettingObjectDirection(Vec3 totalForce, RigidBody _rigidbody);
 		void NewtonianPhysics(Transform _transform, RigidBody _rigidbody);
-	
 	private:
 		float accumulatedTime = 0.0f;
 	};

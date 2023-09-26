@@ -28,12 +28,25 @@ namespace TDS
 		Vec3 totalForce		= Vec3(0.0f);
 		totalForce			+= _rigidbody.GetInputForce();
 		totalForce.y		+= (-_rigidbody.GetGravity() * _rigidbody.GetMass());
+		_rigidbody.SetNormalizedForce(totalForce.normalize());
 		return totalForce;
+	}
+
+	void PhysicsSystem::SettingObjectDirection(Vec3 totalForce, RigidBody _rigidbody)
+	{
+		Vec3 direction = Vec3(0.0f);
+		// If totalForce.axis > 0, direction.axis = 1, else if totalForce.axis < 0, direction.axis = -1, else direction.axis = 0
+		direction.x = (totalForce.x > 0.0f) ? 1.0f : (totalForce.x < 0.0f) ? -1.0f : 0.0f; 
+		direction.y = (totalForce.y > 0.0f) ? 1.0f : (totalForce.y < 0.0f) ? -1.0f : 0.0f;
+		direction.z = (totalForce.z > 0.0f) ? 1.0f : (totalForce.z < 0.0f) ? -1.0f : 0.0f;
+		_rigidbody.SetDirection(direction);
 	}
 
 	void PhysicsSystem::NewtonianPhysics(Transform _transform, RigidBody _rigidbody)
 	{
 		Vec3 totalForce = CalculateTotalForce(_rigidbody);
+		SettingObjectDirection(totalForce, _rigidbody);
+
 		Vec3 acceleration	= totalForce * _rigidbody.GetInverseMass();
 		_rigidbody.SetAcceleration(acceleration);
 		
@@ -44,6 +57,7 @@ namespace TDS
 		Vec3 position		= _transform.GetPosition();
 		position			+= velocity * TimeStep::GetFixedDeltaTime();
 		_transform.SetPosition(position);
+		_rigidbody.SetNextPosition(position);
 	}
 
 	

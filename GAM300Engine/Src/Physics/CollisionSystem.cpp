@@ -15,10 +15,18 @@ namespace TDS
 			{
 				if (i == j)
 					continue;
-				if (SphereSphereCollision(_transform[i], _rigidbody[i], _collider[i],_transform[j], _rigidbody[j], _collider[j]))
+				if (_collider[i].GetColliderType() == Collider::ColliderType::CIRCLE && _collider[j].GetColliderType() == Collider::ColliderType::CIRCLE)
 				{
-					SphereSphereResolution(_transform[i], _rigidbody[i], _transform[j], _rigidbody[j]);
+					if (SphereSphereCollision(_transform[i], _rigidbody[i], _collider[i],_transform[j], _rigidbody[j], _collider[j]))
+					{
+						SphereSphereResolution(_transform[i], _rigidbody[i], _transform[j], _rigidbody[j]);
 					
+					}
+				}
+				else if (_collider[i].GetColliderType() == Collider::ColliderType::CIRCLE && _collider[j].GetColliderType() == Collider::ColliderType::RECTANGLE ||
+					_collider[i].GetColliderType() == Collider::ColliderType::RECTANGLE && _collider[j].GetColliderType() == Collider::ColliderType::CIRCLE)
+				{
+					// TODO: Implement Circle-Rectangle collision
 				}
 			}
 		}
