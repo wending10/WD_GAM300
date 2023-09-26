@@ -9,15 +9,16 @@ namespace TDS
 	{
 	public:
 		AssetBrowser();
+		void getFileNameFromPath(const char* full_path, std::string* path, std::string* file, std::string* fileWithExtension, std::string* extension) const;
 
 		void update();
+		static inline std::filesystem::path m_curr_path;
 
 	private:
 		float thumbnail_size = 80;
 		float padding = 10.f;
 		std::string path1;
 		std::string selectedpath;
-		std::filesystem::path m_curr_path;
 	};
 }
 

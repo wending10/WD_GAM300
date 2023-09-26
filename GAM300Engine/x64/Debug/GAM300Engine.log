@@ -1,4 +1,7 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  ImguiToolBar.cpp
+  ImguiAssetBrowser.cpp
+C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\Include\windowswindow.h(62,22): warning C4251: 'TDS::WindowsWin::m_classname': class 'std::basic_string_view<wchar_t,std::char_traits<wchar_t>>' needs to have dll-interface to be used by clients of class 'TDS::WindowsWin'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\include\xstring(1851,24): message : see declaration of 'std::basic_string_view<wchar_t,std::char_traits<wchar_t>>'
   pch.cpp
+     Creating library C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.lib and object C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.exp
   GAM300Engine.vcxproj -> C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.exe

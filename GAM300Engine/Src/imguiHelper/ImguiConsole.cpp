@@ -1,4 +1,5 @@
 #include "imguiHelper/ImguiConsole.h"
+#include "imguiHelper/ImguiAssetBrowser.h"
 
 namespace TDS
 {
@@ -126,6 +127,7 @@ namespace TDS
 			if (ImGui::IsMouseClicked(0))
 			{
 				AddLog("[orange] Mouse Click detected on ImGui Window ");
+				std::cout << AssetBrowser::m_curr_path << std::endl;
 			}
 		}
 		if (ImGui::IsKeyPressed(ImGuiKey_UpArrow))
