@@ -10,13 +10,6 @@
 #pragma comment( linker, "/subsystem:console" )
 int main(int argc, const char** argv) {
     
-    AudioEngine audioengine;
-    audioengine.init();
-
-    SoundInfo test_audio("../assets/audioFiles/Songs/test.flac");
-    audioengine.loadSound(test_audio);
-    audioengine.playSound(test_audio);
-    
     return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), 0);
 }
 #else
