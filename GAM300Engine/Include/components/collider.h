@@ -29,17 +29,17 @@ namespace TDS
 		ColliderType& GetColliderType() { return mColliderType; }
 		void SetColliderType(ColliderType colliderType) { mColliderType = colliderType; }
 
-		Vec2& GetColliderNormal() { return mCollisionNormal; }
-		void SetColliderNormal(Vec2 collisionNormal) { mCollisionNormal = collisionNormal; }
+		Vec3& GetColliderNormal() { return mCollisionNormal; }
+		void SetColliderNormal(Vec3 collisionNormal) { mCollisionNormal = collisionNormal; }
 
-		Vec2& GetMin() { return mMin; }
-		void SetMin(Vec2 min) { mMin = min; }
+		Vec3& GetMin() { return mMin; }
+		void SetMin(Vec3 min) { mMin = min; }
 
-		Vec2& GetMax() { return mMax; }
-		void SetMax(Vec2 max) { mMax = max; }
+		Vec3& GetMax() { return mMax; }
+		void SetMax(Vec3 max) { mMax = max; }
 
-		Vec2& GetOffset() { return mOffset; }
-		void SetOffset(Vec2 offset) { mOffset = offset; }
+		Vec3& GetOffset() { return mOffset; }
+		void SetOffset(Vec3 offset) { mOffset = offset; }
 
 		int& GetHit() { return mHit; }
 		void SetHit(int hit) { mHit = hit; }
@@ -52,10 +52,10 @@ namespace TDS
 
 	private:
 		ColliderType mColliderType;
-		Vec2 mCollisionNormal;
-		Vec2 mMin;
-		Vec2 mMax;
-		Vec2 mOffset;
+		Vec3 mCollisionNormal;
+		Vec3 mMin;
+		Vec3 mMax;
+		Vec3 mOffset;
 		int mHit;
 		float mRadius;
 		bool mIsAlive;

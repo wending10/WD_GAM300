@@ -1,14 +1,19 @@
 #include "EngineInterface.hxx"
 #include "../GAM300Engine/Include/application.h"
+#include "../GAM300Engine/Include/ecs/ecs.cpp"
+using namespace System;
+using namespace System::Runtime::InteropServices;
 #pragma comment (lib, "GAM300Engine.lib")
 
 
 namespace ScriptAPI
 {
+
 	void EngineInterface::HelloWorld()
 	{
 		System::Console::WriteLine("Hello Managed World!");
 		TDS::Application::HelloWorld();
+
 	}
 
 	void EngineInterface::Init()
@@ -16,23 +21,28 @@ namespace ScriptAPI
         // Load Assembly
         System::Reflection::Assembly::LoadFrom("ManagedScripts.dll");
 
-		scripts = gcnew System::Collections::Generic::SortedList<int,ScriptList^>();
+		scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>();
 
-        for (int i = 0; i < TDS::Application::ENTITY_COUNT; ++i)
+        /*for (int i = 0; i < TDS::Application::ENTITY_COUNT; ++i)
         {
             scripts->Add(i,gcnew ScriptList());
+        }*/
+        HelloWorld();
+        
+        for (auto i : TDS::ECS::getEntities())
+        {
+            scripts->Add(i, gcnew ScriptList());
         }
-		/*for (auto i : TDS::ecs.getEntities())
-		{
-			scripts->Add(i,gcnew ScriptList());
-		}*/
 
         updateScriptTypeList();
 		System::Console::WriteLine("Hello Engine Interface Init!");
 	}
 
-    bool EngineInterface::AddScriptViaName(int entityId, System::String^ scriptName)
+    bool EngineInterface::AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
     {
+        if (entityId == TDS::NULLENTITY || TDS::ECS::getEntities().size() == 0)
+            return false;
+
         // Remove any whitespaces
         scriptName = scriptName->Trim();
 

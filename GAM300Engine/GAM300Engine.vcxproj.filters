@@ -52,6 +52,7 @@
     <ClCompile Include="Src\Model\Skeleton.cpp" />
     <ClCompile Include="Src\Model\ModelTransform.cpp" />
     <ClCompile Include="Src\pch.cpp" />
+    <ClCompile Include="Src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\pch.h" />
+    <ClInclude Include="Include\Physics\PhysicsSystem.h" />
     <ClInclude Include="Include\imguiHelper\ImguiAssetBrowser.h" />
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />

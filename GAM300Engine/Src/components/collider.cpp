@@ -6,10 +6,10 @@ namespace TDS {
 	Constructor for collider component
 	****************************************************************************/
 	Collider::Collider() : mColliderType	(ColliderType::NONE),
-						   mCollisionNormal (Vec2(0.0f, 0.0f)),
-						   mMin				(Vec2(0.0f, 0.0f)),
-						   mMax				(Vec2(0.0f, 0.0f)),
-						   mOffset			(Vec2(0.0f, 0.0f)),
+						   mCollisionNormal (Vec3(0.0f, 0.0f, 0.0f)),
+						   mMin				(Vec3(0.0f, 0.0f, 0.0f)),
+						   mMax				(Vec3(0.0f, 0.0f, 0.0f)),
+						   mOffset			(Vec3(0.0f, 0.0f, 0.0f)),
 						   mHit				(0),
 						   mRadius			(0.0f),
 						   mIsAlive			(true)
@@ -21,10 +21,10 @@ namespace TDS {
 	bool Collider::Deserialize(const rapidjson::Value& obj)
 	{
 		mColliderType		= static_cast<ColliderType>(obj["colliderType"].GetInt());
-		mCollisionNormal	= Vec2(obj["collisionNormalX"].GetFloat(), obj["collisionNormalY"].GetFloat());
-		mMin				= Vec2(obj["minX"].GetFloat(), obj["minY"].GetFloat());
-		mMax				= Vec2(obj["maxX"].GetFloat(), obj["maxY"].GetFloat());
-		mOffset				= Vec2(obj["offsetX"].GetFloat(), obj["offsetY"].GetFloat());
+		mCollisionNormal	= Vec3(obj["collisionNormalX"].GetFloat(), obj["collisionNormalY"].GetFloat(), obj["collisionNormalZ"].GetFloat());
+		mMin				= Vec3(obj["minX"].GetFloat(), obj["minY"].GetFloat(), obj["minZ"].GetFloat());
+		mMax				= Vec3(obj["maxX"].GetFloat(), obj["maxY"].GetFloat(), obj["maxZ"].GetFloat());
+		mOffset				= Vec3(obj["offsetX"].GetFloat(), obj["offsetY"].GetFloat(), obj["offsetZ"].GetFloat());
 		mHit				= obj["hit"].GetInt();
 		mRadius				= obj["radius"].GetFloat();
 		mIsAlive			= obj["isAlive"].GetBool();
@@ -44,21 +44,29 @@ namespace TDS {
 		writer->Double(mCollisionNormal.x);
 		writer->Key("collisionNormalY");
 		writer->Double(mCollisionNormal.y);
+		writer->Key("collisionNormalZ");
+		writer->Double(mCollisionNormal.z);
 
 		writer->Key("minX");
 		writer->Double(mMin.x);
 		writer->Key("minY");
 		writer->Double(mMin.y);
+		writer->Key("minZ");
+		writer->Double(mMin.z);
 
 		writer->Key("maxX");
 		writer->Double(mMax.x);
 		writer->Key("maxY");
 		writer->Double(mMax.y);
+		writer->Key("maxZ");
+		writer->Double(mMax.z);
 
 		writer->Key("mOffsetX");
 		writer->Double(mOffset.x);
 		writer->Key("mOffsetY");
 		writer->Double(mOffset.y);
+		writer->Key("mOffsetZ");
+		writer->Double(mOffset.z);
 
 		writer->Key("hit");
 		writer->Double(mHit);
@@ -104,10 +112,10 @@ namespace TDS {
 			ImGui::EndCombo();
 		}
 
-		ImguiVec2Input("Collision Normal", mCollisionNormal);
-		ImguiVec2Input("Min", mMin);
-		ImguiVec2Input("Max", mMax);
-		ImguiVec2Input("Offset", mOffset);
+		ImguiVec3Input("Collision Normal", mCollisionNormal);
+		ImguiVec3Input("Min", mMin);
+		ImguiVec3Input("Max", mMax);
+		ImguiVec3Input("Offset", mOffset);
 		ImguiIntInput("Hit", mHit);
 		ImguiFloatInput("Radius", mRadius);
 		ImguiBoolInput("Is Alive", mIsAlive);

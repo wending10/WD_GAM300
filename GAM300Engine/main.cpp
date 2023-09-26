@@ -4,7 +4,6 @@
 #include "ecs/ecs.h"
 #include "include/fmod/AudioEngine.h"
 
-//TDS::ECS TDS::ecs;
 
 #if _DEBUG
 #pragma comment( linker, "/subsystem:console" )
