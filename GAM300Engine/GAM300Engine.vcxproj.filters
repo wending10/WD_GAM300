@@ -61,6 +61,7 @@
     <ClCompile Include="Include\Identifier\GUID.cpp" />
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiSceneBrowser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -117,6 +118,7 @@
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+    <ClInclude Include="Include\ecs\systems.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

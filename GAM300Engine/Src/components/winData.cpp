@@ -12,6 +12,16 @@ namespace TDS
 						 mSFXVolume			(1.0f)
 	{ }
 
+	WinData::WinData(WinData&& toMove) noexcept : mTitle			(toMove.mTitle),
+												  mWidth			(toMove.mWidth),
+												  mHeight			(toMove.mHeight),
+												  mCurrentWidth		(toMove.mCurrentWidth),
+												  mCurrentHeight	(toMove.mCurrentHeight),
+												  mMasterVolume		(toMove.mMasterVolume),
+												  mBGMVolume		(toMove.mBGMVolume),
+												  mSFXVolume		(toMove.mSFXVolume)
+	{ }
+
 	bool WinData::Deserialize(const rapidjson::Value& obj)
 	{
 		mTitle = obj["title"].GetString();

@@ -9,9 +9,12 @@ namespace TDS
 	{
 	public:
 		Tag();
+		Tag(Tag&& toMove) noexcept;
 		~Tag() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+		//Tag& operator=(Tag&& other) noexcept { return *this; };
 
 		virtual void ImGuiDisplay();
 

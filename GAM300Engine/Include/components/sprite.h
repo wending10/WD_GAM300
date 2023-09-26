@@ -10,9 +10,12 @@ namespace TDS
 	{
 	public:
 		Sprite();
+		Sprite(Sprite&& toMove) noexcept;
 		~Sprite() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+		//Sprite& operator=(Sprite&& other) noexcept { return *this; };
 
 		virtual void ImGuiDisplay();
 

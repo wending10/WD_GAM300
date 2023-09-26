@@ -17,6 +17,15 @@ namespace TDS
 							 mGravity		(10.0f)
 	{ }
 
+
+	RigidBody::RigidBody(RigidBody&& toMove) noexcept : mAcceleration	(toMove.mAcceleration),
+														mVelocity		(toMove.mVelocity),
+														mDirection		(toMove.mDirection),
+														mNextPosition	(toMove.mNextPosition),
+														mFriction		(toMove.mFriction),
+														mRestitution	(toMove.mRestitution)
+	{ }
+
 	/*!*************************************************************************
 	Deserialize for RigidBody
 	****************************************************************************/

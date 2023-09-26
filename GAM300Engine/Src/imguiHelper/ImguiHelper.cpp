@@ -1,9 +1,10 @@
-#include "imguiHelper/ImguiHelper.h"
-#include "imguiHelper/ImguiHierarchy.h"
-#include "imguiHelper/ImguiProperties.h"
-#include "imguiHelper/ImguiAssetBrowser.h"
+#include "ImguiHelper/ImguiHelper.h"
+#include "ImguiHelper/ImguiHierarchy.h"
+#include "ImguiHelper/ImguiProperties.h"
+#include "ImguiHelper/ImguiAssetBrowser.h"
+#include "ImguiHelper/ImguiSceneBrowser.h"
 
-#include "imguiHelper/ImguiFunctionHelper.h"
+#include "ImguiHelper/ImguiFunctionHelper.h"
 
 namespace TDS
 {
@@ -19,6 +20,7 @@ namespace TDS
 			m_instance->panels[PanelTypes::HIERARCHY] = std::make_shared<Hierarchy>();
 			m_instance->panels[PanelTypes::PROPERTIES] = std::make_shared<Properties>();
 			m_instance->panels[PanelTypes::ASSETBROWSER] = std::make_shared<AssetBrowser>();
+			m_instance->panels[PanelTypes::SCENEBROWSER] = std::make_shared<SceneBrowser>();
 		}
 		return m_instance;
 	}
@@ -76,10 +78,19 @@ namespace TDS
 		// Panels
 		for (auto currentPanel : LevelEditorManager::GetInstance()->panels)
 		{
-			ImGui::GetStyle().WindowPadding = currentPanel.second->windowPadding;
+			//ImGui::GetStyle().WindowPadding = currentPanel.second->windowPadding;
 
 			if (ImGui::Begin(currentPanel.second->panelTitle.c_str(), (bool*)0, currentPanel.second->flags))
 			{
+				if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+				{
+					currentPanel.second->rightClick = true;
+				}
+				else
+				{
+					currentPanel.second->rightClick = false;
+				}
+
 				currentPanel.second->update();
 			}
 			ImGui::End();
@@ -109,55 +120,62 @@ namespace TDS
 	void ImguiTextInput(std::string variableName, std::string& textVariable)
 	{
 		ImGui::TableNextRow();
-		ImGui::TableSetColumnIndex(0);
+		ImGui::TableNextColumn();
 		ImGui::Text(variableName.c_str());
 
-		ImGui::TableSetColumnIndex(1);
+		ImGui::TableNextColumn();
 		char temp[100];
 		strcpy_s(temp, textVariable.c_str());
-		ImGui::InputText("###", temp, 100);
+		ImGui::InputText(("##" + variableName).c_str(), temp, 100);
 		textVariable = std::string(temp);
 	}
 
 	void ImguiBoolInput(std::string variableName, bool& boolVariable)
 	{
 		ImGui::TableNextRow();
-		ImGui::TableSetColumnIndex(0);
+		ImGui::TableNextColumn();
 		ImGui::Text(variableName.c_str());
 
-		ImGui::TableSetColumnIndex(1);
-		ImGui::Checkbox("###", &boolVariable);
+		ImGui::TableNextColumn();
+		ImGui::Checkbox(("##" + variableName).c_str(), &boolVariable);
 	}
 
 	void ImguiIntInput(std::string variableName, int& intVariable, float speed, float min, float max)
 	{
 		ImGui::TableNextRow();
-		ImGui::TableSetColumnIndex(0);
+		ImGui::TableNextColumn();
 		ImGui::Text(variableName.c_str());
 
-		ImGui::TableSetColumnIndex(1);
-		ImGui::DragInt("###", &intVariable, speed, min, max);
+		ImGui::TableNextColumn();
+		if (max > 0)
+		{
+			ImGui::DragInt(("##" + variableName).c_str(), &intVariable, speed, min);
+		}
+		else
+		{
+			ImGui::DragInt(("##" + variableName).c_str(), &intVariable, speed, min, max);
+		}
 	}
 
 	void ImguiFloatInput(std::string variableName, float& floatVariable, float speed, float min, float max)
 	{
 		ImGui::TableNextRow();
-		ImGui::TableSetColumnIndex(0);
+		ImGui::TableNextColumn();
 		ImGui::Text(variableName.c_str());
 
-		ImGui::TableSetColumnIndex(1);
-		ImGui::DragFloat("###", &floatVariable, speed, min, max);
+		ImGui::TableNextColumn();
+		ImGui::DragFloat(("##" + variableName).c_str(), &floatVariable, speed, min, max);
 	}
 
 	void ImguiVec2Input(std::string variableName, Vec2& Vec2Variable)
 	{
 		ImGui::TableNextRow();
-		ImGui::TableSetColumnIndex(0);
+		ImGui::TableNextColumn();
 		ImGui::Text(variableName.c_str());
 
-		ImGui::TableSetColumnIndex(1);
+		ImGui::TableNextColumn();
 		float temp[2]{ Vec2Variable.x, Vec2Variable.y };
-		ImGui::DragFloat3("###", temp, 1.0f);
+		ImGui::DragFloat2(("##" + variableName).c_str(), temp, 1.0f);
 		Vec2Variable.x = temp[0];
 		Vec2Variable.y = temp[1];
 	}
@@ -165,12 +183,12 @@ namespace TDS
 	void ImguiVec3Input(std::string variableName, Vec3& Vec3Variable)
 	{
 		ImGui::TableNextRow();
-		ImGui::TableSetColumnIndex(0);
+		ImGui::TableNextColumn();
 		ImGui::Text(variableName.c_str());
 
-		ImGui::TableSetColumnIndex(1);
+		ImGui::TableNextColumn();
 		float temp[3]{ Vec3Variable.x, Vec3Variable.y, Vec3Variable.z };
-		ImGui::DragFloat3("###", temp, 1.0f);
+		ImGui::DragFloat3(("##" + variableName).c_str(), temp, 1.0f);
 		Vec3Variable.x = temp[0];
 		Vec3Variable.y = temp[1];
 		Vec3Variable.z = temp[2];

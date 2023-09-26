@@ -11,7 +11,6 @@
 #include "imguiHelper/ImguiHelper.h"
 #include "sceneManager/sceneManager.h"
 #include "Logger/Logger.h"
-//#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
@@ -89,20 +88,24 @@ namespace TDS
      }
      void Application::Initialize()
      {
-         /*auto& sceneManager = SceneManager::GetInstance();
-         sceneManager->Init();*/
+         auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();
+
+         bindSystemFunctions();
+         ECS::initializeSystems(1);
+
          EntityID newEntity = ECS::getNewID();
          ECS::registerEntity(newEntity);
          Entity entity1;
          Entity entity2;
-         Run();
-         auto addScript = GetFunctionPtr<bool(*)(TDS::EntityID, const char*)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "AddScriptViaName"
-             );
-         addScript(newEntity, "Test");
+         //Run();
+         //auto addScript = GetFunctionPtr<bool(*)(TDS::EntityID, const char*)>
+         //    (
+         //        "ScriptAPI",
+         //        "ScriptAPI.EngineInterface",
+         //        "AddScriptViaName"
+         //    );
+         //addScript(newEntity, "Test");
      }
 
      void Application::Run()
@@ -125,13 +128,14 @@ namespace TDS
 
      void Application::Update()
      {
-         auto executeUpdate = GetFunctionPtr<void(*)(void)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "ExecuteUpdate"
-             );
+         //auto executeUpdate = GetFunctionPtr<void(*)(void)>
+         //    (
+         //        "ScriptAPI",
+         //        "ScriptAPI.EngineInterface",
+         //        "ExecuteUpdate"
+         //    );
 
+         auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
              float DeltaTime;
@@ -142,15 +146,17 @@ namespace TDS
                  Clock = Now;
              }
 
+             ECS::runSystems(1, DeltaTime);
+
              //Imgui helper
              imguiHelper::Update();
 
              m_pVKInst.get()->drawFrame(m_window, DeltaTime);
              Input::scrollStop();
-             executeUpdate();
+             //executeUpdate();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
-         stopScriptEngine();
+         //stopScriptEngine();
          imguiHelper::Exit();
      }
   

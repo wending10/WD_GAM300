@@ -39,6 +39,7 @@ namespace TDS
 		void deleteScene(std::string scene);
 
 		std::string getCurrentScene();
+		std::vector<std::string>& getScenes();
 
 		bool isGameplay;
 

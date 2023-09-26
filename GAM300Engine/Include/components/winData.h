@@ -9,9 +9,12 @@ namespace TDS
 	{
 	public:
 		WinData();
+		WinData(WinData&& toMove) noexcept;
 		~WinData() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+		//WinData& operator=(WinData&& other) noexcept { return *this; };
 
 		virtual void ImGuiDisplay();
 
