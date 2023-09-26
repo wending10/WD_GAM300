@@ -91,6 +91,8 @@ namespace TDS
      {
          /*auto& sceneManager = SceneManager::GetInstance();
          sceneManager->Init();*/
+
+		
          EntityID newEntity = ECS::getNewID();
          ECS::registerEntity(newEntity);
          Entity entity1;
@@ -134,18 +136,11 @@ namespace TDS
 
          while (m_window.processInputEvent())
          {
-             float DeltaTime;
-             {
-                 auto  Now = std::chrono::high_resolution_clock::now();
-                 std::chrono::duration<float> ElapsedSeconds = Now - Clock;
-                 DeltaTime = ElapsedSeconds.count();
-                 Clock = Now;
-             }
-
+             TimeStep::CalculateDeltaTime();
              //Imgui helper
              imguiHelper::Update();
 
-             m_pVKInst.get()->drawFrame(m_window, DeltaTime);
+             m_pVKInst.get()->drawFrame(m_window, TimeStep::GetDeltaTime());
              Input::scrollStop();
              executeUpdate();
          }

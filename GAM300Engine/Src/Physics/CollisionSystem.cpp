@@ -47,7 +47,8 @@ namespace TDS
 		Dir2 = Dir2 * -1;
 		body1.SetDirection(Dir1);
 		body2.SetDirection(Dir2);
-		
+		body1.SetInputForce(body1.GetInputForce() * -1);
+		body2.SetInputForce(body2.GetInputForce() * -1);
 	}
 
 	

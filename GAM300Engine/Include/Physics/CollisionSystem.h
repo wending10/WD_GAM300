@@ -5,11 +5,11 @@
 #include "components/collider.h"
 #include "components/transform.h"
 #include "components/rigidBody.h"
-
+#include "dotnet/ImportExport.h"
 
 namespace TDS
 {
-	class CollisionSystem
+	class DLL_API CollisionSystem
 	{
 	public:
 		void CollisionSystemInit();

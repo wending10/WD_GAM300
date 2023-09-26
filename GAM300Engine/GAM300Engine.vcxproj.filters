@@ -62,6 +62,7 @@
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="Src\Physics\CollisionSystem.cpp" />
+    <ClCompile Include="Src\Timestep\Timestep.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
     <ClInclude Include="Include\Physics\CollisionSystem.h" />
+    <ClInclude Include="Include\Timestep\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -10,6 +10,9 @@
 #include "dotnet/ImportExport.h"
 #include "dotnet/include/coreclrhost.h" 
 #include "ecs/ecs.h"
+#include "Timestep/Timestep.h"
+#include "Physics/PhysicsSystem.h"
+#include "Physics/CollisionSystem.h"
 
 namespace TDS
 {

@@ -10,11 +10,15 @@ namespace TDS
 
 	void PhysicsSystem::PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody)
 	{
-		//TODO: need fix timestep
 		// Physics loop
-		for (int i = 0; i < entities.size(); ++i)
+		accumulatedTime += dt;
+		while (accumulatedTime >= TimeStep::GetFixedDeltaTime())
 		{
-			NewtonianPhysics(_transform[i], _rigidbody[i]);
+			for (int i = 0; i < entities.size(); ++i)
+			{
+				NewtonianPhysics(_transform[i], _rigidbody[i]);
+			}
+			accumulatedTime -= TimeStep::GetFixedDeltaTime();
 		}
 		
 	}
@@ -34,11 +38,11 @@ namespace TDS
 		_rigidbody.SetAcceleration(acceleration);
 		
 		Vec3 velocity		= _rigidbody.GetLinearVel();
-		velocity			+= acceleration * fixedDt/*dt*/;
+		velocity += acceleration * TimeStep::GetFixedDeltaTime();
 		_rigidbody.SetLinearVel(velocity);
 		
 		Vec3 position		= _transform.GetPosition();
-		position			+= velocity * fixedDt/*dt*/;
+		position			+= velocity * TimeStep::GetFixedDeltaTime();
 		_transform.SetPosition(position);
 	}
 

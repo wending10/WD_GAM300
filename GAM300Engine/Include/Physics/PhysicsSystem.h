@@ -4,6 +4,8 @@
 #include "ecs/ecs.h"
 #include "components/rigidBody.h"
 #include "components/transform.h"
+#include "dotnet/ImportExport.h"
+#include "Timestep/Timestep.h"
 
 // X = moving left, right
 // Y = moving up, down
@@ -11,7 +13,7 @@
 
 namespace TDS
 {
-	class PhysicsSystem
+	class DLL_API PhysicsSystem
 	{
 	public:
 		void PhysicsSystemInit();
@@ -20,11 +22,9 @@ namespace TDS
 	private:
 		Vec3 CalculateTotalForce(RigidBody _collider);
 		void NewtonianPhysics(Transform _transform, RigidBody _rigidbody);
-
-
-		const double fixedDt = 0.0166666f;
-		double accumulator = 0.0f;		
-		
+	
+	private:
+		float accumulatedTime = 0.0f;
 	};
 }
 
