@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Script.hxx"
+#include "ecs/ecs.h"
 
 namespace ScriptAPI
 {
@@ -12,14 +13,14 @@ namespace ScriptAPI
 
 		static void Init();
 
-		static bool AddScriptViaName(int entityId, System::String^ scriptName);
+		static bool AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 
 		static void ExecuteUpdate();
 
 	private:
 		//(^)* reference to managed pointer
 		using ScriptList = System::Collections::Generic::List<Script^>;
-		static System::Collections::Generic::SortedList<int,ScriptList^>^ scripts;
+		static System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>^ scripts;
 		static System::Collections::Generic::IEnumerable<System::Type^>^ scriptTypeList;
 		static void updateScriptTypeList();
 	};

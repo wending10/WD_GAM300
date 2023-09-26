@@ -94,9 +94,20 @@ namespace TDS
      }
      void Application::Initialize()
      {
-         auto& sceneManager = SceneManager::GetInstance();
-         sceneManager->Init();
-         //Run();
+         /*auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();*/
+         EntityID newEntity = ECS::getNewID();
+         ECS::registerEntity(newEntity);
+         Entity entity1;
+         Entity entity2;
+         Run();
+         auto addScript = GetFunctionPtr<bool(*)(TDS::EntityID, const char*)>
+             (
+                 "ScriptAPI",
+                 "ScriptAPI.EngineInterface",
+                 "AddScriptViaName"
+             );
+         addScript(newEntity, "Test");
      }
 
      void Application::Run()
@@ -112,35 +123,20 @@ namespace TDS
                  "ScriptAPI.EngineInterface",
                  "Init"
              );
-         auto addScript = GetFunctionPtr<bool(*)(int, const char*)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "AddScriptViaName"
-             );
+
+         // Step 2: Initialize
+         init();
+     }
+
+     void Application::Update()
+     {
          auto executeUpdate = GetFunctionPtr<void(*)(void)>
              (
                  "ScriptAPI",
                  "ScriptAPI.EngineInterface",
                  "ExecuteUpdate"
              );
-
-         // Step 2: Initialize
-         init();// Step 1: Get Functions
-         addScript(0, "Test");
-
-         //ecs.registerEntity(ecs.getNewID());
-
-         for (int i = 0; i < 15; ++i)
-         {
-             executeUpdate();
-         }
-
-         //stopScriptEngine();
-     }
-
-     void Application::Update()
-     {
+       
          //consoleLog->AddLog("Writing from SpeedLog:");
          TDS_INFO("Hello, {}!", "World");
          auto  Clock = std::chrono::system_clock::now();
@@ -159,8 +155,10 @@ namespace TDS
 
              m_pVKInst.get()->drawFrame(m_window, DeltaTime);
              Input::scrollStop();
+             executeUpdate();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
+         stopScriptEngine();
          imguiHelper::Exit();
      }
   
@@ -172,8 +170,12 @@ namespace TDS
 
      void Application::HelloWorld()
      {
-         std::cout << "Hello Native World!" << std::endl;
+         for (auto i : ECS::getEntities())
+         {
+            std::cout << i << std::endl;
+         }
      }
+
 
      void Application::startScriptEngine()
      {

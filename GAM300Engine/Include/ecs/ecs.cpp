@@ -10,8 +10,3 @@ namespace TDS
 	ECS::SystemsArrayMap          ECS::mSystems;
 	ECS::ComponentTypeIDBaseMap   ECS::mComponentMap;
 }
-
-//namespace TDS
-//{
-//	inline std::vector<EntityID> ECS::getEntities();
-//}
