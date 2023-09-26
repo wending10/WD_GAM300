@@ -16,7 +16,9 @@ namespace TDS
 		void CollisionSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody, Collider* _collider);
 
 	private:
-		bool SphereSphereCollision(RigidBody body1, Collider _collider1, RigidBody body2, Collider _collider2); // assuming all are spheres
+		bool SphereSphereCollision(Transform trans1, RigidBody body1, Collider collider1, Transform trans2, RigidBody body2, Collider collider2);
+		void SphereSphereResolution(Transform trans1, RigidBody body1, Transform trans2, RigidBody body2);
+
 	};
 }
 

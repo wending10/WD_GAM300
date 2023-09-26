@@ -15,9 +15,10 @@ namespace TDS
 			{
 				if (i == j)
 					continue;
-				if (SphereSphereCollision(_rigidbody[i], _collider[i], _rigidbody[j], _collider[j]))
+				if (SphereSphereCollision(_transform[i], _rigidbody[i], _collider[i],_transform[j], _rigidbody[j], _collider[j]))
 				{
-					// sphere resolution
+					SphereSphereResolution(_transform[i], _rigidbody[i], _transform[j], _rigidbody[j]);
+					
 				}
 			}
 		}
@@ -25,9 +26,30 @@ namespace TDS
 
 
 	/*Helper Function*/
-	bool CollisionSystem::SphereSphereCollision(RigidBody body1, Collider _collider1, RigidBody body2, Collider _collider2)
+	bool CollisionSystem::SphereSphereCollision(Transform trans1, RigidBody body1, Collider collider1, Transform trans2, RigidBody body2, Collider collider2)
 	{
+		// get the distance between the two objects
+		float distance = (trans1.GetPosition() - trans2.GetPosition()).magnitude();
+		// if the distance is less than the sum of the two radii, they are colliding
+		if (distance < collider1.GetRadius() + collider2.GetRadius())
+		{
+			return true;
+		}
+		return false;
+	}
+
+	void CollisionSystem::SphereSphereResolution(Transform trans1, RigidBody body1, Transform trans2, RigidBody body2)
+	{
+		// get the direction of both objects, reflect them and multiply back into the forces
+		Vec3 Dir1 = body1.GetDirection();
+		Vec3 Dir2 = body2.GetDirection();
+		Dir1 = Dir1 * -1;
+		Dir2 = Dir2 * -1;
+		body1.SetDirection(Dir1);
+		body2.SetDirection(Dir2);
 		
 	}
+
+	
 }
 

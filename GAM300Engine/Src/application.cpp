@@ -136,7 +136,7 @@ namespace TDS
          {
              float DeltaTime;
              {
-                 auto                         Now = std::chrono::system_clock::now();
+                 auto  Now = std::chrono::high_resolution_clock::now();
                  std::chrono::duration<float> ElapsedSeconds = Now - Clock;
                  DeltaTime = ElapsedSeconds.count();
                  Clock = Now;
