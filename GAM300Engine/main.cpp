@@ -7,6 +7,7 @@
 #if _DEBUG
 #pragma comment( linker, "/subsystem:console" )
 int main(int argc, const char** argv) {
+    
     return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), 0);
 }
 #else

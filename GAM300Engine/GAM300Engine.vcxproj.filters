@@ -61,6 +61,8 @@
     <ClCompile Include="Include\Identifier\GUID.cpp" />
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
+    <ClCompile Include="src\AudioEngine.cpp" />
+    <ClCompile Include="src\imguiHelper\ImguiAudio.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiSceneBrowser.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiConsole.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiToolBar.cpp" />
@@ -121,10 +123,15 @@
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+    <ClInclude Include="Include\fmod\AudioEngine.h" />
+    <ClInclude Include="Include\fmod\SoundInfo.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiAudio.h" />
     <ClInclude Include="Include\ecs\systems.h" />
     <ClInclude Include="Include\imguiHelper\ImguiConsole.h" />
     <ClInclude Include="Include\imguiHelper\ImguiToolbar.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProfiler.h" />
+    <ClInclude Include="Include\fmod_engine\AudioEngine.h" />
+    <ClInclude Include="Include\fmod_engine\SoundInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -140,5 +147,6 @@
     <ClInclude Include="Include\ResourceManagement\Resource.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
+    <None Include="assimp-vc143-mtd.dll" />
   </ItemGroup>
 </Project>
