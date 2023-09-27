@@ -50,8 +50,10 @@ namespace TDS
 		void SetRestitution(float restitution) { mRestitution = restitution; }
 
 		float& GetMass() { return mMass; }
+		void SetMass(float mass) { mMass = mass; }
+		
 		float& GetInverseMass() { return mInverseMass; }
-		void SetMass(float mass) { mMass = mass; mInverseMass = 1.0f / mass; }
+		void setInverseMass(float mass) { mInverseMass = 1.0f / mass; }
 
 		float& GetGravity() { return mGravity; }
 		void SetGravity(float gravity) { mGravity = gravity; }
