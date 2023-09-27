@@ -19,8 +19,6 @@
 #include <map>
 #include "SoundInfo.h"
 
-#include "ecs/ecs.h"
-
 namespace AudioWerks
 {
     /**
@@ -35,7 +33,7 @@ namespace AudioWerks
       * Deals with all FMOD calls so that FMOD-specific code does not need to be used outside this class.
       * Only one AudioEngine should be constructed for an application.
       */
-     class AudioEngine : public TDS::IComponent
+     class AudioEngine
      {
      public:
          /**
@@ -43,21 +41,6 @@ namespace AudioWerks
           * AudioEngine::init() must be called before using the Audio Engine
           */
          AudioEngine();
-
-         /**
-          * Load from a file into a container of SoundInfo struct
-          */
-         virtual bool Deserialize(const rapidjson::Value& obj);
-
-         /**
-          * Save to a file 
-          */
-         virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
-
-         /**
-         * Display for ImGui
-         */
-         virtual void ImGuiDisplay();
 
          /**
           * Initializes Audio Engine Studio and Core systems to default values.

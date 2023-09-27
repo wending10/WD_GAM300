@@ -130,6 +130,8 @@
     <ClInclude Include="Include\imguiHelper\ImguiConsole.h" />
     <ClInclude Include="Include\imguiHelper\ImguiToolbar.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProfiler.h" />
+    <ClInclude Include="Include\fmod_engine\AudioEngine.h" />
+    <ClInclude Include="Include\fmod_engine\SoundInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

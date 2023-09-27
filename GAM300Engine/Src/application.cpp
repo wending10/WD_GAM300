@@ -121,25 +121,25 @@ namespace TDS
          //startScriptEngine();
 
          // Step 1: Get Functions
-         auto init = GetFunctionPtr<void(*)(void)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "Init"
-             );
+         //auto init = GetFunctionPtr<void(*)(void)>
+         //    (
+         //        "ScriptAPI",
+         //        "ScriptAPI.EngineInterface",
+         //        "Init"
+         //    );
 
-         // Step 2: Initialize
-         init();
+         //// Step 2: Initialize
+         //init();
      }
 
      void Application::Update()
      {
-         auto executeUpdate = GetFunctionPtr<void(*)(void)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "ExecuteUpdate"
-             );
+         //auto executeUpdate = GetFunctionPtr<void(*)(void)>
+         //    (
+         //        "ScriptAPI",
+         //        "ScriptAPI.EngineInterface",
+         //        "ExecuteUpdate"
+         //    );
        
          //consoleLog->AddLog("Writing from SpeedLog:");
          TDS_INFO("Hello, {}!", "World");

@@ -2,31 +2,14 @@
 /// @file AudioEngine.cpp
 /// @author Tear Drop Studio
 ///
-#include "fmod/AudioEngine.h"
 #include <fmod/fmod_errors.h>
 #include <iostream>
+#include <fmod_engine/AudioEngine.h>
 
 namespace AudioWerks
 {
     AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
     eventDescriptions(), eventInstances(), reverb() {}
-
-    bool AudioEngine::Deserialize(const rapidjson::Value& obj)
-    {
-        //To do
-        return false;
-    }
-
-    bool AudioEngine::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
-    {
-        //To do
-        return false;
-    }
-
-    void AudioEngine::ImGuiDisplay()
-    {
-
-    }
 
     void AudioEngine::init() {
        ERRCHECK(FMOD::Studio::System::create(&studioSystem));
