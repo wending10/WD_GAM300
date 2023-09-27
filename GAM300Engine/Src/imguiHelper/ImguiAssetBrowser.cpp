@@ -54,6 +54,9 @@ namespace TDS
 
 			if (file != nullptr)
 			{
+				std::string fileType;
+				
+				fileType = nwFullPath.substr(posDot, nwFullPath.size());
 				nwFullPath = nwFullPath.substr(0, posDot);
 				posSlash = nwFullPath.find_last_of("\\/");
 				*file = nwFullPath.substr(posSlash + 1);

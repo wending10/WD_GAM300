@@ -12,10 +12,14 @@ namespace TDS
 		AudioImgui();
 		~AudioImgui();
 
+		void activate_audio_controls();
+		void deactivate_audio_controls();
 		void update();
 
 	private:
-		AudioWerks::AudioEngine* audeng;
+		AudioWerks::AudioEngine audeng;
+
+		bool appear;
 	};
 }
 
