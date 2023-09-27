@@ -10,9 +10,12 @@ namespace TDS
 	{
 	public:
 		Transform();
+		Transform(Transform&& toMove) noexcept;
 		~Transform() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+		//Transform& operator=(Transform&& other) noexcept { return *this; };
 
 		virtual void ImGuiDisplay();
 

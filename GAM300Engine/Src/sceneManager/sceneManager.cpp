@@ -24,23 +24,24 @@ namespace TDS
 	****************************************************************************/
 	void SceneManager::Init()
 	{
-		ECS::registerComponent<NameTag>("NameTag");
+		ECS::registerComponent<NameTag>("Name Tag");
 		ECS::registerComponent<Transform>("Transform");
 
-		ECS::registerComponent<CameraComponent>("CameraComponent");
+		ECS::registerComponent<CameraComponent>("Camera Component");
 		ECS::registerComponent<Collider>("Collider");
-		ECS::registerComponent<PlayerAttributes>("PlayerAttributes");
-		ECS::registerComponent<RigidBody>("RigidBody");
+		ECS::registerComponent<PlayerAttributes>("Player Attributes");
+		ECS::registerComponent<RigidBody>("Rigid Body");
 		ECS::registerComponent<Sprite>("Sprite");
 		ECS::registerComponent<Tag>("Tag");
-		ECS::registerComponent<WinData>("WinData");
+		ECS::registerComponent<WinData>("Win Data");
 
 		// Setting default scene
-		//sceneDeserialize();
+		sceneDeserialize();
 
 		//allScenes.emplace_back("Game");
 		//allScenes.emplace_back("MainMenu");
 		//startScene = "MainMenu";
+		//currentScene = "Game";
 
 		//EntityID entity1 = ECS::getNewID();
 		//ECS::registerEntity(entity1);
@@ -54,96 +55,118 @@ namespace TDS
 		//ECS::addComponent<Transform>(entity2);
 		//ECS::getComponent<Transform>(entity2)->SetPosition(Vec3{2.f, 3.f, 4.f});
 		//ECS::getComponent<Transform>(entity2)->SetScale(Vec3{2.f, 3.f, 4.f});
-
-		//ECS::addComponent<Transform>(entity1);
+		//ECS::addComponent<Collider>(entity2);
 
 		//EntityID entity3 = ECS::getNewID();
 		//ECS::registerEntity(entity3);
 		//ECS::addComponent<NameTag>(entity3);
 		//ECS::getComponent<NameTag>(entity3)->SetNameTag("entity3");
 		//ECS::addComponent<Transform>(entity3);
-		//ECS::getComponent<Transform>(entity3)->SetPosition(Vec3{ 2.f, 3.f, 4.f });
-		//ECS::getComponent<Transform>(entity3)->SetScale(Vec3{ 2.f, 3.f, 4.f });
+		//ECS::getComponent<Transform>(entity3)->SetPosition(Vec3{2.f, 3.f, 4.f});
+		//ECS::getComponent<Transform>(entity3)->SetScale(Vec3{2.f, 3.f, 4.f});
 		//ECS::addComponent<PlayerAttributes>(entity3);
 
-		
-		DeserializeFromFile(std::filesystem::current_path().parent_path().string() + "\\assets\\scenes\\MainMenu.json");
+		//EntityID entity4 = ECS::getNewID();
+		//ECS::registerEntity(entity4);
+		//ECS::addComponent<NameTag>(entity4);
+		//ECS::getComponent<NameTag>(entity4)->SetNameTag("entity4");
+		//ECS::addComponent<Transform>(entity4);
+		//ECS::getComponent<Transform>(entity4)->SetPosition(Vec3{10.f, 10.f, 10.f });
+		//ECS::getComponent<Transform>(entity4)->SetScale(Vec3{ 10.f, 10.f, 10.f });
+		//ECS::addComponent<PlayerAttributes>(entity4);
+		//ECS::addComponent<RigidBody>(entity4);
 
-		std::cout << "ECS: " << std::endl;
-		for (auto entity : ECS::getEntities())
-		{
-			std::cout << entity << std::endl;
+		//ECS::addComponent<Transform>(entity1);
 
-			if (NameTag* nametag = ECS::getComponent<NameTag>(entity))
-			{
-				std::cout << nametag->GetNameTag() << std::endl;
-			}
-			if (Transform* transform = ECS::getComponent<Transform>(entity))
-			{
-				std::cout << transform->GetPosition() << std::endl;
-				std::cout << transform->GetScale() << std::endl;
-				std::cout << transform->GetRotation() << std::endl;
-			}
+		//for (int i = 3; i < 103; ++i)
+		//{
+		//	EntityID newEntity = ECS::getNewID();
+		//	ECS::registerEntity(newEntity);
+		//	ECS::addComponent<NameTag>(newEntity);
+		//	ECS::getComponent<NameTag>(newEntity)->SetNameTag("entity" + std::to_string(i));
+		//	ECS::addComponent<Transform>(newEntity);
+		//	ECS::getComponent<Transform>(newEntity)->SetPosition(Vec3{ (float)i, (float)i, (float)i });
+		//	ECS::getComponent<Transform>(newEntity)->SetScale(Vec3{ (float)i, (float)i, (float)i });
+		//	ECS::addComponent<PlayerAttributes>(newEntity);
+		//}
 
-			std::cout << std::endl;
-		}
-		ECS::addComponent<Sprite>(ECS::getEntities()[0]);
+		//ECS::removeComponent<Transform>(entity2);
 
-		//SerializeToFile(std::filesystem::current_path().parent_path().string() + "\\assets\\scenes\\MainMenu.json");
+
+		//DeserializeFromFile(std::filesystem::current_path().parent_path().string() + "\\assets\\scenes\\" + currentScene + ".json");
+
+		//std::cout << "ECS: " << std::endl;
+		//for (auto entity : ECS::getEntities())
+		//{
+		//	std::cout << entity << std::endl;
+
+		//	if (NameTag* nametag = ECS::getComponent<NameTag>(entity))
+		//	{
+		//		std::cout << nametag->GetNameTag() << std::endl;
+		//	}
+		//	if (Transform* transform = ECS::getComponent<Transform>(entity))
+		//	{
+		//		std::cout << transform->GetPosition() << std::endl;
+		//		std::cout << transform->GetScale() << std::endl;
+		//		std::cout << transform->GetRotation() << std::endl;
+		//	}
+
+		//	std::cout << std::endl;
+		//}
+
+		SerializeToFile(std::filesystem::current_path().parent_path().string() + "\\assets\\scenes\\" + currentScene + ".json");
 	}
 
 	bool SceneManager::Deserialize(const rapidjson::Value& obj)
 	{
 		ECS::removeAllEntities();
 
-		//auto archetypeSizeObject = obj.MemberBegin();
+		for (rapidjson::Value::ConstMemberIterator itr = obj["Archetype Sizes"].MemberBegin(); itr != obj["Archetype Sizes"].MemberEnd(); ++itr)
+		{
+			std::string archetypeID = itr->name.GetString();
+			auto archetypeSizes = itr->value.GetObject();
+
+			ECS::addArchetype(archetypeID, false);
+
+			for (rapidjson::Value::ConstMemberIterator componentItr = archetypeSizes.MemberBegin(); componentItr != archetypeSizes.MemberEnd(); ++componentItr)
+			{
+				int componentID = std::stoi(componentItr->name.GetString());
+				auto componentSize = componentItr->value.GetInt();
+
+				ECS::setComponentSize(archetypeID, componentID, componentSize);
+			}
+
+			ECS::commitArchetype(archetypeID);
+		}
 
 		int i = 0;
 		for (rapidjson::Value::ConstMemberIterator itr = obj["Entity Data"].MemberBegin(); itr != obj["Entity Data"].MemberEnd(); ++itr, ++i)
 		{
-			rapidjson::Value::ConstMemberIterator theItr = obj["Entity Data"].FindMember(std::to_string(i).c_str());
-
-			if (theItr == obj["Entity Data"].MemberEnd())
+			if (itr == obj["Entity Data"].MemberEnd())
 			{
 				continue;
 			}
 
-			auto hmmmm = theItr->name.GetString();
-			auto hmm = theItr->value.GetObject();
-
 			EntityID newEntity = ECS::getNewID();
 			ECS::registerEntity(newEntity);
 
-			for (auto& m : theItr->value.GetObject())
+			for (auto& m : itr->value.GetObject())
 			{
 				std::string componentName = m.name.GetString();
 
 				if (componentName == "ArchetypeID") // First "componentName" to immediately find the archetype of entity
 				{
-					std::vector<ComponentTypeID> ArchetypeID;
-
-					for (auto c : componentName)
-					{
-						if (c == '1')
-						{
-							ArchetypeID.emplace_back(1);
-						}
-						else
-						{
-							ArchetypeID.emplace_back(0);
-						}
-					}
-
 					// Add all components at once
+					ECS::addComponentsByArchetype(newEntity, m.value.GetString());
 
 					continue;
 				}
 
 				auto componentData = m.value.GetObject();
 
-				if (auto addedComponent = addComponentByName(componentName, newEntity))
+				if (auto componentPointer = getComponentByName(componentName, newEntity))
 				{
-					addedComponent->Deserialize(componentData);
+					componentPointer->Deserialize(componentData);
 				}
 			}
 
@@ -157,100 +180,84 @@ namespace TDS
 	****************************************************************************/
 	bool SceneManager::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
 	{
-	//	writer->StartObject();
+		writer->StartObject();
 
-	//	// Serialize archetype sizes first
-	//	writer->String("Archetype Sizes", static_cast<rapidjson::SizeType>(std::string("Archetype Sizes").length()), false);
+		// Serialize archetype sizes first
+		writer->String("Archetype Sizes", static_cast<rapidjson::SizeType>(std::string("Archetype Sizes").length()), false);
 
-	//	writer->StartObject();
+		writer->StartObject();
 
-	//	for (Archetype* a : ECS::getAllArchetypes())
-	//	{
-	//		if (!a->entityIds.size())
-	//		{
-	//			continue;	// there is no entities under this archetype
-	//		}
+		for (Archetype* a : ECS::getAllArchetypes())
+		{
+			if (!a->entityIds.size())
+			{
+				continue;	// there is no entities under this archetype
+			}
 
-	//		std::unordered_map<std::uint32_t, std::uint32_t> archetypeSizes;
+			writer->String(a->type.c_str(), static_cast<rapidjson::SizeType>(a->type.length()), false);
 
-	//		std::string archetype = "";
+			// Start of data sizes
+			writer->StartObject();
 
-	//		for (int i = 0; i < ECS::getNumberOfComponents(); ++i)
-	//		{
-	//			if (a->componentData[i])
-	//			{
-	//				archetype += "1";
-	//				archetypeSizes[i] = a->componentDataSize[i];
-	//			}
-	//			else
-	//			{
-	//				archetype += "0";
-	//			}
-	//		}
+			for (int i = 0; i < ECS::getNumberOfComponents(); ++i)
+			{
+				if (a->type[i] == '1')
+				{
+					writer->Key(std::to_string(i).c_str());
+					writer->Int(a->componentDataSize[i]);
+				}
+			}
 
-	//		writer->String(archetype.c_str(), static_cast<rapidjson::SizeType>(archetype.length()), false);
+			writer->EndObject();
+		}
 
-	//		// Start of data sizes
-	//		writer->StartObject();
+		// End of archetype sizes
+		writer->EndObject();
 
-	//		for (auto archetypeSizeMap = archetypeSizes.begin(); archetypeSizeMap != archetypeSizes.end(); ++archetypeSizeMap)
-	//		{
-	//			writer->Key(std::to_string(archetypeSizeMap->first).c_str());
-	//			writer->Int(archetypeSizeMap->second);
-	//		}
+		// =======================================================
+		// Serialize entity data
+		writer->String("Entity Data", static_cast<rapidjson::SizeType>(std::string("Entity Data").length()), false);
+		writer->StartObject();
 
-	//		writer->EndObject();
+		std::string entityNo = "EntityNo";
+		std::string component = "Component";
 
-	//	}
+		std::vector<EntityID> entityList = ECS::getEntities();
 
-	//	// End of archetype sizes
-	//	writer->EndObject();
+		for (int i = 0; i < entityList.size(); ++i)
+		{
+			writer->String(std::to_string(i).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
+			writer->StartObject();
 
-	//	// =======================================================
-	//	// Serialize entity data
-	//	writer->String("Entity Data", static_cast<rapidjson::SizeType>(std::string("Entity Data").length()), false);
-	//	writer->StartObject();
+			writer->Key("ArchetypeID");
+			writer->String(ECS::getArchetypeID(entityList[i]).c_str());
 
-	//	std::string entityNo = "EntityNo";
-	//	std::string component = "Component";
+			std::vector<std::string> componentStrings = ECS::getEntityComponents(entityList[i]);
+			int j = 0;
+			for (IComponent* component : ECS::getEntityComponentsBase(entityList[i]))
+			{
+				if (!component)
+				{
+					continue;
+				}
 
-	//	std::vector<EntityID> entityList = ECS::getEntities();
+				writer->String(componentStrings[j].c_str(), static_cast<rapidjson::SizeType>(componentStrings[j].length()), false);
 
-	//	for (int i = 0; i < entityList.size(); ++i)
-	//	{
-	//		writer->String(std::to_string(i).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
-	//		writer->StartObject();
+				writer->StartObject();
+				component->Serialize(writer);
+				writer->EndObject();
 
-	//		std::string archetypeIDString = "";
-	//		for (auto componentID : ECS::getArchetypeID(entityList[i]))
-	//		{
-	//			archetypeIDString += std::to_string(componentID);
-	//		}
+				++j;
+			}
 
-	//		writer->Key("ArchetypeID");
-	//		writer->String(archetypeIDString.c_str());
+			writer->EndObject();
+		}
 
-	//		std::vector<std::string> componentStrings = ECS::getEntityComponents(entityList[i]);
-	//		int j = 0;
-	//		for (IComponent* component : ECS::getEntityComponentsBase(entityList[i]))
-	//		{
-	//			writer->String(componentStrings[j].c_str(), static_cast<rapidjson::SizeType>(componentStrings[j].length()), false);
-	//			
-	//			writer->StartObject();
-	//			component->Serialize(writer);
-	//			writer->EndObject();
+		// End of entity data
+		writer->EndObject();
 
-	//			++j;
-	//		}
-
-	//		writer->EndObject();
-	//	}
-
-	//	// End of entity data
-	//	writer->EndObject();
-
-	//	// End of file
-	//	writer->EndObject();
+		// End of file
+		writer->EndObject();
 
 		return true;
 	}
@@ -358,5 +365,10 @@ namespace TDS
 	std::string SceneManager::getCurrentScene()
 	{
 		return currentScene;
+	}
+
+	std::vector<std::string>& SceneManager::getScenes()
+	{
+		return allScenes;
 	}
 }

@@ -63,6 +63,10 @@
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="src\AudioEngine.cpp" />
     <ClCompile Include="src\imguiHelper\ImguiAudio.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiSceneBrowser.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiConsole.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiToolBar.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiProfiler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -122,6 +126,10 @@
     <ClInclude Include="Include\fmod\AudioEngine.h" />
     <ClInclude Include="Include\fmod\SoundInfo.h" />
     <ClInclude Include="Include\imguiHelper\ImguiAudio.h" />
+    <ClInclude Include="Include\ecs\systems.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiConsole.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiToolbar.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiProfiler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

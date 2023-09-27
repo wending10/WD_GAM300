@@ -7,6 +7,11 @@ namespace TDS
 							 mRotation	(0.0f)
 	{ }
 
+	Transform::Transform(Transform&& toMove) noexcept : mPosition	(toMove.mPosition),
+														mScale		(toMove.mScale),
+														mRotation	(toMove.mRotation)
+	{ }
+
 	bool Transform::Deserialize(const rapidjson::Value& obj)
 	{
 		mPosition = Vec3(obj["positionX"].GetFloat(), obj["positionY"].GetFloat(), obj["positionZ"].GetFloat());

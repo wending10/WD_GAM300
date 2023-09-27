@@ -6,6 +6,10 @@ namespace TDS
 				 mTargetTag	("none")
 	{ }
 
+	Tag::Tag(Tag&& toMove) noexcept : mTag			(toMove.mTag),
+									  mTargetTag	(toMove.mTargetTag)
+	{ }
+
 	bool Tag::Deserialize(const rapidjson::Value& obj)
 	{
 		mTag = obj["tag"].GetString();

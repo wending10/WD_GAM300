@@ -9,9 +9,12 @@ namespace TDS
 	{
 	public:
 		NameTag();
+		NameTag(NameTag&& toMove) noexcept;
 		~NameTag() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+		//NameTag& operator=(NameTag&& toMove) noexcept { return *this; };
 
 		virtual void ImGuiDisplay();
 

@@ -2,7 +2,9 @@
 
 namespace TDS
 {
-	System<Transform, RigidBody, Collider> _PhysicsSystem(1);
+	const double PhysicsSystem::fixedDt = 0.0166666f;
+	double PhysicsSystem::accumulator = 0.0f;
+	//System<Transform, RigidBody, Collider> _PhysicsSystem(1);
 		
 	void PhysicsSystem::PhysicsSystemInit()
 	{
@@ -14,11 +16,12 @@ namespace TDS
 		// need fix timestep
 		for (int i = 0; i < entities.size(); ++i)
 		{
-			NewtonianPhysics(_transform[i], _rigidbody[i]);
+			//NewtonianPhysics(_transform[i], _rigidbody[i]);
+			std::cout << "test";
 		}
 	}
 
-	Vec3 PhysicsSystem::CalculateTotalForce(RigidBody _rigidbody)
+	Vec3 PhysicsSystem::CalculateTotalForce(RigidBody& _rigidbody)
 	{
 		Vec3 totalForce		= Vec3(0.0f);
 		totalForce			+= _rigidbody.GetInputForce();
@@ -26,7 +29,7 @@ namespace TDS
 		return totalForce;
 	}
 
-	Vec3 PhysicsSystem::NewtonianPhysics(Transform _transform, RigidBody _rigidbody)
+	Vec3 PhysicsSystem::NewtonianPhysics(Transform& _transform, RigidBody& _rigidbody)
 	{
 		Vec3 totalForce = CalculateTotalForce(_rigidbody);
 		Vec3 acceleration	= totalForce * _rigidbody.GetInverseMass();

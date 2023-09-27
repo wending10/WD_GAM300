@@ -13,6 +13,18 @@ namespace TDS
 					   mMaxIndex		(1)
 	{ }
 
+
+	Sprite::Sprite(Sprite&& toMove) noexcept : mIndex			(toMove.mIndex),
+											   mIsSpriteSheet	(toMove.mIsSpriteSheet),
+											   mIsAnimated		(toMove.mIsAnimated),
+											   mInternalTimer	(toMove.mInternalTimer),
+											   mLayerOrder		(toMove.mLayerOrder),
+											   mTextureName		(toMove.mTextureName),
+											   mUVcooridnates	(toMove.mUVcooridnates),
+											   mAlpha			(toMove.mAlpha),
+											   mMaxIndex		(toMove.mMaxIndex)
+	{ }
+
 	bool Sprite::Deserialize(const rapidjson::Value& obj)
 	{
 		mIndex = Vec2(obj["indexX"].GetFloat(), obj["indexY"].GetFloat());
