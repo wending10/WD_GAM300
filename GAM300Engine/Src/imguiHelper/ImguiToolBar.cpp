@@ -78,7 +78,9 @@ namespace TDS
 			console->AddLog("Opening fmod");
 			if (isOpenFMOD) {
 
-				
+				const char* fmodStudioPath = "..\\Dependencies\\FMOD_Studio_2.02.17\\FMOD_Studio.exe";
+				const char* command = fmodStudioPath;
+				system(command);
 			}
 		}
 		ImGui::PopStyleColor();
