@@ -8,18 +8,14 @@ namespace TDS
 		panelTitle = "Audio Files";
 		windowPadding = ImVec2(0.f, 0.f);
 
-		if(!audeng)
-		{
-			audeng = new AudioWerks::AudioEngine();
-		}
+		audeng.init();
+		
 	}
 
 	AudioImgui::~AudioImgui()
 	{
-		if (audeng)
-		{
-			delete audeng;
-		}
+		
+		audeng.deactivate();
 	}
 
 	void AudioImgui::update()

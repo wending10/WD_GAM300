@@ -331,6 +331,8 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="assimp-vc143-mtd.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudioL.dll" />
     <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

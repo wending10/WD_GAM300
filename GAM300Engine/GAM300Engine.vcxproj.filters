@@ -152,5 +152,7 @@
     <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
     <None Include="assimp-vc143-mtd.dll" />
+    <None Include="fmodstudioL.dll" />
+    <None Include="fmodL.dll" />
   </ItemGroup>
 </Project>
