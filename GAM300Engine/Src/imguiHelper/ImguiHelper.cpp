@@ -2,6 +2,7 @@
 #include "imguiHelper/ImguiHierarchy.h"
 #include "imguiHelper/ImguiProperties.h"
 #include "imguiHelper/ImguiAssetBrowser.h"
+#include "imguiHelper/ImguiAudio.h"
 
 #include "imguiHelper/ImguiFunctionHelper.h"
 
@@ -19,6 +20,7 @@ namespace TDS
 			m_instance->panels[PanelTypes::HIERARCHY] = std::make_shared<Hierarchy>();
 			m_instance->panels[PanelTypes::PROPERTIES] = std::make_shared<Properties>();
 			m_instance->panels[PanelTypes::ASSETBROWSER] = std::make_shared<AssetBrowser>();
+			m_instance->panels[PanelTypes::SOUND] = std::make_shared<AudioImgui>();
 		}
 		return m_instance;
 	}

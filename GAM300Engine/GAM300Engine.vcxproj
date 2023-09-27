@@ -130,7 +130,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\assimp\include;$(SolutionDir)..\Dependencies\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -211,6 +211,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\camera\camera.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
+    <ClCompile Include="src\imguiHelper\ImguiAudio.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
@@ -275,6 +276,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\Identifier\GUID.h" />
     <ClInclude Include="Include\Identifier\Identifier.h" />
     <ClInclude Include="Include\imguiHelper\ImguiAssetBrowser.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiAudio.h" />
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
@@ -312,6 +314,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\windowswindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assimp-vc143-mtd.dll" />
     <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

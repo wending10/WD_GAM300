@@ -23,6 +23,11 @@ namespace AudioWerks
         return false;
     }
 
+    void AudioEngine::ImGuiDisplay()
+    {
+
+    }
+
     void AudioEngine::init() {
        ERRCHECK(FMOD::Studio::System::create(&studioSystem));
        ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));

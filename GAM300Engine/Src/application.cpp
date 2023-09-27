@@ -132,6 +132,8 @@ namespace TDS
                  "ExecuteUpdate"
              );
 
+         auto Clock = std::chrono::system_clock::now();
+
          while (m_window.processInputEvent())
          {
              float DeltaTime;

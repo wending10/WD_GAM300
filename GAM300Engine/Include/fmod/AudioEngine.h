@@ -55,6 +55,11 @@ namespace AudioWerks
          virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
          /**
+         * Display for ImGui
+         */
+         virtual void ImGuiDisplay();
+
+         /**
           * Initializes Audio Engine Studio and Core systems to default values.
           */
          void init();

@@ -2,6 +2,7 @@
 #define IMGUI_AUDIO
 
 #include "ImguiHelper.h"
+#include "../Include/fmod/AudioEngine.h"
 
 namespace TDS
 {
@@ -9,11 +10,12 @@ namespace TDS
 	{
 	public:
 		AudioImgui();
+		~AudioImgui();
 
 		void update();
 
 	private:
-		unsigned int AudioID;
+		AudioWerks::AudioEngine* audeng;
 	};
 }
 
