@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
+    "net6.0-windows7.0": {
       "ScriptAPI/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -22,39 +22,39 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net6.0": [
+    "net6.0-windows7.0": [
       "ScriptAPI >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\goruo\\.nuget\\packages\\": {}
+    "C:\\Users\\elton\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\goruo\\OneDrive\\Documents\\GitHub\\GAM300\\ManagedScripts\\ManagedScripts.csproj",
+      "projectUniqueName": "C:\\sandbox\\GAM300\\ManagedScripts\\ManagedScripts.csproj",
       "projectName": "ManagedScripts",
-      "projectPath": "C:\\Users\\goruo\\OneDrive\\Documents\\GitHub\\GAM300\\ManagedScripts\\ManagedScripts.csproj",
-      "packagesPath": "C:\\Users\\goruo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\goruo\\OneDrive\\Documents\\GitHub\\GAM300\\ManagedScripts\\obj\\",
+      "projectPath": "C:\\sandbox\\GAM300\\ManagedScripts\\ManagedScripts.csproj",
+      "packagesPath": "C:\\Users\\elton\\.nuget\\packages\\",
+      "outputPath": "C:\\sandbox\\GAM300\\ManagedScripts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\goruo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\elton\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0"
+        "net6.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "C:\\Users\\goruo\\OneDrive\\Documents\\GitHub\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj": {
-              "projectPath": "C:\\Users\\goruo\\OneDrive\\Documents\\GitHub\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj"
+            "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj": {
+              "projectPath": "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj"
             }
           }
         }
@@ -66,8 +66,8 @@
       }
     },
     "frameworks": {
-      "net6.0": {
-        "targetAlias": "net6.0",
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
         "imports": [
           "net461",
           "net462",
@@ -84,7 +84,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }
