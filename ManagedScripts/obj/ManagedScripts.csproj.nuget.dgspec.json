@@ -1,39 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ManagedScripts\\ManagedScripts.csproj": {}
+    "C:\\sandbox\\GAM300\\ManagedScripts\\ManagedScripts.csproj": {}
   },
   "projects": {
-    "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ManagedScripts\\ManagedScripts.csproj": {
+    "C:\\sandbox\\GAM300\\ManagedScripts\\ManagedScripts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ManagedScripts\\ManagedScripts.csproj",
+        "projectUniqueName": "C:\\sandbox\\GAM300\\ManagedScripts\\ManagedScripts.csproj",
         "projectName": "ManagedScripts",
-        "projectPath": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ManagedScripts\\ManagedScripts.csproj",
-        "packagesPath": "C:\\Users\\eugen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ManagedScripts\\obj\\",
+        "projectPath": "C:\\sandbox\\GAM300\\ManagedScripts\\ManagedScripts.csproj",
+        "packagesPath": "C:\\Users\\elton\\.nuget\\packages\\",
+        "outputPath": "C:\\sandbox\\GAM300\\ManagedScripts\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\eugen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\elton\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net6.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ScriptAPI\\ScriptAPI.vcxproj": {
-                "projectPath": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ScriptAPI\\ScriptAPI.vcxproj"
+              "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj": {
+                "projectPath": "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj"
               }
             }
           }
@@ -45,8 +41,8 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
           "imports": [
             "net461",
             "net462",
@@ -67,21 +63,17 @@
         }
       }
     },
-    "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ScriptAPI\\ScriptAPI.vcxproj": {
+    "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ScriptAPI\\ScriptAPI.vcxproj",
+        "projectUniqueName": "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj",
         "projectName": "ScriptAPI",
-        "projectPath": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ScriptAPI\\ScriptAPI.vcxproj",
-        "packagesPath": "C:\\Users\\eugen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\eugen\\Documents\\GitHub\\GAM300_Eugene\\ScriptAPI\\obj\\",
+        "projectPath": "C:\\sandbox\\GAM300\\ScriptAPI\\ScriptAPI.vcxproj",
+        "packagesPath": "C:\\Users\\elton\\.nuget\\packages\\",
+        "outputPath": "C:\\sandbox\\GAM300\\ScriptAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\eugen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\elton\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

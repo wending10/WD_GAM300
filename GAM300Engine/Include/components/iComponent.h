@@ -1,7 +1,6 @@
 #ifndef ICOMPONENTS
 #define ICOMPONENTS
 
-#include <imgui/imgui.h>
 #include "imguiHelper/ImguiFunctionHelper.h"
 #include <string>
 

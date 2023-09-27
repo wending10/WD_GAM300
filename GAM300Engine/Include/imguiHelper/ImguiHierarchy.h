@@ -1,6 +1,7 @@
 #ifndef IMGUI_HIERARCHY
 #define IMGUI_HIERARCHY
 
+#include "sceneManager/sceneManager.h"
 #include "ImguiHelper.h"
 
 namespace TDS 

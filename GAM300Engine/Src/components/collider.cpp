@@ -1,7 +1,6 @@
 #include "components/collider.h"
 
 namespace TDS {
-
 	/*!*************************************************************************
 	Constructor for collider component
 	****************************************************************************/
@@ -14,6 +13,16 @@ namespace TDS {
 						   mRadius			(0.0f),
 						   mIsAlive			(true),
 						   mCollision		(false)
+	{ }
+
+	Collider::Collider(Collider&& toMove) noexcept : mColliderType(toMove.mColliderType),
+													 mCollisionNormal(toMove.mCollisionNormal),
+													 mMin(toMove.mMin),
+													 mMax(toMove.mMax),
+													 mOffset(toMove.mOffset),
+													 mHit(toMove.mHit),
+													 mRadius(toMove.mRadius),
+													 mIsAlive(toMove.mIsAlive)
 	{ }
 
 	/*!*************************************************************************
@@ -83,6 +92,12 @@ namespace TDS {
 
 	void Collider::ImGuiDisplay()
 	{
+		ImGui::TableNextRow();
+		ImGui::TableNextColumn();
+		ImGui::Text("Collider Type");
+
+		ImGui::TableNextColumn();
+
 		// Collider Type
 		static std::string colliderTypeStringList[3]{ "None", "Circle", "Rectangle" };
 		int colliderTypeSelected = static_cast<int>(mColliderType) - 1;
@@ -94,7 +109,7 @@ namespace TDS {
 			colliderTypeSelected = 0;
 		}
 
-		if (ImGui::BeginCombo("Collider Type", colliderTypeStringList[colliderTypeSelected].c_str()))
+		if (ImGui::BeginCombo("##", colliderTypeStringList[colliderTypeSelected].c_str()))
 		{
 			for (int n = 0; n < 3; n++)
 			{

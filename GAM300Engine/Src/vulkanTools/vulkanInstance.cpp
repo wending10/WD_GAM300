@@ -7,8 +7,11 @@
 
 #include "vulkanTools/vmaSetup.h"
 #include "imguiHelper/ImguiHelper.h"
+#include "imguiHelper/ImguiProfiler.h" // to display gpu info and vulkan api version
 namespace TDS
 {
+	std::shared_ptr<Profiler> profiler_instance = static_pointer_cast<Profiler>(LevelEditorManager::GetInstance()->panels[PanelTypes::PROFILER]);
+
 	VulkanInstance::VulkanInstance(const WindowsWin& _Windows)
 	{
 		VkResult err;
@@ -78,6 +81,20 @@ namespace TDS
 				}
 			}
 
+			// For Imgui Profiler: Query physical device properties
+			VkPhysicalDeviceProperties deviceProperties;
+			vkGetPhysicalDeviceProperties(m_PhysDeviceHandle, &deviceProperties);
+
+			// For Imgui Profiler: Output GPU information
+			profiler_instance->GPU_name += deviceProperties.deviceName ;
+			profiler_instance->Vulkan_API_version += std::to_string(VK_VERSION_MAJOR(deviceProperties.apiVersion));
+			profiler_instance->Vulkan_API_version += ".";
+			profiler_instance->Vulkan_API_version += std::to_string(VK_VERSION_MINOR(deviceProperties.apiVersion));
+			profiler_instance->Vulkan_API_version += ".";
+			profiler_instance->Vulkan_API_version += std::to_string(VK_VERSION_PATCH(deviceProperties.apiVersion));
+			/*std::cout << "API Version: " << VK_VERSION_MAJOR(deviceProperties.apiVersion) << "."
+				<< VK_VERSION_MINOR(deviceProperties.apiVersion) << "."
+				<< VK_VERSION_PATCH(deviceProperties.apiVersion) << std::endl;*/
 			if (m_PhysDeviceHandle == VK_NULL_HANDLE) {
 				throw std::runtime_error("failed to find a suitable GPU!");
 			}

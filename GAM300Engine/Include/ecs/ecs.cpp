@@ -1,4 +1,7 @@
 #include "ecs.h"
+#include "ecs/systems.h"
+
+#include "physics/physicsSystem.h"
 
 namespace TDS
 {
@@ -7,6 +10,10 @@ namespace TDS
 	ECS::EntityArchetypeMap       ECS::mEntityArchetypeMap;
 	ECS::ArchetypesArray          ECS::mArchetypes;
 	EntityID                      ECS::mEntityIdCounter = 1;
-	ECS::SystemsArrayMap          ECS::mSystems;
 	ECS::ComponentTypeIDBaseMap   ECS::mComponentMap;
+
+	void bindSystemFunctions()
+	{
+		_PhysicsSystem.action(PhysicsSystem::PhysicsSystemInit, PhysicsSystem::PhysicsSystemUpdate);
+	}
 }

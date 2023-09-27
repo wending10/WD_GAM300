@@ -8,6 +8,9 @@ namespace TDS {
 	CameraComponent::CameraComponent()
 	{ }
 
+	CameraComponent::CameraComponent(CameraComponent&& toMove) noexcept
+	{ }
+
 	/*!*************************************************************************
 	Derserialize camera component
 	****************************************************************************/

@@ -11,10 +11,15 @@
 #include "imguiHelper/ImguiHelper.h"
 #include "sceneManager/sceneManager.h"
 #include "Logger/Logger.h"
+#include "imguiHelper/ImguiConsole.h" //to print logs to imgui console
+
 //#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
+    //editor console instance for printing logs
+    //EditorConsole* consoleLog;
+
      Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
      {
@@ -89,22 +94,24 @@ namespace TDS
      }
      void Application::Initialize()
      {
-         /*auto& sceneManager = SceneManager::GetInstance();
-         sceneManager->Init();*/
+         auto& sceneManager = SceneManager::GetInstance();
+         sceneManager->Init();
 
-		
+         bindSystemFunctions();
+         ECS::initializeSystems(1);
+
          EntityID newEntity = ECS::getNewID();
          ECS::registerEntity(newEntity);
          Entity entity1;
          Entity entity2;
-         Run();
-         auto addScript = GetFunctionPtr<bool(*)(TDS::EntityID, const char*)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "AddScriptViaName"
-             );
-         addScript(newEntity, "Test");
+         //Run();
+         //auto addScript = GetFunctionPtr<bool(*)(TDS::EntityID, const char*)>
+         //    (
+         //        "ScriptAPI",
+         //        "ScriptAPI.EngineInterface",
+         //        "AddScriptViaName"
+         //    );
+         //addScript(newEntity, "Test");
      }
 
      void Application::Run()
@@ -133,19 +140,25 @@ namespace TDS
                  "ScriptAPI.EngineInterface",
                  "ExecuteUpdate"
              );
-
+       
+         //consoleLog->AddLog("Writing from SpeedLog:");
+         TDS_INFO("Hello, {}!", "World");
+         auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
              TimeStep::CalculateDeltaTime();
+
+             ECS::runSystems(1, TimeStep::GetDeltaTime());
+
              //Imgui helper
              imguiHelper::Update();
 
              m_pVKInst.get()->drawFrame(m_window, TimeStep::GetDeltaTime());
              Input::scrollStop();
-             executeUpdate();
+             //executeUpdate();
          }
          vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
-         stopScriptEngine();
+         //stopScriptEngine();
          imguiHelper::Exit();
      }
   

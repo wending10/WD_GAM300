@@ -4,13 +4,16 @@
 #include <cstdint>
 #include <vector>
 #include <memory>
-
-//#include <memoryapi.h>
+#include <string>
+#include <unordered_map>
 
 namespace TDS
 {
 	class MemoryManager // for ECS
 	{
+	private:
+		typedef std::string ArchetypeID;
+
 	public:
 		/*!*************************************************************************
 		Returns an instance of the MemoryManager
@@ -19,27 +22,35 @@ namespace TDS
 
 		struct BookData
 		{
+			// For reserved memory (total memory that can be committed)
 			std::vector<std::uint32_t> reservedSize;
+			// For memory committed / going to commit
 			std::vector<std::uint32_t> usedSize;
-			std::vector<unsigned char*> endOfComponent;
+			//
+			std::vector<std::uint32_t> committedSize;
+			// 
+			std::vector<unsigned char*> startOfComponent;
 		};
 
 		void setNumberOfComponent(std::uint32_t _numberOfComponents);
 
-		void newBook();
-		unsigned char* newPage(std::uint32_t archetypeID, std::uint32_t componentID);
-		unsigned char* resizePage(std::uint32_t archetypeID, std::uint32_t componentID);
+		void newBook(const ArchetypeID& archetypeID);
+		unsigned char* newPage(const ArchetypeID& archetypeID, std::uint32_t componentID);
+		void resizePage(const ArchetypeID& archetypeID, std::uint32_t componentID);
 
-		void commitBook(std::uint32_t archetypeID, std::vector<unsigned char*>& componentData);
+		void commitBook(const ArchetypeID& archetypeID);
+		void commitPage(const ArchetypeID& archetypeID, std::uint32_t componentID);
+
+		void freeBook(const ArchetypeID& archetypeID);
+		void freePage(unsigned char* pointer);
 
 		// Reserving data space to commit
-		void reserveComponentSpace(std::uint32_t archetypeID, std::uint32_t componentID, std::uint32_t componentDataSpace);
-		void freeComponentSpace(std::uint32_t archetypeID, std::uint32_t componentID, std::uint32_t componentDataSpace);
+		void reserveComponentSpace(const ArchetypeID& archetypeID, std::uint32_t componentID, std::uint32_t componentSize);
 
 		// Putting data into committed space
-		void addComponentData(std::uint32_t archetypeID, std::uint32_t componentID, unsigned char* startingComponentPointer, unsigned char* newComponentData);
-		void moveComponentData(std::uint32_t oldArchetypeID, std::uint32_t newArchetypeID, std::uint32_t componentID);
-		void removeComponentData();
+		unsigned char* getComponentData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize, std::uint32_t index);
+		unsigned char* addComponentData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize, std::uint32_t index);
+		void removeComponentEndData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize);
 
 	private:
 		// Unique pointer to MemoryManager
@@ -48,13 +59,13 @@ namespace TDS
 		const std::uint32_t PAGE_SIZE = 4096;
 		std::uint32_t numberOfComponents;
 
-		std::vector<BookData> books;
+		std::unordered_map<ArchetypeID, BookData> books;
 
 		// VirtualAlloc functions
-		unsigned char* reserve(std::uint32_t newPageSize);
-		void commit(unsigned char* startingPointer, std::uint32_t usedSize);
-		void decommit(unsigned char* pointer, std::uint32_t componentSize);
-		void release(unsigned char* startingPointer, std::uint32_t reservedSize);
+		unsigned char* reserve(std::uint32_t newPageSize, unsigned char* startingPointer = nullptr);
+		unsigned char* commit(std::uint32_t usedSize, unsigned char* startingPointer = nullptr);
+		void decommit(std::uint32_t componentSize, unsigned char* pointer);
+		void release(unsigned char* startingPointer);
 	};
 }
 

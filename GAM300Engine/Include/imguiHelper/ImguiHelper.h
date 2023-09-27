@@ -4,6 +4,8 @@
 #ifndef TDS_IMGUI_HELPER
 #define TDS_IMGUI_HELPER
 
+#include <map>
+
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_win32.h>
 #include <imgui/imgui_impl_vulkan.h>
@@ -19,7 +21,11 @@ namespace TDS
 		//PREFABS,
 		//MENUBAR,
 		//BEHAVIORTREE,
-		ASSETBROWSER
+		ASSETBROWSER,
+		SCENEBROWSER
+		CONSOLE,
+		TOOLBAR,
+		PROFILER
 		//BEHAVIOURTREEEDITOR,
 		//ANIMATIONBROWSER
 		// TILEMAP
@@ -35,6 +41,8 @@ namespace TDS
 		std::string panelTitle;
 		ImGuiWindowFlags flags;
 		ImVec2 windowPadding;
+
+		bool rightClick;
 	private:
 	};
 
@@ -52,6 +60,8 @@ namespace TDS
 	namespace imguiHelper
 	{
 		void InitializeImgui(ImGui_ImplVulkan_InitInfo initinfo, VkRenderPass RenderPass, void* inHwnd);
+
+		void CustomDarkTheme();
 
 		void ImguiCreateFont(VkCommandBuffer SingleUseCommandBuffer);
 

@@ -20,6 +20,7 @@ namespace TDS
 		};
 
 		Collider();
+		Collider(Collider&& toMove) noexcept;
 		~Collider() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;

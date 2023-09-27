@@ -30,26 +30,79 @@ namespace TDS
 			{
 				IComponent* componentBase = getComponentByName(componentName, selectedEntity);
 
-				if (componentName == "NameTag" && ImGui::BeginTable("###", 2))
+				if (componentName == "Name Tag" && ImGui::BeginTable("###", 2))
 				{
 					componentBase->ImGuiDisplay();
 					ImGui::EndTable();
 					continue;
 				}
 
-				if (componentBase && ImGui::TreeNodeEx(componentName.c_str(), nodeFlags) && ImGui::BeginTable("###", 2, ImGuiTableFlags_Borders, ImVec2(0.0f,  5.5f)))
+				if (!componentBase)
 				{
-					ImGui::TableNextRow();
-					ImGui::TableSetColumnIndex(0);
-					ImGui::PushItemWidth(0);
-					ImGui::TableSetColumnIndex(1);
-					ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
+					continue;
+				}
 
-					componentBase->ImGuiDisplay();
+				bool componentOpen = ImGui::TreeNodeEx(componentName.c_str(), nodeFlags);
 
-					ImGui::EndTable();
+				if (ImGui::BeginPopupContextItem("componentEditPopup"))
+				{
+					if (ImGui::Selectable("Remove Component"))
+					{
+						removeComponentByName(componentName, selectedEntity);
+					}
+
+					ImGui::EndPopup();
+				}
+
+				if (rightClick && ImGui::IsItemHovered())
+				{
+					ImGui::OpenPopup("componentEditPopup");
+				}
+
+				if (componentOpen)
+				{
+					if (ImGui::BeginTable("###", 2, /*ImGuiTableFlags_Borders |*/ ImGuiTableFlags_NoPadInnerX, ImVec2(0.0f, 5.5f)))
+					{
+						ImGui::TableNextRow();
+
+						ImGui::TableNextColumn();
+						ImGui::TableNextColumn();
+						ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
+
+						componentBase->ImGuiDisplay();
+
+						ImGui::PopItemWidth();
+						ImGui::EndTable();
+					}
 					ImGui::TreePop();
 				}
+			}
+
+			if (ImGui::BeginPopupContextItem("componentAddPopup"))
+			{
+				for (auto componentName : allComponentNames)
+				{
+					if (!getComponentByName(componentName, selectedEntity) && ImGui::Selectable(componentName.c_str()))
+					{
+						addComponentByName(componentName, selectedEntity);
+					}
+				}
+				ImGui::EndPopup();
+			}
+
+			// Add component button
+			ImGuiStyle& style = ImGui::GetStyle();
+
+			float size = ImGui::CalcTextSize("Add Component").x + style.FramePadding.x * 2.0f;
+			float avail = ImGui::GetContentRegionAvail().x;
+
+			float off = (avail - size) * 0.5f;
+			if (off > 0.0f)
+				ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
+
+			if (ImGui::Button("Add Component", ImVec2(100.f, 20.f)))
+			{
+				ImGui::OpenPopup("componentAddPopup");
 			}
 		}
 	}

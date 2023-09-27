@@ -2,7 +2,10 @@
 
 namespace TDS
 {
-	NameTag::NameTag() : mName	("entity") 
+	NameTag::NameTag() : mName("New Entity") 
+	{ }
+
+	NameTag::NameTag(NameTag&& toMove) noexcept : mName(toMove.mName)
 	{ }
 
 	bool NameTag::Deserialize(const rapidjson::Value& obj)

@@ -16,15 +16,16 @@ namespace TDS
 	class DLL_API PhysicsSystem
 	{
 	public:
-		void PhysicsSystemInit();
-		void PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody);
+		static void PhysicsSystemInit();
+		static void PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody, Collider* _collider);
 
 	private:
-		Vec3 CalculateTotalForce(RigidBody _collider);
-		void SettingObjectDirection(Vec3 totalForce, RigidBody _rigidbody);
-		void NewtonianPhysics(Transform _transform, RigidBody _rigidbody);
+		static Vec3 CalculateTotalForce(RigidBody& _collider);
+		static Vec3 NewtonianPhysics(Transform& _transform, RigidBody& _rigidbody);
+		static void SettingObjectDirection(Vec3& totalForce, RigidBody& _rigidbody);
 	private:
-		float accumulatedTime = 0.0f;
+		static const double fixedDt;
+		static double accumulator;
 	};
 }
 

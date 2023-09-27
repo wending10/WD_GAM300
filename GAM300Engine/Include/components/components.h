@@ -16,6 +16,7 @@ namespace TDS
 {
 	IComponent* addComponentByName(std::string componentName, EntityID entityID);
 	IComponent* getComponentByName(std::string componentName, EntityID entityID);
+	void removeComponentByName(std::string componentName, EntityID entityID);
 }
 
 #endif

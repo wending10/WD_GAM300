@@ -82,6 +82,7 @@
     <ExternalIncludePath>$(SolutionDir)Dependencies\dotnet\include;$(SolutionDir)Dependencies\assimp\include;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir).bin\$(Configuration)-$(Platform)</OutDir>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -213,8 +214,12 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClCompile Include="Src\imguiHelper\ImguiAssetBrowser.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHelper.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiHierarchy.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiConsole.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiProfiler.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiProperties.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiSceneBrowser.cpp" />
+    <ClCompile Include="Src\imguiHelper\ImguiToolBar.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
@@ -266,6 +271,7 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\components\transform.h" />
     <ClInclude Include="Include\components\winData.h" />
     <ClInclude Include="Include\camera\camera.h" />
+    <ClInclude Include="Include\ecs\systems.h" />
     <ClInclude Include="Include\GraphicsResource\Geom.h" />
     <ClInclude Include="Include\GraphicsResource\GraphicsResourceDefines.h" />
     <ClInclude Include="Include\GraphicsResource\Material.h" />
@@ -277,8 +283,11 @@ rmdir /s /q "$(OutDir)net6.0"</Command>
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiConsole.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiProfiler.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
     <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
+    <ClInclude Include="Include\imguiHelper\ImguiToolbar.h" />
     <ClInclude Include="Include\Input.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
