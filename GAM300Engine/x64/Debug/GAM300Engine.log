@@ -1,1 +1,7 @@
-﻿
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  ImguiProfiler.cpp
+C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\Src\imguiHelper\ImguiProfiler.cpp(68,114): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\Src\imguiHelper\ImguiProfiler.cpp(75,111): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  pch.cpp
+     Creating library C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.lib and object C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.exp
+  GAM300Engine.vcxproj -> C:\Users\User\Documents\GitHub\GAM300\GAM300Engine\.bin\Debug-x64\GAM300Engine.exe

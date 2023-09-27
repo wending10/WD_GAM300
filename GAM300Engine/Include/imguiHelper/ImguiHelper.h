@@ -19,7 +19,10 @@ namespace TDS
 		//PREFABS,
 		//MENUBAR,
 		//BEHAVIORTREE,
-		ASSETBROWSER
+		ASSETBROWSER,
+		CONSOLE,
+		TOOLBAR,
+		PROFILER
 		//BEHAVIOURTREEEDITOR,
 		//ANIMATIONBROWSER
 		// TILEMAP
@@ -52,6 +55,8 @@ namespace TDS
 	namespace imguiHelper
 	{
 		void InitializeImgui(ImGui_ImplVulkan_InitInfo initinfo, VkRenderPass RenderPass, void* inHwnd);
+
+		void CustomDarkTheme();
 
 		void ImguiCreateFont(VkCommandBuffer SingleUseCommandBuffer);
 
