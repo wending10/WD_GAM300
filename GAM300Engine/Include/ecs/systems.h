@@ -10,7 +10,8 @@ namespace TDS
 {
 	ECS::SystemsArrayMap						ECS::mSystems;
 
-	System<Transform, RigidBody, Collider>		_PhysicsSystem(1);
+	System<Transform, RigidBody>				_PhysicsSystem(1);
+	System<Transform, RigidBody, Collider>		_ColliderSystem(1);
 	//System<Transform, RigidBody> _AISystem(1);
 	//System<Transform> _GraphicsSystem(1);
 }

@@ -2,7 +2,6 @@
 
 namespace TDS
 {
-	System<Transform, RigidBody, Collider> CollisionSystem(1);
 	void CollisionSystem::CollisionSystemInit()
 	{
 	}
@@ -34,7 +33,7 @@ namespace TDS
 
 
 	/*Helper Function*/
-	bool CollisionSystem::SphereSphereCollision(Transform trans1, RigidBody body1, Collider collider1, Transform trans2, RigidBody body2, Collider collider2)
+	bool CollisionSystem::SphereSphereCollision(Transform& trans1, RigidBody& body1, Collider& collider1, Transform& trans2, RigidBody& body2, Collider& collider2)
 	{
 		// get the distance between the two objects
 		float distance = (trans1.GetPosition() - trans2.GetPosition()).magnitude();
@@ -46,7 +45,7 @@ namespace TDS
 		return false;
 	}
 
-	void CollisionSystem::SphereSphereResolution(Transform trans1, RigidBody body1, Transform trans2, RigidBody body2)
+	void CollisionSystem::SphereSphereResolution(Transform& trans1, RigidBody& body1, Transform& trans2, RigidBody& body2)
 	{
 		// get the direction of both objects, reflect them and multiply back into the forces
 		Vec3 Dir1 = body1.GetDirection();

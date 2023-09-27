@@ -11,8 +11,6 @@
 #include "dotnet/include/coreclrhost.h" 
 #include "ecs/ecs.h"
 #include "Timestep/Timestep.h"
-#include "Physics/PhysicsSystem.h"
-#include "Physics/CollisionSystem.h"
 
 namespace TDS
 {
@@ -96,7 +94,6 @@ namespace TDS
 		WindowsWin						 m_window;
 		bool							 m_isRunning{ true };
 		std::shared_ptr <VulkanInstance> m_pVKInst;
-		std::chrono::time_point<std::chrono::high_resolution_clock>Clock{};
 	};//class application
 
 

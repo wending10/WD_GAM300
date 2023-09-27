@@ -3,8 +3,7 @@
 namespace TDS
 {
 	const double PhysicsSystem::fixedDt = 0.0166666f;
-	double PhysicsSystem::accumulator = 0.0f;
-	//System<Transform, RigidBody, Collider> _PhysicsSystem(1);
+	double PhysicsSystem::accumulatedTime = 0.0f;
 		
 	void PhysicsSystem::PhysicsSystemInit()
 	{
@@ -37,7 +36,7 @@ namespace TDS
 		return totalForce;
 	}
 
-	void PhysicsSystem::SettingObjectDirection(Vec3 totalForce, RigidBody _rigidbody)
+	void PhysicsSystem::SettingObjectDirection(Vec3& totalForce, RigidBody& _rigidbody)
 	{
 		Vec3 direction = Vec3(0.0f);
 		// If totalForce.axis > 0, direction.axis = 1, else if totalForce.axis < 0, direction.axis = -1, else direction.axis = 0
@@ -47,7 +46,7 @@ namespace TDS
 		_rigidbody.SetDirection(direction);
 	}
 
-	Vec3 PhysicsSystem::NewtonianPhysics(Transform& _transform, RigidBody& _rigidbody)
+	void PhysicsSystem::NewtonianPhysics(Transform& _transform, RigidBody& _rigidbody)
 	{
 		Vec3 totalForce = CalculateTotalForce(_rigidbody);
 		SettingObjectDirection(totalForce, _rigidbody);

@@ -21,7 +21,7 @@ namespace TDS
 
 
 	RigidBody::RigidBody(RigidBody&& toMove) noexcept : mAcceleration	(toMove.mAcceleration),
-														mVelocity		(toMove.mVelocity),
+														mLinearVelocity	(toMove.mLinearVelocity),
 														mDirection		(toMove.mDirection),
 														mNextPosition	(toMove.mNextPosition),
 														mFriction		(toMove.mFriction),
