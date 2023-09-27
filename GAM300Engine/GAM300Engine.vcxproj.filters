@@ -61,6 +61,8 @@
     <ClCompile Include="Include\Identifier\GUID.cpp" />
     <ClCompile Include="Include\GraphicsResource\Model.cpp" />
     <ClCompile Include="Include\ResourceManagement\ResourceManager.cpp" />
+    <ClCompile Include="Src\Physics\CollisionSystem.cpp" />
+    <ClCompile Include="Src\Timestep\Timestep.cpp" />
     <ClCompile Include="src\AudioEngine.cpp" />
     <ClCompile Include="src\imguiHelper\ImguiAudio.cpp" />
     <ClCompile Include="Src\imguiHelper\ImguiSceneBrowser.cpp" />
@@ -123,6 +125,8 @@
     <ClInclude Include="Include\imguiHelper\ImguiFunctionHelper.h" />
     <ClInclude Include="Include\imguiHelper\ImguiHierarchy.h" />
     <ClInclude Include="Include\imguiHelper\ImguiProperties.h" />
+    <ClInclude Include="Include\Physics\CollisionSystem.h" />
+    <ClInclude Include="Include\Timestep\Timestep.h" />
     <ClInclude Include="Include\fmod\AudioEngine.h" />
     <ClInclude Include="Include\fmod\SoundInfo.h" />
     <ClInclude Include="Include\imguiHelper\ImguiAudio.h" />
@@ -148,5 +152,7 @@
     <ClInclude Include="Include\ResourceManagement\ResourceManager.h" />
     <ClInclude Include="Include\ResourceManagement\ResourceRef.h" />
     <None Include="assimp-vc143-mtd.dll" />
+    <None Include="fmodstudioL.dll" />
+    <None Include="fmodL.dll" />
   </ItemGroup>
 </Project>

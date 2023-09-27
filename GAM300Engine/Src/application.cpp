@@ -146,20 +146,14 @@ namespace TDS
          auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
-             float DeltaTime;
-             {
-                 auto                         Now = std::chrono::system_clock::now();
-                 std::chrono::duration<float> ElapsedSeconds = Now - Clock;
-                 DeltaTime = ElapsedSeconds.count();
-                 Clock = Now;
-             }
+             TimeStep::CalculateDeltaTime();
 
-             ECS::runSystems(1, DeltaTime);
+             ECS::runSystems(1, TimeStep::GetDeltaTime());
 
              //Imgui helper
              imguiHelper::Update();
 
-             m_pVKInst.get()->drawFrame(m_window, DeltaTime);
+             m_pVKInst.get()->drawFrame(m_window, TimeStep::GetDeltaTime());
              Input::scrollStop();
              //executeUpdate();
          }

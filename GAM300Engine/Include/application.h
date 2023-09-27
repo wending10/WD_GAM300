@@ -10,6 +10,7 @@
 #include "dotnet/ImportExport.h"
 #include "dotnet/include/coreclrhost.h" 
 #include "ecs/ecs.h"
+#include "Timestep/Timestep.h"
 
 namespace TDS
 {
