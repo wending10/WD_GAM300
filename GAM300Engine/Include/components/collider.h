@@ -1,7 +1,7 @@
 #ifndef COLLIDERCOMPONENT
 #define COLLIDERCOMPONENT
 
-#include "Vector2.h"
+#include "Vector3.h"
 #include "ecs/ecs.h"
 
 namespace TDS
@@ -51,6 +51,9 @@ namespace TDS
 		bool& GetAlive() { return mIsAlive; }
 		void SetAlive(bool isAlive) { mIsAlive = isAlive; }
 
+		bool& GetCollision() { return mCollision; }
+		void SetCollision(bool collision) { mCollision = collision; }
+
 	private:
 		ColliderType mColliderType;
 		Vec3 mCollisionNormal;
@@ -58,8 +61,11 @@ namespace TDS
 		Vec3 mMax;
 		Vec3 mOffset;
 		int mHit;
+		
 		float mRadius;
+		
 		bool mIsAlive;
+		bool mCollision;
 	};
 }
 

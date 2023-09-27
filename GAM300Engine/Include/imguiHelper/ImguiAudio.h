@@ -15,7 +15,7 @@ namespace TDS
 		void update();
 
 	private:
-		AudioWerks::AudioEngine* audeng;
+		AudioWerks::AudioEngine audeng;
 	};
 }
 
