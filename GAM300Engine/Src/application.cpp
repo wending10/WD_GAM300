@@ -143,7 +143,6 @@ namespace TDS
        
          //consoleLog->AddLog("Writing from SpeedLog:");
          TDS_INFO("Hello, {}!", "World");
-         auto  Clock = std::chrono::system_clock::now();
          while (m_window.processInputEvent())
          {
              TimeStep::CalculateDeltaTime();

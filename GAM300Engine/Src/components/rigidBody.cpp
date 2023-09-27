@@ -15,17 +15,24 @@ namespace TDS
 							 mFriction			(0.0f),
 							 mRestitution		(0.0f),
 						     mMass				(1.0f),
-							 mInverseMass		(1.0f),
+							 mInverseMass		(0.0f),
 							 mGravity			(0.0f)
 	{ }
 
 
-	RigidBody::RigidBody(RigidBody&& toMove) noexcept : mAcceleration	(toMove.mAcceleration),
-														mLinearVelocity	(toMove.mLinearVelocity),
-														mDirection		(toMove.mDirection),
-														mNextPosition	(toMove.mNextPosition),
-														mFriction		(toMove.mFriction),
-														mRestitution	(toMove.mRestitution)
+	RigidBody::RigidBody(RigidBody&& toMove) noexcept : mAcceleration		(toMove.mAcceleration),
+														mLinearVelocity		(toMove.mLinearVelocity),
+														mAngularVelocity	(toMove.mAngularVelocity),
+														mDirection			(toMove.mDirection),
+														mNextPosition		(toMove.mNextPosition),
+														mInputForce			(toMove.mInputForce),
+														mNormalizedForce	(toMove.mNormalizedForce),
+														mFriction			(toMove.mFriction),
+														mRestitution		(toMove.mRestitution),
+														mMass				(toMove.mMass),
+														mInverseMass		(toMove.mInverseMass),
+														mGravity			(toMove.mGravity)
+		
 	{ }
 
 	/*!*************************************************************************
@@ -38,6 +45,7 @@ namespace TDS
 		mAngularVelocity	= Vec3(obj["angularvelocityX"].GetFloat(), obj["angularvelocityY"].GetFloat(), obj["angularvelocityZ"].GetFloat());
 		mDirection			= Vec3(obj["directionX"].GetFloat(), obj["directionY"].GetFloat(), obj["directionZ"].GetFloat());
 		mInputForce			= Vec3(obj["inputForceX"].GetFloat(), obj["inputForceY"].GetFloat(), obj["inputForceZ"].GetFloat());
+		mNormalizedForce	= Vec3(obj["normalizedForceX"].GetFloat(), obj["normalizedForceY"].GetFloat(), obj["normalizedForceZ"].GetFloat());
 		mNextPosition		= Vec3(obj["nextPositionX"].GetFloat(), obj["nextPositionY"].GetFloat(), obj["nextPositionZ"].GetFloat());
 		mFriction			= obj["friction"].GetFloat();
 		mRestitution		= obj["restitution"].GetFloat();
@@ -94,6 +102,13 @@ namespace TDS
 		writer->Key("inputForceZ");
 		writer->Double(mInputForce.z);
 		
+		writer->Key("normalizedForceX");
+		writer->Double(mNormalizedForce.x);
+		writer->Key("normalizedForceY");
+		writer->Double(mNormalizedForce.y);
+		writer->Key("normalizedForceZ");
+		writer->Double(mNormalizedForce.z);
+		
 		writer->Key("friction");
 		writer->Double(mFriction);
 
@@ -111,12 +126,15 @@ namespace TDS
 
 	void RigidBody::ImGuiDisplay()
 	{
-		ImguiVec3Input("Acceleration", mAcceleration);
+		ImguiVec3Input("Input Force", mInputForce);
 		ImguiVec3Input("Linear Velocity", mLinearVelocity);
 		ImguiVec3Input("Angular Velocity", mAngularVelocity);
+		ImguiVec3Input("Acceleration", mAcceleration);
 		ImguiVec3Input("Direction", mDirection);
 		ImguiVec3Input("Next Position", mNextPosition);
 		ImguiFloatInput("Friction", mFriction);
 		ImguiFloatInput("Restitution", mRestitution);
+		ImguiFloatInput("Mass", mMass);
+		ImguiFloatInput("Gravity", mGravity);
 	}
 }
