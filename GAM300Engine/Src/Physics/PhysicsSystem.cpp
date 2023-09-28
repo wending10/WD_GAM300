@@ -22,7 +22,7 @@ namespace TDS
 			}
 			accumulatedTime -= TimeStep::GetFixedDeltaTime();
 			//NewtonianPhysics(_transform[i], _rigidbody[i]);
-			std::cout << "test";
+			//std::cout << "test";
 		}
 		
 	}

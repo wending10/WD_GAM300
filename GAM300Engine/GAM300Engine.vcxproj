@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(SolutionDir)..\Dependencies\assimp\lib\Debug;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(SolutionDir)Dependencies\dotnet\include;$(SolutionDir)Dependencies\assimp\include;$(SolutionDir)Dependencies\fmod;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(SolutionDir)..\Dependencies\dotnet\include;$(SolutionDir)..\Dependencies\assimp\include;$(SolutionDir)..\Dependencies\fmod;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir).bin\$(Configuration)-$(Platform)</OutDir>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>

@@ -11,7 +11,8 @@ namespace AudioWerks
     AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
     eventDescriptions(), eventInstances(), reverb() {}
 
-    void AudioEngine::init() {
+    void AudioEngine::init()
+    {
        ERRCHECK(FMOD::Studio::System::create(&studioSystem));
        ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
        ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_STEREO, 0));
@@ -19,21 +20,24 @@ namespace AudioWerks
        ERRCHECK(lowLevelSystem->set3DNumListeners(1));
        ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
        ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
-       //ERRCHECK(FMOD::System_Create()) //I don't think need this
+       //ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this
        initReverb();
     }
 
-    void AudioEngine::deactivate() {
+    void AudioEngine::deactivate()
+    {
         lowLevelSystem->close();
         lowLevelSystem->release();
         studioSystem->release();
     }
 
-    void AudioEngine::update() {
+    void AudioEngine::update()
+    {
         ERRCHECK(studioSystem->update()); // also updates the low level system
     }
 
-    void AudioEngine::loadSound(SoundInfo &soundInfo) {
+    void AudioEngine::loadSound(SoundInfo &soundInfo)
+    {
         if (!soundLoaded(soundInfo)) {
             std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
             FMOD::Sound* sound;
