@@ -20,17 +20,25 @@ namespace TDS
 		Vec3& GetAcceleration() { return mAcceleration; }
 		void SetAcceleration(Vec3 acceleration) { mAcceleration = acceleration; }
 
-		Vec3& GetVel() { return mVelocity; }
-		void SetVel(Vec3 velocity) { mVelocity = velocity; }
-		void SetVel(float velocityX, float velocityY) { mVelocity = Vec3(velocityX, velocityY); }
+		Vec3& GetLinearVel() { return mLinearVelocity; }
+		void SetLinearVel(Vec3 velocity) { mLinearVelocity = velocity; }
+		void SetLinearVel(float velocityX, float velocityY, float velocityZ) { mLinearVelocity = Vec3(velocityX, velocityY, velocityZ); }
+		
+		Vec3& GetAngularVel() { return mAngularVelocity; }
+		void SetAngularVel(Vec3 velocity) { mAngularVelocity = velocity; }
+		void SetAngularVel(float velocityX, float velocityY, float velocityZ) { mAngularVelocity = Vec3(velocityX, velocityY, velocityZ); }
 
 		Vec3& GetInputForce() { return mInputForce; }
 		void SetInputForce(Vec3 inputForce) { mInputForce = inputForce; }
-		void SetInputForce(float inputForceX, float inputForceY) { mInputForce = Vec3(inputForceX, inputForceY); }
+		void SetInputForce(float inputForceX, float inputForceY, float inputForceZ) { mInputForce = Vec3(inputForceX, inputForceY, inputForceZ); }
+
+		Vec3& GetNormalizedForce() { return mNormalizedForce; }
+		void SetNormalizedForce(Vec3 normalizedForce) { mNormalizedForce = normalizedForce; }
+		void SetNormalizedForce(float normalizedForceX, float normalizedForceY, float normalizedForceZ) { mNormalizedForce = Vec3(normalizedForceX, normalizedForceY, normalizedForceZ); }
 
 		Vec3& GetDirection() { return mDirection; }
 		void SetDirection(Vec3 direction) { mDirection = direction; }
-		void SetDirection(float directionX, float directionY) { mDirection = Vec3(directionX, directionY); }
+		void SetDirection(float directionX, float directionY, float directionZ) { mDirection = Vec3(directionX, directionY, directionZ); }
 
 		Vec3& GetNextPosition() { return mNextPosition; }
 		void SetNextPosition(Vec3 nextPosition) { mNextPosition = nextPosition; }
@@ -42,8 +50,10 @@ namespace TDS
 		void SetRestitution(float restitution) { mRestitution = restitution; }
 
 		float& GetMass() { return mMass; }
+		void SetMass(float mass) { mMass = mass; }
+		
 		float& GetInverseMass() { return mInverseMass; }
-		void SetMass(float mass) { mMass = mass; mInverseMass = 1.0f / mass; }
+		void setInverseMass(float mass) { mInverseMass = 1.0f / mass; }
 
 		float& GetGravity() { return mGravity; }
 		void SetGravity(float gravity) { mGravity = gravity; }
@@ -51,10 +61,12 @@ namespace TDS
 
 	private:
 		Vec3 mAcceleration;
-		Vec3 mVelocity;
+		Vec3 mLinearVelocity;
+		Vec3 mAngularVelocity;
 		Vec3 mDirection;
 		Vec3 mNextPosition;
 		Vec3 mInputForce;
+		Vec3 mNormalizedForce;
 		Vec3 mTotalForce;
 		
 		float mFriction;

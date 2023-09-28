@@ -11,9 +11,15 @@
 #include "imguiHelper/ImguiHelper.h"
 #include "sceneManager/sceneManager.h"
 #include "Logger/Logger.h"
+#include "imguiHelper/ImguiConsole.h" //to print logs to imgui console
+
+//#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
+    //editor console instance for printing logs
+    //EditorConsole* consoleLog;
+
      Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
      {
@@ -115,15 +121,15 @@ namespace TDS
          //startScriptEngine();
 
          // Step 1: Get Functions
-         auto init = GetFunctionPtr<void(*)(void)>
-             (
-                 "ScriptAPI",
-                 "ScriptAPI.EngineInterface",
-                 "Init"
-             );
+         //auto init = GetFunctionPtr<void(*)(void)>
+         //    (
+         //        "ScriptAPI",
+         //        "ScriptAPI.EngineInterface",
+         //        "Init"
+         //    );
 
-         // Step 2: Initialize
-         init();
+         //// Step 2: Initialize
+         //init();
      }
 
      void Application::Update()
@@ -134,24 +140,19 @@ namespace TDS
          //        "ScriptAPI.EngineInterface",
          //        "ExecuteUpdate"
          //    );
-
-         auto  Clock = std::chrono::system_clock::now();
+       
+         //consoleLog->AddLog("Writing from SpeedLog:");
+         TDS_INFO("Hello, {}!", "World");
          while (m_window.processInputEvent())
          {
-             float DeltaTime;
-             {
-                 auto                         Now = std::chrono::system_clock::now();
-                 std::chrono::duration<float> ElapsedSeconds = Now - Clock;
-                 DeltaTime = ElapsedSeconds.count();
-                 Clock = Now;
-             }
+             TimeStep::CalculateDeltaTime();
 
-             ECS::runSystems(1, DeltaTime);
+             ECS::runSystems(1, TimeStep::GetDeltaTime());
 
              //Imgui helper
              imguiHelper::Update();
 
-             m_pVKInst.get()->drawFrame(m_window, DeltaTime);
+             m_pVKInst.get()->drawFrame(m_window, TimeStep::GetDeltaTime());
              Input::scrollStop();
              //executeUpdate();
          }

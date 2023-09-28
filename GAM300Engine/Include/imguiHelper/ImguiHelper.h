@@ -22,11 +22,14 @@ namespace TDS
 		//MENUBAR,
 		//BEHAVIORTREE,
 		ASSETBROWSER,
-		SCENEBROWSER
+		SCENEBROWSER,
+		CONSOLE,
+		TOOLBAR,
+		PROFILER,
 		//BEHAVIOURTREEEDITOR,
-		//ANIMATIONBROWSER
-		// TILEMAP
-		// SOUND
+		//ANIMATIONBROWSER,
+		// TILEMAP,
+		AUDIOLER
 		// ANIMATION
 	};
 
@@ -57,6 +60,8 @@ namespace TDS
 	namespace imguiHelper
 	{
 		void InitializeImgui(ImGui_ImplVulkan_InitInfo initinfo, VkRenderPass RenderPass, void* inHwnd);
+
+		void CustomDarkTheme();
 
 		void ImguiCreateFont(VkCommandBuffer SingleUseCommandBuffer);
 
