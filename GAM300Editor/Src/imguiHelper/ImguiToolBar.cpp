@@ -2,7 +2,6 @@
 #include "imguiHelper/ImguiConsole.h"
 
 #include "sceneManager/sceneManager.h"
-
 #include <Windows.h>
 #include <shellapi.h>
 
@@ -117,6 +116,7 @@ namespace TDS
 			if (isSaveScene) {
 
 				SceneManager::GetInstance()->saveScene(SceneManager::GetInstance()->getCurrentScene());
+				SceneManager::GetInstance()->sceneSerialize();
 			}
 		}
 		ImGui::PopStyleColor();
