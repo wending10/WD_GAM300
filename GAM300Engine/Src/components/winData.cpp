@@ -28,7 +28,7 @@ namespace TDS
 		mWidth = obj["width"].GetUint();
 		mHeight = obj["height"].GetUint();
 		mCurrentWidth = obj["currentWidth"].GetUint();
-		mCurrentHeight = obj["currentHeight"].GetFloat();
+		mCurrentHeight = obj["currentHeight"].GetUint();
 		mMasterVolume = obj["masterVolume"].GetFloat();
 		mBGMVolume = obj["BGMVolume"].GetFloat();
 		mSFXVolume = obj["SFXVolume"].GetFloat();
@@ -59,10 +59,5 @@ namespace TDS
 		writer->Double(mSFXVolume);
 
 		return true;
-	}
-
-	void WinData::ImGuiDisplay()
-	{
-
 	}
 }

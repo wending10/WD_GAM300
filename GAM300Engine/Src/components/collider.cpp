@@ -71,69 +71,69 @@ namespace TDS {
 		writer->Key("maxZ");
 		writer->Double(mMax.z);
 
-		writer->Key("mOffsetX");
+		writer->Key("offsetX");
 		writer->Double(mOffset.x);
-		writer->Key("mOffsetY");
+		writer->Key("offsetY");
 		writer->Double(mOffset.y);
-		writer->Key("mOffsetZ");
+		writer->Key("offsetZ");
 		writer->Double(mOffset.z);
 
 		writer->Key("hit");
-		writer->Double(mHit);
+		writer->Int(mHit);
 
 		writer->Key("radius");
 		writer->Double(mRadius);
 
 		writer->Key("isAlive");
-		writer->Double(mIsAlive);
+		writer->Bool(mIsAlive);
 
 		return true;
 	}
 
-	void Collider::ImGuiDisplay()
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text("Collider Type");
+	//void Collider::ImGuiDisplay()
+	//{
+	//	ImGui::TableNextRow();
+	//	ImGui::TableNextColumn();
+	//	ImGui::Text("Collider Type");
 
-		ImGui::TableNextColumn();
+	//	ImGui::TableNextColumn();
 
-		// Collider Type
-		static std::string colliderTypeStringList[3]{ "None", "Circle", "Rectangle" };
-		int colliderTypeSelected = static_cast<int>(mColliderType) - 1;
+	//	// Collider Type
+	//	static std::string colliderTypeStringList[3]{ "None", "Circle", "Rectangle" };
+	//	int colliderTypeSelected = static_cast<int>(mColliderType) - 1;
 
-		// Uninitialized
-		if (colliderTypeSelected == -1)
-		{
-			mColliderType = ColliderType::NONE;
-			colliderTypeSelected = 0;
-		}
+	//	// Uninitialized
+	//	if (colliderTypeSelected == -1)
+	//	{
+	//		mColliderType = ColliderType::NONE;
+	//		colliderTypeSelected = 0;
+	//	}
 
-		if (ImGui::BeginCombo("##", colliderTypeStringList[colliderTypeSelected].c_str()))
-		{
-			for (int n = 0; n < 3; n++)
-			{
-				const bool is_selected = (colliderTypeSelected == n);
-				if (ImGui::Selectable(colliderTypeStringList[n].c_str(), is_selected))
-				{
-					mColliderType = static_cast<ColliderType>(n + 1);
-				}
+	//	if (ImGui::BeginCombo("##", colliderTypeStringList[colliderTypeSelected].c_str()))
+	//	{
+	//		for (int n = 0; n < 3; n++)
+	//		{
+	//			const bool is_selected = (colliderTypeSelected == n);
+	//			if (ImGui::Selectable(colliderTypeStringList[n].c_str(), is_selected))
+	//			{
+	//				mColliderType = static_cast<ColliderType>(n + 1);
+	//			}
 
-				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-				if (is_selected)
-				{
-					ImGui::SetItemDefaultFocus();
-				}
-			}
-			ImGui::EndCombo();
-		}
+	//			// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+	//			if (is_selected)
+	//			{
+	//				ImGui::SetItemDefaultFocus();
+	//			}
+	//		}
+	//		ImGui::EndCombo();
+	//	}
 
-		ImguiVec3Input("Collision Normal", mCollisionNormal);
-		ImguiVec3Input("Min", mMin);
-		ImguiVec3Input("Max", mMax);
-		ImguiVec3Input("Offset", mOffset);
-		ImguiIntInput("Hit", mHit);
-		ImguiFloatInput("Radius", mRadius);
-		ImguiBoolInput("Is Alive", mIsAlive);
-	}
+	//	ImguiVec3Input("Collision Normal", mCollisionNormal);
+	//	ImguiVec3Input("Min", mMin);
+	//	ImguiVec3Input("Max", mMax);
+	//	ImguiVec3Input("Offset", mOffset);
+	//	ImguiIntInput("Hit", mHit);
+	//	ImguiFloatInput("Radius", mRadius);
+	//	ImguiBoolInput("Is Alive", mIsAlive);
+	//}
 }

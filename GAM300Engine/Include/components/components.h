@@ -1,6 +1,7 @@
 #ifndef COMPONENTS
 #define COMPONENTS
 
+#include "ai.h"
 #include "cameraComponent.h"
 #include "collider.h"
 #include "nameTag.h"
@@ -14,9 +15,9 @@
 // Helper functions for components
 namespace TDS
 {
-	IComponent* addComponentByName(std::string componentName, EntityID entityID);
-	IComponent* getComponentByName(std::string componentName, EntityID entityID);
-	void removeComponentByName(std::string componentName, EntityID entityID);
+	DLL_API IComponent* addComponentByName(std::string componentName, EntityID entityID);
+	DLL_API IComponent* getComponentByName(std::string componentName, EntityID entityID);
+	DLL_API void removeComponentByName(std::string componentName, EntityID entityID);
 }
 
 #endif

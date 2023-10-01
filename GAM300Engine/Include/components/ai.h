@@ -1,11 +1,11 @@
 #ifndef AICOMPONENT
 #define AICOMPONENT
 
-#include "ecs/ecs.h"
+#include "AI/behaviourTree.h"
 
 namespace TDS
 {
-	class AI : public IComponent
+	class DLL_API AI : public IComponent
 	{
 	public:
 		AI();
@@ -14,11 +14,23 @@ namespace TDS
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
-		virtual void ImGuiDisplay();
+		int& GetBehaviourTreeIndex() { return mBehaviourTreeIndex; }
+		void SetBehaviourTreeIndex(int behaviourTreeIndex) { mBehaviourTreeIndex = behaviourTreeIndex; }
+
+		NodeStatus& GetEntityCurrentStatus() { return mEntityCurrentStatus; }
+		void SetEntityCurrentStatus(NodeStatus entityCurrentStatus) { mEntityCurrentStatus = entityCurrentStatus; }
+
+		std::shared_ptr<Node> GetCurrentNode() { return mCurrentNode; }
+		void SetCurrentNode(std::shared_ptr<Node> currentNode) { mCurrentNode = currentNode; }
+		
+		float GetTimer() { return mTimer; }
+		void SetTimer(float timer) { mTimer = timer; }
 
 	private:
-		std::string mTitle;
-		float mMasterVolume;
+		int mBehaviourTreeIndex;
+		NodeStatus mEntityCurrentStatus;
+		std::shared_ptr<Node> mCurrentNode;
+		float mTimer;
 	};
 }
 

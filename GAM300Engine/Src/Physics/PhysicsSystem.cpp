@@ -1,5 +1,4 @@
 #include "Physics/PhysicsSystem.h"
-
 namespace TDS
 {
 	const double PhysicsSystem::fixedDt = 0.0166666f;
@@ -7,22 +6,21 @@ namespace TDS
 		
 	void PhysicsSystem::PhysicsSystemInit()
 	{
-		
 	}
 
 	void PhysicsSystem::PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody)
 	{
+		//TDS_INFO(entities.size());
 		// Physics loop
 		accumulatedTime += dt;
 		while (accumulatedTime >= TimeStep::GetFixedDeltaTime())
 		{
 			for (int i = 0; i < entities.size(); ++i)
 			{
-				//NewtonianPhysics(_transform[i], _rigidbody[i]);
+				_rigidbody->setInverseMass(_rigidbody->GetMass());
+				NewtonianPhysics(_transform[i], _rigidbody[i]);
 			}
 			accumulatedTime -= TimeStep::GetFixedDeltaTime();
-			//NewtonianPhysics(_transform[i], _rigidbody[i]);
-			//std::cout << "test";
 		}
 		
 	}

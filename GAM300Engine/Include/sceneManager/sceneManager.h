@@ -8,7 +8,7 @@
 
 namespace TDS
 {
-	class SceneManager : public Serializer
+	class DLL_API SceneManager : public Serializer
 	{
 	public:
 		/*!*************************************************************************
@@ -51,7 +51,8 @@ namespace TDS
 		std::string currentScene;
 		std::string startScene;
 
-		std::string filepath;
+		std::string parentFilePath;
+		std::string filePath;
 	};
 }
 

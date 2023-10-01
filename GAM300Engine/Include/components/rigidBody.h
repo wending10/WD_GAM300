@@ -6,7 +6,7 @@
 
 namespace TDS
 {
-	class RigidBody : public IComponent
+	class DLL_API RigidBody : public IComponent
 	{
 	public:
 		RigidBody();
@@ -14,8 +14,6 @@ namespace TDS
 		~RigidBody() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
-
-		virtual void ImGuiDisplay();
 
 		Vec3& GetAcceleration() { return mAcceleration; }
 		void SetAcceleration(Vec3 acceleration) { mAcceleration = acceleration; }
@@ -50,8 +48,10 @@ namespace TDS
 		void SetRestitution(float restitution) { mRestitution = restitution; }
 
 		float& GetMass() { return mMass; }
+		void SetMass(float mass) { mMass = mass; }
+		
 		float& GetInverseMass() { return mInverseMass; }
-		void SetMass(float mass) { mMass = mass; mInverseMass = 1.0f / mass; }
+		void setInverseMass(float mass) { mInverseMass = 1.0f / mass; }
 
 		float& GetGravity() { return mGravity; }
 		void SetGravity(float gravity) { mGravity = gravity; }

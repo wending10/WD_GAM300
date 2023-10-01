@@ -4,71 +4,77 @@ namespace TDS
 {
 	IComponent* addComponentByName(std::string componentName, EntityID entityID)
 	{
-		if (componentName == "Camera Component")
-			return ECS::addComponent<CameraComponent>(entityID);
+		if (componentName == "AI")
+			return ecs.addComponent<AI>(entityID);
+		else if (componentName == "Camera Component")
+			return ecs.addComponent<CameraComponent>(entityID);
 		else if (componentName == "Collider")
-			return ECS::addComponent<Collider>(entityID);
+			return ecs.addComponent<Collider>(entityID);
 		else if (componentName == "Name Tag")
-			return ECS::addComponent<NameTag>(entityID);
+			return ecs.addComponent<NameTag>(entityID);
 		else if (componentName == "Player Attributes")
-			return ECS::addComponent<PlayerAttributes>(entityID);
+			return ecs.addComponent<PlayerAttributes>(entityID);
 		else if (componentName == "Rigid Body")
-			return ECS::addComponent<RigidBody>(entityID);
+			return ecs.addComponent<RigidBody>(entityID);
 		else if (componentName == "Sprite")
-			return ECS::addComponent<Sprite>(entityID);
+			return ecs.addComponent<Sprite>(entityID);
 		else if (componentName == "Tag")
-			return ECS::addComponent<Tag>(entityID);
+			return ecs.addComponent<Tag>(entityID);
 		else if (componentName == "Transform")
-			return ECS::addComponent<Transform>(entityID);
+			return ecs.addComponent<Transform>(entityID);
 		else if (componentName == "Win Data")
-			return ECS::addComponent<WinData>(entityID);
+			return ecs.addComponent<WinData>(entityID);
 		else 
 			return nullptr;
 	}
 
 	IComponent* getComponentByName(std::string componentName, EntityID entityID)
 	{
-		if (componentName == "Camera Component")
-			return ECS::getComponent<CameraComponent>(entityID);
+		if (componentName == "AI")
+			return ecs.getComponent<AI>(entityID);
+		else if (componentName == "Camera Component")
+			return ecs.getComponent<CameraComponent>(entityID);
 		else if (componentName == "Collider")
-			return ECS::getComponent<Collider>(entityID);
+			return ecs.getComponent<Collider>(entityID);
 		else if (componentName == "Name Tag")
-			return ECS::getComponent<NameTag>(entityID);
+			return ecs.getComponent<NameTag>(entityID);
 		else if (componentName == "Player Attributes")
-			return ECS::getComponent<PlayerAttributes>(entityID);
+			return ecs.getComponent<PlayerAttributes>(entityID);
 		else if (componentName == "Rigid Body")
-			return ECS::getComponent<RigidBody>(entityID);
+			return ecs.getComponent<RigidBody>(entityID);
 		else if (componentName == "Sprite")
-			return ECS::getComponent<Sprite>(entityID);
+			return ecs.getComponent<Sprite>(entityID);
 		else if (componentName == "Tag")
-			return ECS::getComponent<Tag>(entityID);
+			return ecs.getComponent<Tag>(entityID);
 		else if (componentName == "Transform")
-			return ECS::getComponent<Transform>(entityID);
+			return ecs.getComponent<Transform>(entityID);
 		else if (componentName == "Win Data")
-			return ECS::getComponent<WinData>(entityID);
+			return ecs.getComponent<WinData>(entityID);
 		else
 			return nullptr;
 	}
 
 	void removeComponentByName(std::string componentName, EntityID entityID)
 	{
-		if (componentName == "Camera Component")
-			ECS::removeComponent<CameraComponent>(entityID);
+		if (componentName == "AI")
+			ecs.removeComponent<AI>(entityID);
+		else if (componentName == "Camera Component")
+			ecs.removeComponent<CameraComponent>(entityID);
 		else if (componentName == "Collider")
-			ECS::removeComponent<Collider>(entityID);
+			ecs.removeComponent<Collider>(entityID);
 		else if (componentName == "Name Tag")
-			ECS::removeComponent<NameTag>(entityID);
+			ecs.removeComponent<NameTag>(entityID);
 		else if (componentName == "Player Attributes")
-			ECS::removeComponent<PlayerAttributes>(entityID);
+			ecs.removeComponent<PlayerAttributes>(entityID);
 		else if (componentName == "Rigid Body")
-			ECS::removeComponent<RigidBody>(entityID);
+			ecs.removeComponent<RigidBody>(entityID);
 		else if (componentName == "Sprite")
-			ECS::removeComponent<Sprite>(entityID);
+			ecs.removeComponent<Sprite>(entityID);
 		else if (componentName == "Tag")
-			ECS::removeComponent<Tag>(entityID);
+			ecs.removeComponent<Tag>(entityID);
 		else if (componentName == "Transform")
-			ECS::removeComponent<Transform>(entityID);
+			ecs.removeComponent<Transform>(entityID);
 		else if (componentName == "Win Data")
-			ECS::removeComponent<WinData>(entityID);
+			ecs.removeComponent<WinData>(entityID);
 	}
 }

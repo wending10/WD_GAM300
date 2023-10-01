@@ -5,7 +5,7 @@
 
 namespace TDS
 {
-	class Tag : public IComponent
+	class DLL_API Tag : public IComponent
 	{
 	public:
 		Tag();
@@ -13,10 +13,6 @@ namespace TDS
 		~Tag() = default;
 		virtual bool Deserialize(const rapidjson::Value& obj);
 		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
-
-		//Tag& operator=(Tag&& other) noexcept { return *this; };
-
-		virtual void ImGuiDisplay();
 
 		std::string GetTag() { return mTag; }
 		void SetTag(std::string tag) { mTag = tag; }

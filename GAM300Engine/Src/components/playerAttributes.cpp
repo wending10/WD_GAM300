@@ -8,6 +8,7 @@ namespace TDS
 	bool PlayerAttributes::Deserialize(const rapidjson::Value& obj)
 	{
 		//UNREFERENCED_PARAMETER(obj);
+		obj;
 		return true;
 	}
 
@@ -17,11 +18,12 @@ namespace TDS
 	bool PlayerAttributes::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
 	{
 		//UNREFERENCED_PARAMETER(writer);
+		writer;
 		return true;
 	}
 
-	void PlayerAttributes::ImGuiDisplay()
-	{
+	//void PlayerAttributes::ImGuiDisplay()
+	//{
 
-	}
+	//}
 }

@@ -4,6 +4,7 @@
 #include <windowsx.h>
 #include <stdint.h>
 
+#include "dotnet/ImportExport.h"
 #define TDS_MAX_KEYS 56
 
 #define TDS_A			0
@@ -76,20 +77,24 @@
 #define TDS_MOUSE_SCROLL	 5
 #define TDS_MOUSE_HOVER		 6
 
-//#define TDS_MOUSE_SCROLLDOWN 6
 
 namespace TDS
 {
-	class Input
+	class DLL_API Input
 	{
-		friend LRESULT CALLBACK WindowsWin::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	public:
 		struct keyState
 		{
 			bool wasDown, isDown;
 		};
-
+		enum class KeyStatus
+		{
+			IDLE,
+			PRESSED,
+			RELEASED,
+			REPEATED
+		};
 		struct keyboardInputMap
 		{
 			keyState keys[TDS_MAX_KEYS];
@@ -111,10 +116,12 @@ namespace TDS
 			mousePosition position;
 		};
 
+		static KeyStatus keystatus;
+		static uint32_t keyCode;
+		static short wheelDelta;
 	private:
 		static keyboardInputMap keyboard;
 		static mouseInputMap mouse;
-
 	public:
 		static keyState GetKeyState(uint32_t keycode);
 
@@ -135,21 +142,20 @@ namespace TDS
 		static bool isMouseButtonReleased(unsigned int buttonCode);
 
 		static bool wasMouseButtonHit(unsigned int buttonCode); //true if button has just been pressed
-		
-		
+
+
 		static void processMouseScroll(WPARAM _wParam);
 
 		static void scrollStop();
-
-	private:
-
 
 		static void processKeyboardInput(uint32_t VKcode, bool wasDown, bool isDown);
 
 		static void processMouseInput(WPARAM wParam, LPARAM lParam);
 
-
 		static void updateMousePosition(LPARAM lParam);
+	private:
+
+
 
 	}; //end of Input class
 
