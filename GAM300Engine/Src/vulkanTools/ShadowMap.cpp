@@ -4,7 +4,7 @@
 namespace TDS {
 	ShadowMap::ShadowMap(VulkanInstance& Instance, VkRenderPass renderpass, VkDescriptorSetLayout globbalsetlayout)
 		:m_Instance(Instance) {
-		createPipelineLayout(globbalsetlayout);
+		//createPipelineLayout(globbalsetlayout);
 		createPipeline(renderpass);
 	}
 
