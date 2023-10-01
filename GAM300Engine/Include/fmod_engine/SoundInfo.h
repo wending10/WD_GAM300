@@ -5,6 +5,9 @@
 #include <array>
 #include <time.h>
 
+#include "ecs/ecs.h"
+#include "components/iComponent.h"
+
 namespace TDS{
     static unsigned int counter{ 0 };
 
@@ -16,7 +19,7 @@ namespace TDS{
         SOUND_PLAYING
     };
 
-    struct SoundInfo
+    struct DLL_API SoundInfo : public IComponent
     {
 
         unsigned int uniqueID, MSLength;
@@ -25,6 +28,26 @@ namespace TDS{
         SOUND_STATE whatState;
         std::array<float, 3> posVec; //!!!!!!!To be replaced when vec container is used
         float volume, ReverbAmount;
+
+        /**
+         * @brief Loading info from a file into SOUNDINFO.
+         * @param obj 
+         * @return true when success.
+        */
+        virtual bool Deserialize(const rapidjson::Value& obj)
+        {
+            return false;
+        }
+
+        /**
+         * @brief Storing info from SOUNDINFO into a file
+         * @param writer 
+         * @return true when success.
+        */
+        virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
+        {
+            return false;
+        }
 
         // convenience method to set the 3D coordinates of the sound.
         void set3DCoords(float x, float y, float z) {
