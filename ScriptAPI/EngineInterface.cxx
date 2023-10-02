@@ -27,7 +27,7 @@ namespace ScriptAPI
 
         HelloWorld();
         
-        for (auto i : TDS::ECS::getEntities())
+        for (auto i : TDS::ecs.getEntities())
         {
             scripts->Add(i, gcnew ScriptList());
         }
@@ -41,7 +41,7 @@ namespace ScriptAPI
     ***************************************************************************/
     bool EngineInterface::AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
     {
-        if (entityId == TDS::NULLENTITY || TDS::ECS::getEntities().size() == 0)
+        if (entityId == TDS::NULLENTITY || TDS::ecs.getEntities().size() == 0)
             return false;
 
         // Remove any whitespaces
