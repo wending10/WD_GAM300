@@ -131,20 +131,18 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(SolutionDir)Shared_Libs;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)GAM300Engine\Include;$(SolutionDir)GAM300Engine\Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\Libs;$(SolutionDir)..\Libs\Debug;$(SolutionDir)..\Libs\fmod</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs;$(SolutionDir)Libs\Debug;$(SolutionDir)Libs\fmod;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;assimp-vc143-mtd.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(SolutionDir).bin\Debug-x64\GAM300Engine.dll" "$(SolutionDir)..\GAM300Editor\"
-xcopy /s /r /y /q "$(SolutionDir)..\Dependencies\dotnet\bin" "$(OutDir)"
-xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
-rmdir /s /q "$(OutDir)net6.0"
-xcopy /y /d "$(SolutionDir)..\Libs\fmod\*.dll" "$(OutDir)"</Command>
+      <Command>xcopy /Y "$(SolutionDir)..\.bin\Debug-x64\GAM300Engine.dll" "$(SolutionDir)..\GAM300Editor\"
+xcopy /s /r /y /q "$(SolutionDir)Dependencies\dotnet\bin" "$(OutDir)"
+xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -173,9 +171,9 @@ xcopy /y /d "$(SolutionDir)..\Libs\fmod\*.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "$(SolutionDir)..\Dependencies\dotnet\bin" "$(OutDir)"
-xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
-rmdir /s /q "$(OutDir)net6.0"</Command>
+      <Command>xcopy /Y "$(SolutionDir).bin\Debug-x64\GAM300Engine.dll" "$(SolutionDir)..\GAM300Editor\"
+xcopy /s /r /y /q "$(SolutionDir)..\Dependencies\dotnet\bin" "$(OutDir)"
+xcopy /y /d "$(SolutionDir)..\Libs\fmod\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

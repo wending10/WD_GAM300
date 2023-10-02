@@ -38,10 +38,12 @@ namespace TDS
 				if (ImGui::MenuItem("New")) 
 				{
 					SceneManager::GetInstance()->newScene("NewScene");
+					ecs.removeAllEntities();
 				}
 				if (ImGui::MenuItem("Save")) 
 				{
 					SceneManager::GetInstance()->saveScene(SceneManager::GetInstance()->getCurrentScene());
+					SceneManager::GetInstance()->sceneSerialize();
 				}
                 ImGui::EndMenu();
             }
