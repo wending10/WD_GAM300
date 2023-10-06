@@ -1,3 +1,13 @@
+/*!*************************************************************************
+****
+\file serialization.h
+\author Go Ruo Yan
+\par DP email: ruoyan.go@digipen.edu
+\date 28-9-2023
+\brief  This program declares the functions in the serializer class
+****************************************************************************
+***/
+
 #ifndef SERIALIZATION
 #define SERIALIZATION
 
@@ -5,10 +15,10 @@
 #include "rapidJSON/document.h"
 #include "rapidJSON/stringbuffer.h"
 #include "rapidJSON/prettywriter.h"
-
+#include "dotnet/ImportExport.h"
 namespace TDS
 {
-	class Serializer
+	class DLL_API Serializer
 	{
 	public:
 		/*!*************************************************************************
