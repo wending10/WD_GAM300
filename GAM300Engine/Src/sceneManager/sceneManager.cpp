@@ -150,7 +150,7 @@ namespace TDS
 			// Start of data sizes
 			writer->StartObject();
 
-			for (int i = 0; i < ecs.getNumberOfComponents(); ++i)
+			for (unsigned int i = 0; i < ecs.getNumberOfComponents(); ++i)
 			{
 				if (a->type[i] == '1')
 				{
@@ -171,7 +171,7 @@ namespace TDS
 		writer->StartObject();
 
 		std::string entityNo = "EntityNo";
-		std::string component = "Component";
+		//std::string component = "Component";
 
 		std::vector<EntityID> entityList = ecs.getEntities();
 

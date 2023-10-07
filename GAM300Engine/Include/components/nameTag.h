@@ -15,36 +15,36 @@
 
 namespace TDS
 {
-	class DLL_API NameTag : public IComponent
+	class NameTag : public IComponent
 	{
 	public:
 		/*!*************************************************************************
 		Initializes the NameTag component when created
 		****************************************************************************/
-		NameTag();
+		DLL_API NameTag();
 		/*!*************************************************************************
 		Initializes the NameTag component when created, given another NameTag
 		component to move (for ECS)
 		****************************************************************************/
-		NameTag(NameTag&& toMove) noexcept;
+		DLL_API NameTag(NameTag&& toMove) noexcept;
 		/*!*************************************************************************
 		Destructor for the NameTag component class
 		****************************************************************************/
-		~NameTag() = default;
+		DLL_API ~NameTag() = default;
 		/*!*************************************************************************
 		Deserializes the NameTag component
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj);
 		/*!*************************************************************************
 		Serializes the NameTag component
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 		/*!*************************************************************************
 		Getter and setter functions for the variables in the NameTag component class
 		****************************************************************************/
-		std::string& GetNameTag() { return mName; }
-		void SetNameTag(std::string name) { mName = name; }
+		DLL_API std::string& GetNameTag() { return mName; }
+		DLL_API void SetNameTag(std::string name) { mName = name; }
 		
 	private:
 		std::string mName;

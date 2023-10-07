@@ -19,21 +19,21 @@
 
 namespace TDS
 {
-	class DLL_API IComponent : public Serializer
+	class IComponent : public Serializer
 	{
 	public:
 		/*!*************************************************************************
 		Destructor of the abstract IComponent class
 		****************************************************************************/
-		virtual ~IComponent() = default;
+		DLL_API virtual ~IComponent() = default;
 		/*!*************************************************************************
 		Deserialize function of the abstract IComponent class
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj) = 0;
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj) = 0;
 		/*!*************************************************************************
 		Serialize function of the abstract IComponent class
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const = 0;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const = 0;
 	};
 }
 

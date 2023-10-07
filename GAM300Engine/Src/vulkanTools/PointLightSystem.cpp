@@ -59,6 +59,7 @@ namespace TDS {
 	}
 
 	void PointLightSystem::update(FrameInfo& frameinfo, GlobalUBO& ubo) {
+		(void)frameinfo;
 		//by right loop through all gameobj for pointlight components
 		ubo.m_vPointLights[0].m_Position = Vec4(0.f, 2.f, 0.f, 1.f);
 		ubo.m_vPointLights[0].m_Color = Vec4(1.f, 1.f, 1.f, 1.f);//white light with intensity at w

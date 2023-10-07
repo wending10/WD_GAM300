@@ -19,7 +19,7 @@
 #include "dotnet/ImportExport.h"
 namespace TDS
 {
-	class DLL_API MemoryManager // for ECS
+	class MemoryManager // for ECS
 	{
 	private:
 		typedef std::string ArchetypeID;
@@ -28,7 +28,7 @@ namespace TDS
 		/*!*************************************************************************
 		Returns an instance of the MemoryManager
 		****************************************************************************/
-		static std::unique_ptr<MemoryManager>& GetInstance();
+		DLL_API static std::unique_ptr<MemoryManager>& GetInstance();
 
 		struct BookData
 		{
@@ -45,68 +45,68 @@ namespace TDS
 		/*!*************************************************************************
 		Sets the number of components (from ECS)
 		****************************************************************************/
-		void setNumberOfComponent(std::uint32_t _numberOfComponents);
+		DLL_API void setNumberOfComponent(std::uint32_t _numberOfComponents);
 
 		/*!*************************************************************************
 		Adds a new book (Archetype)
 		****************************************************************************/
-		void newBook(const ArchetypeID& archetypeID);
+		DLL_API void newBook(const ArchetypeID& archetypeID);
 		/*!*************************************************************************
 		Adds a new page (Component) in given book using ArchetypeID & ComponentID
 		****************************************************************************/
-		unsigned char* newPage(const ArchetypeID& archetypeID, std::uint32_t componentID);
+		DLL_API unsigned char* newPage(const ArchetypeID& archetypeID, std::uint32_t componentID);
 		/*!*************************************************************************
 		Resizes the page (Component) in given book using ArchetypeID & ComponentID
 		****************************************************************************/
-		void resizePage(const ArchetypeID& archetypeID, std::uint32_t componentID);
+		DLL_API void resizePage(const ArchetypeID& archetypeID, std::uint32_t componentID);
 
 		/*!*************************************************************************
 		Commits the book (Archetypes) in given book using ArchetypeID
 		****************************************************************************/
-		void commitBook(const ArchetypeID& archetypeID);
+		DLL_API void commitBook(const ArchetypeID& archetypeID);
 		/*!*************************************************************************
 		Commits the page (Archetypes) in given book using ArchetypeID & ComponentID
 		****************************************************************************/
-		void commitPage(const ArchetypeID& archetypeID, std::uint32_t componentID);
+		DLL_API void commitPage(const ArchetypeID& archetypeID, std::uint32_t componentID);
 
 		/*!*************************************************************************
 		Frees the book (Archetypes) in given book using ArchetypeID
 		****************************************************************************/
-		void freeBook(const ArchetypeID& archetypeID);
+		DLL_API void freeBook(const ArchetypeID& archetypeID);
 		/*!*************************************************************************
 		Frees the page (Component) in given pointer
 		****************************************************************************/
-		void freePage(unsigned char* pointer);
+		DLL_API void freePage(unsigned char* pointer);
 
 		/*!*************************************************************************
 		Reserve space in the given book (Archetypes) using ArchetypeID & ComponentID
 		****************************************************************************/
-		void reserveComponentSpace(const ArchetypeID& archetypeID, std::uint32_t componentID, std::uint32_t componentSize);
+		DLL_API void reserveComponentSpace(const ArchetypeID& archetypeID, std::uint32_t componentID, std::uint32_t componentSize);
 
 		/*!*************************************************************************
 		Getting the component data in the given book (Archetypes) using ArchetypeID
 		& ComponentID
 		****************************************************************************/
-		unsigned char* getComponentData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize, std::uint32_t index);
+		DLL_API unsigned char* getComponentData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize, std::uint32_t index);
 		/*!*************************************************************************
 		Adding the component data in the given book (Archetypes) using ArchetypeID
 		& ComponentID
 		****************************************************************************/
-		unsigned char* addComponentData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize, std::uint32_t index);
+		DLL_API unsigned char* addComponentData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize, std::uint32_t index);
 		/*!*************************************************************************
 		Removing the end the component data in the given book (Archetypes) using
 		ArchetypeID & ComponentID
 		****************************************************************************/
-		void removeComponentEndData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize);
+		DLL_API void removeComponentEndData(ArchetypeID archetypeID, std::uint32_t componentID, std::uint32_t componentSize);
 
 	private:
 		// Unique pointer to MemoryManager
-		static std::unique_ptr<MemoryManager> m_instance;
+		 static std::unique_ptr<MemoryManager> m_instance;
 
 		const std::uint32_t PAGE_SIZE = 4096;
 		std::uint32_t numberOfComponents;
 
-		std::unordered_map<ArchetypeID, BookData> books;
+		 std::unordered_map<ArchetypeID, BookData> books;
 
 		/*!*************************************************************************
 		Reserve memory using VirtualAlloc

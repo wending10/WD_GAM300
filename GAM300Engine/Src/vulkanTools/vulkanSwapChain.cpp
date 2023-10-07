@@ -373,14 +373,6 @@ namespace TDS
 	}
 
 	VkPresentModeKHR VulkanSwapChain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
-		/*	for (const auto& availablePresentMode : availablePresentModes) {
-				if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
-					std::cout << "Present mode: MailBox\n";
-					return availablePresentMode;
-				}
-			}
-			std::cout << "Present mode: V-Sync\n";
-			return VK_PRESENT_MODE_FIFO_KHR;*/
 		if (m_Instance.getVsync())
 		{
 			std::cout << "Present mode: V-Sync\n";
@@ -393,6 +385,9 @@ namespace TDS
 				return availablePresentMode;
 			}
 		}
+
+		std::cout << "Using default present mode: FIFO\n";
+		return VK_PRESENT_MODE_FIFO_KHR;
 	}
 
 	VkExtent2D VulkanSwapChain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {

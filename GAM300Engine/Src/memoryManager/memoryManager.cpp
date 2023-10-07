@@ -92,7 +92,7 @@ namespace TDS
 	****************************************************************************/
 	void MemoryManager::commitBook(const ArchetypeID& archetypeID)
 	{
-		int componentID = 0;
+		//int componentID = 0;
 		for (int componentID = 0; componentID < archetypeID.size(); ++componentID)
 		{
 			if (archetypeID[componentID] == '0')
@@ -117,7 +117,7 @@ namespace TDS
 	****************************************************************************/
 	void MemoryManager::freeBook(const ArchetypeID& archetypeID)
 	{
-		int componentID = 0;
+		//int componentID = 0;
 		for (int componentID = 0; componentID < archetypeID.size(); ++componentID)
 		{
 			if (archetypeID[componentID] == '0')

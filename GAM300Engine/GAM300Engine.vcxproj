@@ -132,6 +132,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(SolutionDir)Shared_Libs;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)GAM300Engine\Include;$(SolutionDir)GAM300Engine\Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -16,6 +16,7 @@ namespace TDS {
 	ShadowMap::ShadowMap(VulkanInstance& Instance, VkRenderPass renderpass, VkDescriptorSetLayout globbalsetlayout)
 		:m_Instance(Instance) {
 		createPipeline(renderpass);
+		(void)globbalsetlayout;
 	}
 
 	ShadowMap::~ShadowMap() {
@@ -40,7 +41,7 @@ namespace TDS {
 		viewinfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 		viewinfo.flags = 0;
 
-		VkImageView shadowmapview;
+		//VkImageView shadowmapview;
 		if (vkCreateImageView(m_Instance.getVkLogicalDevice(), &viewinfo, NULL, &m_ImageView) != VK_SUCCESS)
 			throw std::runtime_error("unable to create shadow map image view");
 	}
@@ -131,6 +132,7 @@ namespace TDS {
 	}
 
 	void ShadowMap::createPipeline(VkRenderPass renderpass) {
+		(void)renderpass;
 		/*Pipeline::PipelineConfiginfo pipelineconfig;
 		Pipeline::defaultPipelineConfiginfo(pipelineconfig);
 		Pipeline::enableAlphaBlending(pipelineconfig);

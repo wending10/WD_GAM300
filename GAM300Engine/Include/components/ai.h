@@ -15,45 +15,45 @@
 
 namespace TDS
 {
-	class DLL_API AI : public IComponent
+	class AI : public IComponent
 	{
 	public:
 		/*!*************************************************************************
 		Initializes the AI component when created
 		****************************************************************************/
-		AI();
+		DLL_API AI();
 		/*!*************************************************************************
 		Initializes the AI component when created, given another AI component to
 		move (for ECS)
 		****************************************************************************/
-		AI(AI&& toMove) noexcept;
+		DLL_API AI(AI&& toMove) noexcept;
 		/*!*************************************************************************
 		Destructor for the AI component class
 		****************************************************************************/
-		~AI() = default;
+		DLL_API ~AI() = default;
 		/*!*************************************************************************
 		Deserializes the AI component
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj);
 		/*!*************************************************************************
 		Serializes the AI component
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 		/*!*************************************************************************
 		Getter and setter functions for the variables in the AI component class
 		****************************************************************************/
-		int& GetBehaviourTreeIndex() { return mBehaviourTreeIndex; }
-		void SetBehaviourTreeIndex(int behaviourTreeIndex) { mBehaviourTreeIndex = behaviourTreeIndex; }
+		DLL_API int& GetBehaviourTreeIndex() { return mBehaviourTreeIndex; }
+		DLL_API void SetBehaviourTreeIndex(int behaviourTreeIndex) { mBehaviourTreeIndex = behaviourTreeIndex; }
 
-		NodeStatus& GetEntityCurrentStatus() { return mEntityCurrentStatus; }
-		void SetEntityCurrentStatus(NodeStatus entityCurrentStatus) { mEntityCurrentStatus = entityCurrentStatus; }
+		DLL_API NodeStatus& GetEntityCurrentStatus() { return mEntityCurrentStatus; }
+		DLL_API void SetEntityCurrentStatus(NodeStatus entityCurrentStatus) { mEntityCurrentStatus = entityCurrentStatus; }
 
-		std::shared_ptr<Node> GetCurrentNode() { return mCurrentNode; }
-		void SetCurrentNode(std::shared_ptr<Node> currentNode) { mCurrentNode = currentNode; }
+		DLL_API std::shared_ptr<Node> GetCurrentNode() { return mCurrentNode; }
+		DLL_API void SetCurrentNode(std::shared_ptr<Node> currentNode) { mCurrentNode = currentNode; }
 		
-		float GetTimer() { return mTimer; }
-		void SetTimer(float timer) { mTimer = timer; }
+		DLL_API float GetTimer() { return mTimer; }
+		DLL_API void SetTimer(float timer) { mTimer = timer; }
 
 	private:
 		int mBehaviourTreeIndex;
