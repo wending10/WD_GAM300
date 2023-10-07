@@ -43,10 +43,10 @@ namespace TDS
 		virtual void update() = 0;
 
 		std::string panelTitle;
-		ImGuiWindowFlags flags;
+		ImGuiWindowFlags flags{};
 		ImVec2 windowPadding;
 
-		bool rightClick;
+		bool rightClick{};
 	private:
 	};
 

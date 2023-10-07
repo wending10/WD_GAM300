@@ -17,37 +17,37 @@
 #include "windowswindow.h"
 
 namespace TDS {
-	class DLL_API Renderer {
+	class Renderer {
 	public:
 		//Constructor and Destructor
-		Renderer(WindowsWin& window, VulkanInstance& instance);
-		~Renderer();
+		DLL_API Renderer(WindowsWin& window, VulkanInstance& instance);
+		DLL_API ~Renderer();
 
 		//no copy constructor
 		Renderer(const Renderer&) = delete;
 		Renderer& operator=(const Renderer&) = delete;
 
 		//Getters
-		VkRenderPass				getSwapChainRenderPass() const { return m_SwapChain->getRenderPass(); }
-		float						getAspectRatio() const { return m_SwapChain->extentAspectRatio(); }
-		bool						isFrameInProgress() const { return m_isFrameStarted; }
-		VkImageView					getImageView(uint32_t val)const { return m_SwapChain->getImageView(val); }
-		std::vector	<VkImageView>	getImageViewContainer()const { return m_SwapChain->getImageViewContainer(); }
-		VkCommandBuffer				getCurrentCommandBuffer() const {
+		DLL_API VkRenderPass				getSwapChainRenderPass() const { return m_SwapChain->getRenderPass(); }
+		DLL_API float						getAspectRatio() const { return m_SwapChain->extentAspectRatio(); }
+		DLL_API bool						isFrameInProgress() const { return m_isFrameStarted; }
+		DLL_API VkImageView					getImageView(uint32_t val)const { return m_SwapChain->getImageView(val); }
+		DLL_API std::vector	<VkImageView>	getImageViewContainer()const { return m_SwapChain->getImageViewContainer(); }
+		DLL_API VkCommandBuffer				getCurrentCommandBuffer() const {
 			assert(m_isFrameStarted && "Cannot get commandbuffer when frame not in progress");
 			return m_vCommandBuffers[m_currentFrameIndex];
 		}
 
-		int							getFrameIndex() const {
+		DLL_API int							getFrameIndex() const {
 			assert(m_isFrameStarted && "Cannot get Frame index when frame not in progress");
 			return m_currentFrameIndex;
 		}
 
 		//these functions tell tell when to begin and end the frame and renderpass
-		VkCommandBuffer BeginFrame();
-		void EndFrame();
-		void BeginSwapChainRenderPass(VkCommandBuffer commandbuffer);
-		void EndSwapChainRenderPass(VkCommandBuffer commandbuffer);
+		DLL_API VkCommandBuffer BeginFrame();
+		DLL_API void EndFrame();
+		DLL_API void BeginSwapChainRenderPass(VkCommandBuffer commandbuffer);
+		DLL_API void EndSwapChainRenderPass(VkCommandBuffer commandbuffer);
 
 	private:
 		//helper functions

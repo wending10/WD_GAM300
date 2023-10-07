@@ -23,7 +23,9 @@ namespace TDS
 	to move (for ECS)
 	****************************************************************************/
 	CameraComponent::CameraComponent(CameraComponent&& toMove) noexcept
-	{ }
+	{
+		(void)toMove;//TODO 
+	}
 
 	/*!*************************************************************************
 	Deserializes the CameraComponent

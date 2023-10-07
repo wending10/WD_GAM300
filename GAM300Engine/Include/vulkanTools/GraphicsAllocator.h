@@ -9,7 +9,13 @@
  *				  GraphicsAllocator class.
  *******************************************************************************/
 #pragma once
+#pragma warning(push)
+#pragma warning(disable: 4100)
+#pragma warning(disable: 4189)
+#pragma warning(disable: 4127)
+#pragma warning(disable: 4324)
 #include <vma/vk_mem_alloc.h>
+#pragma warning(pop)
 #include "dotnet/ImportExport.h"
 namespace TDS
 {
@@ -34,7 +40,7 @@ namespace TDS
 		/*!*************************************************************************
 		 * Init for GraphicsAllocator class
 		 ***************************************************************************/
-		void DLL_API Init(VulkanInstance& instance);
+		DLL_API void Init(VulkanInstance& instance);
 		/*!*************************************************************************
 		 * Mapping and Unmapping Memory
 		 ***************************************************************************/
@@ -44,7 +50,7 @@ namespace TDS
 			vmaMapMemory(GraphicsAllocator::GetInstance().GetAllocator(), allocation, (void**)(RequestSpace));
 
 		}
-		static void DLL_API UnMapMemory(VmaAllocation allocation);
+		DLL_API static void UnMapMemory(VmaAllocation allocation);
 		/*!*************************************************************************
 		 * Helper functions
 		 ***************************************************************************/
@@ -64,7 +70,7 @@ namespace TDS
 		 * Allocation and Freeing Memory
 		 ***************************************************************************/
 		template <typename T>
-		static VmaAllocation Allocate(void* CreateInfo, VmaMemoryUsage usage, T*& buffer)
+		/*static */VmaAllocation Allocate(void* CreateInfo, VmaMemoryUsage usage, T*& buffer)
 		{
 			static_assert(always_false_v<T>, "Cant allocate is this type");
 			return nullptr;
@@ -72,7 +78,7 @@ namespace TDS
 
 
 		template <>
-		static VmaAllocation Allocate<VkBuffer>(void* CreateInfo, VmaMemoryUsage usage, VkBuffer*& buffer)
+		/*static */VmaAllocation Allocate<VkBuffer>(void* CreateInfo, VmaMemoryUsage usage, VkBuffer*& buffer)
 		{
 			VmaAllocationCreateInfo bufferAlocateInfo{};
 
@@ -90,7 +96,7 @@ namespace TDS
 		}
 
 		template <>
-		static VmaAllocation Allocate<VkImage>(void* CreateInfo, VmaMemoryUsage usage, VkImage*& buffer)
+		/*static */VmaAllocation Allocate<VkImage>(void* CreateInfo, VmaMemoryUsage usage, VkImage*& buffer)
 		{
 			VmaAllocationCreateInfo bufferAlocateInfo{};
 

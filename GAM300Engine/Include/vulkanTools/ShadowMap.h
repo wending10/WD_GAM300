@@ -18,17 +18,17 @@
 
 
 namespace TDS {
-	class DLL_API ShadowMap {
+	class ShadowMap {
 	public:
 #define SHADOW_MAP_WIDTH 1200
 #define SHADOW_MAP_HEIGHT 800
 		//Constructor and destructor
-		ShadowMap(VulkanInstance& Instance, VkRenderPass renderpass, VkDescriptorSetLayout globalsetlayout);
-		~ShadowMap();
+		DLL_API ShadowMap(VulkanInstance& Instance, VkRenderPass renderpass, VkDescriptorSetLayout globalsetlayout);
+		DLL_API ~ShadowMap();
 
 		//no copy constructor
-		ShadowMap(const ShadowMap&) = delete;
-		ShadowMap& operator=(const ShadowMap&) = delete;
+		DLL_API ShadowMap(const ShadowMap&) = delete;
+		DLL_API ShadowMap& operator=(const ShadowMap&) = delete;
 
 		//update ShadowMap
 		void update(FrameInfo& frameinfo, GlobalUBO& UBO);

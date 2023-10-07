@@ -17,10 +17,10 @@ namespace TDS
 	/*!*************************************************************************
 	 * Loading of texture using TinyDDS
 	 ***************************************************************************/
-	struct DLL_API TextureData
+	struct TextureData
 	{
 		tinyddsloader::DDSFile m_TextureLoaded;
-		void LoadTexture(std::string_view path);
+		DLL_API void LoadTexture(std::string_view path);
 
 
 	};
@@ -30,10 +30,10 @@ namespace TDS
 		bool m_FlipTextureY = true;
 		bool m_UseAnistrophy = true;
 	};
-	struct DLL_API Texture
+	struct  Texture
 	{
-		void LoadTextureData(TextureData& textureData);
-		VkFormat m_Format;
+		DLL_API void LoadTextureData(TextureData& textureData);
+		VkFormat m_Format{};
 		VkImageType m_ImageType = VK_IMAGE_TYPE_2D;
 		VkSamplerAddressMode m_SampleAddressMode = VkSamplerAddressMode::VK_SAMPLER_ADDRESS_MODE_REPEAT;
 		VkBorderColor m_BorderClr = VkBorderColor::VK_BORDER_COLOR_INT_OPAQUE_WHITE;

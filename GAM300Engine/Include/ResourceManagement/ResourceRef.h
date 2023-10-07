@@ -42,7 +42,7 @@ namespace TDS
 	template <typename Type>
 	struct SingleTypeReference : public Resource_Ref
 	{
-		Type* m_Reference;
+		Type* m_Reference{};
 
 		virtual bool IsPointer() override
 		{

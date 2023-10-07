@@ -15,30 +15,30 @@
 
 namespace TDS
 {
-	class DLL_API CameraComponent : public IComponent
+	class CameraComponent : public IComponent
 	{
 	public:
 		/*!*************************************************************************
 		Initializes the CameraComponent when created
 		****************************************************************************/
-		CameraComponent();
+		DLL_API CameraComponent();
 		/*!*************************************************************************
 		Initializes the CameraComponent when created, given another CameraComponent 
 		to move (for ECS)
 		****************************************************************************/
-		CameraComponent(CameraComponent&& toMove) noexcept;
+		DLL_API CameraComponent(CameraComponent&& toMove) noexcept;
 		/*!*************************************************************************
 		Destructor for the CameraComponent class
 		****************************************************************************/
-		~CameraComponent() = default;
+		DLL_API ~CameraComponent() = default;
 		/*!*************************************************************************
 		Deserializes the CameraComponent
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj);
 		/*!*************************************************************************
 		Serializes the CameraComponent
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 	private:
 	};

@@ -22,7 +22,7 @@ namespace TDS
 	 * template class ModelFactory
 	 ***************************************************************************/
 	template<>
-	class DLL_API AssetFactory<AssetModel>
+	class AssetFactory<AssetModel>
 	{
 	private:
 		std::mutex m_Mutex;
@@ -34,7 +34,7 @@ namespace TDS
 		/*!*************************************************************************
 		 * Deserialize the model from the file.
 		 ***************************************************************************/
-		static void DeserializeGeom(GeomCompiled& geomOut, std::string_view PathData)
+		DLL_API static void DeserializeGeom(GeomCompiled& geomOut, std::string_view PathData)
 		{
 			std::ifstream inFile(PathData.data(), std::ios::binary);
 			if (!inFile)
@@ -121,7 +121,7 @@ namespace TDS
 		/*!*************************************************************************
 		 * Preload the model from the file.
 		 ***************************************************************************/
-		void Preload(ResourceManager& resourceMgr)
+		DLL_API void Preload(ResourceManager& resourceMgr)
 		{
 			m_LoadedModelsGUID.reserve(20);
 			std::filesystem::path dir = MODEL_PATH;
@@ -153,7 +153,7 @@ namespace TDS
 						continue;
 					}
 					newModel->LoadGeomData(newGeom);
-					m_ModelMap[fileName] = m_LoadedModelsGUID.size();
+					m_ModelMap[fileName] = static_cast<int>(m_LoadedModelsGUID.size());
 					m_LoadedModelsGUID.emplace_back(modelInstance.m_GUID.GetUniqueID());
 
 
@@ -166,7 +166,7 @@ namespace TDS
 		/*!*************************************************************************
 		 * Loading the model from the file.
 		 ***************************************************************************/
-		static void Load(std::string_view path, SingleTypeReference<AssetModel>& model, ResourceManager& resourceMgr)
+		DLL_API  static void Load(std::string_view path, SingleTypeReference<AssetModel>& model, ResourceManager& resourceMgr)
 		{
 			GeomCompiled geom{};
 			DeserializeGeom(geom, path);

@@ -16,45 +16,45 @@
 
 namespace TDS
 {
-	class DLL_API Transform : public IComponent
+	class Transform : public IComponent
 	{
 	public:
 		/*!*************************************************************************
 		Initializes the Transform component when created
 		****************************************************************************/
-		Transform();
+		DLL_API Transform();
 		/*!*************************************************************************
 		Initializes the Transform component when created, given another Transform
 		component to move (for ECS)
 		****************************************************************************/
-		Transform(Transform&& toMove) noexcept;
+		DLL_API Transform(Transform&& toMove) noexcept;
 		/*!*************************************************************************
 		Destructor for the Transform component class
 		****************************************************************************/
-		~Transform() = default;
+		DLL_API ~Transform() = default;
 		/*!*************************************************************************
 		Deserializes the WinData component
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj);
 		/*!*************************************************************************
 		Serializes the Transform component
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 		/*!*************************************************************************
 		Getter and setter functions for the variables in the Transform component 
 		class
 		****************************************************************************/
-		Vec3& GetPosition() { return mPosition;  }
-		void SetPosition(Vec3 position) { mPosition = position; }
-		void SetPosition(float positionX, float positionY, float positionZ) { mPosition = Vec3(positionX, positionY, positionZ); }
+		DLL_API Vec3& GetPosition() { return mPosition;  }
+		DLL_API void SetPosition(Vec3 position) { mPosition = position; }
+		DLL_API void SetPosition(float positionX, float positionY, float positionZ) { mPosition = Vec3(positionX, positionY, positionZ); }
 		
-		Vec3& GetScale() { return mScale; }
-		void SetScale(Vec3 scale) { mScale = scale; }
-		void SetScale(float scaleX, float scaleY, float scaleZ) { mScale = Vec3(scaleX, scaleY, scaleZ); }
+		DLL_API Vec3& GetScale() { return mScale; }
+		DLL_API void SetScale(Vec3 scale) { mScale = scale; }
+		DLL_API void SetScale(float scaleX, float scaleY, float scaleZ) { mScale = Vec3(scaleX, scaleY, scaleZ); }
 		
-		float& GetRotation() { return mRotation; }
-		void SetRotation(float rotation) { mRotation = rotation; }
+		DLL_API float& GetRotation() { return mRotation; }
+		DLL_API void SetRotation(float rotation) { mRotation = rotation; }
 
 	private:
 		Vec3 mPosition;
