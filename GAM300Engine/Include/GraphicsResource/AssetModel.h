@@ -15,7 +15,7 @@
 #include "vulkanTools/Geom.h"
 namespace TDS
 {
-	class DLL_API AssetModel
+	class AssetModel
 	{
 	private:
 		std::vector<VertexData> m_VertexData;
@@ -25,17 +25,17 @@ namespace TDS
 		/*!*************************************************************************
 		 * Constructor & Destructor for AssetModel class
 		 ***************************************************************************/
-		AssetModel();
-		~AssetModel();
+		DLL_API AssetModel();
+		DLL_API ~AssetModel();
 		/*!*************************************************************************
 		 * Load the geometry data from GeomCompiled
 		 ***************************************************************************/
-		void LoadGeomData(GeomCompiled& geom);
+		DLL_API void LoadGeomData(GeomCompiled& geom);
 		/*!*************************************************************************
 		 * Helper Functions
 		 ***************************************************************************/
-		std::vector<VertexData>& GetVertexData();
-		std::vector<std::uint32_t>& GetIndexData();
+		DLL_API std::vector<VertexData>& GetVertexData();
+		DLL_API std::vector<std::uint32_t>& GetIndexData();
 
 
 	};

@@ -16,7 +16,7 @@
 
 namespace TDS
 {
-	class DLL_API Collider : public IComponent
+	class Collider : public IComponent
 	{
 	public:
 		/*!*************************************************************************
@@ -32,54 +32,54 @@ namespace TDS
 		/*!*************************************************************************
 		Initializes the Collider component when created
 		****************************************************************************/
-		Collider();
+		DLL_API Collider();
 		/*!*************************************************************************
 		Initializes the Collider component when created, given another Collider
 		component to move (for ECS)
 		****************************************************************************/
-		Collider(Collider&& toMove) noexcept;
+		DLL_API Collider(Collider&& toMove) noexcept;
 		/*!*************************************************************************
 		Destructor for the Collider component class
 		****************************************************************************/
-		~Collider() = default;
+		DLL_API ~Collider() = default;
 		/*!*************************************************************************
 		Deserializes the Collider component
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj);
 		/*!*************************************************************************
 		Serializes the Collider component
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 		/*!*************************************************************************
 		Getter and setter functions for the variables in the Collider component class
 		****************************************************************************/
-		ColliderType& GetColliderType() { return mColliderType; }
-		void SetColliderType(ColliderType colliderType) { mColliderType = colliderType; }
+		DLL_API ColliderType& GetColliderType() { return mColliderType; }
+		DLL_API void SetColliderType(ColliderType colliderType) { mColliderType = colliderType; }
 
-		Vec3& GetColliderNormal() { return mCollisionNormal; }
-		void SetColliderNormal(Vec3 collisionNormal) { mCollisionNormal = collisionNormal; }
+		DLL_API Vec3& GetColliderNormal() { return mCollisionNormal; }
+		DLL_API void SetColliderNormal(Vec3 collisionNormal) { mCollisionNormal = collisionNormal; }
 
-		Vec3& GetMin() { return mMin; }
-		void SetMin(Vec3 min) { mMin = min; }
+		DLL_API Vec3& GetMin() { return mMin; }
+		DLL_API void SetMin(Vec3 min) { mMin = min; }
 
-		Vec3& GetMax() { return mMax; }
-		void SetMax(Vec3 max) { mMax = max; }
+		DLL_API Vec3& GetMax() { return mMax; }
+		DLL_API void SetMax(Vec3 max) { mMax = max; }
 
-		Vec3& GetOffset() { return mOffset; }
-		void SetOffset(Vec3 offset) { mOffset = offset; }
+		DLL_API Vec3& GetOffset() { return mOffset; }
+		DLL_API void SetOffset(Vec3 offset) { mOffset = offset; }
 
-		int& GetHit() { return mHit; }
-		void SetHit(int hit) { mHit = hit; }
+		DLL_API int& GetHit() { return mHit; }
+		DLL_API void SetHit(int hit) { mHit = hit; }
 
-		float& GetRadius() { return mRadius; }
-		void SetRadius(float radius) { mRadius = radius; }
+		DLL_API float& GetRadius() { return mRadius; }
+		DLL_API void SetRadius(float radius) { mRadius = radius; }
 
-		bool& GetAlive() { return mIsAlive; }
-		void SetAlive(bool isAlive) { mIsAlive = isAlive; }
+		DLL_API bool& GetAlive() { return mIsAlive; }
+		DLL_API void SetAlive(bool isAlive) { mIsAlive = isAlive; }
 
-		bool& GetCollision() { return mCollision; }
-		void SetCollision(bool collision) { mCollision = collision; }
+		DLL_API bool& GetCollision() { return mCollision; }
+		DLL_API void SetCollision(bool collision) { mCollision = collision; }
 
 	private:
 		ColliderType mColliderType;

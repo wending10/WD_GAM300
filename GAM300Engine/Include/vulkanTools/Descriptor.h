@@ -18,30 +18,30 @@
 namespace TDS {
 
 
-	class DLL_API DescriptorSetLayout {
+	class DescriptorSetLayout {
 	public:
-		class DLL_API Builder {
+		class Builder {
 		public:
 			//Constructor for Descriptorsetlayout builder
-			Builder(VulkanInstance& Instance) :m_Instance(Instance) {};
+			DLL_API Builder(VulkanInstance& Instance) :m_Instance(Instance) {};
 
 			//adds a binding to the descriptorset
-			Builder& AddBinding(uint32_t binding, VkDescriptorType DescType, VkShaderStageFlags StageFlags, uint32_t count = 1);
-			std::unique_ptr<DescriptorSetLayout>	build() const;
+			DLL_API Builder& AddBinding(uint32_t binding, VkDescriptorType DescType, VkShaderStageFlags StageFlags, uint32_t count = 1);
+			DLL_API std::unique_ptr<DescriptorSetLayout>	build() const;
 		private:
 			VulkanInstance& m_Instance;
 			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>	m_vBindings{};
 		};
 		//Constructor & destructor for Descriptorsetlayout
-		DescriptorSetLayout(VulkanInstance& m_Instance, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
-		~DescriptorSetLayout();
+		DLL_API DescriptorSetLayout(VulkanInstance& m_Instance, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
+		DLL_API ~DescriptorSetLayout();
 
 		//no copy constructor
-		DescriptorSetLayout(const DescriptorSetLayout&) = delete;
-		DescriptorSetLayout& operator=(const DescriptorSetLayout&) = delete;
+		DLL_API DescriptorSetLayout(const DescriptorSetLayout&) = delete;
+		DLL_API DescriptorSetLayout& operator=(const DescriptorSetLayout&) = delete;
 
 		//getter
-		VkDescriptorSetLayout getDescSetLayout() const { return m_DescSetLayout; }
+		DLL_API VkDescriptorSetLayout getDescSetLayout() const { return m_DescSetLayout; }
 
 	private:
 		VulkanInstance& m_Instance;
@@ -51,17 +51,17 @@ namespace TDS {
 		friend class DescriptorWriter;
 	};
 
-	class DLL_API DescriptorPool {
+	class DescriptorPool {
 	public:
-		class DLL_API Builder {
+		class Builder {
 		public:
 			//Constructor for DescriptorPool Builder
-			Builder(VulkanInstance& Instance) : m_Instance(Instance) {};
+			DLL_API Builder(VulkanInstance& Instance) : m_Instance(Instance) {};
 
-			Builder& addPoolSize(VkDescriptorType DescType, uint32_t count);
-			Builder& setPoolFlags(VkDescriptorPoolCreateFlags flags);
-			Builder& setMaxSets(uint32_t count);
-			std::unique_ptr<DescriptorPool> build() const;
+			DLL_API Builder& addPoolSize(VkDescriptorType DescType, uint32_t count);
+			DLL_API Builder& setPoolFlags(VkDescriptorPoolCreateFlags flags);
+			DLL_API Builder& setMaxSets(uint32_t count);
+			DLL_API std::unique_ptr<DescriptorPool> build() const;
 
 		private:
 			VulkanInstance& m_Instance;
@@ -70,20 +70,20 @@ namespace TDS {
 			VkDescriptorPoolCreateFlags			m_PoolFlags{ 0 };
 		};
 		//Constructor and Destructor for DescriptorPool
-		DescriptorPool(VulkanInstance& Instance, uint32_t maxSets, VkDescriptorPoolCreateFlags PoolFlags, const std::vector<VkDescriptorPoolSize>& PoolSizes);
-		~DescriptorPool();
+		DLL_API DescriptorPool(VulkanInstance& Instance, uint32_t maxSets, VkDescriptorPoolCreateFlags PoolFlags, const std::vector<VkDescriptorPoolSize>& PoolSizes);
+		DLL_API ~DescriptorPool();
 
 		//no copy constructor
-		DescriptorPool(const DescriptorPool&) = delete;
-		DescriptorPool& operator=(const DescriptorPool&) = delete;
+		DLL_API DescriptorPool(const DescriptorPool&) = delete;
+		DLL_API DescriptorPool& operator=(const DescriptorPool&) = delete;
 
 		//allocates descriptor sets into the descriptor pool
-		bool allocateDescriptor(const VkDescriptorSetLayout DescSetLayout, VkDescriptorSet& Desc) const;
+		DLL_API bool allocateDescriptor(const VkDescriptorSetLayout DescSetLayout, VkDescriptorSet& Desc) const;
 		//frees the descriptors in the descriptor pool
-		void freeDescriptors(std::vector<VkDescriptorSet>& Descriptors)const;
+		DLL_API void freeDescriptors(std::vector<VkDescriptorSet>& Descriptors)const;
 		//reset the descriptors in the descriptor pool
-		void resetPool();
-		VkDescriptorPool getDescPool() const { return m_DescPool; }
+		DLL_API void resetPool();
+		DLL_API VkDescriptorPool getDescPool() const { return m_DescPool; }
 	private:
 		VulkanInstance& m_Instance;
 		VkDescriptorPool	m_DescPool;
@@ -91,20 +91,20 @@ namespace TDS {
 		friend class DescriptorWriter;
 	};
 
-	class DLL_API DescriptorWriter {
+	class DescriptorWriter {
 	public:
 		//constructor for the DescriptorWriter
-		DescriptorWriter(DescriptorSetLayout& setLayout, DescriptorPool& Pool);
+		DLL_API DescriptorWriter(DescriptorSetLayout& setLayout, DescriptorPool& Pool);
 
 		//writes buffer into binding
-		DescriptorWriter& writeBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferinfo);
+		DLL_API DescriptorWriter& writeBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferinfo);
 		//writes image into binding
-		DescriptorWriter& writeImage(uint32_t binding, VkDescriptorImageInfo* imageinfo);
+		DLL_API DescriptorWriter& writeImage(uint32_t binding, VkDescriptorImageInfo* imageinfo);
 
 		//builds the descriptor set
-		bool Build(VkDescriptorSet& set);
+		DLL_API bool Build(VkDescriptorSet& set);
 		//overwrite the current descriptor set
-		void OverWrite(VkDescriptorSet& set);
+		DLL_API void OverWrite(VkDescriptorSet& set);
 
 	private:
 		DescriptorSetLayout& m_SetLayout;

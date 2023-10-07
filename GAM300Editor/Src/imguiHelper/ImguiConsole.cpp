@@ -62,7 +62,7 @@ namespace TDS
 		{
 			const char* item = Items[i];
 			//if (!Filter.PassFilter(item))
-			continue;
+			//continue;
 
 			// Normally you would store more information in your item (e.g. make Items[] an array of structure, store color/type etc.)
 			bool pop_color = false;

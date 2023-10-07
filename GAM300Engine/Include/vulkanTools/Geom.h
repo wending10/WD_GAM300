@@ -28,7 +28,7 @@ namespace TDS
 			Vec3 m_Normal;
 			Vec3 m_Tanget;
 			Vec3 m_Bitangent;
-			std::uint32_t m_Colour;
+			std::uint32_t m_Colour{};
 		};
 		std::vector<Vec3> m_Pos;
 		std::vector<Mesh> m_Mesh;

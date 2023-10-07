@@ -431,7 +431,7 @@ namespace TDS
         // Add entity ID to new archetype
         newArchetype->entityIds.emplace_back(entityID);
         // Change index
-        record.index = newArchetype->entityIds.size() - 1;
+        record.index = static_cast<uint32_t>(newArchetype->entityIds.size() - 1);
         // Change archetype pointer
         record.archetype = newArchetype;
 
@@ -582,7 +582,7 @@ namespace TDS
         oldArchetype->entityIds.erase(willBeRemoved);
 
         newArchetype->entityIds.emplace_back(entityID);
-        record.index = newArchetype->entityIds.size() - 1;
+        record.index = static_cast<uint32_t>(newArchetype->entityIds.size() - 1);
         record.archetype = newArchetype;
     }
 

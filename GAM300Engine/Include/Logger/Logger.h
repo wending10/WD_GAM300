@@ -25,26 +25,26 @@
 namespace TDS
 {
 	//template class TDS_API std::shared_ptr<spdlog::logger>;
-	class DLL_API Log
+	class Log
 	{
 	public:
-		static void Init();
+		DLL_API static void Init();
 
 
 		/*!*************************************************************************
 		Retrieves CoreLogger info
 		****************************************************************************/
-		static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+		DLL_API static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 
 		/*!*************************************************************************
 		Retrieves ClientLogger info
 		****************************************************************************/
-		static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+		DLL_API static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
 
 		/*!*************************************************************************
 		Outputs spdlog info via output string stream for ImGui
 		****************************************************************************/
-		static std::string GetImguiLog();
+		DLL_API static std::string GetImguiLog();
 		
 
 	private:

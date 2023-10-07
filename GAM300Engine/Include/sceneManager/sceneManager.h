@@ -18,62 +18,62 @@
 
 namespace TDS
 {
-	class DLL_API SceneManager : public Serializer
+	class SceneManager : public Serializer
 	{
 	public:
 		/*!*************************************************************************
 		Returns an instance of the SceneManager
 		****************************************************************************/
-		static std::unique_ptr<SceneManager>& GetInstance();
+		DLL_API static std::unique_ptr<SceneManager>& GetInstance();
 
 		/*!*************************************************************************
 		Initialize all registered components
 		****************************************************************************/
-		void Init();
+		DLL_API void Init();
 		/*!*************************************************************************
 		Deserializes ECS entities and data from JSON file to build ECS (File loading)
 		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
+		DLL_API virtual bool Deserialize(const rapidjson::Value& obj);
 		/*!*************************************************************************
 		Serializes ECS entities and data to JSON file to save ECS (File saving)
 		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+		DLL_API virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
 		/*!*************************************************************************
 		This function serializes scenes into JSON files
 		****************************************************************************/
-		bool sceneSerialize();
+		DLL_API bool sceneSerialize();
 		/*!*************************************************************************
 		This function deserializes scenes from JSON files
 		****************************************************************************/
-		bool sceneDeserialize();
+		DLL_API bool sceneDeserialize();
 
 		/*!*************************************************************************
 		This function adds a new scene into the Scene Manager
 		****************************************************************************/
-		void newScene(std::string scene);
+		DLL_API void newScene(std::string scene);
 		/*!*************************************************************************
 		This function loads given scene
 		****************************************************************************/
-		void loadScene(std::string scene);
+		DLL_API void loadScene(std::string scene);
 
 		/*!*************************************************************************
 		This function saves the given scene
 		****************************************************************************/
-		void saveScene(std::string scene);
+		DLL_API void saveScene(std::string scene);
 		/*!*************************************************************************
 		This function deletes the given scene
 		****************************************************************************/
-		void deleteScene(std::string scene);
+		DLL_API void deleteScene(std::string scene);
 
 		/*!*************************************************************************
 		This function is the getter function for current scene
 		****************************************************************************/
-		std::string getCurrentScene();
+		DLL_API std::string getCurrentScene();
 		/*!*************************************************************************
 		This function is the getter function for all scenes in Scene Browser
 		****************************************************************************/
-		std::vector<std::string>& getScenes();
+		DLL_API std::vector<std::string>& getScenes();
 
 		bool isGameplay;
 

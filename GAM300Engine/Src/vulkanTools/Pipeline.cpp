@@ -148,7 +148,7 @@ namespace TDS {
 		configInfo.m_RasterizerInfo.depthBiasEnable = VK_FALSE;
 		//if depthbias enabled, edit these
 		configInfo.m_RasterizerInfo.depthBiasConstantFactor = 0.f;			//optional
-		configInfo.m_RasterizerInfo.depthClampEnable = 0.f;					//optional
+		configInfo.m_RasterizerInfo.depthClampEnable = VK_FALSE;					//optional
 		configInfo.m_RasterizerInfo.depthBiasSlopeFactor = 0.f;				//optional
 
 		//Multisampling

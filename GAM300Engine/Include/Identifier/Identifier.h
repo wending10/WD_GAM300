@@ -40,8 +40,8 @@ namespace TDS
 
 	struct TypeIdentifier
 	{
-		size_t m_TypeHash;
-		size_t m_NameHash;
+		size_t m_TypeHash{};
+		size_t m_NameHash{};
 		std::string m_CustomName;
 		std::string m_ClassType;
 

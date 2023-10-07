@@ -22,20 +22,20 @@
 #include <memory>
 
 namespace TDS {
-	class DLL_API PointLightSystem {
+	class PointLightSystem {
 	public:
 		//Constructor and destructor
-		PointLightSystem(VulkanInstance& Instance, VkRenderPass renderpass, VkDescriptorSetLayout globalSetLayout);
-		~PointLightSystem();
+		DLL_API PointLightSystem(VulkanInstance& Instance, VkRenderPass renderpass, VkDescriptorSetLayout globalSetLayout);
+		DLL_API ~PointLightSystem();
 
 		//no copy constructor
-		PointLightSystem(const PointLightSystem&) = delete;
-		PointLightSystem& operator=(const PointLightSystem&) = delete;
+		DLL_API PointLightSystem(const PointLightSystem&) = delete;
+		DLL_API PointLightSystem& operator=(const PointLightSystem&) = delete;
 		
 		//update system with the position of the active point lights 
-		void update(FrameInfo& frameInfo, GlobalUBO& UBO);
+		DLL_API void update(FrameInfo& frameInfo, GlobalUBO& UBO);
 		//render the active point lights
-		void render(FrameInfo& frameInfo);
+		DLL_API void render(FrameInfo& frameInfo);
 	private:
 		//create pipeline layout for pointlights
 		void createPipelineLayout(VkDescriptorSetLayout globalsetlayout);

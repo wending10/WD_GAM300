@@ -6,18 +6,18 @@
 
 namespace TDS
 {
-	class DLL_API TDSCamera
+	class TDSCamera
 	{
 	public:
 
-		TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 3.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
+		DLL_API TDSCamera(float Yaw, float pitch, Vec3 position = { 0.0f, 0.0f, 3.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
 
 		//using lookat and Euler Angles
-		Mat4 GetViewMatrix() const;
+		DLL_API Mat4 GetViewMatrix() const;
 
-		void UpdateCamera(float deltaTime);
+		DLL_API void UpdateCamera(float deltaTime);
 
-		bool moving();
+		DLL_API bool moving();
 
 		float m_Fov{45.f};
 	private:

@@ -17,7 +17,7 @@
 #include "MathCommon.h"
 #include "Geom.h"
 namespace TDS {
-	class DLL_API Model {
+	class Model {
 	public:
 		struct Vertex {
 			Vec3 Pos;
@@ -26,8 +26,8 @@ namespace TDS {
 			Vec2 UV;
 
 			//create binding and attribute descriptors
-			static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
-			static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
+			DLL_API static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
+			DLL_API static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
 			bool operator==(const Vertex& p)const {
 				return (Pos == p.Pos && Color == p.Color && UV == p.UV);
@@ -38,28 +38,28 @@ namespace TDS {
 			std::vector<Vertex> Vertices;
 			std::vector<uint32_t> Indices;
 			//create model
-			void LoadModel(const std::string& filepath);
+			DLL_API void LoadModel(const std::string& filepath);
 			//load data from the Deserialized geom
-			void LoadGeomData(GeomCompiled& geom);
+			DLL_API void LoadGeomData(GeomCompiled& geom);
 		};
 		//Constructor and destructor
-		Model(VulkanInstance& Instance, const Builder& build);
-		~Model();
+		DLL_API Model(VulkanInstance& Instance, const Builder& build);
+		DLL_API ~Model();
 
 		//no copy constructor
 		Model(const Model&) = delete;
 		Model& operator=(const Model&) = delete;
 
 		//after geom compiler
-		static std::unique_ptr<Model> createModelFromFile(VulkanInstance& Instance, const std::string& FilePath);
+		DLL_API static std::unique_ptr<Model> createModelFromFile(VulkanInstance& Instance, const std::string& FilePath);
 
 		//binds model to the command buffer
-		void bind(VkCommandBuffer cmdbuffer);
+		DLL_API void bind(VkCommandBuffer cmdbuffer);
 		//draws the model in the command buffer
-		void draw(VkCommandBuffer cmdbuffer);
+		DLL_API void draw(VkCommandBuffer cmdbuffer);
 
 		//deserialize the data in the geom file
-		static void DeserializeGeom(GeomCompiled& geomOut, std::string_view PathData);
+		DLL_API static void DeserializeGeom(GeomCompiled& geomOut, std::string_view PathData);
 	private:
 		//create vertex and indexbuffer for the model
 		void createVertexBuffer(const std::vector<Vertex>& Vertices);

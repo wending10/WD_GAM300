@@ -15,7 +15,7 @@ namespace TDS
 {
 
 	template<>
-	class DLL_API AssetFactory<Texture>
+	class AssetFactory<Texture>
 	{
 
 	private:
@@ -56,7 +56,7 @@ namespace TDS
 					TextureData loader{};
 					loader.LoadTexture(path.string());
 					newTexture->LoadTextureData(loader);
-					m_LoadedTexture[fileName] = m_LoadedTextureGUID.size();
+					m_LoadedTexture[fileName] = static_cast<int>(m_LoadedTextureGUID.size());
 					m_LoadedTextureGUID.emplace_back(TextureInstance.m_GUID.GetUniqueID());
 				}
 			}
