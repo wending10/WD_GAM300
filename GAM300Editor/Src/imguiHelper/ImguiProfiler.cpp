@@ -3,6 +3,7 @@
 
 namespace TDS
 {
+	ImGui_ImplVulkan_InitInfo Profiler::m_vulkanInfo;
 	
 	Profiler::Profiler()
 	{
@@ -20,15 +21,16 @@ namespace TDS
 
 	
 		
-	void Profiler::getVulkanInfo()
+	void Profiler::getVulkanInfo(ImGui_ImplVulkan_InitInfo& vulkanInfo)
 	{
-		
+		m_vulkanInfo = vulkanInfo;
 	}
 
 	void Profiler::update()
 	{
 		
-		ImGui::Text("Application: ");
+		vkGetPhysicalDeviceProperties(m_vulkanInfo.PhysicalDevice, &deviceProperties);
+		ImGui::Text("Application: ", deviceProperties.deviceID);
 
 		char* engineName = (char*)"TDS Engine";
 		char* organizationName = (char*)"by Tear Drop Studio";
@@ -37,13 +39,17 @@ namespace TDS
 		
 
 		//GPU
-		ImGui::Text(GPU_name.c_str());
+		ImGui::Text("GPU: %s", deviceProperties.deviceName);
 		
+	
+		//Brand
+		uint32_t vulkanMajor = VK_VERSION_MAJOR(deviceProperties.apiVersion);
+		uint32_t vulkanMinor = VK_VERSION_MINOR(deviceProperties.apiVersion);
+		uint32_t vulkanPatch = VK_VERSION_PATCH(deviceProperties.apiVersion);
+
+		ImGui::Text("API Version : %d.%d.%d", vulkanMajor, vulkanMinor, vulkanPatch);
 		
 
-		//Brand
-		ImGui::Text(Vulkan_API_version.c_str());
-		
 		ImGui::Separator();
 
 		//VRAM

@@ -166,9 +166,6 @@ namespace TDS
             }
 
             imguiHelper::Update();
-            //ImGui::Begin("Profiler");
-            //ImGui::Text("FPS: %.3f", 1.f / DeltaTime);
-            //ImGui::End();
 
             if (auto commandbuffer = m_Renderer->BeginFrame())
             {
