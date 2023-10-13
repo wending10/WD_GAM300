@@ -87,6 +87,10 @@
     <ClCompile Include="Src\imguiHelper\ImguiToolBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudio.dll" />
+    <None Include="fmodstudioL.dll" />
     <None Include="GAM300Engine.dll" />
     <None Include="imgui.ini" />
   </ItemGroup>
@@ -202,11 +206,12 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir).bin\Debug-x64;$(SolutionDir)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GAM300Engine.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GAM300Engine.lib;vulkan-1.lib;fmod\fmodstudioL_vc.lib;fmod\fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
-rmdir /s /q "$(OutDir)net6.0"</Command>
+rmdir /s /q "$(OutDir)net6.0"
+xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

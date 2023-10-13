@@ -12,6 +12,8 @@
 #ifndef IMGUI_AUDIO
 #define IMGUI_AUDIO
 
+#include <filesystem>
+
 #include "ImguiHelper.h"
 #include "fmod_engine/AudioEngine.h"
 
@@ -38,6 +40,8 @@ namespace TDS
 		 * @brief Hides ImGui Constrols for audio.
 		*/
 		void deactivate_audio_controls();
+
+		void add_audio_files();
 
 		/**
 		 * @brief Update loop.

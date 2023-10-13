@@ -41,24 +41,31 @@ namespace TDS
 		appear = false;
 	}
 
+	void AudioImgui::add_audio_files()
+	{
+		std::filesystem::path pathing = std::filesystem::current_path();
+
+
+	}
+
 	void AudioImgui::update()
 	{
-		if (appear)
-		{
-			ImGui::Text("Controls: ");
-			ImGui::SameLine();
+		//if (appear)
+		//{
+		//	ImGui::Text("Controls: ");
+		//	ImGui::SameLine();
 
-			/*if(ImGui::Selectable(""))
-			{
-				if (ImGui::ArrowButton("Play", ImGuiDir_Right))
-				{
-					audeng.playSound(current_sound);
-				}
-			}*/
+		//	if(ImGui::Selectable(""))
+		//	{
+		//		if (ImGui::ArrowButton("Play", ImGuiDir_Right))
+		//		{
+		//			//audeng.playSound(current_sound);
+		//		}
+		//	}
 
-			ImGui::Columns(3);
-			ImGui::SliderFloat("Playback", &bar, 16, 512);
-		}
+		//	ImGui::Columns(3);
+		//	ImGui::SliderFloat("Playback", &bar, 16, 512);
+		//}
 
 		audeng.update();
 	}
