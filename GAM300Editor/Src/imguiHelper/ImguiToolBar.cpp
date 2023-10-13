@@ -32,6 +32,7 @@ namespace TDS
 	{
 		ImGui::Text("Display: "); ImGui::SameLine();
 
+		ImGui::SetItemDefaultFocus();
 		if (ImGui::ArrowButton("Play", ImGuiDir_Right))
 		{
 			console->AddLog("Play button pressed");
@@ -47,7 +48,16 @@ namespace TDS
 			//}
 			/*App->scene->inGame = true;*/
 
-			isPlaying = true;
+			if (isPlaying)
+			{
+				isPlaying = false;
+				SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+			}
+			else
+			{
+				SceneManager::GetInstance()->saveCurrentScene();
+				isPlaying = true;
+			}
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("||", { 23, 19 }))
@@ -59,7 +69,7 @@ namespace TDS
 
 			//}
 
-			isPlaying = false;
+			isPlaying = isPlaying ? false : true;
 		}
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.8f,0,0,1 });
@@ -118,8 +128,7 @@ namespace TDS
 			console->AddLog("Save Scene Button Pressed");
 			if (isSaveScene) {
 
-				SceneManager::GetInstance()->saveScene(SceneManager::GetInstance()->getCurrentScene());
-				SceneManager::GetInstance()->sceneSerialize();
+				SceneManager::GetInstance()->saveCurrentScene();
 			}
 		}
 		ImGui::PopStyleColor();
