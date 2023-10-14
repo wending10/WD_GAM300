@@ -10,7 +10,9 @@ public class Test : Script
 
     public override void Update()
     {
-        Console.WriteLine("Update");
+        //Console.WriteLine("Update");
+        TransformComponent tf = GetTransformComponent();
+        tf.SetPositionX(3.0f);
     }
 
     public override void OnDestroy() 

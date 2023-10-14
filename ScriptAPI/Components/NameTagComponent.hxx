@@ -15,5 +15,5 @@ namespace ScriptAPI
 	private:
 
 		TDS::EntityID entityID;
-	}
+	};
 }

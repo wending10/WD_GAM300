@@ -1,3 +1,4 @@
+#pragma once
 #include "../Shared_Libs/Vector3.h"
 
 namespace ScriptAPI
