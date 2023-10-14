@@ -8,6 +8,11 @@
  * \brief         Virtual class for all script creation
  *******************************************************************************/
 #pragma once
+
+#include "IncludeFromEngine.hxx"
+#include "Components/TransformComponent.hxx"
+#include "Components/ColliderComponent.hxx"
+
 namespace ScriptAPI
 {
     public ref class Script abstract
@@ -16,9 +21,13 @@ namespace ScriptAPI
         void virtual Start() {};
         void virtual Update() {};
         void virtual OnDestroy() {};
+
+        TransformComponent GetTransformComponent();
+        ColliderComponent GetColliderComponent();
+
     internal:
-        void SetEntityId(int id);
+        void SetEntityID(TDS::EntityID ID);
     private:
-        int entityId;
+        TDS::EntityID entityID;
     };
 }

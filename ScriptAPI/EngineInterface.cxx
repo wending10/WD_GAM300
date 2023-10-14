@@ -34,6 +34,11 @@ namespace ScriptAPI
 		scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>();
 
         HelloWorld();
+
+        //for (int i = 0; i < 5/*TDS::ecs.numberOfLiveEntities*/; ++i)
+        //{
+        //    scripts->Add(i, gcnew ScriptList());
+        //}
         
         for (auto i : TDS::ecs.getEntities())
         {
@@ -75,10 +80,11 @@ namespace ScriptAPI
 
         // Create the script
         // Default construct an object of the specified type. 
-        // We have to use this as we can’t use the normal gcnew syntax to create it as 
+        // We have to use this as we canï¿½t use the normal gcnew syntax to create it as 
         // scriptType is a variable that stores a type; it itself is not a type that we can pass to gcnew.
         Script^ script = safe_cast<Script^>(System::Activator::CreateInstance(scriptType));
-        script->SetEntityId(entityId);
+        script->SetEntityID(entityId);
+
         // Add script to SortedList
         scripts[entityId]->Add(script);
         return true;
