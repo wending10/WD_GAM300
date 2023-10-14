@@ -13,6 +13,12 @@ namespace ScriptAPI
     public ref class Script abstract
     {
     public:
+        void virtual Start() {};
         void virtual Update() {};
+        void virtual OnDestroy() {};
+    internal:
+        void SetEntityId(int id);
+    private:
+        int entityId;
     };
 }
