@@ -10,7 +10,6 @@
 #pragma once
 
 #include "Script.hxx"
-#include "../GAM300Engine/Include/ecs/ecs.h"
 
 namespace ScriptAPI
 {

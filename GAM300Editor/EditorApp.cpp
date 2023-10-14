@@ -118,12 +118,12 @@ namespace TDS
 
     void Application::Update()
     {
-        /*auto executeUpdate = GetFunctionPtr<void(*)(void)>
+        auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "ExecuteUpdate"
-            );*/
+            );
 
         std::vector<std::unique_ptr<Buffer>> uboBuffers(VulkanSwapChain::MAX_FRAMES_IN_FLIGHT);
         for (int i = 0; i < uboBuffers.size(); i++) {
@@ -226,9 +226,9 @@ namespace TDS
             //    ImGui::RenderPlatformWindowsDefault();
             //}
             Input::scrollStop();
-            //executeUpdate();
+            executeUpdate();
         }
-        //stopScriptEngine();
+        stopScriptEngine();
         vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
         imguiHelper::Exit();
         ecs.destroy();
@@ -248,6 +248,15 @@ namespace TDS
 
         // Step 2: Initialize
         init();
+
+        auto addScript = GetFunctionPtr<bool(*)(int,const char*)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptViaName"
+            );
+
+       addScript(1,"Test");
     }
 
     Application::~Application()

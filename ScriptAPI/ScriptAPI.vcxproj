@@ -130,11 +130,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\ColliderComponent.hxx" />
+    <ClInclude Include="Components\NameTagComponent.hxx" />
+    <ClInclude Include="Components\TransformComponent.hxx" />
     <ClInclude Include="EngineInterface.hxx" />
+    <ClInclude Include="IncludeFromEngine.hxx" />
     <ClInclude Include="Script.hxx" />
+    <ClInclude Include="Vector3.hxx" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\ColliderComponent.cxx" />
+    <ClCompile Include="Components\NameTagComponent.cxx" />
+    <ClCompile Include="Components\TransformComponent.cxx" />
     <ClCompile Include="EngineInterface.cxx" />
+    <ClCompile Include="Script.cxx" />
+    <ClCompile Include="Vector3.cxx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
