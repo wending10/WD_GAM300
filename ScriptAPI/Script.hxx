@@ -18,7 +18,9 @@ namespace ScriptAPI
     public ref class Script abstract
     {
     public:
+        void virtual Start() {};
         void virtual Update() {};
+        void virtual OnDestroy() {};
 
         TransformComponent GetTransformComponent();
         ColliderComponent GetColliderComponent();

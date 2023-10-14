@@ -1,15 +1,20 @@
 ﻿using ScriptAPI;
+using System;
 
-public class Test : ScriptAPI.Script
+public class Test : Script
 {
+    public override void Start()
+    {
+        Console.WriteLine("Start Test");
+    }
+
     public override void Update()
     {
-        TransformComponent transform = GetTransformComponent();
-        //Console.WriteLine("Test!");
-        Console.WriteLine("x: " + transform.GetPosition().X + "\ty: " + transform.GetPosition().Y + "\tz: " + transform.GetPosition().Z);
-        transform.SetPositionX(100.0f);
-        transform.SetPositionY(100.0f);
-        //Vector3 vec = new Vector3(70.0f, 0.0f, 0.0f);
-        //transform.SetPosition(vec);
+        Console.WriteLine("Update");
+    }
+
+    public override void OnDestroy() 
+    {
+        Console.WriteLine("Exit");
     }
 }
