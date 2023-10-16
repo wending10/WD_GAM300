@@ -239,8 +239,8 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>GAM300Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
-rmdir /s /q "$(OutDir)net6.0"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
