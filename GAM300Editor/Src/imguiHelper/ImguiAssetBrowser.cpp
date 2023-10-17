@@ -13,7 +13,7 @@ namespace TDS
 		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 		panelTitle = "Asset Browser";
 		windowPadding = ImVec2(0.f, 0.f);
-		m_curr_path = std::filesystem::current_path();
+		m_curr_path = std::filesystem::current_path().parent_path();
 
 		//insertEntities();
 	}
