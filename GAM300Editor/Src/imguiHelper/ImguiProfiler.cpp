@@ -4,23 +4,21 @@
 namespace TDS
 {
 	ImGui_ImplVulkan_InitInfo Profiler::m_vulkanInfo;
-	
+
 	Profiler::Profiler()
 	{
 		//selected = 0;
 		//selectedFolder = -1;
 		//renameCheck = false;
 
-		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse ;
+		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 		panelTitle = "Profiler Window";
 		windowPadding = ImVec2(0.f, 0.f);
-		
-		
+
+
 		//insertEntities();
 	}
 
-	
-		
 	void Profiler::getVulkanInfo(ImGui_ImplVulkan_InitInfo& vulkanInfo)
 	{
 		m_vulkanInfo = vulkanInfo;
@@ -28,7 +26,6 @@ namespace TDS
 
 	void Profiler::update()
 	{
-		
 		vkGetPhysicalDeviceProperties(m_vulkanInfo.PhysicalDevice, &deviceProperties);
 		ImGui::Text("Application: ", deviceProperties.deviceID);
 
@@ -36,7 +33,7 @@ namespace TDS
 		char* organizationName = (char*)"by Tear Drop Studio";
 
 		ImVec4 yellow(1.0f, 0.8f, 0.0f, 1.0f); //We'll use yellow to print the results
-		
+
 
 		//GPU
 		ImGui::Text("GPU: %s", deviceProperties.deviceName);
@@ -48,7 +45,6 @@ namespace TDS
 		uint32_t vulkanPatch = VK_VERSION_PATCH(deviceProperties.apiVersion);
 
 		ImGui::Text("API Version : %d.%d.%d", vulkanMajor, vulkanMinor, vulkanPatch);
-		
 
 		ImGui::Separator();
 
@@ -80,5 +76,5 @@ namespace TDS
 		sprintf_s(engine_name, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &ms_log[0], static_cast<int>(ms_log.size()), 0, engine_name, 0.0f, 40.0f, ImVec2(200, 100));
 	}
-		
+
 }
