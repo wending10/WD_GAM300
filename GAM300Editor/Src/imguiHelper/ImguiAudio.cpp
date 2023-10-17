@@ -22,7 +22,7 @@ namespace TDS
 		appear = false;
 		bar = 0.f;
 
-		audeng.init();
+		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
 	}
 
 	AudioImgui::~AudioImgui()
@@ -50,22 +50,22 @@ namespace TDS
 
 	void AudioImgui::update()
 	{
-		//if (appear)
-		//{
-		//	ImGui::Text("Controls: ");
-		//	ImGui::SameLine();
+		if (appear)
+		{
+			ImGui::Text("Controls: ");
+			ImGui::SameLine();
 
-		//	if(ImGui::Selectable(""))
-		//	{
-		//		if (ImGui::ArrowButton("Play", ImGuiDir_Right))
-		//		{
-		//			//audeng.playSound(current_sound);
-		//		}
-		//	}
+			if(ImGui::Selectable(""))
+			{
+				if (ImGui::ArrowButton("Play", ImGuiDir_Right))
+				{
+					//audeng.playSound(current_sound);
+				}
+			}
 
-		//	ImGui::Columns(3);
-		//	ImGui::SliderFloat("Playback", &bar, 16, 512);
-		//}
+			ImGui::Columns(3);
+			ImGui::SliderFloat("Playback", &bar, 16, 512);
+		}
 
 		audeng.update();
 	}

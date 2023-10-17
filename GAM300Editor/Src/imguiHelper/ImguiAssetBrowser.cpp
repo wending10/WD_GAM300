@@ -14,6 +14,13 @@ namespace TDS
 		panelTitle = "Asset Browser";
 		windowPadding = ImVec2(0.f, 0.f);
 		m_curr_path = std::filesystem::current_path().parent_path();
+		for (const auto& paths : std::filesystem::directory_iterator(m_curr_path))
+		{
+			if (paths.path().string().find("assets") != std::string::npos)
+			{
+				m_curr_path = paths;
+			}
+		}
 
 		//insertEntities();
 	}

@@ -57,6 +57,14 @@ namespace TDS
             DLL_API  void deactivate();
 
             /**
+             * Returns a pointer to an instance of AudioEngine.
+             */
+            DLL_API static AudioEngine* get_audioengine_instance()
+            {
+                return instance = new AudioEngine();
+            }
+
+            /**
             * Method which should be called every frame of the game loop
             */
             DLL_API  void update();
@@ -220,6 +228,9 @@ namespace TDS
              * Prints debug info about an FMOD event description
              */
             void printEventInfo(FMOD::Studio::EventDescription* eventDescription);
+
+            //AudioEngine Instance
+            static AudioEngine* instance;
 
             // FMOD Studio API system, which can play FMOD sound banks (*.bank)
             FMOD::Studio::System* studioSystem{ nullptr };
