@@ -27,7 +27,7 @@ namespace TDS
 
 	AudioImgui::~AudioImgui()
 	{
-		audeng.deactivate();
+		audeng->deactivate();
 	}
 
 	void AudioImgui::activate_audio_controls()
@@ -67,6 +67,6 @@ namespace TDS
 			ImGui::SliderFloat("Playback", &bar, 16, 512);
 		}
 
-		audeng.update();
+		audeng->update();
 	}
 }

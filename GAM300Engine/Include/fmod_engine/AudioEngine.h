@@ -61,7 +61,14 @@ namespace TDS
              */
             DLL_API static AudioEngine* get_audioengine_instance()
             {
-                return instance = new AudioEngine();
+                if (instance == nullptr)
+                {
+                    return instance = new AudioEngine();
+                }
+                else
+                {
+                    return instance;
+                }
             }
 
             /**
@@ -302,3 +309,5 @@ namespace TDS
         };
     }
 }
+
+static TDS::AudioWerks::AudioEngine::instance = nullptr;
