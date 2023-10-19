@@ -5,7 +5,6 @@
 #include <array>
 #include <time.h>
 
-#include "ecs/ecs.h"
 #include "components/iComponent.h"
 
 namespace TDS{
