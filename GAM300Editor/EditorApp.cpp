@@ -123,7 +123,7 @@ namespace TDS
         m_AssetManager.PreloadAssets();
         SceneManager::GetInstance()->Init();
         ecs.initializeSystems(1);
-        Run();
+        //Run();
     }
 
     void Application::Update()
@@ -235,9 +235,17 @@ namespace TDS
                 "AddScriptViaName"
             );
 
+        auto awake = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteAwake"
+            );
+
         // Step 2: Initialize
         init();
         addScript(1, "Test");
+        awake();
     }
 
     Application::~Application()
@@ -400,7 +408,7 @@ namespace TDS
             // Copy out files
             std::filesystem::copy_file
             (
-                "..\\..\\scriptDLL/ManagedScripts.dll",
+                "..\\..\\scriptDLL\\ManagedScripts.dll",
                 "ManagedScripts.dll",
                 std::filesystem::copy_options::overwrite_existing
             );
