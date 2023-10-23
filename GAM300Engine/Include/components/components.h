@@ -22,6 +22,8 @@
 #include "transform.h"
 #include "winData.h"
 #include "GraphicsComponent.h"
+#include "fmod_engine/SoundInfo.h"
+#include "fmod_engine/AudioEngine.h"
 
 // Helper functions for components
 namespace TDS
