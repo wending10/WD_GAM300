@@ -80,6 +80,7 @@ namespace TDS
 			{
 				hierarchyPanel->setSelectedEntity(0);
 				sceneManager->loadScene(scene);
+				hierarchyPanel->init();
 			}
 
 			if (rightClick && ImGui::IsItemHovered())
