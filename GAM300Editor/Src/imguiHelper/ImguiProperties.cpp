@@ -262,9 +262,5 @@ namespace TDS
 		{
 			//auto transform = dynamic_cast<WinData*>(componentBase);
 		}
-		else if (componentName == "Audio Data")
-		{
-
-		}
 	}
 }

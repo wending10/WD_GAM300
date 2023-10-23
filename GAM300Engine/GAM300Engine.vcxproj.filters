@@ -81,7 +81,6 @@
     <ClCompile Include="..\Shared_Libs\Color.cpp" />
     <ClCompile Include="..\Shared_Libs\Color8UNorm.cpp" />
     <ClCompile Include="src\components\AudioSource.cpp" />
-    <ClCompile Include="src\components\AudioClip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -190,7 +189,6 @@
     <ClInclude Include="..\Shared_Libs\Color.h" />
     <ClInclude Include="..\Shared_Libs\Color8UNorm.h" />
     <ClInclude Include="Include\components\AudioSource.h" />
-    <ClInclude Include="Include\components\AudioClip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />

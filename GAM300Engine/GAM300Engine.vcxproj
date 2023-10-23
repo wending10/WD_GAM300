@@ -191,7 +191,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\AI\behaviourTree.cpp" />
     <ClCompile Include="Src\AudioEngine.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
-    <ClCompile Include="src\components\AudioClip.cpp" />
     <ClCompile Include="src\components\AudioSource.cpp" />
     <ClCompile Include="Src\components\cameraComponent.cpp" />
     <ClCompile Include="Src\components\collider.cpp" />
@@ -281,7 +280,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\AssetManagement\ModelFactory.h" />
     <ClInclude Include="Include\AssetManagement\TextureFactory.h" />
     <ClInclude Include="Include\components\ai.h" />
-    <ClInclude Include="Include\components\AudioClip.h" />
     <ClInclude Include="Include\components\AudioSource.h" />
     <ClInclude Include="Include\components\cameraComponent.h" />
     <ClInclude Include="Include\components\collider.h" />

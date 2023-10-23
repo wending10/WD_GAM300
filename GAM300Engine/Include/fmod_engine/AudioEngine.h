@@ -9,7 +9,8 @@
 ****************************************************************************
 ***/
 
-#pragma once
+#ifndef AUDIOENGINE_H_
+#define AUDIOENGINE_H_
 
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod.hpp>
@@ -41,10 +42,10 @@ namespace TDS
         {
         public:
             /**
-             * Default AudioEngine constructor.
-             * AudioEngine::init() must be called before using the Audio Engine
+             * Remove AudioEngine copy constructor.
+             * It is the ensure singleton
              */
-            DLL_API  AudioEngine();
+            DLL_API  AudioEngine(const AudioEngine& rhs) = delete;
 
             /**
              * Initializes Audio Engine Studio and Core systems to default values.
@@ -61,7 +62,7 @@ namespace TDS
              */
             DLL_API static AudioEngine* get_audioengine_instance()
             {
-                if (instance == nullptr)
+                if (instance == NULL)
                 {
                     return instance = new AudioEngine();
                 }
@@ -217,6 +218,15 @@ namespace TDS
 
         private:
             /**
+             * Default AudioEngine constructor.
+             * AudioEngine::init() must be called before using the Audio Engine
+             */
+            DLL_API  AudioEngine();
+
+            //Instance of AudioEngine
+            static AudioEngine* instance;
+
+            /**
              * Checks if a sound file is in the soundCache
              */
             bool soundLoaded(SoundInfo soundInfo);
@@ -235,9 +245,6 @@ namespace TDS
              * Prints debug info about an FMOD event description
              */
             void printEventInfo(FMOD::Studio::EventDescription* eventDescription);
-
-            //AudioEngine Instance
-            static AudioEngine* instance;
 
             // FMOD Studio API system, which can play FMOD sound banks (*.bank)
             FMOD::Studio::System* studioSystem{ nullptr };
@@ -310,4 +317,4 @@ namespace TDS
     }
 }
 
-static TDS::AudioWerks::AudioEngine::instance = nullptr;
+#endif
