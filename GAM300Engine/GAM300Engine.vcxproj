@@ -138,7 +138,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Libs;$(SolutionDir)Libs\Debug;$(SolutionDir)Libs\fmod;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;fmodL_vc.lib;fmodstudioL_vc.lib;rttr_core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vulkan-1.lib;fmodL_vc.lib;fmodstudioL_vc.lib;Jolt.lib;rttr_core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /s /r /y /q "$(SolutionDir)Dependencies\dotnet\bin" "$(OutDir)"
