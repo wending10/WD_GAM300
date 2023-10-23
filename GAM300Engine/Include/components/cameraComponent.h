@@ -35,6 +35,9 @@ namespace TDS
 		RTTR_ENABLE(IComponent);
 		RTTR_REGISTRATION_FRIEND
 
+		RTTR_ENABLE();
+		RTTR_REGISTRATION_FRIEND
+
 	private:
 	};
 }

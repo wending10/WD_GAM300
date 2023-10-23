@@ -63,6 +63,29 @@ namespace TDS
 		ecs.registerComponent<WinData>("Win Data");
 
 		startScene = "";
+		//startScene = "MainMenu";
+
+		//Entity entity1;
+		//ecs.addComponent<NameTag>(entity1.getID());
+		//ecs.addComponent<Transform>(entity1.getID());
+		//ecs.addComponent<GraphicsComponent>(entity1.getID());
+		//Entity entity2;
+		//ecs.addComponent<NameTag>(entity2.getID());
+		//ecs.addComponent<Transform>(entity2.getID());
+		//ecs.addComponent<GraphicsComponent>(entity2.getID());
+		//Entity entity3;
+		//ecs.addComponent<NameTag>(entity3.getID());
+		//ecs.addComponent<Transform>(entity3.getID());
+		//ecs.addComponent<GraphicsComponent>(entity3.getID());
+		//Entity entity4;
+		//ecs.addComponent<NameTag>(entity4.getID());
+		//ecs.addComponent<Transform>(entity4.getID());
+		//ecs.addComponent<GraphicsComponent>(entity4.getID());
+
+		//SerializeToFile(filePath + "MainMenu.json");
+
+		//ecs.removeEntity(entity4.getID());
+		//SerializeToFile(filePath + "Game.json");
 
 		//Entity entity1;
 		//ecs.addComponent<NameTag>(entity1.getID());

@@ -97,6 +97,8 @@ namespace TDS
 						ImGui::TableNextColumn();
 						ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
 
+						rttr::type type = rttr::type::get_by_name(componentName);
+						std::cout << type.get_name() << std::endl;
 						ImguiComponentDisplay(componentName, componentBase);
 
 						ImGui::PopItemWidth();
