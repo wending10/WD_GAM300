@@ -4,7 +4,6 @@
 namespace TDS
 {
 	ImGui_ImplVulkan_InitInfo Profiler::m_vulkanInfo;
-
 	Profiler::Profiler()
 	{
 		//selected = 0;
@@ -18,6 +17,8 @@ namespace TDS
 
 		//insertEntities();
 	}
+
+
 
 	void Profiler::getVulkanInfo(ImGui_ImplVulkan_InitInfo& vulkanInfo)
 	{
@@ -37,8 +38,8 @@ namespace TDS
 
 		//GPU
 		ImGui::Text("GPU: %s", deviceProperties.deviceName);
-		
-	
+
+
 		//Brand
 		uint32_t vulkanMajor = VK_VERSION_MAJOR(deviceProperties.apiVersion);
 		uint32_t vulkanMinor = VK_VERSION_MINOR(deviceProperties.apiVersion);
