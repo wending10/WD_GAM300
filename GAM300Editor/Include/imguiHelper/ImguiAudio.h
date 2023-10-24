@@ -44,6 +44,11 @@ namespace TDS
 		void add_audio_files();
 
 		/**
+		 * @brief Initialize
+		*/
+		void init() {}
+
+		/**
 		 * @brief Update loop.
 		*/
 		void update();
