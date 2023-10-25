@@ -11,6 +11,9 @@
 #include "Rendering/RenderLayer.h"
 #include "Rendering/Renderer3D.h"
 #include "Rendering/RenderDataManager.h"
+#include "Rendering/RenderTarget.h"
+#include "Rendering/renderPass.h"
+#include "vulkanTools/FrameBuffer.h"
 namespace TDS
 {
 	GraphicsManager::GraphicsManager()
@@ -30,12 +33,28 @@ namespace TDS
 		m_SwapchainRenderer = std::make_shared<Renderer>(*m_pWindow, *m_MainVkContext);
 		DefaultTextures::GetInstance().Init();
 		Renderer3D::Init();
-		FrameBufferEntryInfo entry{};
-		entry.m_AreaDimension = { m_pWindow->getWidth(), m_pWindow->getHeight() };
-		entry.m_AttachmentRequirememnts.push_back(AttachmentSetting(m_SwapchainRenderer->getSwapchain().GetSwapChainImageFormat()));
-
-		m_MainFrameBuffer = std::make_shared<DirectFrameBuffer>(entry);
-
+	
+		Vec3 size = { static_cast<float>(window->getWidth()), static_cast<float>(window->getHeight()), 1.f };
+		std::vector<AttachmentInfo> attachmentInfos{};
+		std::vector<RenderTarget*> attachments{};
+		RenderTargetCI rendertargetCI{
+			VK_FORMAT_R8_UNORM,
+			VK_IMAGE_ASPECT_COLOR_BIT,
+			VK_IMAGE_VIEW_TYPE_2D,
+			size,
+			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
+			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
+			RenderTargetType::COLOR,
+			false,
+			VK_SAMPLE_COUNT_1_BIT
+		};
+		//m_RenderingAttachment = new RenderTarget(m_MainVkContext, rendertargetCI);
+		//attachmentInfos.push_back({ m_RenderingAttachment.get(), VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
+		//attachments.push_back(m_RenderingAttachment.get());*/
+		
+		/*m_Renderpass = new RenderPass(m_MainVkContext->getVkLogicalDevice(), attachmentInfos);
+		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);*/
+		
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->Setup(m_pWindow);
@@ -79,10 +98,11 @@ namespace TDS
 		{
 			renderlayer->ShutDown();
 		}
-
+		delete m_Renderpass;
+		delete m_Framebuffer;
 		Renderer3D::getInstance()->ShutDown();
 		GlobalBufferPool::GetInstance()->Destroy();
-		m_MainFrameBuffer->Destroy();
+		//m_MainFrameBuffer->Destroy();
 		DefaultTextures::GetInstance().DestroyDefaultTextures();
 		m_SwapchainRenderer->ShutDown();
 		m_CommandManager->Shutdown();
@@ -93,7 +113,7 @@ namespace TDS
 	}
 	void GraphicsManager::ResizeFrameBuffer(std::uint32_t width, std::uint32_t height)
 	{
-		m_MainFrameBuffer->Resize({ width, height });
+		//m_MainFrameBuffer->Resize({ width, height });
 	}
 	void GraphicsManager::setCamera(TDSCamera& camera)
 	{
@@ -103,10 +123,10 @@ namespace TDS
 	{
 		return *m_Camera;
 	}
-	std::shared_ptr<DirectFrameBuffer> GraphicsManager::GetMainFrameBuffer()
-	{
-		return m_MainFrameBuffer;
-	}
+	//std::shared_ptr<DirectFrameBuffer> GraphicsManager::GetMainFrameBuffer()
+	//{
+	//	return m_MainFrameBuffer;
+	//}
 	VkCommandBuffer& GraphicsManager::getCommandBuffer()
 	{
 		return currentCommand;

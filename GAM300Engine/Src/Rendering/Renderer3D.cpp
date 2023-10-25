@@ -99,6 +99,6 @@ namespace TDS
 	void Renderer3D::ShutDown()
 	{
 		m_DefaultPipeline->ShutDown();
-		m_FrameBuffer = nullptr;
+		//m_FrameBuffer = nullptr;
 	}
 }

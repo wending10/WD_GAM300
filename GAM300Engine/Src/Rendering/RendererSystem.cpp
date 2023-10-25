@@ -22,7 +22,7 @@ namespace TDS
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-		//GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
+
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
 			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
