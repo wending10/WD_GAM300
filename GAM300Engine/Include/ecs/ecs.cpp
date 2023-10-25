@@ -25,5 +25,6 @@ namespace TDS
 		_PhysicsSystem.action(PhysicsSystem::PhysicsSystemInit, PhysicsSystem::PhysicsSystemUpdate);
 		_AISystem.action(AISystem::AISystemInit, AISystem::AISystemUpdate);
 		_RenderSystem.action(RendererSystem::OnInit, RendererSystem::OnUpdate);
+		//_AudioSystem.action(AudioWerks::AudioEngine::init, AudioWerks::AudioEngine::update);
 	}
 }

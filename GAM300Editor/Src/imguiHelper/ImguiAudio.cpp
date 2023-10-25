@@ -59,10 +59,10 @@ namespace TDS
 			{
 				if (ImGui::ArrowButton("Play", ImGuiDir_Right))
 				{
-					SoundInfo selected{};
+					/*SoundInfo selected{};
 					selected = ImGui::IsItemClicked();
 					
-					audeng->playSound();
+					audeng->playSound();*/
 				}
 			}
 

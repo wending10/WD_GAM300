@@ -28,7 +28,7 @@ namespace TDS
 	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(1);
 	//System<Transform, RigidBody> _AISystem(1);
 	//System<Transform> _GraphicsSystem(1);
-	System<AudioWerks::AudioEngine, SoundInfo>	_AudioSystem(1);
+	//ECSSystem<AudioWerks::AudioEngine, SoundInfo>	_AudioSystem(1);
 }
 
 #endif // SYSTEMS

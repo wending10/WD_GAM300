@@ -314,6 +314,8 @@ namespace TDS
              */
             std::map<std::string, FMOD::Studio::EventInstance*> eventInstances{};
         };
+
+        static AudioEngine* instance;
     }
 }
 

@@ -7,8 +7,6 @@
 
 namespace TDS
 {
-	class AudioClip;
-	
 	class AudioSource : public IComponent
 	{
 	public:
@@ -29,7 +27,7 @@ namespace TDS
 	private:
 		Vec3 position;
 		float volume;
-		std::vector<AudioClip> clips;
+		std::map<unsigned int, FMOD::Sound*> audioclips;
 	};
 }
 
