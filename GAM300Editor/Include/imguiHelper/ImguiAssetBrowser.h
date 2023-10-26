@@ -2,6 +2,7 @@
 #define IMGUI_ASSET_BROWSER
 
 #include "ImguiHelper.h"
+#include "ImguiAudio.h"
 
 namespace TDS 
 {
