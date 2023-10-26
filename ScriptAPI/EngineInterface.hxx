@@ -26,6 +26,10 @@ namespace ScriptAPI
 		***************************************************************************/
 		static bool AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
+		* Add new entity to scripts via name in managed script library
+		***************************************************************************/
+		static void AddEntityToScripts(TDS::EntityID entityId);
+		/*!*************************************************************************
 		* Calls all script awake function
 		***************************************************************************/
 		static void ExecuteAwake();

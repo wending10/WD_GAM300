@@ -1,48 +1,22 @@
 {
     "Archetype Sizes": {
         "110000100000": {
-            "0": 224,
-            "1": 448,
-            "6": 1024
+            "0": 448,
+            "1": 896,
+            "6": 2048
         }
     },
     "Entity Data": {
-        "0": {
-            "ArchetypeID": "110000100000",
-            "Name Tag": {
-                "Name": "New Entity",
-                "HierarchyParent": 0,
-                "HierarchyIndex": 0
-            },
-            "Transform": {
-                "Position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 0.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {}
-        },
         "1": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
-                "HierarchyParent": 0,
+                "Name": "entity1",
+                "HierarchyParent": 2,
                 "HierarchyIndex": 0
             },
             "Transform": {
                 "Position": {
-                    "x": 0.0,
+                    "x": 3.0,
                     "y": 0.0,
                     "z": 0.0
                 },
@@ -62,7 +36,7 @@
         "2": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
+                "Name": "entity2",
                 "HierarchyParent": 0,
                 "HierarchyIndex": 0
             },
@@ -88,9 +62,35 @@
         "3": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
+                "Name": "entity3",
                 "HierarchyParent": 0,
-                "HierarchyIndex": 0
+                "HierarchyIndex": 1
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {}
+        },
+        "4": {
+            "ArchetypeID": "110000100000",
+            "Name Tag": {
+                "Name": "entity4",
+                "HierarchyParent": 0,
+                "HierarchyIndex": 2
             },
             "Transform": {
                 "Position": {

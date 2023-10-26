@@ -138,6 +138,7 @@ namespace TDS
 			ecs.commitArchetype(archetypeID);
 		}
 
+		EntityID lastEntity = 0;
 		int i = 0;
 		for (rapidjson::Value::ConstMemberIterator itr = obj["Entity Data"].MemberBegin(); itr != obj["Entity Data"].MemberEnd(); ++itr, ++i)
 		{
@@ -146,8 +147,9 @@ namespace TDS
 				continue;
 			}
 
-			EntityID newEntity = ecs.getNewID();
-			ecs.registerEntity(newEntity);
+			//EntityID newEntity = ecs.getNewID();
+			lastEntity = static_cast<EntityID>(std::stoi(itr->name.GetString()));
+			ecs.registerEntity(lastEntity);
 
 			for (auto& m : itr->value.GetObject())
 			{
@@ -155,7 +157,7 @@ namespace TDS
 				if (componentName == "ArchetypeID") // First "componentName" to immediately find the archetype of entity
 				{
 					// Add all components at once
-					ecs.addComponentsByArchetype(newEntity, m.value.GetString());
+					ecs.addComponentsByArchetype(lastEntity, m.value.GetString());
 
 					continue;
 				}
@@ -165,10 +167,12 @@ namespace TDS
 
 				rttr::type component = rttr::type::get_by_name(componentName);
 
-				rttr::instance addedComponent = getComponentByName(component, newEntity);
+				rttr::instance addedComponent = getComponentByName(component, lastEntity);
 				fromJsonRecur(addedComponent, componentData);
 			}
 		}
+
+		ecs.setIDCounter(lastEntity + 1);
 
 		return true;
 	}
@@ -224,7 +228,7 @@ namespace TDS
 
 		for (int i = 0; i < entityList.size(); ++i)
 		{
-			writer->String(std::to_string(i).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
+			writer->String(std::to_string(entityList[i]).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
 			writer->StartObject();
 
 			std::string archetype = ecs.getArchetypeID(entityList[i]);
@@ -465,6 +469,7 @@ namespace TDS
 		}
 
 		std::filesystem::rename(filePath + oldName + ".json", filePath + newName + ".json");
+		std::replace(allScenes.begin(), allScenes.end(), oldName, newName);
 		std::sort(allScenes.begin(), allScenes.end(), stringCompare);
 		return true;
 	}

@@ -29,10 +29,10 @@ namespace ScriptAPI
 
 		scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>();
         
-        for (auto i : TDS::ecs.getEntities())
-        {
-            scripts->Add(i, gcnew ScriptList());
-        }
+        //for (auto i : TDS::ecs.getEntities())
+        //{
+        //    scripts->Add(i, gcnew ScriptList());
+        //}
 
         updateScriptTypeList();
 		System::Console::WriteLine("Hello Engine Interface Init!");
@@ -80,6 +80,14 @@ namespace ScriptAPI
         SAFE_NATIVE_CALL_END
 
         return false;
+    }
+
+    /*!*************************************************************************
+    * Add new entity to scripts via name in managed script library
+    ***************************************************************************/
+    void EngineInterface::AddEntityToScripts(TDS::EntityID entityId)
+    {
+        scripts->Add(entityId, gcnew ScriptList());
     }
 
     /*!*************************************************************************

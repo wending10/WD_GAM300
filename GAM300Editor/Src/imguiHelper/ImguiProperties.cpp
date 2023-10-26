@@ -55,6 +55,8 @@ namespace TDS
 				{
 					auto nameTagComponent = reinterpret_cast<NameTag*>(componentBase);
 					nameTagComponent->SetNameTag(ImguiInput("", nameTagComponent->GetNameTag()));
+					//ImguiInput("", static_cast<int>(hierarchyPanel->hierarchyMap[selectedEntity].parent));
+					//ImguiInput("", hierarchyPanel->hierarchyMap[selectedEntity].indexInParent);
 
 					ImGui::EndTable();
 
@@ -71,7 +73,7 @@ namespace TDS
 				ImGui::PushID(i);
 				if (ImGui::BeginPopupContextItem("componentEditPopup"))
 				{
-					if (ImGui::Selectable("Remove Component"))
+					if (componentName != "Name Tag" && componentName != "Transform" && ImGui::Selectable("Remove Component"))
 					{
 						removeComponentByName(componentName, selectedEntity);
 						TDS_INFO("Removed Component");
@@ -97,8 +99,6 @@ namespace TDS
 						ImGui::TableNextColumn();
 						ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
 
-						rttr::type type = rttr::type::get_by_name(componentName);
-						std::cout << type.get_name() << std::endl;
 						ImguiComponentDisplay(componentName, componentBase);
 
 						ImGui::PopItemWidth();
@@ -149,6 +149,10 @@ namespace TDS
 		for (rttr::property propertyName : type.get_properties())
 		{
 			if (propertyName.get_type() == rttr::type::get<int>())
+			{
+				propertyName.set_value(componentInstance, ImguiInput(propertyName.get_name().to_string(), propertyName.get_value(componentInstance).convert<int>()));
+			}
+			if (propertyName.get_type() == rttr::type::get<EntityID>())
 			{
 				propertyName.set_value(componentInstance, ImguiInput(propertyName.get_name().to_string(), propertyName.get_value(componentInstance).convert<int>()));
 			}
