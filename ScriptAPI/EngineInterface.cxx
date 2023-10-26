@@ -97,15 +97,21 @@ namespace ScriptAPI
     {
         for each (auto i in TDS::ecs.getEntities())
         {
-            if (!scripts->ContainsKey(i))
+            if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                continue;
-            }
-            for each (Script ^ script in scripts[i])
-            {
-                SAFE_NATIVE_CALL_BEGIN
-                    script->Awake();
-                SAFE_NATIVE_CALL_END
+                for each (Script ^ script in scripts[i])
+                {
+                    for each (Script ^ script in scripts[i])
+                    {
+                        SAFE_NATIVE_CALL_BEGIN
+                            if (!script->getAwakeFlag())
+                            {
+                                script->Awake();
+                                script->setAwakeFlag();
+                            }
+                        SAFE_NATIVE_CALL_END
+                    }
+                }
             }
         }
     }
@@ -116,15 +122,17 @@ namespace ScriptAPI
     {
         for each (auto i in TDS::ecs.getEntities())
         {
-            if (!scripts->ContainsKey(i))
+            if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                continue;
-            }
-            for each (Script ^ script in scripts[i])
-            {
-                SAFE_NATIVE_CALL_BEGIN
-                    script->OnEnable();
-                SAFE_NATIVE_CALL_END
+                for each (Script ^ script in scripts[i])
+                {
+                    for each (Script ^ script in scripts[i])
+                    {
+                        SAFE_NATIVE_CALL_BEGIN
+                            script->OnEnable();
+                        SAFE_NATIVE_CALL_END
+                    }
+                }
             }
         }
     }
@@ -175,15 +183,21 @@ namespace ScriptAPI
     {
         for each (auto i in TDS::ecs.getEntities())
         {
-            if (!scripts->ContainsKey(i))
-            {
-                continue;
-            }
-            for each (Script ^ script in scripts[i])
-            {
-                SAFE_NATIVE_CALL_BEGIN
-                    script->Start();
-                SAFE_NATIVE_CALL_END
+            if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
+            {   
+                for each (Script ^ script in scripts[i])
+                {
+                    for each (Script ^ script in scripts[i])
+                    {
+                        SAFE_NATIVE_CALL_BEGIN
+                            if (!script->getStartFlag() && script->isScriptEnabled())
+                            {
+                                script->Start();
+                                script->setStartFlag();
+                            }
+                        SAFE_NATIVE_CALL_END
+                    }
+                }
             }
         }
     }
@@ -195,18 +209,20 @@ namespace ScriptAPI
     {
         for each (auto i in TDS::ecs.getEntities())
         {
-            if (!scripts->ContainsKey(i))
-            {
-                continue;
-            }
-            for each (Script^ script in scripts[i])
-            {
-                SAFE_NATIVE_CALL_BEGIN
-                    if (script->isScriptEnabled())
+            if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
+            { 
+                for each (Script^ script in scripts[i])
+                {
+                    for each (Script^ script in scripts[i])
                     {
-                        script->Update();
+                        SAFE_NATIVE_CALL_BEGIN
+                            if (script->isScriptEnabled())
+                            {
+                                script->Update();
+                            }
+                        SAFE_NATIVE_CALL_END
                     }
-                SAFE_NATIVE_CALL_END
+                }
             }
         }
     }
@@ -218,15 +234,20 @@ namespace ScriptAPI
     {
         for each (auto i in TDS::ecs.getEntities())
         {
-            if (!scripts->ContainsKey(i))
+            if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                continue;
-            }
-            for each (Script ^ script in scripts[i])
-            {
-                SAFE_NATIVE_CALL_BEGIN
-                    script->LateUpdate();
-                SAFE_NATIVE_CALL_END
+                for each (Script ^ script in scripts[i])
+                {
+                    for each (Script ^ script in scripts[i])
+                    {
+                        SAFE_NATIVE_CALL_BEGIN
+                            if (script->isScriptEnabled())
+                            {
+                                script->LateUpdate();
+                            }
+                        SAFE_NATIVE_CALL_END
+                    }
+                }
             }
         }
     }
