@@ -17,6 +17,8 @@ namespace TDS
 {
     namespace AudioWerks
     {
+        AudioEngine* AudioEngine::audioE_instance = 0;
+
         AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
             eventDescriptions(), eventInstances(), reverb() {}
 
@@ -36,6 +38,16 @@ namespace TDS
             lowLevelSystem->close();
             lowLevelSystem->release();
             studioSystem->release();
+        }
+
+        AudioEngine* AudioEngine::get_audioengine_instance()
+        {
+            if (audioE_instance == NULL)
+            {
+                return audioE_instance = new AudioEngine();
+            }
+
+            return audioE_instance;
         }
 
         void AudioEngine::update() {

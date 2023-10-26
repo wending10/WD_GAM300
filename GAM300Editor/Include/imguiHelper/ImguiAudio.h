@@ -54,7 +54,7 @@ namespace TDS
 		void update();
 
 	private:
-		AudioWerks::AudioEngine* audeng;
+		AudioWerks::AudioEngine* audeng{ nullptr };
 
 		bool appear;
 		float bar;

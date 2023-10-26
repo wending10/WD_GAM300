@@ -48,6 +48,12 @@ namespace TDS
             DLL_API  AudioEngine(const AudioEngine& rhs) = delete;
 
             /**
+             * Remove AudioEngine operator= copy constructor.
+             * It is the ensure singleton
+             */
+            DLL_API  void operator=(const AudioEngine& rhs) = delete;
+
+            /**
              * Initializes Audio Engine Studio and Core systems to default values.
              */
             DLL_API void init();
@@ -60,17 +66,7 @@ namespace TDS
             /**
              * Returns a pointer to an instance of AudioEngine.
              */
-            DLL_API static AudioEngine* get_audioengine_instance()
-            {
-                if (instance == NULL)
-                {
-                    return instance = new AudioEngine();
-                }
-                else
-                {
-                    return instance;
-                }
-            }
+            DLL_API static AudioEngine* get_audioengine_instance();
 
             /**
             * Method which should be called every frame of the game loop
@@ -224,7 +220,7 @@ namespace TDS
             DLL_API  AudioEngine();
 
             //Instance of AudioEngine
-            static AudioEngine* instance;
+            static AudioEngine* audioE_instance;
 
             /**
              * Checks if a sound file is in the soundCache
@@ -314,8 +310,6 @@ namespace TDS
              */
             std::map<std::string, FMOD::Studio::EventInstance*> eventInstances{};
         };
-
-        static AudioEngine* instance;
     }
 }
 
