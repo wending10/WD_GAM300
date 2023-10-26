@@ -203,6 +203,7 @@
     <ClInclude Include="Include\components\capsuleCollider.h" />
     <ClInclude Include="Include\components\sphereCollider.h" />
     <ClInclude Include="Include\sceneManager\serializationHelperFunctions.h" />
+    <ClInclude Include="Include\propertyManager\registration.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />

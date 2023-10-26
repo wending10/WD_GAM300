@@ -66,7 +66,7 @@ namespace ScriptAPI
 	private:
 		//(^)* reference to managed pointer
 		using ScriptList = System::Collections::Generic::List<Script^>;
-		static System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>^ scripts;
+		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ scripts;
 		static System::Collections::Generic::IEnumerable<System::Type^>^ scriptTypeList;
 		/*!*************************************************************************
 		* Updates script Type list

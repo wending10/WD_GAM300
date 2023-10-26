@@ -82,7 +82,7 @@ namespace ScriptAPI
         // Define a function that simulates an async operation and returns the result in a Task
         // Task<IAsyncEnumerable<TResult>^>^
         generic <typename TResult>
-        static IAsyncEnumerable<TResult>^ UnityCoroutineC(Func<IAsyncEnumerable<TResult>^>^ func, std::chrono::milliseconds duration) 
+        static IAsyncEnumerable<TResult>^ UnityCoroutineC(Func<IAsyncEnumerable<TResult>^>^ func, std::chrono::milliseconds duration)
         {
             auto startTime = std::chrono::steady_clock::now();
             auto endTime = startTime + duration;

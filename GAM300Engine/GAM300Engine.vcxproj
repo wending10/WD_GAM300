@@ -331,6 +331,7 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Model\Skeleton.h" />
     <ClInclude Include="Include\Physics\JPHLayers.h" />
     <ClInclude Include="Include\Physics\PhysicsSystem.h" />
+    <ClInclude Include="Include\propertyManager\registration.h" />
     <ClInclude Include="Include\Rendering\GraphicsManager.h" />
     <ClInclude Include="Include\Rendering\Material.h" />
     <ClInclude Include="Include\Rendering\ModelElement.h" />
