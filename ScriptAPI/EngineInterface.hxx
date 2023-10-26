@@ -27,10 +27,6 @@ namespace ScriptAPI
 		***************************************************************************/
 		static bool AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
-		* Add new entity to scripts via name in managed script library
-		***************************************************************************/
-		static void AddEntityToScripts(TDS::EntityID entityId);
-		/*!*************************************************************************
 		* Calls all script awake function
 		***************************************************************************/
 		static void ExecuteAwake();
@@ -70,7 +66,7 @@ namespace ScriptAPI
 	private:
 		//(^)* reference to managed pointer
 		using ScriptList = System::Collections::Generic::List<Script^>;
-		static System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>^ scripts;
+		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ scripts;
 		static System::Collections::Generic::IEnumerable<System::Type^>^ scriptTypeList;
 		/*!*************************************************************************
 		* Updates script Type list
