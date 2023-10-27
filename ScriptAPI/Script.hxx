@@ -23,7 +23,11 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
+using namespace System::Reflection;
 using namespace concurrency;
+
+[AttributeUsage(AttributeTargets.Field)]
+public ref class SerializeFieldAttribute : System::Attribute { };
 
 
 namespace ScriptAPI
