@@ -62,6 +62,20 @@ namespace ScriptAPI
 		* Reloads the script assembly
 		***************************************************************************/
 		static void Reload();
+		/*!*************************************************************************
+		* Checks if Entity has Script
+		***************************************************************************/
+		static bool HasScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
+		/*!*************************************************************************
+		* Returns Script Type
+		***************************************************************************/
+		static bool GetScript(TDS::EntityID entityId, System::String^ scriptName, rttr::variant& instance);
+		/*!*************************************************************************
+		* Serializing Stuff
+		***************************************************************************/
+		static void Serialize(Object^ obj, String^ filename);
+
+		/*static std::vector<std::string> GetTypeListName()*/
 
 	private:
 		//(^)* reference to managed pointer

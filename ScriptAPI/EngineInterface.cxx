@@ -299,6 +299,92 @@ namespace ScriptAPI
         Init();
     }
 
+    bool EngineInterface::HasScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            if (entityId == TDS::NULLENTITY)
+                return false;
+
+        // Remove any whitespaces
+        scriptName = scriptName->Trim();
+
+        // Look for the correct script
+        System::Type^ scriptType = nullptr;
+        for each (System::Type ^ type in scriptTypeList)
+        {
+            if (type->FullName == scriptName || type->Name == scriptName)
+            {
+                scriptType = type;
+                break;
+            }
+        }
+
+        // Failed to get any script
+        if (scriptType == nullptr)
+        {
+            return false;
+        }
+
+        return true;
+        SAFE_NATIVE_CALL_END
+    }
+
+    bool EngineInterface::GetScript(TDS::EntityID entityId, System::String^ scriptName, rttr::variant& instance)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            if (entityId == TDS::NULLENTITY)
+                return false;
+
+        // Remove any whitespaces
+        scriptName = scriptName->Trim();
+
+        // Look for the correct script
+        System::Type^ scriptType = nullptr;
+        for each (System::Type ^ type in scriptTypeList)
+        {
+            if (type->FullName == scriptName || type->Name == scriptName)
+            {
+                scriptType = type;
+                break;
+            }
+        }
+
+        // Failed to get any script
+        if (scriptType == nullptr)
+        {
+            return false;
+        }
+
+
+        for each (Script ^ script in scripts[entityId])
+        {
+            if (script->GetType() == scriptType)
+            {
+                instance = script;
+                return true;
+            }
+        }
+
+        return false;
+
+        SAFE_NATIVE_CALL_END
+    }
+
+    void EngineInterface::Serialize(Object^ obj, String^ filename)
+    {
+        Type^ type = obj->GetType();
+        array<FieldInfo^>^ fields = type->GetFields(BindingFlags::Public | BindingFlags::Instance);
+
+        for each (FieldInfo ^ field in fields) {
+            array<Object^>^ attributes = field->GetCustomAttributes(SerializeFieldAttribute::typeid, true);
+            if (attributes->Length > 0) {
+                // Call native C++ serialization function here
+                // Pass field values, such as field->GetValue(obj)
+
+            }
+        }
+    }
+
     namespace
     {
         /* Select Many */
