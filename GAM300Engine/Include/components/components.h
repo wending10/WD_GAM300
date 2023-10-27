@@ -11,8 +11,6 @@
 #ifndef COMPONENTS
 #define COMPONENTS
 
-#include "collider.h"
-
 #include "ai.h"
 #include "boxCollider.h"
 #include "cameraComponent.h"

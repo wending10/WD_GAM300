@@ -54,12 +54,24 @@ namespace ScriptAPI
 		return ScriptSystem::UnityCoroutineC<TResult>(func, std::chrono::milliseconds(duration));
 	}
 
+	BoxColliderComponent Script::GetBoxColliderComponent()
+	{
+		return BoxColliderComponent(entityID);
+	}
+	CapsuleColliderComponent Script::GetCapsuleColliderComponent()
+	{
+		return CapsuleColliderComponent(entityID);
+	}
+	NameTagComponent Script::GetNameTagComponent()
+	{
+		return NameTagComponent(entityID);
+	}
+	SphereColliderComponent Script::GetSphereColliderComponent()
+	{
+		return SphereColliderComponent(entityID);
+	}
 	TransformComponent Script::GetTransformComponent()
 	{
 		return TransformComponent(entityID);
-	}
-	ColliderComponent Script::GetColliderComponent()
-	{
-		return ColliderComponent(entityID);
 	}
 }

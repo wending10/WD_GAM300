@@ -9,8 +9,11 @@
  *******************************************************************************/
 #pragma once
 #include "IncludeFromEngine.hxx"
+#include "Components/BoxColliderComponent.hxx"
+#include "Components/CapsuleColliderComponent.hxx"
+#include "Components/NameTagComponent.hxx"
+#include "Components/SphereColliderComponent.hxx"
 #include "Components/TransformComponent.hxx"
-#include "Components/ColliderComponent.hxx"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -40,8 +43,11 @@ namespace ScriptAPI
         generic <typename TResult>
         IAsyncEnumerable<TResult>^ Coroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration);
 
+        BoxColliderComponent GetBoxColliderComponent();
+        CapsuleColliderComponent GetCapsuleColliderComponent();
+        NameTagComponent GetNameTagComponent();
+        SphereColliderComponent GetSphereColliderComponent();
         TransformComponent GetTransformComponent();
-        ColliderComponent GetColliderComponent();
 
     internal:
         void SetEntityID(TDS::EntityID ID);

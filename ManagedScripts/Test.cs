@@ -62,5 +62,4 @@ public class Test : Script
 
         return 0;
     }
-
 }

@@ -128,6 +128,7 @@ namespace TDS
         m_AssetManager.PreloadAssets();
         SceneManager::GetInstance()->Init();
         ecs.initializeSystems(1);
+        ecs.initializeSystems(2);
         //Run();
     }
 
@@ -199,6 +200,9 @@ namespace TDS
             {
                 ecs.runSystems(1, DeltaTime);
             }
+
+            ecs.runSystems(2, DeltaTime);
+
             imguiHelper::Draw(commandBuffer);
             GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
             GraphicsManager::getInstance().EndFrame();

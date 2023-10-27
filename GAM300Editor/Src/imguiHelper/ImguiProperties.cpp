@@ -54,7 +54,7 @@ namespace TDS
 				if (componentName == "Name Tag" && ImGui::BeginTable("###", 2))
 				{
 					auto nameTagComponent = reinterpret_cast<NameTag*>(componentBase);
-					nameTagComponent->SetNameTag(ImguiInput("", nameTagComponent->GetNameTag()));
+					nameTagComponent->SetName(ImguiInput("", nameTagComponent->GetName()));
 					//ImguiInput("", static_cast<int>(hierarchyPanel->hierarchyMap[selectedEntity].parent));
 					//ImguiInput("", hierarchyPanel->hierarchyMap[selectedEntity].indexInParent);
 
@@ -123,6 +123,16 @@ namespace TDS
 				ImGui::OpenPopup("componentAddPopup");
 			}
 
+			if (ImGui::GetCursorPosY() < ImGui::GetWindowHeight())
+			{
+				ImGui::SetNextWindowPos(ImVec2(ImGui::GetContentRegionAvail().x / 2 + ImGui::GetWindowPos().x + style.FramePadding.x * 2.0f, ImGui::GetCursorPosY()), ImGuiCond_Appearing, ImVec2(0.5f, 0.0f));
+			}
+			else
+			{
+				ImGui::SetNextWindowPos(ImVec2(ImGui::GetContentRegionAvail().x / 2 + ImGui::GetWindowPos().x + style.FramePadding.x * 2.0f, ImGui::GetWindowHeight()), ImGuiCond_Appearing, ImVec2(0.5f, 0.0f));
+			}
+			ImGui::SetNextWindowSize(ImVec2(150.f, 0.f));
+			
 			if (ImGui::BeginPopupContextItem("componentAddPopup"))
 			{
 				for (auto componentName : allComponentNames)
@@ -252,7 +262,7 @@ namespace TDS
 
 		ImGui::TableNextColumn();
 		float temp[2]{ Vec2Variable.x, Vec2Variable.y };
-		ImGui::DragFloat2(("##" + variableName).c_str(), temp, 1.0f);
+		ImGui::DragFloat2(("##" + variableName).c_str(), temp, 0.1f);
 		Vec2Variable.x = temp[0];
 		Vec2Variable.y = temp[1];
 
@@ -270,7 +280,7 @@ namespace TDS
 
 		ImGui::TableNextColumn();
 		float temp[3]{ Vec3Variable.x, Vec3Variable.y, Vec3Variable.z };
-		ImGui::DragFloat3(("##" + variableName).c_str(), temp, 1.0f);
+		ImGui::DragFloat3(("##" + variableName).c_str(), temp, 0.1f);
 		Vec3Variable.x = temp[0];
 		Vec3Variable.y = temp[1];
 		Vec3Variable.z = temp[2];

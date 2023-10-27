@@ -199,7 +199,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\components\boxCollider.cpp" />
     <ClCompile Include="Src\components\cameraComponent.cpp" />
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
-    <ClCompile Include="Src\components\collider.cpp" />
     <ClCompile Include="Src\components\componentHelperFunctions.cpp" />
     <ClCompile Include="Src\components\graphicsComponent.cpp" />
     <ClCompile Include="Src\components\nameTag.cpp" />
@@ -290,7 +289,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\components\boxCollider.h" />
     <ClInclude Include="Include\components\cameraComponent.h" />
     <ClInclude Include="Include\components\capsuleCollider.h" />
-    <ClInclude Include="Include\components\collider.h" />
     <ClInclude Include="Include\components\components.h" />
     <ClInclude Include="Include\components\graphicsComponent.h" />
     <ClInclude Include="Include\components\iComponent.h" />

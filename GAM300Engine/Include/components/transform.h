@@ -36,15 +36,15 @@ namespace TDS
 		Getter and setter functions for the variables in the Transform component 
 		class
 		****************************************************************************/
-		DLL_API Vec3& GetPosition() { return mPosition;  }
+		DLL_API Vec3 GetPosition() { return mPosition;  }
 		DLL_API void SetPosition(Vec3 position) { mPosition = position; }
 		DLL_API void SetPosition(float positionX, float positionY, float positionZ) { mPosition = Vec3(positionX, positionY, positionZ); }
 
-		DLL_API Vec3& GetScale() { return mScale; }
+		DLL_API Vec3 GetScale() { return mScale; }
 		DLL_API void SetScale(Vec3 scale) { mScale = scale; }
 		DLL_API void SetScale(float scaleX, float scaleY, float scaleZ) { mScale = Vec3(scaleX, scaleY, scaleZ); }
 
-		DLL_API Vec3& GetRotation() { return mRotation; }
+		DLL_API Vec3 GetRotation() { return mRotation; }
 		DLL_API void SetRotation(Vec3 rotation) { mRotation = rotation; }
 		DLL_API void SetRotation(float rotationX, float rotationY, float rotationZ) { mRotation = Vec3(rotationX, rotationY, rotationZ); }
 
