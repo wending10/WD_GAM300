@@ -54,6 +54,12 @@ namespace ScriptAPI
 		return ScriptSystem::UnityCoroutineC<TResult>(func, std::chrono::milliseconds(duration));
 	}
 
+	TDS::EntityID Script::findGameObject(System::String^ gameObjectName)
+	{
+		gameObjectName = gameObjectName->Trim();
+		return ScriptSystem::findGameObject(gameObjectName);
+	}
+
 	TransformComponent Script::GetTransformComponent()
 	{
 		return TransformComponent(entityID);
