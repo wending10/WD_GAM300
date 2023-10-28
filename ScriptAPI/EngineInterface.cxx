@@ -28,6 +28,7 @@ namespace ScriptAPI
         /*System::Reflection::Assembly::LoadFrom("ManagedScripts.dll");*/
 
         scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>();
+        gameObjectList = gcnew System::Collections::Generic::SortedList<System::String^, TDS::EntityID>();
 
         for (auto i : TDS::ecs.getEntities())
         {
@@ -81,6 +82,47 @@ namespace ScriptAPI
 
             return false;
     }
+    /*!*************************************************************************
+    * Add GameObject to List
+    ***************************************************************************/
+    bool EngineInterface::AddGameObjectViaName(TDS::EntityID entityId, System::String^ entityName)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            if (entityId == TDS::NULLENTITY)
+                return false;
+
+        entityName = entityName->Trim();
+
+        gameObjectList->Add(entityName, entityId);
+
+        return true;
+            SAFE_NATIVE_CALL_END
+            return false;
+    }
+    /*!*************************************************************************
+    * Updates GameObject Name
+    ***************************************************************************/
+    bool EngineInterface::UpdateGameObjectName(System::String^ oldName, System::String^ newName)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            oldName = oldName->Trim();
+            if (gameObjectList->ContainsKey(oldName))
+            {
+                TDS::EntityID entity = gameObjectList[oldName];
+                gameObjectList->Remove(oldName);
+                newName = newName->Trim();
+                gameObjectList->Add(newName, entity);
+                return true;
+            }
+        return false;
+        SAFE_NATIVE_CALL_END
+            return false;
+    }
+
+    System::Collections::Generic::SortedList<System::String^, TDS::EntityID>^ EngineInterface::GetGameObjectList()
+    {
+        return gameObjectList;
+    }
 
     /*!*************************************************************************
     * Calls all script Awake function
@@ -128,7 +170,9 @@ namespace ScriptAPI
             }
         }
     }
-
+    /*!*************************************************************************
+    * Toggles active status on script
+    ***************************************************************************/
     bool EngineInterface::ToggleScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
     {
         SAFE_NATIVE_CALL_BEGIN
@@ -283,7 +327,9 @@ namespace ScriptAPI
             }
         }
     }
-
+    /*!*************************************************************************
+    * Reloads the script assembly
+    ***************************************************************************/
     void EngineInterface::Reload()
     {
         // Clear all references to types in the script assembly we are going to unload
@@ -298,7 +344,9 @@ namespace ScriptAPI
         // Load the assembly again
         Init();
     }
-
+    /*!*************************************************************************
+    * Checks if Entity has Script
+    ***************************************************************************/
     bool EngineInterface::HasScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
     {
         SAFE_NATIVE_CALL_BEGIN
@@ -328,7 +376,9 @@ namespace ScriptAPI
         return true;
         SAFE_NATIVE_CALL_END
     }
-
+    /*!*************************************************************************
+    * Returns Script Type
+    ***************************************************************************/
     bool EngineInterface::GetScript(TDS::EntityID entityId, System::String^ scriptName, rttr::variant& instance)
     {
         SAFE_NATIVE_CALL_BEGIN
@@ -369,7 +419,9 @@ namespace ScriptAPI
 
         SAFE_NATIVE_CALL_END
     }
-
+    /*!*************************************************************************
+    * Serializing Stuff
+    ***************************************************************************/
     void EngineInterface::Serialize(Object^ obj, String^ filename)
     {
         Type^ type = obj->GetType();
@@ -383,6 +435,14 @@ namespace ScriptAPI
 
             }
         }
+    }
+
+    void EngineInterface::RemoveEntity(TDS::EntityID entityId)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+        scripts->Remove(entityId);
+        gameObjectList->RemoveAt(gameObjectList->IndexOfValue(entityId));
+        SAFE_NATIVE_CALL_END
     }
 
     namespace
