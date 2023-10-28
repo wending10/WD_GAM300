@@ -28,10 +28,12 @@ namespace ScriptAPI
 		static bool AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
 		* Add GameObject to List
+		* Add this function to new Entities being Created
 		***************************************************************************/
 		static bool AddGameObjectViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
 		* Updates GameObject Name
+		* Call this function if User changes the name of Entities
 		***************************************************************************/
 		static bool UpdateGameObjectName(System::String^ oldName, System::String^ newName);
 		/*!*************************************************************************
@@ -88,6 +90,7 @@ namespace ScriptAPI
 		static void Serialize(Object^ obj, String^ filename);
 		/*!*************************************************************************
 		* Remove Entity from scriptList
+		* Call this function when entity gets removed
 		***************************************************************************/
 		static void RemoveEntity(TDS::EntityID entityId);
 
