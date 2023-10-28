@@ -16,16 +16,21 @@
 
 #include "sceneManager/serialization.h"
 
-// Macro to define a serialized field
-#define SerializeField(type, name)					\
-private:											\
-    type name##_;									\
-public:												\
-    property type name {							\
-        type get() { return name##_; }				\
-        void set(type value) { name##_ = value; }	\
-    }
-
+//// Macro to define a serialized field
+//#define SerializeField(type, name)					\
+//private:											\
+//    type name##_;									\
+//public:												\
+//    property type name {							\
+//        type get() { return name##_; }				\
+//        void set(type value) { name##_ = value; }	\
+//    } 
+//
+//RTTR_REGISTRATION
+//{
+//	rttr::registration::class_<CLASS>("CLASS")
+//		.property("TYPE", &CLASS::TYPE)
+//}
 
 namespace TDS
 {

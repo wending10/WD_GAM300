@@ -10,8 +10,8 @@ namespace ScriptAPI
     /*!*************************************************************************
     * Loads the managed script dll and adds the scriptlist to all active entities
     ***************************************************************************/
-	void EngineInterface::Init()
-	{
+    void EngineInterface::Init()
+    {
         using namespace System::IO;
         loadContext = gcnew System::Runtime::Loader::AssemblyLoadContext(nullptr, true);
 
@@ -27,16 +27,16 @@ namespace ScriptAPI
         // Load Assembly
         /*System::Reflection::Assembly::LoadFrom("ManagedScripts.dll");*/
 
-		scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>();
-        
+        scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>();
+
         for (auto i : TDS::ecs.getEntities())
         {
             scripts->Add(i, gcnew ScriptList());
         }
 
         updateScriptTypeList();
-		System::Console::WriteLine("Hello Engine Interface Init!");
-	}
+        System::Console::WriteLine("Hello Engine Interface Init!");
+    }
 
     /*!*************************************************************************
     * Adds scripts from the managedscript.dll to the entity via name
@@ -44,8 +44,8 @@ namespace ScriptAPI
     bool EngineInterface::AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
     {
         SAFE_NATIVE_CALL_BEGIN
-        if (entityId == TDS::NULLENTITY)
-            return false;
+            if (entityId == TDS::NULLENTITY)
+                return false;
 
         // Remove any whitespaces
         scriptName = scriptName->Trim();
@@ -79,7 +79,7 @@ namespace ScriptAPI
         return true;
         SAFE_NATIVE_CALL_END
 
-        return false;
+            return false;
     }
 
     /*!*************************************************************************
@@ -165,7 +165,7 @@ namespace ScriptAPI
         return true;
         SAFE_NATIVE_CALL_END
 
-        return false;
+            return false;
     }
 
     /*!*************************************************************************
@@ -176,7 +176,7 @@ namespace ScriptAPI
         for each (auto i in TDS::ecs.getEntities())
         {
             if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
-            {   
+            {
                 for each (Script ^ script in scripts[i])
                 {
                     for each (Script ^ script in scripts[i])
@@ -202,10 +202,10 @@ namespace ScriptAPI
         for each (auto i in TDS::ecs.getEntities())
         {
             if (!scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
-            { 
-                for each (Script^ script in scripts[i])
+            {
+                for each (Script ^ script in scripts[i])
                 {
-                    for each (Script^ script in scripts[i])
+                    for each (Script ^ script in scripts[i])
                     {
                         SAFE_NATIVE_CALL_BEGIN
                             if (script->isScriptEnabled())
@@ -299,13 +299,99 @@ namespace ScriptAPI
         Init();
     }
 
-	namespace
+    bool EngineInterface::HasScriptViaName(TDS::EntityID entityId, System::String^ scriptName)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            if (entityId == TDS::NULLENTITY)
+                return false;
+
+        // Remove any whitespaces
+        scriptName = scriptName->Trim();
+
+        // Look for the correct script
+        System::Type^ scriptType = nullptr;
+        for each (System::Type ^ type in scriptTypeList)
+        {
+            if (type->FullName == scriptName || type->Name == scriptName)
+            {
+                scriptType = type;
+                break;
+            }
+        }
+
+        // Failed to get any script
+        if (scriptType == nullptr)
+        {
+            return false;
+        }
+
+        return true;
+        SAFE_NATIVE_CALL_END
+    }
+
+    bool EngineInterface::GetScript(TDS::EntityID entityId, System::String^ scriptName, rttr::variant& instance)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            if (entityId == TDS::NULLENTITY)
+                return false;
+
+        // Remove any whitespaces
+        scriptName = scriptName->Trim();
+
+        // Look for the correct script
+        System::Type^ scriptType = nullptr;
+        for each (System::Type ^ type in scriptTypeList)
+        {
+            if (type->FullName == scriptName || type->Name == scriptName)
+            {
+                scriptType = type;
+                break;
+            }
+        }
+
+        // Failed to get any script
+        if (scriptType == nullptr)
+        {
+            return false;
+        }
+
+
+        for each (Script ^ script in scripts[entityId])
+        {
+            if (script->GetType() == scriptType)
+            {
+                instance = script;
+                return true;
+            }
+        }
+
+        return false;
+
+        SAFE_NATIVE_CALL_END
+    }
+
+    void EngineInterface::Serialize(Object^ obj, String^ filename)
+    {
+        Type^ type = obj->GetType();
+        array<FieldInfo^>^ fields = type->GetFields(BindingFlags::Public | BindingFlags::Instance);
+
+        for each (FieldInfo ^ field in fields) {
+            array<Object^>^ attributes = field->GetCustomAttributes(SerializeFieldAttribute::typeid, true);
+            if (attributes->Length > 0) {
+                // Call native C++ serialization function here
+                // Pass field values, such as field->GetValue(obj)
+
+            }
+        }
+    }
+
+    namespace
     {
         /* Select Many */
         ref struct Pair
         {
             System::Reflection::Assembly^ assembly;
-            System::Type^                 type;
+            System::Type^ type;
         };
         System::Collections::Generic::IEnumerable<System::Type^>^ selectorFunc(System::Reflection::Assembly^ assembly)
         {

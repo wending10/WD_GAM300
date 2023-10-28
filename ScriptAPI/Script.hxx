@@ -20,7 +20,11 @@ using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Threading;
 using namespace System::Threading::Tasks;
+using namespace System::Reflection;
 using namespace concurrency;
+
+[AttributeUsage(AttributeTargets.Field)]
+public ref class SerializeFieldAttribute : System::Attribute { };
 
 
 namespace ScriptAPI
@@ -82,7 +86,7 @@ namespace ScriptAPI
         // Define a function that simulates an async operation and returns the result in a Task
         // Task<IAsyncEnumerable<TResult>^>^
         generic <typename TResult>
-        static IAsyncEnumerable<TResult>^ UnityCoroutineC(Func<IAsyncEnumerable<TResult>^>^ func, std::chrono::milliseconds duration) 
+        static IAsyncEnumerable<TResult>^ UnityCoroutineC(Func<IAsyncEnumerable<TResult>^>^ func, std::chrono::milliseconds duration)
         {
             auto startTime = std::chrono::steady_clock::now();
             auto endTime = startTime + duration;
