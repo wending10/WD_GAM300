@@ -310,7 +310,7 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\eventmanager\eventmanager.hpp" />
     <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
     <ClInclude Include="Include\fmod_engine\AudioEngine.h" />
-    <ClInclude Include="Include\fmod_engine\SoundInfo.h" />
+    <ClInclude Include="Include\components\SoundInfo.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
     <ClInclude Include="Include\Geometry\Geometry.h" />
     <ClInclude Include="Include\Geometry\Line.h" />

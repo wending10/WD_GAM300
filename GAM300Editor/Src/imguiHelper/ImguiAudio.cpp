@@ -25,6 +25,11 @@ namespace TDS
 		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
 	}
 
+	void AudioImgui::init(bool show)
+	{
+		appear = show;
+	}
+
 	AudioImgui::~AudioImgui()
 	{
 		audeng->deactivate();

@@ -46,7 +46,9 @@ namespace TDS
 		/**
 		 * @brief Initialize
 		*/
-		void init() {}
+		virtual void init() {}
+
+		void init(bool show);
 
 		/**
 		 * @brief Update loop.

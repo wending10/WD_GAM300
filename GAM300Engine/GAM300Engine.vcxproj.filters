@@ -80,11 +80,6 @@
     <ClCompile Include="..\Shared_Libs\Color.cpp" />
     <ClCompile Include="..\Shared_Libs\Color8UNorm.cpp" />
     <ClCompile Include="src\components\AudioSource.cpp" />
-    <ClCompile Include="Src\JoltPhysics\Bodies\JoltBodyComponent.cpp" />
-    <ClCompile Include="Src\JoltPhysics\Bodies\JoltDynamicBodyComponent.cpp" />
-    <ClCompile Include="Src\JoltPhysics\Bodies\JoltQueryShapeBodyComponent.cpp" />
-    <ClCompile Include="Src\JoltPhysics\Bodies\JoltStaticBodyComponent.cpp" />
-    <ClCompile Include="Src\JoltPhysics\Bodies\JoltTriggerComponent.cpp" />
     <ClCompile Include="Src\components\sphereCollider.cpp" />
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
@@ -153,7 +148,7 @@
     <ClInclude Include="Include\AI\aiSystem.h" />
     <ClInclude Include="Include\AI\behaviourTree.h" />
     <ClInclude Include="Include\fmod_engine\AudioEngine.h" />
-    <ClInclude Include="Include\fmod_engine\SoundInfo.h" />
+    <ClInclude Include="Include\components\SoundInfo.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
     <ClInclude Include="Include\Geometry\Geometry.h" />
     <ClInclude Include="Include\Geometry\Line.h" />
@@ -196,11 +191,6 @@
     <ClInclude Include="..\Shared_Libs\Color.h" />
     <ClInclude Include="..\Shared_Libs\Color8UNorm.h" />
     <ClInclude Include="Include\components\AudioSource.h" />
-    <ClInclude Include="Include\JoltPhysics\Bodies\JoltBodyComponent.h" />
-    <ClInclude Include="Include\JoltPhysics\Bodies\JoltDynamicBodyComponent.h" />
-    <ClInclude Include="Include\JoltPhysics\Bodies\JoltQueryShapeBodyComponent.h" />
-    <ClInclude Include="Include\JoltPhysics\Bodies\JoltStaticBodyComponent.h" />
-    <ClInclude Include="Include\JoltPhysics\Bodies\JoltTriggerComponent.h" />
     <ClInclude Include="Include\components\boxCollider.h" />
     <ClInclude Include="Include\components\capsuleCollider.h" />
     <ClInclude Include="Include\components\sphereCollider.h" />

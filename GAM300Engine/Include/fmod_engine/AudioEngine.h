@@ -19,7 +19,7 @@
 #include <vector>
 #include <list>
 #include <map>
-#include "SoundInfo.h"
+#include "components/SoundInfo.h"
 #include "dotnet/ImportExport.h"
 
 namespace TDS

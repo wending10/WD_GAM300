@@ -159,6 +159,7 @@ namespace TDS
 				{
 					AudioImgui audimg;
 
+					audimg.init(true);
 				}
 
 

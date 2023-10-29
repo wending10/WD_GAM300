@@ -25,7 +25,7 @@
 #include "tag.h"
 #include "transform.h"
 #include "winData.h"
-#include "fmod_engine/SoundInfo.h"
+#include "components/SoundInfo.h"
 #include "fmod_engine/AudioEngine.h"
 
 // Helper functions for components
