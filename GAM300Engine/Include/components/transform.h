@@ -57,6 +57,13 @@ namespace TDS
 			Mat4 transM4 = Mat4::Translate(translate);
 			mTransformMatrix = transM4 * rotM4 * scaleM4;
 		}
+		DLL_API void GenerateTransfom() {
+			Quat qRot = Quat(mRotation);
+			Mat4 scaleM4 = Mat4::Scale(mScale);
+			Mat4 rotM4 = Mat4(Quat::toMat4(qRot));
+			Mat4 transM4 = Mat4::Translate(mPosition);
+			mTransformMatrix = transM4 * rotM4 * scaleM4;
+		}
 
 		RTTR_ENABLE(IComponent);
 		RTTR_REGISTRATION_FRIEND

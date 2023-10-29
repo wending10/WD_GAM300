@@ -67,14 +67,14 @@
     <ClCompile Include="Src\vulkanTools\VertexTypes.cpp" />
     <ClCompile Include="Src\vulkanTools\GlobalBufferPool.cpp" />
     <ClCompile Include="Src\vulkanTools\CommandManager.cpp" />
-    <ClCompile Include="Src\Renderer\GraphicsManager.cpp" />
+    <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Src\vulkanTools\FrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\DirectFrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\VMATypes\VMABuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\VulkanPipeline.cpp" />
-    <ClCompile Include="Src\Renderer\RendererSystem.cpp" />
-    <ClCompile Include="Src\Renderer\RenderDataManager.cpp" />
-    <ClCompile Include="Src\Renderer\Renderer3D.cpp" />
+    <ClCompile Include="Src\Rendering\RendererSystem.cpp" />
+    <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
+    <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
     <ClCompile Include="Src\components\graphicsComponent.cpp" />
     <ClCompile Include="..\Shared_Libs\Color.cpp" />
     <ClCompile Include="..\Shared_Libs\Color8UNorm.cpp" />
@@ -82,6 +82,8 @@
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
     <ClCompile Include="Src\sceneManager\serializationHelperFunctions.cpp" />
+    <ClCompile Include="Src\Rendering\RenderTarget.cpp" />
+    <ClCompile Include="Src\Rendering\renderPass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -191,6 +193,8 @@
     <ClInclude Include="Include\components\capsuleCollider.h" />
     <ClInclude Include="Include\components\sphereCollider.h" />
     <ClInclude Include="Include\sceneManager\serializationHelperFunctions.h" />
+    <ClInclude Include="Include\Rendering\RenderTarget.h" />
+    <ClInclude Include="Include\Rendering\renderPass.h" />
     <ClInclude Include="Include\propertyManager\registration.h" />
   </ItemGroup>
   <ItemGroup>

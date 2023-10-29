@@ -233,13 +233,13 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Src\Physics\CollisionSystem.cpp" />
-    <ClCompile Include="Src\Physics\PhysicsSystem.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Src\Renderer\GraphicsManager.cpp" />
-    <ClCompile Include="Src\Renderer\RenderDataManager.cpp" />
-    <ClCompile Include="Src\Renderer\Renderer3D.cpp" />
-    <ClCompile Include="Src\Renderer\RendererSystem.cpp" />
+    <ClCompile Include="Src\Physics\PhysicsSystem.cpp" />
+    <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
+    <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
+    <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
+    <ClCompile Include="Src\Rendering\RendererSystem.cpp" />
+    <ClCompile Include="Src\Rendering\renderPass.cpp" />
+    <ClCompile Include="Src\Rendering\RenderTarget.cpp" />
     <ClCompile Include="Src\ResourceManagement\ResouceManager.cpp" />
     <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
     <ClCompile Include="Src\sceneManager\serialization.cpp" />
@@ -337,6 +337,8 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\Renderer3D.h" />
     <ClInclude Include="Include\Rendering\RendererSystem.h" />
     <ClInclude Include="Include\Rendering\RenderLayer.h" />
+    <ClInclude Include="Include\Rendering\renderPass.h" />
+    <ClInclude Include="Include\Rendering\RenderTarget.h" />
     <ClInclude Include="Include\Rendering\Skybox.h" />
     <ClInclude Include="Include\sceneManager\serializationHelperFunctions.h" />
     <ClInclude Include="Include\Shader\ShaderData.h" />
