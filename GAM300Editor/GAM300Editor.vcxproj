@@ -66,8 +66,8 @@
     <ClInclude Include="Include\Tools\TextureCompiler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Users\i_wil\Downloads\GAM300\GAM300\Dependencies\imgui\ImGuizmo.cpp" />
     <ClCompile Include="..\Dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui\ImGuizmo.cpp" />
     <ClCompile Include="..\Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Dependencies\imgui\imgui_impl_vulkan.cpp" />

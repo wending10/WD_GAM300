@@ -251,7 +251,7 @@
     <ClCompile Include="Src\imguiHelper\ImguiScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Users\i_wil\Downloads\GAM300\GAM300\Dependencies\imgui\ImGuizmo.cpp">
+    <ClCompile Include="..\Dependencies\imgui\ImGuizmo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
