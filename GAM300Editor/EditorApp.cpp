@@ -185,14 +185,7 @@ namespace TDS
 
             GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-
-         
-           GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
-        
-            
-            imguiHelper::Update();
-            GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
-            GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
+             GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
 
             if (isPlaying)
             {
@@ -200,6 +193,13 @@ namespace TDS
             }
 
             ecs.runSystems(2, DeltaTime);
+         
+        
+            
+            imguiHelper::Update();
+            GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
+            GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
+
 
             imguiHelper::Draw(commandBuffer);
 
