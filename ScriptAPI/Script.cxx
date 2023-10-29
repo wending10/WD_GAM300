@@ -1,5 +1,4 @@
 #include "Script.hxx"
-#include "HelperFunctions.hxx"
 
 namespace ScriptAPI
 {
@@ -55,41 +54,12 @@ namespace ScriptAPI
 		return ScriptSystem::UnityCoroutineC<TResult>(func, std::chrono::milliseconds(duration));
 	}
 
-	BoxColliderComponent Script::GetBoxColliderComponent()
-	{
-		return BoxColliderComponent(entityID);
-	}
-	CapsuleColliderComponent Script::GetCapsuleColliderComponent()
-	{
-		return CapsuleColliderComponent(entityID);
-	}
-	NameTagComponent Script::GetNameTagComponent()
-	{
-		return NameTagComponent(entityID);
-	}
-	SphereColliderComponent Script::GetSphereColliderComponent()
-	{
-		return SphereColliderComponent(entityID);
-	}
-	//TDS::EntityID Script::findGameObject(System::String^ gameObjectName)
-	//{
-	//	gameObjectName = gameObjectName->Trim();
-	//	return ScriptSystem::findGameObject(gameObjectName);
-	//}
-
 	TransformComponent Script::GetTransformComponent()
 	{
 		return TransformComponent(entityID);
 	}
-
-	int Script::GetEntityID()
+	ColliderComponent Script::GetColliderComponent()
 	{
-		return entityID;
-	}
-
-	Script^ Script::GameObjectScriptFind(System::String^ name, System::String^ script)
-	{
-		System::Console::WriteLine("called");
-		return FindGameObjectViaName(name, script);
+		return ColliderComponent(entityID);
 	}
 }

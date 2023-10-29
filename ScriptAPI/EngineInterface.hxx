@@ -11,6 +11,8 @@
 
 #include "Script.hxx"
 
+
+
 namespace ScriptAPI
 {
 	public ref class EngineInterface
@@ -20,26 +22,10 @@ namespace ScriptAPI
 		* Initializes the scriptlist for all active entities
 		***************************************************************************/
 		static void Init();
-
-		static void AddScriptList(TDS::EntityID entityID);
 		/*!*************************************************************************
 		* Add Scripts via name in managed script library
 		***************************************************************************/
-		static bool AddScriptViaName(TDS::EntityID entityId, std::string scriptName);
-		/*!*************************************************************************
-		* Add GameObject to List
-		* Add this function to new Entities being Created
-		***************************************************************************/
-		static bool AddGameObjectViaName(TDS::EntityID entityId, System::String^ scriptName);
-		/*!*************************************************************************
-		* Updates GameObject Name
-		* Call this function if User changes the name of Entities
-		***************************************************************************/
-		static bool UpdateGameObjectName(System::String^ oldName, System::String^ newName);
-		/*!*************************************************************************
-		* Gets Game Object List
-		***************************************************************************/
-		static System::Collections::Generic::SortedList<System::String^, TDS::EntityID>^ GetGameObjectList();
+		static bool AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
 		* Calls all script awake function
 		***************************************************************************/
@@ -49,7 +35,7 @@ namespace ScriptAPI
 		***************************************************************************/
 		static void ExecuteOnEnable();
 		/*!*************************************************************************
-		* Toggles active status on script
+		* Calls all script OnEnable function with EntityID
 		***************************************************************************/
 		static bool ToggleScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
@@ -76,45 +62,16 @@ namespace ScriptAPI
 		* Reloads the script assembly
 		***************************************************************************/
 		static void Reload();
-		/*!*************************************************************************
-		* Checks if Entity has Script
-		***************************************************************************/
-		static bool HasScriptViaName(TDS::EntityID entityId, std::string script);
-		/*!*************************************************************************
-		* Getting script fields for serializing
-		***************************************************************************/
-		static std::vector<TDS::ScriptValues> GetScriptVariables(TDS::EntityID entityID, std::string scriptName);
-		/*!*************************************************************************
-		* Remove Entity from scriptList
-		* Call this function when entity gets removed
-		***************************************************************************/
-		static void RemoveEntity(TDS::EntityID entityId);
-		/*!*************************************************************************
-		* Getting all the scripts from scriptList
-		***************************************************************************/
-		static std::vector<std::string> GetAllScripts();
-
-		static void SetValueBool(TDS::EntityID entityId, std::string script, std::string variableName, bool value);
-		static void SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value);
-		static void SetValueDouble(TDS::EntityID entityId, std::string script, std::string variableName, double value);
-		static void SetValueFloat(TDS::EntityID entityId, std::string script, std::string variableName, float value);
-		
-		using ScriptList = System::Collections::Generic::Dictionary<String^, Script^>;
-		using NameScriptPair = System::Collections::Generic::KeyValuePair<String^, Script^>;
-		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ GetScriptList();
 
 	private:
 		//(^)* reference to managed pointer
-		static System::Collections::Generic::SortedList<System::String^, TDS::EntityID>^ gameObjectList;
-		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ scripts;
+		using ScriptList = System::Collections::Generic::List<Script^>;
+		static System::Collections::Generic::SortedList<TDS::EntityID,ScriptList^>^ scripts;
 		static System::Collections::Generic::IEnumerable<System::Type^>^ scriptTypeList;
 		/*!*************************************************************************
 		* Updates script Type list
 		***************************************************************************/
 		static void updateScriptTypeList();
 		static System::Runtime::Loader::AssemblyLoadContext^ loadContext;
-
-		//static array<FieldInfo^>^ currentFieldArray;
-		//static Object^ currentObject;
 	};
 }

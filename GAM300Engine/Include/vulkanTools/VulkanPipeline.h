@@ -5,8 +5,7 @@
 #include "GraphicsResource/GraphicsResourceDefines.h"
 #include "VertexTypes.h"
 #include "dotnet/ImportExport.h"
-#include "Rendering/GraphicsManager.h"
-#include "Rendering/RenderTarget.h"
+
 namespace TDS
 {
 	struct PipelineConfig
@@ -25,7 +24,7 @@ namespace TDS
 		float				m_MinDepth{ 0.f },
 			m_MaxDepth{ 1.f };
 
-		bool				m_EnableDepthTest{ false },
+		bool				m_EnableDepthTest{ true },
 			m_EnableDepthWrite{ true },
 			m_EnableDepthBiased{ false },
 			m_EnablePrimitiveRestart{ false };

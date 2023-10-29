@@ -213,8 +213,6 @@ namespace TDS
 			io.DisplaySize = pViewPort->Size;
 		}
 		ImGui::Render();
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
 		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), FCB);
 	}
 

@@ -25,4 +25,5 @@ RTTR_REGISTRATION
 		.property("w", &Vec4::w);
 }
 
+
 #endif //COMPONENT_RTTR_REGISTRATION

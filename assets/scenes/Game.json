@@ -1,18 +1,16 @@
 {
     "Archetype Sizes": {
-        "110000100000": {
-            "0": 416,
-            "1": 448,
-            "6": 1024
+        "1100001000000": {
+            "0": 952,
+            "1": 1904,
+            "6": 4352
         }
     },
     "Entity Data": {
-        "1": {
-            "ArchetypeID": "110000100000",
+        "0": {
+            "ArchetypeID": "1100001000000",
             "Name Tag": {
                 "Name": "New Entity",
-                "Tag": "",
-                "IsActive": true,
                 "HierarchyParent": 0,
                 "HierarchyIndex": 0
             },
@@ -25,7 +23,33 @@
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 1.0
+                    "z": 0.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {}
+        },
+        "1": {
+            "ArchetypeID": "1100001000000",
+            "Name Tag": {
+                "Name": "New Entity",
+                "HierarchyParent": 0,
+                "HierarchyIndex": 0
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -36,41 +60,11 @@
             "Graphics Component": {}
         },
         "2": {
-            "ArchetypeID": "110000100000",
+            "ArchetypeID": "1100001000000",
             "Name Tag": {
                 "Name": "New Entity",
-                "Tag": "",
-                "IsActive": true,
                 "HierarchyParent": 0,
-                "HierarchyIndex": 1
-            },
-            "Transform": {
-                "Position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {}
-        },
-        "3": {
-            "ArchetypeID": "110000100000",
-            "Name Tag": {
-                "Name": "New Entity",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 0,
-                "HierarchyIndex": 2
+                "HierarchyIndex": 0
             },
             "Transform": {
                 "Position": {
@@ -82,34 +76,6 @@
                     "x": 1.0,
                     "y": 1.0,
                     "z": 0.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {}
-        },
-        "4": {
-            "ArchetypeID": "110000100000",
-            "Name Tag": {
-                "Name": "New Entity",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 0,
-                "HierarchyIndex": 3
-            },
-            "Transform": {
-                "Position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -119,37 +85,5 @@
             },
             "Graphics Component": {}
         }
-    },
-    "Scripts": {
-        "1": {
-            "Test": {
-                "script": {
-                    "ScriptName": ""
-                },
-                "test": {
-                    "ScriptName": ""
-                },
-                "hmm": {
-                    "Bool": true
-                },
-                "testt": {
-                    "Double": 4.0
-                },
-                "testtt": {
-                    "Int": 3
-                },
-                "testttt": {
-                    "Float": 7.0
-                },
-                "testtttt": {
-                    "ScriptName": ""
-                }
-            }
-        },
-        "2": {
-            "Testing": {}
-        },
-        "3": {},
-        "4": {}
     }
 }

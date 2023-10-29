@@ -23,10 +23,19 @@ RTTR_REGISTRATION
 	);
 
 	rttr::registration::class_<CapsuleCollider>("Capsule Collider")
-		.property("IsTrigger", &CapsuleCollider::GetIsTrigger, &CapsuleCollider::SetIsTrigger)
-		.property("Center", &CapsuleCollider::GetCenter, rttr::select_overload<void(Vec3)>(&CapsuleCollider::SetCenter))
-		.property("Radius", &CapsuleCollider::GetRadius, &CapsuleCollider::SetRadius)
-		.property("Height", &CapsuleCollider::GetHeight, &CapsuleCollider::SetHeight);
+		.method("GetIsTrigger", &CapsuleCollider::GetIsTrigger)
+		.method("SetIsTrigger", &CapsuleCollider::SetIsTrigger)
+		.property("IsTrigger", &CapsuleCollider::mIsTrigger)
+		.method("GetCenter", &CapsuleCollider::GetCenter)
+		.method("SetCenter", rttr::select_overload<void(Vec3)>(&CapsuleCollider::SetCenter))
+		.method("SetCenter", rttr::select_overload<void(float, float, float)>(&CapsuleCollider::SetCenter))
+		.property("Center", &CapsuleCollider::mCenter)
+		.method("GetRadius", &CapsuleCollider::GetRadius)
+		.method("SetRadius", &CapsuleCollider::SetRadius)
+		.property("Radius", &CapsuleCollider::mRadius)
+		.method("GetHeight", &CapsuleCollider::GetHeight)
+		.method("SetHeight", &CapsuleCollider::SetHeight)
+		.property("Height", &CapsuleCollider::mHeight);
 }
 
 namespace TDS

@@ -4,6 +4,7 @@
 namespace TDS
 {
 	ImGui_ImplVulkan_InitInfo Profiler::m_vulkanInfo;
+
 	Profiler::Profiler()
 	{
 		//selected = 0;
@@ -27,6 +28,7 @@ namespace TDS
 
 	void Profiler::update()
 	{
+
 		vkGetPhysicalDeviceProperties(m_vulkanInfo.PhysicalDevice, &deviceProperties);
 		ImGui::Text("Application: ", deviceProperties.deviceID);
 
@@ -46,6 +48,7 @@ namespace TDS
 		uint32_t vulkanPatch = VK_VERSION_PATCH(deviceProperties.apiVersion);
 
 		ImGui::Text("API Version : %d.%d.%d", vulkanMajor, vulkanMinor, vulkanPatch);
+
 
 		ImGui::Separator();
 

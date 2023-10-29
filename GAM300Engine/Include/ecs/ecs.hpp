@@ -170,16 +170,11 @@ namespace TDS
     template<class... Cs>
     void ECSSystem<Cs...>::doAction(const float elapsedMilliseconds, Archetype* archetype)
     {
-        //if (mFuncSet)
-        //    doAction<0>(elapsedMilliseconds,
-        //        archetype->type,
-        //        archetype->entityIds,
-        //        archetype->componentData);
         if (mFuncSet)
             doAction<0>(elapsedMilliseconds,
                 archetype->type,
                 archetype->entityIds,
-                MemoryManager::GetInstance()->getComponents(archetype->type));
+                archetype->componentData);
     }
 
     // --doAction--
@@ -315,12 +310,6 @@ namespace TDS
         dummyRecord.index = 0;
         dummyRecord.is_Enabled = true;
         mEntityArchetypeMap[entityId] = dummyRecord;
-
-        //ScriptAPI
-        if (addScriptList)
-        {
-            addScriptList(entityId);
-        }
     }
 
     // --addComponent--
@@ -692,8 +681,6 @@ namespace TDS
         oldArchetype->entityIds.erase(willBeRemoved);
 
         mEntityArchetypeMap.erase(entityID);
-
-        removeScriptList(entityID);
     }
 
     // --removeAllEntities--
@@ -817,18 +804,17 @@ namespace TDS
         {
             if (id[i] == '1')
             {
-                MemoryManager::GetInstance()->newPage(id, i);
-                //newArchetype->componentData.emplace_back(MemoryManager::GetInstance()->newPage(id, i));
+                newArchetype->componentData.emplace_back(MemoryManager::GetInstance()->newPage(id, i));
 
                 if (commit)
                 {
                     MemoryManager::GetInstance()->reserveComponentSpace(id, i, mComponentMap[i]->getSize());
                 }
             }
-            //else
-            //{
-            //    newArchetype->componentData.emplace_back(nullptr);
-            //}
+            else
+            {
+                newArchetype->componentData.emplace_back(nullptr);
+            }
             newArchetype->componentDataSize.emplace_back(0);
         }
         if (commit)
