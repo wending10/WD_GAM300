@@ -25,7 +25,8 @@
 #include "vulkanTools/CommandManager.h"
 #include "GraphicsResource/TextureInfo.h"
 #include "vulkanTools/VulkanTexture.h"
-
+#include "Rendering/renderPass.h"
+#include "vulkanTools/FrameBuffer.h"
 bool isPlaying = false;
 
 namespace TDS
@@ -39,11 +40,6 @@ namespace TDS
         //m_Renderer = std::make_shared<Renderer>(m_window, *m_pVKInst.get());
         Log::Init();
         TDS_INFO("window width: {}, window height: {}", m_window.getWidth(), m_window.getHeight());
-
-        //m_globalPool = DescriptorPool::Builder(GraphicsManager::getInstance().getVkInstance()).setMaxSets(VulkanSwapChain::MAX_FRAMES_IN_FLIGHT)
-        //    .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VulkanSwapChain::MAX_FRAMES_IN_FLIGHT)
-        //    .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VulkanSwapChain::MAX_FRAMES_IN_FLIGHT)
-        //    .build();
 
        /* models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");*/
     }
@@ -120,15 +116,13 @@ namespace TDS
     }
     void Application::Initialize()
     {
+
         ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
         GraphicsManager::getInstance().Init(&m_window);
-
-
         m_AssetManager.Init();
         m_AssetManager.PreloadAssets();
         SceneManager::GetInstance()->Init();
         ecs.initializeSystems(1);
-        //Run();
     }
 
     void Application::Update()
@@ -163,45 +157,53 @@ namespace TDS
         RendererSystem::assetManager = &m_AssetManager;
         initImgui();
         float lightx = 0.f;
-
-
-       /* Texture data{};
+    
+      /*  Texture data{};
         data.LoadTexture("../../assets/textures/texture.dds");
         VulkanTexture vkTexture{};
         vkTexture.CreateBasicTexture(data.m_TextureInfo);
         
         vkTexture.m_DescSet = ImGui_ImplVulkan_AddTexture(vkTexture.getInfo().sampler, vkTexture.getInfo().imageView, vkTexture.getInfo().imageLayout);
-        ImGui::Image(vkTexture.m_DescSet, { 500.f,500.f });*/
+       */
 
-
+        VkDescriptorSet  m_DescSet{};
         GraphicsManager::getInstance().setCamera(m_camera);
         while (m_window.processInputEvent())
         {
 
             TimeStep::CalculateDeltaTime();
             float DeltaTime = TimeStep::GetDeltaTime();
+            
 
-            GraphicsManager::getInstance().StartFrame();
-
-
+            
             m_camera.UpdateCamera(DeltaTime);
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
+
+            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
+            if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension)
+                GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
+
+            GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
+
+         
+           GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
+           if (isPlaying)
+            {
+                ecs.runSystems(1, DeltaTime);  
+           }
             
             imguiHelper::Update();
-            //loading the imgui image 
-           // ImGui::Image(vkTexture.m_DescSet, { 500.f,500.f });
-
+            GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
             GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
-
-            if (isPlaying)
-            {
-                ecs.runSystems(1, DeltaTime);
-            }
+          
             imguiHelper::Draw(commandBuffer);
+
             GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
             GraphicsManager::getInstance().EndFrame();
+
+            
             if (GetKeyState(VK_F5) & 0x8000)
             {
                 compileScriptAssembly();
@@ -502,10 +504,7 @@ namespace TDS
             return false;
         }
 
-        /* for(uint32_t i = 0; i < m_pVKInst.get()->swapChainImageViews.size(); i++)
-             m_pVKInst.get()->m_descriptorSets[i] = ImGui_ImplVulkan_AddTexture(m_pVKInst.get()->m_textureSampler, m_pVKInst.get()->swapChainImageViews[i], VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);*/
-
-
+       
         return true;
 
     }

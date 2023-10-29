@@ -7,7 +7,7 @@
 #include "vulkanTools/FrameBuffer.h"
 #include "vulkanTools/GlobalBufferPool.h"
 #include "vulkanTools/VulkanTexture.h"
-
+#include "Rendering/renderPass.h"
 namespace TDS
 {
 	VulkanPipeline::VulkanPipeline()
@@ -49,7 +49,7 @@ namespace TDS
 		}
 		else
 		{
-			m_RenderTarget = GraphicsManager::getInstance().GetSwapchainRenderer().getSwapChainRenderPass();
+			m_RenderTarget = GraphicsManager::getInstance().getRenderPass().getRenderPass();
 		}
 		CreateDescriptors(m_PipelineEntry.m_ShaderInputs, m_PipelineEntry.m_NumDescriptorSets);
 
@@ -441,7 +441,7 @@ namespace TDS
 			vkDestroyDescriptorPool(device, m_DescriptorPool, nullptr);
 		}
 		VK_ASSERT(vkCreateDescriptorPool(device, &descriptorPoolInfo, nullptr, &m_DescriptorPool), "Failed to create descriptor Pool!");
-
+		m_PipelineDescriptor.m_ImageInfo = GraphicsManager::getInstance().getFinalImage().getImageInfoDescriptor();
 
 		CreateDescriptorSet(shaderInputs, m_PipelineDescriptor);
 		CreateUniformBuffers(shaderInputs, m_PipelineDescriptor);

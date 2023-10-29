@@ -1,5 +1,6 @@
 #include "Rendering/RenderTarget.h"
 #include "Logger/Logger.h"
+#include "Rendering/GraphicsManager.h"
 namespace TDS
 {
 	RenderTarget::RenderTarget(std::shared_ptr<VulkanInstance> inst, const RenderTargetCI& attachmentCI)
@@ -15,10 +16,9 @@ namespace TDS
 	{
 		if (!m_InheritsVkImage)
 		{
-			VkImageCreateInfo imageCI;
+			VkImageCreateInfo imageCI{};
 			imageCI.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-			imageCI.pNext = VK_NULL_HANDLE;
-			imageCI.flags |= attachmentCI._viewType == VK_IMAGE_VIEW_TYPE_CUBE ? VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT : 0;
+			imageCI.pNext = nullptr;
 			imageCI.imageType = VK_IMAGE_TYPE_2D;
 			imageCI.format = attachmentCI._format;
 			imageCI.extent.width = static_cast<uint32_t>(attachmentCI._dim.x);
@@ -29,6 +29,7 @@ namespace TDS
 			imageCI.samples = attachmentCI._sampleCount;
 			imageCI.tiling = VK_IMAGE_TILING_OPTIMAL;
 			imageCI.usage = attachmentCI._imageUsage;
+			imageCI.flags = 0;//|= attachmentCI._viewType == VK_IMAGE_VIEW_TYPE_CUBE ? VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT : 0;
 
 			VkMemoryAllocateInfo memAlloc{};
 			memAlloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
@@ -156,6 +157,7 @@ namespace TDS
 	}
 	void RenderTarget::destroy()
 	{
+		vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
 		for (int i = 0; i < m_RenderImageViews.size(); i++) {
 			for (int j = 0; j < m_RenderImageViews[i].size(); j++) {
 				vkDestroyImageView(m_Inst->getVkLogicalDevice(), m_RenderImageViews[i][j], nullptr);

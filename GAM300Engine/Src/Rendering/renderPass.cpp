@@ -1,5 +1,5 @@
 #include"Rendering/renderPass.h"
-
+#include "Rendering/GraphicsManager.h"
 namespace TDS {
 	RenderPass::RenderPass(VkDevice device, const std::vector<AttachmentInfo>& attachments)
 		:m_Device(device)
@@ -35,7 +35,7 @@ namespace TDS {
 				attachmentDescription.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			}
 
-			attachmentDescription.initialLayout = loadImageLayout ? attachments[i].framebufferAttachment->getImageLayout() : VK_IMAGE_LAYOUT_UNDEFINED;
+			attachmentDescription.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;//loadImageLayout ? attachments[i].framebufferAttachment->getImageLayout() : VK_IMAGE_LAYOUT_UNDEFINED;
 			attachmentDescription.finalLayout = attachments[i].framebufferAttachment->getAttachmentDescription()._imagelayout;
 
 			if ((attachmentDescription.loadOp == VK_ATTACHMENT_LOAD_OP_LOAD) && (attachments[i].framebufferAttachment->getAttachmentType() == RenderTargetType::COLOR))
@@ -73,7 +73,7 @@ namespace TDS {
 		}
 
 
-		subpassDescription.colorAttachmentCount - static_cast<uint32_t>(colorAttachment.size());
+		subpassDescription.colorAttachmentCount = static_cast<uint32_t>(colorAttachment.size());
 		if (colorAttachment.size() > 0) subpassDescription.pColorAttachments = colorAttachment.data();
 		if (depthStencilAttachments.size() > 0) subpassDescription.pDepthStencilAttachment = depthStencilAttachments.data();
 		if (resolveAttachments.size() > 0) subpassDescription.pResolveAttachments = resolveAttachments.data();
@@ -157,21 +157,20 @@ namespace TDS {
 	}
 	RenderPass::~RenderPass()
 	{
-		vkDestroyRenderPass(m_Device, m_RenderPass, nullptr);
+		vkDestroyRenderPass(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), m_RenderPass, nullptr);
 	}
 	void RenderPass::beginRenderPass(VkCommandBuffer commandBuffer, FrameBuffer* framebuffer, uint32_t viewports)
 	{
 		assert(viewports > 0 && "You must have at least 1 viewport");
 		
-		VkRenderPassBeginInfo renderPassBeginInfo{
-		.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
-		.renderPass = m_RenderPass,
-		.framebuffer = framebuffer->getFrameBuffer(),
-		.renderArea{.extent{.width = static_cast<uint32_t>(framebuffer->getDimensions().x),
-		.height = static_cast<uint32_t>(framebuffer->getDimensions().y)}},
-		.clearValueCount = static_cast<uint32_t>(m_clearValues.size()),
-		.pClearValues = m_clearValues.data()
-		};
+		VkRenderPassBeginInfo renderPassBeginInfo{};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.renderPass = m_RenderPass;
+		renderPassBeginInfo.framebuffer = framebuffer->getVKFrameBuffer();
+		renderPassBeginInfo.renderArea.extent.width = static_cast<uint32_t>(framebuffer->getDimensions().x);
+		renderPassBeginInfo.renderArea.extent.height = static_cast<uint32_t>(framebuffer->getDimensions().y);
+		renderPassBeginInfo.clearValueCount = m_clearValues.size();
+		renderPassBeginInfo.pClearValues = m_clearValues.data();
 
 		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 

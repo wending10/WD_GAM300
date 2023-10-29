@@ -1,10 +1,10 @@
 #include "vulkanTools/FrameBuffer.h"
-
+#include "Rendering/GraphicsManager.h"
 namespace TDS
 {
 	
 	FrameBuffer::FrameBuffer(VkDevice _device, VkRenderPass _renderPass, const std::vector<RenderTarget*>& _attachments, uint32_t _layer, uint32_t _mipLevel)
-		:m_device(_device),m_UseLayer(_layer),m_UseMipLevel(_mipLevel)
+		:m_device(_device),m_UseLayer(_layer),m_UseMipLevel(_mipLevel), m_renderPass(_renderPass)
 	
 	{
 		create(_device, _renderPass, _attachments);
@@ -14,7 +14,7 @@ namespace TDS
 	}
 
 	FrameBuffer::FrameBuffer(VkDevice _device, VkRenderPass _renderPass, [[maybe_unused]] bool _imageless, Vec3 _ImageLessDim)
-		:m_device(_device),m_UseLayer(0), m_UseMipLevel(0)
+		:m_device(_device),m_UseLayer(0), m_UseMipLevel(0), m_renderPass(_renderPass)
 	{
 		m_Width = static_cast<uint32_t>(_ImageLessDim.x);
 		m_Height = static_cast<uint32_t>(_ImageLessDim.y);
@@ -33,11 +33,11 @@ namespace TDS
 			attach->resize(_newdim);
 
 		destroy();
-		create(m_device, _renderPass, m_Attachments);
+		create(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), _renderPass, m_Attachments);
 
 	}
 
-	void FrameBuffer::create(VkDevice& _device, VkRenderPass _renderPass, const std::vector<RenderTarget*>& _attachments)
+	void FrameBuffer::create(VkDevice _device, VkRenderPass _renderPass, const std::vector<RenderTarget*>& _attachments)
 	{
 		std::vector<VkImageView> imageViews;
 		int lowestLayerCounterOverride = -1;
@@ -70,7 +70,7 @@ namespace TDS
 			.layers = static_cast<uint32_t>(lowestLayerCounterOverride)
 		};
 
-		VK_ASSERT(vkCreateFramebuffer(_device, &framebufferCI, nullptr, &m_FrameBuffer), "Failed to create FrameBuffer!");
+		VK_ASSERT(vkCreateFramebuffer(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), &framebufferCI, nullptr, &m_FrameBuffer), "Failed to create FrameBuffer!");
 
 
 
@@ -102,7 +102,9 @@ namespace TDS
 
 	void FrameBuffer::destroy()
 	{
-		vkDestroyFramebuffer(m_device, m_FrameBuffer, nullptr);
+		vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
+		vkDestroyFramebuffer(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), m_FrameBuffer, nullptr);
+		
 
 	}
 

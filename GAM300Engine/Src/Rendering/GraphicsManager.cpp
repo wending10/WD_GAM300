@@ -32,13 +32,12 @@ namespace TDS
 		m_CommandManager->Init();
 		m_SwapchainRenderer = std::make_shared<Renderer>(*m_pWindow, *m_MainVkContext);
 		DefaultTextures::GetInstance().Init();
-		Renderer3D::Init();
 	
 		Vec3 size = { static_cast<float>(window->getWidth()), static_cast<float>(window->getHeight()), 1.f };
 		std::vector<AttachmentInfo> attachmentInfos{};
 		std::vector<RenderTarget*> attachments{};
 		RenderTargetCI rendertargetCI{
-			VK_FORMAT_R8_UNORM,
+			VK_FORMAT_R8G8B8A8_UNORM,
 			VK_IMAGE_ASPECT_COLOR_BIT,
 			VK_IMAGE_VIEW_TYPE_2D,
 			size,
@@ -48,13 +47,15 @@ namespace TDS
 			false,
 			VK_SAMPLE_COUNT_1_BIT
 		};
-		//m_RenderingAttachment = new RenderTarget(m_MainVkContext, rendertargetCI);
-		//attachmentInfos.push_back({ m_RenderingAttachment.get(), VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
-		//attachments.push_back(m_RenderingAttachment.get());*/
+	
+		m_RenderingAttachment = new RenderTarget(m_MainVkContext, rendertargetCI);
+		attachmentInfos.push_back({ m_RenderingAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
+		attachments.push_back(m_RenderingAttachment);
 		
-		/*m_Renderpass = new RenderPass(m_MainVkContext->getVkLogicalDevice(), attachmentInfos);
-		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);*/
+		m_Renderpass = new RenderPass(m_MainVkContext->getVkLogicalDevice(), attachmentInfos);
+		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);
 		
+		Renderer3D::Init();
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->Setup(m_pWindow);
@@ -98,10 +99,11 @@ namespace TDS
 		{
 			renderlayer->ShutDown();
 		}
-		delete m_Renderpass;
-		delete m_Framebuffer;
 		Renderer3D::getInstance()->ShutDown();
 		GlobalBufferPool::GetInstance()->Destroy();
+		m_RenderingAttachment->~RenderTarget();
+		m_Renderpass->~RenderPass();
+		m_Framebuffer->~FrameBuffer();
 		//m_MainFrameBuffer->Destroy();
 		DefaultTextures::GetInstance().DestroyDefaultTextures();
 		m_SwapchainRenderer->ShutDown();

@@ -21,12 +21,12 @@ namespace TDS
 		std::shared_ptr<Renderer>				m_SwapchainRenderer;
 		std::shared_ptr<CommandManager>			m_CommandManager;
 		std::vector<RenderLayer*>				m_RenderLayer;
-		TDSCamera* m_Camera = nullptr;
+		TDSCamera*								m_Camera = nullptr;
 		VkCommandBuffer							currentCommand = nullptr;
-		WindowsWin* m_pWindow = nullptr;
-		RenderTarget*							m_RenderingAttachment;
-		RenderPass*								m_Renderpass;
-		FrameBuffer*							m_Framebuffer;
+		WindowsWin*								m_pWindow = nullptr;
+		RenderTarget*							m_RenderingAttachment{ nullptr };
+		RenderPass*								m_Renderpass{ nullptr };
+		FrameBuffer*							m_Framebuffer{ nullptr };
 	public:
 		inline static std::shared_ptr<GraphicsManager> m_Instance;
 		GraphicsManager();
@@ -47,6 +47,8 @@ namespace TDS
 		CommandManager& getCommandManager();
 		static GraphicsManager& getInstance();
 		RenderTarget& getFinalImage() { return *m_RenderingAttachment; }
+		FrameBuffer& getFrameBuffer() { return *m_Framebuffer; }
+		RenderPass& getRenderPass() { return *m_Renderpass; }
 	};
 
 
