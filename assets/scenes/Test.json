@@ -18,14 +18,14 @@
             },
             "Transform": {
                 "Position": {
-                    "x": 0.0,
+                    "x": 3.0,
                     "y": 0.0,
                     "z": 0.0
                 },
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 1.0
+                    "z": 0.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -53,7 +53,7 @@
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 1.0
+                    "z": 0.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -109,7 +109,7 @@
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 1.0
+                    "z": 0.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -133,21 +133,25 @@
                     "Bool": true
                 },
                 "testt": {
-                    "Double": 4.0
+                    "Double": 9.0
                 },
                 "testtt": {
-                    "Int": 3
+                    "Int": 8
                 },
                 "testttt": {
-                    "Float": 7.0
+                    "Float": 0.0
                 },
                 "testtttt": {
-                    "ScriptName": ""
+                    "ScriptName": "\u0000"
                 }
             }
         },
         "2": {
-            "Testing": {}
+            "Testing": {
+                "hihi": {
+                    "Bool": true
+                }
+            }
         },
         "3": {},
         "4": {}

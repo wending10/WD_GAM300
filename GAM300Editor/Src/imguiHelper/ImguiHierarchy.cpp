@@ -210,7 +210,7 @@ namespace TDS
 
 			// Entity will be a selectable as there are no children
 			bool currentItemHovered = false;
-			selected = ImGui::Selectable(nameTagComponent->GetNameTag().c_str(), selectedEntity == entityID, ImGuiSelectableFlags_SpanAllColumns);
+			selected = ImGui::Selectable(nameTagComponent->GetName().c_str(), selectedEntity == entityID, ImGuiSelectableFlags_SpanAllColumns);
 
 			if (ImGui::IsItemHovered())
 			{
@@ -282,7 +282,7 @@ namespace TDS
 		}
 
 		bool currentItemHovered = false;
-		selected = ImGui::TreeNodeEx(nameTagComponent->GetNameTag().c_str(), nodeFlags);
+		selected = ImGui::TreeNodeEx(nameTagComponent->GetName().c_str(), nodeFlags);
 
 		if (ImGui::IsItemHovered())
 		{

@@ -43,7 +43,6 @@
     <ClCompile Include="Src\Geometry\Triangle.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
     <ClCompile Include="Src\components\cameraComponent.cpp" />
-    <ClCompile Include="Src\components\collider.cpp" />
     <ClCompile Include="Src\components\componentHelperFunctions.cpp" />
     <ClCompile Include="Src\components\nameTag.cpp" />
     <ClCompile Include="Src\components\rigidBody.cpp" />
@@ -131,7 +130,6 @@
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\components\ai.h" />
     <ClInclude Include="Include\components\cameraComponent.h" />
-    <ClInclude Include="Include\components\collider.h" />
     <ClInclude Include="Include\components\components.h" />
     <ClInclude Include="Include\components\iComponent.h" />
     <ClInclude Include="Include\components\nameTag.h" />

@@ -121,8 +121,7 @@ namespace TDS
         GraphicsManager::getInstance().Init(&m_window);
         m_AssetManager.Init();
         m_AssetManager.PreloadAssets();
-        SceneManager::GetInstance()->Init();
-        ecs.initializeSystems(1);
+        //Run();
     }
 
     void Application::Update()
@@ -189,26 +188,32 @@ namespace TDS
 
          
            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
-           if (isPlaying)
-            {
-                ecs.runSystems(1, DeltaTime);  
-           }
+        
             
             imguiHelper::Update();
             GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
             GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
-          
+
+            if (isPlaying)
+            {
+                ecs.runSystems(1, DeltaTime);
+            }
+
+            ecs.runSystems(2, DeltaTime);
+
             imguiHelper::Draw(commandBuffer);
 
             GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
             GraphicsManager::getInstance().EndFrame();
-
             
+            // Reloading
             if (GetKeyState(VK_F5) & 0x8000)
             {
                 compileScriptAssembly();
+                SceneManager::GetInstance()->saveCurrentScene();
                 reloadScripts();
-                addScript(1, "Test");
+                SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+                //addScript(1, "Test");
             }
 
             if (GetKeyState(VK_SPACE) & 0x8000)
@@ -253,7 +258,7 @@ namespace TDS
             );
 
 
-        auto addScript = GetFunctionPtr<bool(*)(int, const char*)>
+        SceneManager::GetInstance()->addScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
@@ -269,8 +274,82 @@ namespace TDS
 
         // Step 2: Initialize
         init();
-        addScript(1, "Test");
+
+        SceneManager::GetInstance()->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetScriptVariables"
+            );
+
+        SceneManager::GetInstance()->hasScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "HasScriptViaName"
+            );
+
+        SceneManager::GetInstance()->getAllScripts = GetFunctionPtr<std::vector<std::string>(*)()>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetAllScripts"
+            );
+
+        ecs.addScriptList = GetFunctionPtr<void(*)(EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptList"
+            );
+
+        ecs.removeScriptList = GetFunctionPtr<void(*)(EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "RemoveEntity"
+            );
+
+        SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(EntityID, std::string, std::string, bool)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueBool"
+            );
+
+        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueInt"
+            );
+
+        SceneManager::GetInstance()->setDouble = GetFunctionPtr<void(*)(EntityID, std::string, std::string, double)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueDouble"
+            );
+
+        SceneManager::GetInstance()->setFloat = GetFunctionPtr<void(*)(EntityID, std::string, std::string, float)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueFloat"
+            );
+
+        SceneManager::GetInstance()->Init();
+        ecs.initializeSystems(1);
+        ecs.initializeSystems(2);
+
+        //addScript(1, "Test");
+        //addScript(2, "Testing");
         awake();
+
+        // test
+        SceneManager::GetInstance()->setCurrentScene("Test");
+        SceneManager::GetInstance()->saveCurrentScene();
+        SceneManager::GetInstance()->setCurrentScene("MainMenu");
     }
 
     Application::~Application()

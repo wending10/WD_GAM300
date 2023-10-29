@@ -76,7 +76,7 @@ namespace TDS
             ImGui::EndMenuBar();
         }
 
-		ImGui::Columns(3, 0, false);
+		ImGui::Columns(6, 0, false);
 		int i = 0;
 		for (std::string scene : sceneManager->getScenes())
 		{
