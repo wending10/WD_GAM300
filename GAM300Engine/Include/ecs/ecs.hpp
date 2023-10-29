@@ -317,6 +317,10 @@ namespace TDS
         mEntityArchetypeMap[entityId] = dummyRecord;
 
         //ScriptAPI
+        if (addScriptList)
+        {
+            addScriptList(entityId);
+        }
     }
 
     // --addComponent--
@@ -688,6 +692,8 @@ namespace TDS
         oldArchetype->entityIds.erase(willBeRemoved);
 
         mEntityArchetypeMap.erase(entityID);
+
+        removeScriptList(entityID);
     }
 
     // --removeAllEntities--

@@ -2,13 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-public class Testing : Script
-{
-    [SerializeField]
-    public bool hihi = true;
-}
-
-public class Test : Script
+public class YES : Script
 {
     [SerializeField]
     public Script script;

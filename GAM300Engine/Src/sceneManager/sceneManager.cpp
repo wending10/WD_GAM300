@@ -39,6 +39,7 @@ namespace TDS
 			}
 			m_instance->parentFilePath = currentPath.string() + "\\assets\\";
 			m_instance->filePath = currentPath.string() + "\\assets\\scenes\\";
+			m_instance->scriptFilePath = currentPath.string() + "\\ManagedScripts\\";
 		}
 		return m_instance;
 	}
@@ -85,32 +86,13 @@ namespace TDS
 
 		//SerializeToFile(filePath + "MainMenu.json");
 
-		//ecs.removeEntity(entity4.getID());
-		//SerializeToFile(filePath + "Game.json");
-
-		//Entity entity1;
-		//ecs.addComponent<NameTag>(entity1.getID());
-		//ecs.addComponent<Transform>(entity1.getID());
-		//ecs.addComponent<GraphicsComponent>(entity1.getID());
-		//Entity entity2;
-		//ecs.addComponent<NameTag>(entity2.getID());
-		//ecs.addComponent<Transform>(entity2.getID());
-		//ecs.addComponent<GraphicsComponent>(entity2.getID());
-		//Entity entity3;
-		//ecs.addComponent<NameTag>(entity3.getID());
-		//ecs.addComponent<Transform>(entity3.getID());
-		//ecs.addComponent<GraphicsComponent>(entity3.getID());
-		//Entity entity4;
-		//ecs.addComponent<NameTag>(entity4.getID());
-		//ecs.addComponent<Transform>(entity4.getID());
-		//ecs.addComponent<GraphicsComponent>(entity4.getID());
-
-		//SerializeToFile(filePath + "MainMenu.json");
+		//ecs.removeAllEntities();
 
 		//ecs.removeEntity(entity4.getID());
 		//SerializeToFile(filePath + "Game.json");
 
 		bindSystemFunctions();
+		allScripts = getAllScripts();
 		// Setting default scene
 		sceneDeserialize();
 	}
@@ -175,6 +157,51 @@ namespace TDS
 
 		ecs.setIDCounter(lastEntity + 1);
 
+		for (rapidjson::Value::ConstMemberIterator itr = obj["Scripts"].MemberBegin(); itr != obj["Scripts"].MemberEnd(); ++itr, ++i)
+		{
+			EntityID currentEntity = static_cast<EntityID>(std::stoi(itr->name.GetString()));
+
+			for (auto& script : itr->value.GetObject())
+			{
+				std::string scriptName = script.name.GetString();
+
+				std::cout << "script" << std::endl;
+				addScript(currentEntity, scriptName);
+
+				for (auto& variable : script.value.GetObject())
+				{
+					std::string variableName = variable.name.GetString();
+					auto variableTypeValue = variable.value.GetObject();
+
+					std::string variableType = variableTypeValue.MemberBegin()->name.GetString();
+
+					if (variableType == "Bool")
+					{
+						bool value = variableTypeValue.MemberBegin()->value.GetBool();
+						setBool(currentEntity, scriptName, variableName, value);
+					}
+					else if (variableType == "Int")
+					{
+						int value = variableTypeValue.MemberBegin()->value.GetInt();
+						setInt(currentEntity, scriptName, variableName, value);
+					}
+					else if (variableType == "Double")
+					{
+						double value = variableTypeValue.MemberBegin()->value.GetDouble();
+						setDouble(currentEntity, scriptName, variableName, value);
+					}
+					else if (variableType == "Float")
+					{
+						float value = variableTypeValue.MemberBegin()->value.GetDouble();
+						setFloat(currentEntity, scriptName, variableName, value);
+					}
+					//else // scripts
+					//{
+					//}
+				}
+			}
+		}
+
 		return true;
 	}
 
@@ -229,7 +256,7 @@ namespace TDS
 
 		for (int i = 0; i < entityList.size(); ++i)
 		{
-			writer->String(std::to_string(entityList[i]).c_str(), static_cast<rapidjson::SizeType>(std::to_string(i).length()), false);
+			writer->String(std::to_string(entityList[i]).c_str(), static_cast<rapidjson::SizeType>(std::to_string(entityList[i]).length()), false);
 			writer->StartObject();
 
 			std::string archetype = ecs.getArchetypeID(entityList[i]);
@@ -249,6 +276,76 @@ namespace TDS
 		}
 
 		// End of entity data
+		writer->EndObject();
+
+		// =======================================================
+		// Start of scripts
+		writer->String("Scripts", static_cast<rapidjson::SizeType>(std::string("Scripts").length()), false);
+		writer->StartObject();
+
+		for (int i = 0; i < entityList.size(); ++i)
+		{
+			// EntityID
+			writer->String(std::to_string(entityList[i]).c_str(), static_cast<rapidjson::SizeType>(std::to_string(entityList[i]).length()), false);
+			writer->StartObject();
+
+			for (std::string scriptName : allScripts)
+			{
+				if (hasScript(entityList[i], scriptName))
+				{
+					writer->String(scriptName.c_str(), static_cast<rapidjson::SizeType>(scriptName.length()), false);
+					writer->StartObject();
+
+					std::vector<ScriptValues> allValues = getScriptVariables(entityList[i], scriptName);
+					for (ScriptValues& scriptValues : allValues)
+					{
+						writer->String(scriptValues.name.c_str(), static_cast<rapidjson::SizeType>(scriptValues.name.length()), false);
+						writer->StartObject();
+
+						if (scriptValues.type == "System.Boolean")
+						{
+							writer->String("Bool", static_cast<rapidjson::SizeType>(std::string("Bool").length()), false);
+							scriptValues.value == "False" ? writer->Bool(false) : writer->Bool(true);
+						}
+						else if (scriptValues.type == "System.Int16"
+							|| scriptValues.type == "System.Int32"
+							|| scriptValues.type == "System.Int64"
+							|| scriptValues.type == "System.UInt16"
+							|| scriptValues.type == "System.UInt32"
+							|| scriptValues.type == "System.UInt64"
+							|| scriptValues.type == "System.Byte"
+							|| scriptValues.type == "System.SByte")
+						{
+							writer->String("Int", static_cast<rapidjson::SizeType>(std::string("Int").length()), false);
+							scriptValues.value == "" ? writer->Int(0) : writer->Int(std::stoi(scriptValues.value));
+						}
+						else if (scriptValues.type == "System.Double")
+						{
+							writer->String("Double", static_cast<rapidjson::SizeType>(std::string("Double").length()), false);
+							scriptValues.value == "" ? writer->Double(0) : writer->Double(std::stod(scriptValues.value));
+						}
+						else if (scriptValues.type == "System.Single")
+						{
+							writer->String("Float", static_cast<rapidjson::SizeType>(std::string("Float").length()), false);
+							scriptValues.value == "" ? writer->Double(0) : writer->Double(std::stod(scriptValues.value));
+						}
+						else // scripts
+						{
+							// To Do 
+							writer->String("ScriptName", static_cast<rapidjson::SizeType>(std::string("ScriptName").length()), false);
+							writer->String(scriptValues.value.c_str(), static_cast<rapidjson::SizeType>(scriptValues.value.length()), false);
+						}
+						writer->EndObject();
+					}
+
+					writer->EndObject();
+				}
+			}
+
+			writer->EndObject();
+		}
+
+		// End of scripts
 		writer->EndObject();
 
 		// End of file
@@ -301,7 +398,6 @@ namespace TDS
 
 		rapidjson::Value& value = doc.GetObject();
 
-		// Starting scene
 		for (auto& directory_entry : std::filesystem::directory_iterator(filePath))
 		{
 			if (directory_entry.path().extension() == ".json")
@@ -309,7 +405,8 @@ namespace TDS
 				newScene(directory_entry.path().stem().string());
 			}
 		}
-
+		
+		// Starting scene
 		rapidjson::Value::MemberIterator theItr = value.FindMember("start");
 		std::string startingScene = theItr->value.GetString();
 
@@ -336,6 +433,29 @@ namespace TDS
 		currentSceneSaved = true;
 
 		return true;
+	}
+
+	/*!*************************************************************************
+	This function finds scripts in project
+	****************************************************************************/
+	void SceneManager::scriptsDeserialize(std::string filepath)
+	{
+		if (filepath == "")
+		{
+			filepath = scriptFilePath;
+		}
+
+		for (auto& directory_entry : std::filesystem::directory_iterator(filepath))
+		{
+			if (directory_entry.path().extension() == ".cs")
+			{
+				allScripts.emplace_back(directory_entry.path().stem().string());
+			}
+			if (directory_entry.is_directory() && directory_entry.path().filename() != "obj" && directory_entry.path().filename() != ".bin")
+			{
+				scriptsDeserialize(directory_entry.path().string());
+			}
+		}
 	}
 
 	bool SceneManager::stringCompare(std::string a, std::string b)
