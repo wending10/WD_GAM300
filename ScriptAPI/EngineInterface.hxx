@@ -27,6 +27,20 @@ namespace ScriptAPI
 		***************************************************************************/
 		static bool AddScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
+		* Add GameObject to List
+		* Add this function to new Entities being Created
+		***************************************************************************/
+		static bool AddGameObjectViaName(TDS::EntityID entityId, System::String^ scriptName);
+		/*!*************************************************************************
+		* Updates GameObject Name
+		* Call this function if User changes the name of Entities
+		***************************************************************************/
+		static bool UpdateGameObjectName(System::String^ oldName, System::String^ newName);
+		/*!*************************************************************************
+		* Gets Game Object List
+		***************************************************************************/
+		static System::Collections::Generic::SortedList<System::String^, TDS::EntityID>^ GetGameObjectList();
+		/*!*************************************************************************
 		* Calls all script awake function
 		***************************************************************************/
 		static void ExecuteAwake();
@@ -35,7 +49,7 @@ namespace ScriptAPI
 		***************************************************************************/
 		static void ExecuteOnEnable();
 		/*!*************************************************************************
-		* Calls all script OnEnable function with EntityID
+		* Toggles active status on script
 		***************************************************************************/
 		static bool ToggleScriptViaName(TDS::EntityID entityId, System::String^ scriptName);
 		/*!*************************************************************************
@@ -74,12 +88,19 @@ namespace ScriptAPI
 		* Serializing Stuff
 		***************************************************************************/
 		static void Serialize(Object^ obj, String^ filename);
+		/*!*************************************************************************
+		* Remove Entity from scriptList
+		* Call this function when entity gets removed
+		***************************************************************************/
+		static void RemoveEntity(TDS::EntityID entityId);
 
 		/*static std::vector<std::string> GetTypeListName()*/
+
 
 	private:
 		//(^)* reference to managed pointer
 		using ScriptList = System::Collections::Generic::List<Script^>;
+		static System::Collections::Generic::SortedList<System::String^, TDS::EntityID>^ gameObjectList;
 		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ scripts;
 		static System::Collections::Generic::IEnumerable<System::Type^>^ scriptTypeList;
 		/*!*************************************************************************

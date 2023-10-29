@@ -43,6 +43,8 @@ namespace ScriptAPI
 
         generic <typename TResult>
         IAsyncEnumerable<TResult>^ Coroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration);
+        
+        TDS::EntityID findGameObject(System::String^ gameObjectName);
 
         TransformComponent GetTransformComponent();
         ColliderComponent GetColliderComponent();
@@ -101,8 +103,12 @@ namespace ScriptAPI
 
             // Wrap the result in a Task
             /*return Task::FromResult(result);*/
-
             return func();
+        }
+
+        static TDS::EntityID findGameObject(System::String^ entityName)
+        {
+            return EngineInterface::GetGameObjectList()[entityName];
         }
 
     };
