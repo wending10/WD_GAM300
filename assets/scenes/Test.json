@@ -139,10 +139,10 @@
                     "Int": 3
                 },
                 "testttt": {
-                    "Float": 7.0
+                    "Double": 7.0
                 },
                 "testtttt": {
-                    "ScriptName": ""
+                    "ScriptName": "\u0000"
                 }
             }
         },

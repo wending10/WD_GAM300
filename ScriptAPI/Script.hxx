@@ -26,9 +26,8 @@ using namespace System::Threading::Tasks;
 using namespace System::Reflection;
 using namespace concurrency;
 
-[AttributeUsage(AttributeTargets.Field)]
-public ref class SerializeFieldAttribute : System::Attribute { };
-
+[AttributeUsage(AttributeTargets::Field)]
+public ref class SerializeFieldAttribute : public Attribute { };
 
 namespace ScriptAPI
 {
@@ -47,13 +46,16 @@ namespace ScriptAPI
         generic <typename TResult>
         IAsyncEnumerable<TResult>^ Coroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration);
         
-        TDS::EntityID findGameObject(System::String^ gameObjectName);
+        //TDS::EntityID findGameObject(System::String^ gameObjectName);
 
         BoxColliderComponent GetBoxColliderComponent();
         CapsuleColliderComponent GetCapsuleColliderComponent();
         NameTagComponent GetNameTagComponent();
         SphereColliderComponent GetSphereColliderComponent();
         TransformComponent GetTransformComponent();
+
+        int GetEntityID();
+        Script^ GameObjectScriptFind(System::String^ name, System::String^ script);
 
     internal:
         void SetEntityID(TDS::EntityID ID);
@@ -112,10 +114,10 @@ namespace ScriptAPI
             return func();
         }
 
-        static TDS::EntityID findGameObject(System::String^ entityName)
-        {
-            return EngineInterface::GetGameObjectList()[entityName];
-        }
+        //static TDS::EntityID findGameObject(System::String^ entityName)
+        //{
+        //    return EngineInterface::GetGameObjectList()[entityName];
+        //}
 
     };
 }

@@ -27,6 +27,14 @@
 // Helper functions for components
 namespace TDS
 {
+	DLL_API struct ScriptValues
+	{
+		std::string name;
+		std::string value;
+		std::string type;
+		EntityID referenceEntityID;
+	};
+
 	/*!*************************************************************************
 	This function is a helper function to add components by string name
 	****************************************************************************/

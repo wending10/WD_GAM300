@@ -108,6 +108,67 @@ namespace TDS
 				}
 			}
 
+			for (auto scriptName : SceneManager::GetInstance()->getAllScripts())
+			{
+				if (!SceneManager::GetInstance()->hasScript(selectedEntity, scriptName))
+				{
+					continue;
+				}
+
+				if (ImGui::TreeNodeEx(scriptName.c_str(), nodeFlags))
+				{
+					//ImGui::PushID(selectedEntity);
+					if (ImGui::BeginTable("###", 2, /*ImGuiTableFlags_Borders |*/ ImGuiTableFlags_NoPadInnerX, ImVec2(0.0f, 5.5f)))
+					{
+						ImGui::TableNextRow();
+
+						ImGui::TableNextColumn();
+						ImGui::TableNextColumn();
+						ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
+
+						std::vector<ScriptValues> allValues = SceneManager::GetInstance()->getScriptVariables(selectedEntity, scriptName);
+
+						for (ScriptValues scriptValue : allValues)
+						{
+							if (scriptValue.type == "System.Boolean")
+							{
+								bool value = scriptValue.value == "False" ? false : true;
+								ImguiInput(scriptValue.name, value);
+							}
+							else if (scriptValue.type == "System.Int16"
+								|| scriptValue.type == "System.Int32"
+								|| scriptValue.type == "System.Int64"
+								|| scriptValue.type == "System.UInt16"
+								|| scriptValue.type == "System.UInt32"
+								|| scriptValue.type == "System.UInt64"
+								|| scriptValue.type == "System.Byte"
+								|| scriptValue.type == "System.SByte")
+							{
+								int value = std::stoi(scriptValue.value);
+								ImguiInput(scriptValue.name, value);
+							}
+							else if (scriptValue.type == "System.Double" || scriptValue.type == "System.Single")
+							{
+								float value = std::stod(scriptValue.value);
+								ImguiInput(scriptValue.name, value);
+							}
+							else // scripts
+							{
+								// To Do 
+
+							}
+						}
+
+						ImGui::PopItemWidth();
+						ImGui::EndTable();
+					}
+					ImGui::TreePop();
+				}
+			}
+
+			// all script names
+			// call manage side to gimme variables that the script has
+
 			// Add component button
 			ImGuiStyle& style = ImGui::GetStyle();
 

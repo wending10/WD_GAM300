@@ -1,4 +1,5 @@
 #include "Script.hxx"
+#include "HelperFunctions.hxx"
 
 namespace ScriptAPI
 {
@@ -70,14 +71,25 @@ namespace ScriptAPI
 	{
 		return SphereColliderComponent(entityID);
 	}
-	TDS::EntityID Script::findGameObject(System::String^ gameObjectName)
-	{
-		gameObjectName = gameObjectName->Trim();
-		return ScriptSystem::findGameObject(gameObjectName);
-	}
+	//TDS::EntityID Script::findGameObject(System::String^ gameObjectName)
+	//{
+	//	gameObjectName = gameObjectName->Trim();
+	//	return ScriptSystem::findGameObject(gameObjectName);
+	//}
 
 	TransformComponent Script::GetTransformComponent()
 	{
 		return TransformComponent(entityID);
+	}
+
+	int Script::GetEntityID()
+	{
+		return entityID;
+	}
+
+	Script^ Script::GameObjectScriptFind(System::String^ name, System::String^ script)
+	{
+		System::Console::WriteLine("called");
+		return FindGameObjectViaName(name, script);
 	}
 }

@@ -323,6 +323,9 @@ namespace TDS
 
         void                         toggleEnabledEntity(const EntityID& entityId);
 
+        void (*addScriptList)(EntityID);
+        void (*removeScriptList)(EntityID);
+
     private:
         // Unique pointer to ECS
         //static std::unique_ptr<ECS>  m_instance;

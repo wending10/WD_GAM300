@@ -15,6 +15,8 @@ RTTR_REGISTRATION
 {
 	using namespace TDS;
 
+	//rttr::registration::property()
+
 	rttr::registration::class_<BoxCollider>("Box Collider")
 		.property("IsTrigger", &BoxCollider::GetIsTrigger, &BoxCollider::SetIsTrigger)
 		.method("GetCenter", &BoxCollider::GetCenter)

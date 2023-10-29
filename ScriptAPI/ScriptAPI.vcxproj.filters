@@ -45,6 +45,12 @@
     <ClInclude Include="Components\SphereColliderComponent.hxx">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TypeConversion.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HelperFunctions.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineInterface.cxx">
@@ -69,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\SphereColliderComponent.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeConversion.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
