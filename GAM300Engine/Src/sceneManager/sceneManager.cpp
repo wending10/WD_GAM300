@@ -178,22 +178,22 @@ namespace TDS
 					if (variableType == "Bool")
 					{
 						bool value = variableTypeValue.MemberBegin()->value.GetBool();
-						setBool(variableName, value);
+						setBool(currentEntity, scriptName, variableName, value);
 					}
 					else if (variableType == "Int")
 					{
 						int value = variableTypeValue.MemberBegin()->value.GetInt();
-						setInt(variableName, value);
+						setInt(currentEntity, scriptName, variableName, value);
 					}
 					else if (variableType == "Double")
 					{
 						double value = variableTypeValue.MemberBegin()->value.GetDouble();
-						setDouble(variableName, value);
+						setDouble(currentEntity, scriptName, variableName, value);
 					}
 					else if (variableType == "Float")
 					{
 						float value = variableTypeValue.MemberBegin()->value.GetDouble();
-						setFloat(variableName, value);
+						setFloat(currentEntity, scriptName, variableName, value);
 					}
 					//else // scripts
 					//{
@@ -319,9 +319,14 @@ namespace TDS
 							writer->String("Int", static_cast<rapidjson::SizeType>(std::string("Int").length()), false);
 							scriptValues.value == "" ? writer->Int(0) : writer->Int(std::stoi(scriptValues.value));
 						}
-						else if (scriptValues.type == "System.Double" || scriptValues.type == "System.Single")
+						else if (scriptValues.type == "System.Double")
 						{
 							writer->String("Double", static_cast<rapidjson::SizeType>(std::string("Double").length()), false);
+							scriptValues.value == "" ? writer->Double(0) : writer->Double(std::stod(scriptValues.value));
+						}
+						else if (scriptValues.type == "System.Single")
+						{
+							writer->String("Float", static_cast<rapidjson::SizeType>(std::string("Float").length()), false);
 							scriptValues.value == "" ? writer->Double(0) : writer->Double(std::stod(scriptValues.value));
 						}
 						else // scripts

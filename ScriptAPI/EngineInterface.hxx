@@ -94,12 +94,13 @@ namespace ScriptAPI
 		***************************************************************************/
 		static std::vector<std::string> GetAllScripts();
 
-		static void SetValueBool(std::string variableName, bool value);
-		static void SetValueInt(std::string variableName, int value);
-		static void SetValueDouble(std::string variableName, double value);
-		static void SetValueFloat(std::string variableName, float value);
+		static void SetValueBool(TDS::EntityID entityId, std::string script, std::string variableName, bool value);
+		static void SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value);
+		static void SetValueDouble(TDS::EntityID entityId, std::string script, std::string variableName, double value);
+		static void SetValueFloat(TDS::EntityID entityId, std::string script, std::string variableName, float value);
 		
-		using ScriptList = System::Collections::Generic::List<Script^>;
+		using ScriptList = System::Collections::Generic::Dictionary<String^, Script^>;
+		using NameScriptPair = System::Collections::Generic::KeyValuePair<String^, Script^>;
 		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ GetScriptList();
 
 	private:
@@ -113,7 +114,7 @@ namespace ScriptAPI
 		static void updateScriptTypeList();
 		static System::Runtime::Loader::AssemblyLoadContext^ loadContext;
 
-		static array<FieldInfo^>^ currentFieldArray;
-		static Object^ currentObject;
+		//static array<FieldInfo^>^ currentFieldArray;
+		//static Object^ currentObject;
 	};
 }

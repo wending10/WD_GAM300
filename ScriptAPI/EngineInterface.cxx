@@ -87,11 +87,11 @@ namespace ScriptAPI
         script->SetEntityID(entityId);
 
         // Add script to SortedList
-        scripts[entityId]->Add(script);
+        scripts[entityId]->Add(script->GetType()->FullName, script);
 
-        currentObject = script;
-        Type^ type = script->GetType();
-        currentFieldArray = type->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
+        //currentObject = script;
+        //Type^ type = script->GetType();
+        //currentFieldArray = type->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
 
         return true;
         SAFE_NATIVE_CALL_END
@@ -149,13 +149,13 @@ namespace ScriptAPI
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                for each (Script ^ script in scripts[i])
+                for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        if (!script->getAwakeFlag())
+                        if (!script->Value->getAwakeFlag())
                         {
-                            script->Awake();
-                            script->setAwakeFlag();
+                            script->Value->Awake();
+                            script->Value->setAwakeFlag();
                         }
                     SAFE_NATIVE_CALL_END
                 }
@@ -171,10 +171,10 @@ namespace ScriptAPI
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                for each (Script ^ script in scripts[i])
+                for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        script->OnEnable();
+                        script->Value->OnEnable();
                     SAFE_NATIVE_CALL_END
                 }
             }
@@ -190,28 +190,28 @@ namespace ScriptAPI
         // Remove any whitespaces
         scriptName = scriptName->Trim();
 
-        // Look for the correct script
-        System::Type^ scriptType = nullptr;
-        for each (System::Type ^ type in scriptTypeList)
-        {
-            if (type->FullName == scriptName || type->Name == scriptName)
-            {
-                scriptType = type;
-                break;
-            }
-        }
+        //// Look for the correct script
+        //System::Type^ scriptType = nullptr;
+        //for each (System::Type ^ type in scriptTypeList)
+        //{
+        //    if (type->FullName == scriptName || type->Name == scriptName)
+        //    {
+        //        scriptType = type;
+        //        break;
+        //    }
+        //}
 
-        // Failed to get any script
-        if (scriptType == nullptr)
-        {
-            return false;
-        }
+        //// Failed to get any script
+        //if (scriptType == nullptr)
+        //{
+        //    return false;
+        //}
 
-        for each (Script ^ script in scripts[entityId])
+        for each (NameScriptPair ^ script in scripts[entityId])
         {
-            if (script->GetType() == scriptType)
+            if (script->Key == scriptName)
             {
-                script->ToggleScript();
+                script->Value->ToggleScript();
             }
         }
         return true;
@@ -229,13 +229,13 @@ namespace ScriptAPI
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                for each (Script ^ script in scripts[i])
+                for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        if (!script->getStartFlag() && script->isScriptEnabled())
+                        if (!script->Value->getStartFlag() && script->Value->isScriptEnabled())
                         {
-                            script->Start();
-                            script->setStartFlag();
+                            script->Value->Start();
+                            script->Value->setStartFlag();
                         }
                     SAFE_NATIVE_CALL_END
                 }
@@ -252,12 +252,12 @@ namespace ScriptAPI
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                for each (Script ^ script in scripts[i])
+                for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        if (script->isScriptEnabled())
+                        if (script->Value->isScriptEnabled())
                         {
-                            script->Update();
+                            script->Value->Update();
                         }
                     SAFE_NATIVE_CALL_END
                 }
@@ -274,12 +274,12 @@ namespace ScriptAPI
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEnabledEntity(i))
             {
-                for each (Script ^ script in scripts[i])
+                for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        if (script->isScriptEnabled())
+                        if (script->Value->isScriptEnabled())
                         {
-                            script->LateUpdate();
+                            script->Value->LateUpdate();
                         }
                     SAFE_NATIVE_CALL_END
                 }
@@ -298,10 +298,10 @@ namespace ScriptAPI
             {
                 continue;
             }
-            for each (Script ^ script in scripts[i])
+            for each (NameScriptPair ^ script in scripts[i])
             {
                 SAFE_NATIVE_CALL_BEGIN
-                    script->OnDisable();
+                    script->Value->OnDisable();
                 SAFE_NATIVE_CALL_END
             }
         }
@@ -318,10 +318,10 @@ namespace ScriptAPI
             {
                 continue;
             }
-            for each (Script ^ script in scripts[i])
+            for each (NameScriptPair ^ script in scripts[i])
             {
                 SAFE_NATIVE_CALL_BEGIN
-                    script->OnDestroy();
+                    script->Value->OnDestroy();
                 SAFE_NATIVE_CALL_END
             }
         }
@@ -357,9 +357,9 @@ namespace ScriptAPI
 
         // Look for the correct script
         System::Type^ scriptType = nullptr;
-        for each (Script ^ script in scripts[entityId])
+        for each (NameScriptPair ^ script in scripts[entityId])
         {
-            if (script->GetType()->FullName == scriptName || script->GetType()->Name == scriptName)
+            if (script->Key == scriptName)
             {
                 return true;
             }
@@ -397,15 +397,16 @@ namespace ScriptAPI
 
         scriptName = scriptName->Trim();
 
-        Object^ obj = nullptr;
-        for each (Script ^ script in scripts[entityId])
-        {
-            if (script->GetType()->FullName == scriptName || script->GetType()->Name == scriptName)
-            {
-                obj = script;
-                break;
-            }
-        }
+        //Object^ obj = nullptr;
+        //for each (Script ^ script in scripts[entityId])
+        //{
+        //    if (script->GetType()->FullName == scriptName || script->GetType()->Name == scriptName)
+        //    {
+        //        obj = script;
+        //        break;
+        //    }
+        //}
+        Object^ obj = scripts[entityId][scriptName];
 
         // Failed to get any script
         if (obj == nullptr)
@@ -445,12 +446,18 @@ namespace ScriptAPI
         return scriptValues;
     }
 
-    void EngineInterface::SetValueBool(std::string variableName, bool value)
+    void EngineInterface::SetValueBool(TDS::EntityID entityId, std::string script, std::string variableName, bool value)
     {
-        System::Console::WriteLine("called in SetValueBool");
         String^ variable = toSystemString(variableName);
 
-        //auto currentFieldArray = FindField(entityId, script);
+        Object^ currentObject = scripts[entityId][toSystemString(script)];
+
+        if (currentObject == nullptr)
+        {
+            return;
+        }
+
+        array<FieldInfo^>^ currentFieldArray = currentObject->GetType()->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
 
         if (currentFieldArray == nullptr)
         {
@@ -461,49 +468,24 @@ namespace ScriptAPI
         {
             if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
             {
-                System::Console::WriteLine("set bool hehe");
                 field->SetValue(currentObject, value);
-                System::Console::WriteLine(field->GetValue(currentObject));
-                //return;
-            }
-        }
-
-        System::Console::WriteLine("??");
-        for each (auto values in GetScriptVariables(1, "Test"))
-        {
-            System::Console::WriteLine(toSystemString(values.name));
-            System::Console::WriteLine(toSystemString(values.value));
-        }
-    }
-
-    void EngineInterface::SetValueInt(std::string variableName, int value)
-    {
-        System::Console::WriteLine("called in SetValueInt");
-        String^ variable = toSystemString(variableName);
-
-        //auto currentFieldArray = FindField(entityId, script);
-
-        if (currentFieldArray == nullptr)
-        {
-            return;
-        }
-
-        for each (FieldInfo^ field in currentFieldArray)
-        {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
-            {
-                System::Console::WriteLine("set int hehe");
-                field->SetValue(currentObject, value);
-                System::Console::WriteLine(field->GetValue(currentObject));
                 return;
             }
         }
     }
 
-    void EngineInterface::SetValueDouble(std::string variableName, double value)
+    void EngineInterface::SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value)
     {
-        System::Console::WriteLine("called in SetValueDouble");
         String^ variable = toSystemString(variableName);
+
+        Object^ currentObject = scripts[entityId][toSystemString(script)];
+
+        if (currentObject == nullptr)
+        {
+            return;
+        }
+
+        array<FieldInfo^>^ currentFieldArray = currentObject->GetType()->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
 
         if (currentFieldArray == nullptr)
         {
@@ -514,18 +496,24 @@ namespace ScriptAPI
         {
             if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
             {
-                System::Console::WriteLine("set double hehe");
                 field->SetValue(currentObject, value);
-                System::Console::WriteLine(field->GetValue(currentObject));
                 return;
             }
         }
     }
 
-    void EngineInterface::SetValueFloat(std::string variableName, float value)
+    void EngineInterface::SetValueDouble(TDS::EntityID entityId, std::string script, std::string variableName, double value)
     {
-        System::Console::WriteLine("called in SetValueDouble");
         String^ variable = toSystemString(variableName);
+
+        Object^ currentObject = scripts[entityId][toSystemString(script)];
+
+        if (currentObject == nullptr)
+        {
+            return;
+        }
+
+        array<FieldInfo^>^ currentFieldArray = currentObject->GetType()->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
 
         if (currentFieldArray == nullptr)
         {
@@ -536,9 +524,35 @@ namespace ScriptAPI
         {
             if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
             {
-                System::Console::WriteLine("set double hehe");
                 field->SetValue(currentObject, value);
-                System::Console::WriteLine(field->GetValue(currentObject));
+                return;
+            }
+        }
+    }
+
+    void EngineInterface::SetValueFloat(TDS::EntityID entityId, std::string script, std::string variableName, float value)
+    {
+        String^ variable = toSystemString(variableName);
+
+        Object^ currentObject = scripts[entityId][toSystemString(script)];
+
+        if (currentObject == nullptr)
+        {
+            return;
+        }
+
+        array<FieldInfo^>^ currentFieldArray = currentObject->GetType()->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
+
+        if (currentFieldArray == nullptr)
+        {
+            return;
+        }
+
+        for each (FieldInfo^ field in currentFieldArray)
+        {
+            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            {
+                field->SetValue(currentObject, value);
                 return;
             }
         }
@@ -620,11 +634,11 @@ namespace ScriptAPI
         {
             if (entityNameID.Key == name)
             {
-                for each (auto script in EngineInterface::GetScriptList()[entityNameID.Value])
+                for each (EngineInterface::NameScriptPair^ script in EngineInterface::GetScriptList()[entityNameID.Value])
                 {
-                    if (script->GetType()->FullName == scriptName || script->GetType()->Name == scriptName)
+                    if (script->Key == scriptName)
                     {
-                        return script;
+                        return script->Value;
                     }
                 }
             }

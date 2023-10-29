@@ -107,16 +107,17 @@ namespace TDS
 
 		bool isGameplay;
 
+		// Function pointers from scriptAPI
 		std::vector<TDS::ScriptValues>(*getScriptVariables)(EntityID entityID, std::string scriptName);
 		bool(*hasScript)(EntityID entityID, std::string scriptName);
 		std::vector<std::string>(*getAllScripts)();
 
 		bool (*addScript)(EntityID entityID, std::string scriptName);
 
-		void (*setBool)(std::string variableName, bool value);
-		void (*setInt)(std::string variableName, int value);
-		void (*setDouble)(std::string variableName, double value);
-		void (*setFloat)(std::string variableName, float value);
+		void (*setBool)(EntityID entityID, std::string script, std::string variableName, bool value);
+		void (*setInt)(EntityID entityID, std::string script, std::string variableName, int value);
+		void (*setDouble)(EntityID entityID, std::string script, std::string variableName, double value);
+		void (*setFloat)(EntityID entityID, std::string script, std::string variableName, float value);
 
 	private:
 		// Unique pointer to SceneManager

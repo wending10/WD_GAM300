@@ -203,11 +203,15 @@ namespace TDS
             imguiHelper::Draw(commandBuffer);
             GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
             GraphicsManager::getInstance().EndFrame();
+            
+            // Reloading
             if (GetKeyState(VK_F5) & 0x8000)
             {
                 compileScriptAssembly();
+                SceneManager::GetInstance()->saveCurrentScene();
                 reloadScripts();
-                addScript(1, "Test");
+                SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+                //addScript(1, "Test");
             }
 
             if (GetKeyState(VK_SPACE) & 0x8000)
@@ -304,28 +308,28 @@ namespace TDS
                 "RemoveEntity"
             );
 
-        SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(std::string, bool)>
+        SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(EntityID, std::string, std::string, bool)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "SetValueBool"
             );
 
-        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(std::string, int)>
+        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "SetValueInt"
             );
 
-        SceneManager::GetInstance()->setDouble = GetFunctionPtr<void(*)(std::string, double)>
+        SceneManager::GetInstance()->setDouble = GetFunctionPtr<void(*)(EntityID, std::string, std::string, double)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "SetValueDouble"
             );
 
-        SceneManager::GetInstance()->setFloat = GetFunctionPtr<void(*)(std::string, float)>
+        SceneManager::GetInstance()->setFloat = GetFunctionPtr<void(*)(EntityID, std::string, std::string, float)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",

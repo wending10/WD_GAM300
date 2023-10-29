@@ -33,6 +33,7 @@ namespace TDS
 	void Properties::update()
 	{
 		std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
+		auto& sceneManagerInstance = SceneManager::GetInstance();
 
 		// If there is a selected entity
 		if (EntityID selectedEntity = hierarchyPanel->getSelectedEntity())
@@ -108,9 +109,9 @@ namespace TDS
 				}
 			}
 
-			for (auto scriptName : SceneManager::GetInstance()->getAllScripts())
+			for (auto scriptName : sceneManagerInstance->getAllScripts())
 			{
-				if (!SceneManager::GetInstance()->hasScript(selectedEntity, scriptName))
+				if (!sceneManagerInstance->hasScript(selectedEntity, scriptName))
 				{
 					continue;
 				}
@@ -126,14 +127,15 @@ namespace TDS
 						ImGui::TableNextColumn();
 						ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
 
-						std::vector<ScriptValues> allValues = SceneManager::GetInstance()->getScriptVariables(selectedEntity, scriptName);
+						std::vector<ScriptValues> allValues = sceneManagerInstance->getScriptVariables(selectedEntity, scriptName);
 
 						for (ScriptValues scriptValue : allValues)
 						{
 							if (scriptValue.type == "System.Boolean")
 							{
 								bool value = scriptValue.value == "False" ? false : true;
-								ImguiInput(scriptValue.name, value);
+								value = ImguiInput(scriptValue.name, value);
+								sceneManagerInstance->setBool(selectedEntity, scriptName, scriptValue.name, value);
 							}
 							else if (scriptValue.type == "System.Int16"
 								|| scriptValue.type == "System.Int32"
@@ -145,12 +147,20 @@ namespace TDS
 								|| scriptValue.type == "System.SByte")
 							{
 								int value = std::stoi(scriptValue.value);
-								ImguiInput(scriptValue.name, value);
+								value = ImguiInput(scriptValue.name, value);
+								sceneManagerInstance->setInt(selectedEntity, scriptName, scriptValue.name, value);
 							}
-							else if (scriptValue.type == "System.Double" || scriptValue.type == "System.Single")
+							else if (scriptValue.type == "System.Double")
 							{
 								float value = std::stod(scriptValue.value);
-								ImguiInput(scriptValue.name, value);
+								value = ImguiInput(scriptValue.name, value);
+								sceneManagerInstance->setDouble(selectedEntity, scriptName, scriptValue.name, static_cast<double>(value));
+							}
+							else if (scriptValue.type == "System.Single")
+							{
+								float value = std::stod(scriptValue.value);
+								value = ImguiInput(scriptValue.name, value);
+								sceneManagerInstance->setFloat(selectedEntity, scriptName, scriptValue.name, value);
 							}
 							else // scripts
 							{
@@ -202,6 +212,13 @@ namespace TDS
 					{
 						addComponentByName(componentName, selectedEntity);
 						TDS_INFO("Added Component");
+					}
+				}
+				for (auto scriptName : sceneManagerInstance->getAllScripts())
+				{
+					if (!sceneManagerInstance->hasScript(selectedEntity, scriptName) && ImGui::Selectable(scriptName.c_str()))
+					{
+						sceneManagerInstance->addScript(selectedEntity, scriptName);
 					}
 				}
 				ImGui::EndPopup();
