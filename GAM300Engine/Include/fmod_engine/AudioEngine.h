@@ -48,6 +48,11 @@ namespace TDS
             DLL_API  AudioEngine(const AudioEngine& rhs) = delete;
 
             /**
+            * Destructor for Audio Engine
+            */
+            DLL_API  ~AudioEngine();
+
+            /**
              * Remove AudioEngine operator= copy constructor.
              * It is the ensure singleton
              */
@@ -66,7 +71,12 @@ namespace TDS
             /**
              * Returns a pointer to an instance of AudioEngine.
              */
-            DLL_API static AudioEngine* get_audioengine_instance();
+            DLL_API  static AudioEngine* get_audioengine_instance();
+
+            /**
+            * Creates a unique ptr for anyone who wants to use audio engine
+            */
+            //DLL_API  std::unique_ptr<AudioEngine> get_audioengine_unique(std::unique_ptr<AudioEngine> ptr);
 
             /**
             * Method which should be called every frame of the game loop

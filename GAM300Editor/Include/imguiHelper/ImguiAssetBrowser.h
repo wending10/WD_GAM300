@@ -19,6 +19,7 @@ namespace TDS
 		float padding = 10.f;
 		std::string path1;
 		std::string selectedpath;
+		AudioImgui audimg;
 	};
 }
 

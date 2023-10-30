@@ -22,7 +22,13 @@ namespace TDS
         AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
             eventDescriptions(), eventInstances(), reverb() {}
 
+        AudioEngine::~AudioEngine()
+        {
+            deactivate();
+        }
+
         void AudioEngine::init() {
+            ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this
             ERRCHECK(FMOD::Studio::System::create(&studioSystem));
             ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
             ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_STEREO, 0));
@@ -30,21 +36,23 @@ namespace TDS
             ERRCHECK(lowLevelSystem->set3DNumListeners(1));
             ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
             ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
-            //ERRCHECK(FMOD::System_Create()) //I don't think need this
             initReverb();
         }
 
-        void AudioEngine::deactivate() {
-            lowLevelSystem->close();
-            lowLevelSystem->release();
-            studioSystem->release();
+        void AudioEngine::deactivate()
+        {
+            ERRCHECK(studioSystem->release());
+            ERRCHECK(lowLevelSystem->close());
+            ERRCHECK(lowLevelSystem->release());
         }
 
         AudioEngine* AudioEngine::get_audioengine_instance()
         {
             if (audioE_instance == NULL)
             {
-                return audioE_instance = new AudioEngine();
+                audioE_instance = new AudioEngine();
+                audioE_instance->init();
+                return audioE_instance;
             }
 
             return audioE_instance;
@@ -58,7 +66,7 @@ namespace TDS
             if (!soundLoaded(soundInfo)) {
                 std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
                 FMOD::Sound* sound;
-                ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
+                ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath_inChar(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
                 ERRCHECK(sound->setMode(soundInfo.isLoop() ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF));
                 ERRCHECK(sound->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR));
                 sounds.insert({ soundInfo.getUniqueID(), sound });
@@ -275,7 +283,7 @@ namespace TDS
         //// Private definitions 
         bool AudioEngine::soundLoaded(SoundInfo soundInfo) {
             std::cout << "Checking sound " << soundInfo.getUniqueID() << " exists\n";
-            return sounds.count(soundInfo.getUniqueID()) > 0;
+            return (sounds.count(soundInfo.getUniqueID()) > 0);
         }
 
         void AudioEngine::set3dChannelPosition(SoundInfo soundInfo, FMOD::Channel * channel) {

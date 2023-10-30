@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "components/iComponent.h"
+#include "Vector3.h"
 
 namespace TDS{
     static unsigned int counter{ 0 };
@@ -22,10 +23,10 @@ namespace TDS{
     {
 
         unsigned int uniqueID, MSLength;
-        const char* filePath;
+        std::string filePath;
         bool isitLoop, isit3D;
         SOUND_STATE whatState;
-        std::array<float, 3> posVec; //!!!!!!!To be replaced when vec container is used
+        Vec3 position; //!!!!!!!To be replaced when vec container is used
         float volume, ReverbAmount;
 
         /**
@@ -35,7 +36,9 @@ namespace TDS{
         */
         virtual bool Deserialize(const rapidjson::Value& obj)
         {
-            return false;
+            position = { obj["PositionX"].GetFloat(), obj["PositionY"].GetFloat(), obj["PositionZ"].GetFloat() };
+
+            return true; //Change this to return based of whether it's really successful or not
         }
 
         /**
@@ -45,12 +48,16 @@ namespace TDS{
         */
         virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
         {
-            return false;
+            writer->Key("PositionX");
+            writer->Double(static_cast<float>(position[0]));
+
+            return true; //Change this to return based of whether it's really successful or not
         }
 
         // convenience method to set the 3D coordinates of the sound.
-        void set3DCoords(float x, float y, float z) {
-            this->posVec[0] = x, this->posVec[1] = y, this->posVec[2] = z; //!!!!!!!To be replaced when vec container is used
+        void set3DCoords(float x, float y, float z)
+        {
+            position.Set(x, y, z);
         }
 
         bool isLoaded()
@@ -78,24 +85,31 @@ namespace TDS{
             return uniqueID;
         }
 
-        const char* getFilePath()
+        std::string getFilePath()
         {
             return filePath;
         }
 
+        const char* getFilePath_inChar()
+        {
+            const char* name = filePath.c_str();
+
+            return name;
+        }
+
         float getX()
         {
-            return posVec[0]; //!!!!!!!To be replaced when vec container is used
+            return position[0]; //!!!!!!!To be replaced when vec container is used
         }
 
         float getY()
         {
-            return posVec[1]; //!!!!!!!To be replaced when vec container is used
+            return position[1]; //!!!!!!!To be replaced when vec container is used
         }
 
         float getZ()
         {
-            return posVec[2]; //!!!!!!!To be replaced when vec container is used
+            return position[2]; //!!!!!!!To be replaced when vec container is used
         }
 
         float getReverbAmount()
@@ -143,9 +157,15 @@ namespace TDS{
             isit3D = condition;
         }
 
-        SoundInfo(const char* _filePath = "", bool _isLoop = false, bool _is3D = false, SOUND_STATE _theState = SOUND_UNLOAD, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
-            : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), whatState(_theState), posVec{ _x, _y, _z }, volume(_volume), ReverbAmount(_reverbamount)  //!!!!!!!To be replaced when vec container is used
+        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, SOUND_STATE _theState = SOUND_UNLOAD, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
+            : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), whatState(_theState), volume(_volume), ReverbAmount(_reverbamount)  //!!!!!!!To be replaced when vec container is used
         {
+            if (filePath != "")
+            {
+                whatState = SOUND_LOADED;
+            }
+            
+            position.Set(_x, _y, _z);
             MSLength = 0;
             uniqueID = counter++; //Change UID to include time when added
         }

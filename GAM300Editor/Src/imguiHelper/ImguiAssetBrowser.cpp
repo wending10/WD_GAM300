@@ -157,9 +157,9 @@ namespace TDS
 				//if .wav, play audio...
 				if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
 				{
-					AudioImgui audimg;
-
 					audimg.init(true);
+
+					audimg.update();
 				}
 
 

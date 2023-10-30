@@ -32,7 +32,7 @@ namespace TDS
 
 	AudioImgui::~AudioImgui()
 	{
-		audeng->deactivate();
+		delete audeng;
 	}
 
 	void AudioImgui::activate_audio_controls()
@@ -49,8 +49,11 @@ namespace TDS
 	void AudioImgui::add_audio_files()
 	{
 		std::filesystem::path pathing = std::filesystem::current_path();
+		std::cout << "The file path is " << pathing << '\n';
 
+		/*std::string file_name;
 
+		SoundInfo add_sound(file_name);*/
 	}
 
 	void AudioImgui::update()
