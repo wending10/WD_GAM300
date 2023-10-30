@@ -10,7 +10,7 @@
         "1": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
+                "Name": "entity1",
                 "Tag": "",
                 "IsActive": true,
                 "HierarchyParent": 0,
@@ -25,7 +25,7 @@
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 0.0
+                    "z": 1.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -38,7 +38,7 @@
         "2": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
+                "Name": "entity2",
                 "Tag": "",
                 "IsActive": true,
                 "HierarchyParent": 0,
@@ -53,7 +53,7 @@
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 0.0
+                    "z": 1.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -66,7 +66,7 @@
         "3": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
+                "Name": "entity3",
                 "Tag": "",
                 "IsActive": true,
                 "HierarchyParent": 0,
@@ -74,14 +74,14 @@
             },
             "Transform": {
                 "Position": {
-                    "x": 0.0,
+                    "x": 15.0,
                     "y": 0.0,
                     "z": 0.0
                 },
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 0.0
+                    "z": 1.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -94,7 +94,7 @@
         "4": {
             "ArchetypeID": "110000100000",
             "Name Tag": {
-                "Name": "New Entity",
+                "Name": "entity4",
                 "Tag": "",
                 "IsActive": true,
                 "HierarchyParent": 0,
@@ -109,7 +109,7 @@
                 "Scale": {
                     "x": 1.0,
                     "y": 1.0,
-                    "z": 0.0
+                    "z": 1.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -123,8 +123,8 @@
     "Scripts": {
         "1": {
             "Test": {
-                "script": {
-                    "ScriptName": ""
+                "otherEntity": {
+                    "GameObject": 3
                 },
                 "test": {
                     "ScriptName": ""

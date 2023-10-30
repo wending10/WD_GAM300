@@ -338,18 +338,46 @@ namespace TDS
                 "SetValueFloat"
             );
 
+        SceneManager::GetInstance()->setString = GetFunctionPtr<void(*)(EntityID, std::string, std::string, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueString"
+            );
+
+        //SceneManager::GetInstance()->setChar = GetFunctionPtr<void(*)(EntityID, std::string, std::string, char)>
+        //    (
+        //        "ScriptAPI",
+        //        "ScriptAPI.EngineInterface",
+        //        "SetValueChar"
+        //    );
+
+        SceneManager::GetInstance()->setGameObject = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetGameObject"
+            );
+
+        SceneManager::GetInstance()->setScriptReference = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetScript"
+            );
+
+        SceneManager::GetInstance()->updateName = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "UpdateGameObjectName"
+            );
+
         SceneManager::GetInstance()->Init();
         ecs.initializeSystems(1);
         ecs.initializeSystems(2);
 
-        //addScript(1, "Test");
-        //addScript(2, "Testing");
         awake();
-
-        // test
-        SceneManager::GetInstance()->setCurrentScene("Test");
-        SceneManager::GetInstance()->saveCurrentScene();
-        SceneManager::GetInstance()->setCurrentScene("MainMenu");
     }
 
     Application::~Application()
