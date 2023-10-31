@@ -63,7 +63,7 @@ namespace TDS
 			ImGui::Text("Controls: ");
 			ImGui::SameLine();
 
-			if(ImGui::Selectable(""))
+			if(ImGui::Selectable("Play Song"))
 			{
 				if (ImGui::ArrowButton("Play", ImGuiDir_Right))
 				{

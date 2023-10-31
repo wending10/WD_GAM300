@@ -85,6 +85,8 @@ namespace TDS
 			if (ImGui::Button("<-")) //will only show if u went into a folder in the current directory above
 			{
 				m_curr_path = m_curr_path.parent_path();
+
+				audimg.init(false);
 			}
 		}
 		float cellSize = thumbnail_size + padding;
