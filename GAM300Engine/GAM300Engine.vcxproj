@@ -194,7 +194,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Include\ecs\ecs.cpp" />
     <ClCompile Include="Src\AI\aiSystem.cpp" />
     <ClCompile Include="Src\AI\behaviourTree.cpp" />
-    <ClCompile Include="Src\AudioEngine.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
     <ClCompile Include="src\components\AudioSource.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
@@ -211,6 +210,7 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\components\transform.cpp" />
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
+    <ClCompile Include="Src\fmod_engine\AudioEngine.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
     <ClCompile Include="Src\Geometry\Line.cpp" />

@@ -60,7 +60,6 @@
     <ClCompile Include="Src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
     <ClCompile Include="Src\sceneManager\serialization.cpp" />
-    <ClCompile Include="Src\AudioEngine.cpp" />
     <ClCompile Include="Src\vulkanTools\ShadowMap.cpp" />
     <ClCompile Include="Src\Shader\ShaderLoader.cpp" />
     <ClCompile Include="Src\vulkanTools\VulkanTexture.cpp" />
@@ -84,6 +83,7 @@
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
     <ClCompile Include="Src\sceneManager\serializationHelperFunctions.cpp" />
+    <ClCompile Include="Src\fmod_engine\AudioEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />

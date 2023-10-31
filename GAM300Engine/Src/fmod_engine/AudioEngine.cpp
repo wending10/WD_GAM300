@@ -28,7 +28,7 @@ namespace TDS
         }
 
         void AudioEngine::init() {
-            ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this
+            //ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this
             ERRCHECK(FMOD::Studio::System::create(&studioSystem));
             ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
             ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_STEREO, 0));

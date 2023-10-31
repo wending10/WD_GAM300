@@ -43,6 +43,7 @@ namespace TDS
 
 	void AudioImgui::deactivate_audio_controls()
 	{
+		flags = ImGuiWindowFlags_None;
 		appear = false;
 	}
 
