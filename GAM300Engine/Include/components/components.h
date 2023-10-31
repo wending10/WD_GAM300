@@ -33,7 +33,7 @@ namespace TDS
 		std::string name;
 		std::string value;
 		std::string type;
-		EntityID referenceEntityID;
+		EntityID referenceEntityID = 0;
 	};
 
 	/*!*************************************************************************
