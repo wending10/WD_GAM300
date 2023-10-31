@@ -1,7 +1,7 @@
 
 #version 450
 
-//layout(binding = 1) uniform sampler2D texSampler;
+layout(binding = 4) uniform sampler2D texSampler;
 
 
 layout(location = 0) in vec3 fragColor;
@@ -38,7 +38,8 @@ void main() {
     vec3 ambientlight = PL.ambientlightcolor.xyz * PL.ambientlightcolor.w;
     vec3 diffuselight = lightcolor * max(dot(normalize(fragNormalWorld),normalize(directiontolight)),0);
 
-
-    outColor = vec4((diffuselight*ambientlight)*fragColor,1.0);
+    vec4 texColor = texture(texSampler, fragTexCoord);
+    //outColor = vec4((diffuselight*ambientlight)*fragColor,1.0);
     //outColor = texture(texSampler, fragTexCoord);
+    outColor = texColor * vec4((diffuselight + ambientlight), 1.0);
 }

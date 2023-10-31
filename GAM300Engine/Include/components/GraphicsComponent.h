@@ -21,21 +21,20 @@ namespace TDS
 		{
 			return m_ShowMesh;
 		}
-		inline SingleTypeReference<AssetModel>& GetAsset()
+		inline TypeReference<AssetModel>& GetAsset()
 		{
 			return m_AssetReference;
 		}
-		inline SingleTypeReference<Texture>& GetTexture()
+		inline TypeReference<Texture>& GetTexture()
 		{
 			return m_TextureReference;
 		}
-
 		RTTR_ENABLE(IComponent);
 		RTTR_REGISTRATION_FRIEND
 
 	private:
-		SingleTypeReference<AssetModel> m_AssetReference;
-		SingleTypeReference<Texture>	m_TextureReference;
+		TypeReference<AssetModel> m_AssetReference;
+		TypeReference<Texture>	m_TextureReference;
 		bool m_ShowMesh = true;
 		
 

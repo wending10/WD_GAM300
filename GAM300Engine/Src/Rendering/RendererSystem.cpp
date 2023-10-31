@@ -5,9 +5,8 @@
 #include "Rendering/GraphicsManager.h"
 #include "vulkanTools/VulkanPipeline.h"
 #include "vulkanTools/vulkanSwapChain.h"
+#include "vulkanTools/VulkanTexture.h"
 #include "vulkanTools/Renderer.h"
-#include "Rendering/renderPass.h"
-#include "vulkanTools/FrameBuffer.h"
 namespace TDS
 {
 	struct PushConstantData {
@@ -24,23 +23,19 @@ namespace TDS
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
 			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
-			_Graphics[i].GetAsset().m_GUID = *assetManager->GetModelFactory().m_LoadedModelsGUID.begin();
-			_Graphics[i].GetAsset().m_Identifier.CreateTypeIDByName(assetManager->GetModelFactory().m_ModelMap.begin()->first);
-			_Graphics[i].GetAsset().m_Identifier.GetTypeName<AssetModel>();
 
-			assetManager->getResourceManager().getResource(_Graphics[i].GetAsset());
 
-			if (_Graphics[i].ShowMesh() == true)
+			if (_Graphics[i].ShowMesh() == true && _Graphics[i].GetAsset().m_ResourcePtr != nullptr)
 			{
+				if (_Graphics[i].GetAsset().m_ResourcePtr->BufferIsNull())
+					_Graphics[i].GetAsset().m_ResourcePtr->CreateBuffers();
+
 				if (Renderer3D::getPipeline()->GetCreateEntry().m_EnableDoubleBuffering)
 				{
-
-					GlobalUBO ubo = RendererDataManager::GetUBO(_Graphics->GetAsset().m_GUID.GetUniqueID());
-					ModelElement elem = RendererDataManager::GetModelElement(_Graphics->GetAsset().m_GUID.GetUniqueID(), _Graphics->GetAsset().m_Reference);
+					GlobalUBO ubo{};
 					PushConstantData pushData{};
 
 					if (Vec3 Scale = _TransformComponent[i].GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f) {
@@ -62,40 +57,28 @@ namespace TDS
 						GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 10.f);
 					ubo.m_Projection.m[1][1] *= -1;
 
-					
 					Renderer3D::getPipeline()->BindPipeline();
+					if (_Graphics[i].GetTexture().m_ResourcePtr != nullptr)
+					{
+						Renderer3D::getPipeline()->UpdateTexture(4,
+							VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+							*_Graphics[i].GetTexture().m_ResourcePtr->m_VulkanTexture);
+					}
+
 					Renderer3D::getPipeline()->UpdateUBO(&ubo, sizeof(GlobalUBO), 0, frame);
-					Renderer3D::getPipeline()->BindDescriptor(frame);
-					Renderer3D::getPipeline()->SubmitPushConstant(&pushData, sizeof(PushConstantData), SHADER_FLAG::VERTEX);
-				
-					Renderer3D::getPipeline()->BindVertexBuffer(*elem.m_VertexBuffer);
-					Renderer3D::getPipeline()->BindIndexBuffer(*elem.m_IndexBuffer);
-					Renderer3D::getPipeline()->DrawIndexed(*elem.m_VertexBuffer, *elem.m_IndexBuffer, frame);
-					
+					Renderer3D::getPipeline()->SubmitPushConstant(&pushData, sizeof(PushConstantData), SHADER_FLAG::VERTEX | SHADER_FLAG::FRAGMENT);
+
+					Renderer3D::getPipeline()->BindVertexBuffer(*_Graphics->GetAsset().m_ResourcePtr->GetVertexBuffer());
+					Renderer3D::getPipeline()->BindIndexBuffer(*_Graphics->GetAsset().m_ResourcePtr->GetIndexBuffer());
+					Renderer3D::getPipeline()->DrawIndexed(*_Graphics->GetAsset().m_ResourcePtr->GetVertexBuffer(),
+						*_Graphics->GetAsset().m_ResourcePtr->GetIndexBuffer(),
+						frame);
 				}
-
-
 			}
 		}
-		//GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
-
-
-	/*	OnRender(entities, &_transform, _Graphics)*/
-		/*SubmitModels(entities, &_transform, _Graphics);*/
-	/*	Renderer3D::DrawFrame(*RendererDataManager::GetInstance());*/
 	}
 	void RendererSystem::OnRender(const float dt, const std::vector<EntityID>& entities, GraphicsComponent* _Graphics)
 	{
 	}
-	void RendererSystem::SubmitPointLights()
-	{
-	}
-	void RendererSystem::SubmitModels(const std::vector<EntityID>& entities, Transform* _transform, GraphicsComponent* _Graphics)
-	{
 
-
-	}
-	void RendererSystem::SubmitTextures()
-	{
-	}
 }

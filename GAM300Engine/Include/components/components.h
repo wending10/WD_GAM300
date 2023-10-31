@@ -23,6 +23,7 @@
 #include "tag.h"
 #include "transform.h"
 #include "winData.h"
+#include "FontComponent.h"
 
 // Helper functions for components
 namespace TDS
