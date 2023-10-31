@@ -27,6 +27,7 @@
 #include "vulkanTools/VulkanTexture.h"
 #include "Rendering/renderPass.h"
 #include "vulkanTools/FrameBuffer.h"
+#include "Tools/DDSConverter.h"
 bool isPlaying = false;
 
 namespace TDS
@@ -119,13 +120,14 @@ namespace TDS
 
         ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
         GraphicsManager::getInstance().Init(&m_window);
-        m_AssetManager.Init();
-        m_AssetManager.PreloadAssets();
+        AssetManager::GetInstance()->Init();
+        AssetManager::GetInstance()->PreloadAssets();
         //Run();
     }
 
     void Application::Update()
     {
+        DDSConverter::Init();
         auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
@@ -153,7 +155,6 @@ namespace TDS
                 "ToggleScriptViaName"
             );
 
-        RendererSystem::assetManager = &m_AssetManager;
         initImgui();
         float lightx = 0.f;
     
@@ -226,6 +227,7 @@ namespace TDS
         stopScriptEngine();
         /*vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());*/
 
+        AssetManager::GetInstance()->ShutDown();
         vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
         if (m_ImGuiDescPool)
         {
@@ -235,6 +237,7 @@ namespace TDS
         imguiHelper::Exit();
         ecs.destroy();
         GraphicsManager::getInstance().ShutDown();
+        DDSConverter::Destroy();
     }
 
     void Application::Run()

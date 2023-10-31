@@ -21,8 +21,8 @@ namespace TDS
 
 		
 		inline bool								ShowMesh() { return m_ShowMesh; }
-		inline SingleTypeReference<AssetModel>& GetAsset() { return m_AssetReference; }
-		inline SingleTypeReference<Texture>&	GetTexture() { return m_TextureReference; }
+		inline TypeReference<AssetModel>& 		GetAsset() { return m_AssetReference; }
+		inline TypeReference<Texture>&			GetTexture() { return m_TextureReference; }
 		inline bool&							IsPointLight() { return m_Pointlight; }
 		inline int&								GetPointLightID() { return m_PointLightID; }
 		inline Vec4&							GetColor() { return m_Color; }
@@ -31,8 +31,8 @@ namespace TDS
 		RTTR_REGISTRATION_FRIEND
 
 	private:
-		SingleTypeReference<AssetModel> m_AssetReference;
-		SingleTypeReference<Texture>	m_TextureReference;
+		TypeReference<AssetModel> 		m_AssetReference;
+		TypeReference<Texture>			m_TextureReference;
 		bool							m_ShowMesh = true;
 		Vec4							m_Color;
 		int								m_PointLightID{ -1 };
