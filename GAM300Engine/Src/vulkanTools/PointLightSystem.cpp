@@ -86,7 +86,8 @@ namespace TDS {
 		pushdata.m_Position = Trans->GetPosition();
 		pushdata.m_Color = Gp->GetColor();
 		pushdata.m_radius = Trans->GetScale().x;
-		m_Pipeline->SubmitPushConstant(&pushdata, sizeof(PointLightPushConstants), SHADER_FLAG::FRAGMENT);
+		m_Pipeline->SubmitPushConstant(&pushdata, sizeof(PointLightPushConstants), SHADER_FLAG::VERTEX | SHADER_FLAG::FRAGMENT);
+
 		vkCmdDraw(m_Pipeline->GetCommandBuffer(), 6, 1, 0, 0);
 	}
 	VulkanPipeline& PointLightSystem::GetPipeline() {
