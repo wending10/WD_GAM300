@@ -19,6 +19,7 @@ namespace TDS
 			if (paths.path().string().find("assets") != std::string::npos)
 			{
 				m_curr_path = paths;
+				std::cout << "m_curr_path: " << m_curr_path << '\n';
 			}
 		}
 		//m_curr_path = std::filesystem::path(ASSET_PATH);
@@ -162,7 +163,7 @@ namespace TDS
 				{
 					audimg.init(true);
 
-					//audimg.add_audio_files();
+					audimg.add_audio_files();
 				}
 
 
