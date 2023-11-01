@@ -12,6 +12,7 @@ RTTR_REGISTRATION
 		.method("SetColor", rttr::select_overload<void(float, float, float, float)>(&GraphicsComponent::SetColor))
 		.method("GetColor", &GraphicsComponent::GetColor)
 		.property("Color", &GraphicsComponent::m_Color);
+		//.property("Color", &GraphicsComponent::GetColor, rttr::select_overload<void(Vec4)>(&GraphicsComponent::SetColor));
 }
 
 namespace TDS
