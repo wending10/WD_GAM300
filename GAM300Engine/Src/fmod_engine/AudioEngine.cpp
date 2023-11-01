@@ -28,7 +28,6 @@ namespace TDS
         }
 
         void AudioEngine::init() {
-            //ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this
             ERRCHECK(FMOD::Studio::System::create(&studioSystem));
             ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
             ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_STEREO, 0));
@@ -36,6 +35,7 @@ namespace TDS
             ERRCHECK(lowLevelSystem->set3DNumListeners(1));
             ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
             ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
+            ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this //nvm this is needed for object handle here, but why?
             initReverb();
         }
 
@@ -58,11 +58,13 @@ namespace TDS
             return audioE_instance;
         }
 
-        void AudioEngine::update() {
+        void AudioEngine::update()
+        {
             ERRCHECK(studioSystem->update()); // also updates the low level system
         }
 
-        void AudioEngine::loadSound(SoundInfo & soundInfo) {
+        void AudioEngine::loadSound(SoundInfo & soundInfo)
+        {
             if (!soundLoaded(soundInfo)) {
                 std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
                 FMOD::Sound* sound;
@@ -79,7 +81,8 @@ namespace TDS
                 std::cout << "Audio Engine: Sound File was already loaded!\n";
         }
 
-        int AudioEngine::playSound(SoundInfo & soundInfo) {
+        int AudioEngine::playSound(SoundInfo & soundInfo)
+        {
             if (soundLoaded(soundInfo)) {
                 std::cout << "Playing Sound\n";
                 FMOD::Channel* channel{ nullptr };
@@ -110,7 +113,8 @@ namespace TDS
 
         }
 
-        void AudioEngine::stopSound(SoundInfo & soundInfo) {
+        void AudioEngine::stopSound(SoundInfo & soundInfo)
+        {
             if (soundIsPlaying(soundInfo)) {
                 ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
                 loopsPlaying.erase(soundInfo.getUniqueID());
@@ -120,7 +124,8 @@ namespace TDS
                 std::cout << "Audio Engine: Can't stop a looping sound that's not playing!\n";
         }
 
-        void AudioEngine::updateSoundLoopVolume(SoundInfo & soundInfo, float newVolume, unsigned int fadeSampleLength) {
+        void AudioEngine::updateSoundLoopVolume(SoundInfo & soundInfo, float newVolume, unsigned int fadeSampleLength)
+        {
             if (soundIsPlaying(soundInfo)) {
                 FMOD::Channel* channel = loopsPlaying[soundInfo.getUniqueID()];
                 if (fadeSampleLength <= 64) // 64 samples is default volume fade out
@@ -147,7 +152,8 @@ namespace TDS
         }
 
 
-        void AudioEngine::update3DSoundPosition(SoundInfo soundInfo) {
+        void AudioEngine::update3DSoundPosition(SoundInfo soundInfo)
+        {
             if (soundIsPlaying(soundInfo))
                 set3dChannelPosition(soundInfo, loopsPlaying[soundInfo.getUniqueID()]);
             else
@@ -155,7 +161,8 @@ namespace TDS
 
         }
 
-        bool AudioEngine::soundIsPlaying(SoundInfo soundInfo) {
+        bool AudioEngine::soundIsPlaying(SoundInfo soundInfo)
+        {
             int channelnum{ 0 };
 
             ERRCHECK(lowLevelSystem->getChannelsPlaying(&channelnum));
@@ -170,28 +177,32 @@ namespace TDS
             //return (soundInfo.isLoop() || soundInfo.isPlaying()) && soundInfo.isLoaded() && loopsPlaying.count(soundInfo.getUniqueID());
         }
 
-        void AudioEngine::set3DListenerPosition(float posX, float posY, float posZ, float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ) {
+        void AudioEngine::set3DListenerPosition(float posX, float posY, float posZ, float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ)
+        {
             listenerpos = { posX,     posY,     posZ };
             forward = { forwardX, forwardY, forwardZ };
             up = { upX,      upY,      upZ };
             ERRCHECK(lowLevelSystem->set3DListenerAttributes(0, &listenerpos, 0, &forward, &up));
         }
 
-        unsigned int AudioEngine::getSoundLengthInMS(SoundInfo soundInfo) {
+        unsigned int AudioEngine::getSoundLengthInMS(SoundInfo soundInfo)
+        {
             unsigned int length = 0;
             if (sounds.count(soundInfo.getUniqueID()))
                 ERRCHECK(sounds[soundInfo.getUniqueID()]->getLength(&length, FMOD_TIMEUNIT_MS));
             return length;
         }
 
-        void AudioEngine::loadFMODStudioBank(const char* filepath) {
+        void AudioEngine::loadFMODStudioBank(const char* filepath)
+        {
             std::cout << "Audio Engine: Loading FMOD Studio Sound Bank " << filepath << '\n';
             FMOD::Studio::Bank* bank = NULL;
             ERRCHECK(studioSystem->loadBankFile(filepath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));
             soundBanks.insert({ filepath, bank });
         }
 
-        void AudioEngine::loadFMODStudioEvent(const char* eventName, std::vector<std::pair<const char*, float>> paramsValues) { //std::vector<std::map<const char*, float>> perInstanceParameterValues) {
+        void AudioEngine::loadFMODStudioEvent(const char* eventName, std::vector<std::pair<const char*, float>> paramsValues)
+        { //std::vector<std::map<const char*, float>> perInstanceParameterValues) {
             std::cout << "AudioEngine: Loading FMOD Studio Event " << eventName << '\n';
             FMOD::Studio::EventDescription* eventDescription = NULL;
             ERRCHECK(studioSystem->getEvent(eventName, &eventDescription));
@@ -207,7 +218,8 @@ namespace TDS
             eventDescriptions.insert({ eventName, eventDescription });
         }
 
-        void AudioEngine::setFMODEventParamValue(const char* eventName, const char* parameterName, float value) {
+        void AudioEngine::setFMODEventParamValue(const char* eventName, const char* parameterName, float value)
+        {
             if (eventInstances.count(eventName) > 0)
                 ERRCHECK(eventInstances[eventName]->setParameterByName(parameterName, value));
             else
@@ -215,7 +227,8 @@ namespace TDS
 
         }
 
-        void AudioEngine::playEvent(const char* eventName, int instanceIndex) {
+        void AudioEngine::playEvent(const char* eventName, int instanceIndex)
+        {
             (void)instanceIndex;//TODO
             printEventInfo(eventDescriptions[eventName]);
             //auto eventInstance = eventInstances[eventName];
@@ -225,7 +238,8 @@ namespace TDS
                 std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, cannot play \n";
         }
 
-        void AudioEngine::stopEvent(const char* eventName, int instanceIndex) {
+        void AudioEngine::stopEvent(const char* eventName, int instanceIndex)
+        {
             (void)instanceIndex;//TODO
             if (eventInstances.count(eventName) > 0)
                 ERRCHECK(eventInstances[eventName]->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT));
@@ -233,12 +247,14 @@ namespace TDS
                 std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, cannot stop \n";
         }
 
-        void AudioEngine::setEventVolume(const char* eventName, float volume0to1) {
+        void AudioEngine::setEventVolume(const char* eventName, float volume0to1)
+        {
             std::cout << "AudioEngine: Setting Event Volume\n";
             ERRCHECK(eventInstances[eventName]->setVolume(volume0to1));
         }
 
-        bool AudioEngine::eventIsPlaying(const char* eventName, int instance /*= 0*/) {
+        bool AudioEngine::eventIsPlaying(const char* eventName, int instance /*= 0*/)
+        {
             (void)instance;
             FMOD_STUDIO_PLAYBACK_STATE playbackState;
             ERRCHECK(eventInstances[eventName]->getPlaybackState(&playbackState));
@@ -246,17 +262,20 @@ namespace TDS
         }
 
 
-        void AudioEngine::muteAllSounds() {
+        void AudioEngine::muteAllSounds()
+        {
             ERRCHECK(mastergroup->setMute(true));
             muted = true;
         }
 
-        void AudioEngine::unmuteAllSound() {
+        void AudioEngine::unmuteAllSound()
+{
             ERRCHECK(mastergroup->setMute(false));
             muted = false;
         }
 
-        bool AudioEngine::isMuted() {
+        bool AudioEngine::isMuted()
+        {
             return muted;
         }
 
@@ -281,18 +300,21 @@ namespace TDS
         }
 
         //// Private definitions 
-        bool AudioEngine::soundLoaded(SoundInfo soundInfo) {
+        bool AudioEngine::soundLoaded(SoundInfo soundInfo)
+        {
             std::cout << "Checking sound " << soundInfo.getUniqueID() << " exists\n";
             return (sounds.count(soundInfo.getUniqueID()) > 0);
         }
 
-        void AudioEngine::set3dChannelPosition(SoundInfo soundInfo, FMOD::Channel * channel) {
+        void AudioEngine::set3dChannelPosition(SoundInfo soundInfo, FMOD::Channel * channel)
+        {
             FMOD_VECTOR position = { soundInfo.getX() * DISTANCEFACTOR, soundInfo.getY() * DISTANCEFACTOR, soundInfo.getZ() * DISTANCEFACTOR };
             FMOD_VECTOR velocity = { 0.0f, 0.0f, 0.0f }; // TODO Add dopplar (velocity) support
             ERRCHECK(channel->set3DAttributes(&position, &velocity));
         }
 
-        void AudioEngine::initReverb() {
+        void AudioEngine::initReverb()
+        {
             ERRCHECK(lowLevelSystem->createReverb3D(&reverb));
             FMOD_REVERB_PROPERTIES prop2 = FMOD_PRESET_CONCERTHALL;
             ERRCHECK(reverb->setProperties(&prop2));
@@ -301,13 +323,15 @@ namespace TDS
 
         // Error checking/debugging function definitions
 
-        void ERRCHECK_fn(FMOD_RESULT result, const char* file, int line) {
+        void ERRCHECK_fn(FMOD_RESULT result, const char* file, int line)
+        {
             (void)file;//TODO
             if (result != FMOD_OK)
                 std::cout << "FMOD ERROR: AudioEngine.cpp [Line " << line << "] " << result << "  - " << FMOD_ErrorString(result) << '\n';
         }
 
-        void AudioEngine::printEventInfo(FMOD::Studio::EventDescription * eventDescription) {
+        void AudioEngine::printEventInfo(FMOD::Studio::EventDescription * eventDescription)
+        {
 
             int params;
             bool is3D, isOneshot;

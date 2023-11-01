@@ -22,6 +22,7 @@ namespace TDS
 				std::cout << "m_curr_path: " << m_curr_path << '\n';
 			}
 		}
+
 		//m_curr_path = std::filesystem::path(ASSET_PATH);
 
 		//insertEntities();
@@ -163,7 +164,7 @@ namespace TDS
 				{
 					audimg.init(true);
 
-					audimg.add_audio_files();
+					audimg.add_audio_files(path1);
 				}
 
 

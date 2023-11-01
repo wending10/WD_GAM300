@@ -22,6 +22,8 @@ namespace TDS
 		appear = false;
 		bar = 0.f;
 
+		sounds.clear();
+
 		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
 	}
 
@@ -47,14 +49,21 @@ namespace TDS
 		appear = false;
 	}
 
-	void AudioImgui::add_audio_files()
+	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
 	{
-		std::filesystem::path pathing = std::filesystem::current_path().parent_path();
+		std::filesystem::path pathing = folder_path;
 		std::cout << "The file path is " << pathing.string() << '\n';
 
-		/*std::string file_name;
+		SoundInfo add_sound(pathing.string());
+		SoundInfo test_path("..\\..\\assets\\audioFiles\\songs\\test.flac");
+		test_path.setLoop(false);
+		test_path.set3DCoords(0.f, 0.f, 0.f);
 
-		SoundInfo add_sound(file_name);*/
+		audeng->loadSound(test_path);
+		audeng->playSound(test_path);
+
+		/*audeng->loadSound(add_sound);
+		audeng->playSound(add_sound);*/
 	}
 
 	void AudioImgui::update()

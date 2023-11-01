@@ -41,7 +41,7 @@ namespace TDS
 		*/
 		void deactivate_audio_controls();
 
-		void add_audio_files();
+		void add_audio_files(std::filesystem::path folder_path);
 
 		/**
 		 * @brief Initialize
@@ -60,6 +60,8 @@ namespace TDS
 
 		bool appear;
 		float bar;
+
+		std::vector<SoundInfo> sounds;
 	};
 }
 
