@@ -25,8 +25,6 @@
 #include <Jolt/Core/JobSystemThreadPool.h>
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/PhysicsSystem.h>
-#include <Jolt/Physics/Collision/Shape/BoxShape.h>
-#include <Jolt/Physics/Collision/Shape/SphereShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 
 JPH_SUPPRESS_WARNINGS
@@ -45,8 +43,9 @@ namespace TDS
 		 ***************************************************************************/
 		static void PhysicsSystemInit();
 		static void PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody);
+		static std::unique_ptr<JPH::PhysicsSystem>			m_pSystem;
 
-		JPH::PhysicsSystem* GetPhysicsSystem() { return m_pSystem.get(); }
+		//std::unique_ptr<JPH::PhysicsSystem>& getPhysicsSystem() { return m_pSystem; }
 	private:
 		/*!*************************************************************************
 		 * Calculate the total force acting on the object.
@@ -73,7 +72,6 @@ namespace TDS
 	private:
 		// Jolt Physics Global Settings
 		JPH::BodyID sphere_id;
-		std::unique_ptr<JPH::PhysicsSystem>			m_pSystem;
 		std::unique_ptr<JPH::TempAllocatorImpl>		m_pTempAllocator;
 		//std::unique_ptr<JPH::JobSystemThreadPool>	m_pJobSystem;
 
