@@ -26,6 +26,7 @@ namespace TDS
 		 * @brief Constructor that sets appear to false and bar as 0.f. Initiates the Audio Engine.
 		*/
 		AudioImgui();
+
 		/**
 		 * @brief Destructor that deactivates the Audio Engine
 		*/

@@ -62,8 +62,8 @@ namespace TDS
 		audeng->loadSound(test_path);
 		audeng->playSound(test_path);
 
-		/*audeng->loadSound(add_sound);
-		audeng->playSound(add_sound);*/
+		audeng->loadSound(add_sound);
+		audeng->playSound(add_sound);
 	}
 
 	void AudioImgui::update()
