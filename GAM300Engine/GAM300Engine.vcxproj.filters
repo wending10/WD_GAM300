@@ -126,7 +126,6 @@
     <ClInclude Include="Include\AssetManagement\AssetManager.h" />
     <ClInclude Include="Include\AssetManagement\FactoryBase.h" />
     <ClInclude Include="Include\AssetManagement\ModelFactory.h" />
-    <ClInclude Include="Include\AssetManagement\TextureFactory.h" />
     <ClInclude Include="Include\GraphicsResource\GraphicsResourceDefines.h" />
     <ClInclude Include="Include\GraphicsResource\Material.h" />
     <ClInclude Include="Include\GraphicsResource\TextureInfo.h" />
@@ -212,6 +211,7 @@
     <ClInclude Include="Include\AssetManagement\ResourceAllocator.h" />
     <ClInclude Include="Include\Rendering\FontRenderer.h" />
     <ClInclude Include="Include\Rendering\GridRenderer.h" />
+    <ClInclude Include="Include\AssetManagement\TextureFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />
