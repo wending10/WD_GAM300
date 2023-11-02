@@ -39,6 +39,8 @@ namespace TDS
             ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
             ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
             initReverb();
+
+            std::cout << "Audio Engine Init successful!" << '\n';
         }
 
         void AudioEngine::deactivate()
@@ -69,7 +71,6 @@ namespace TDS
         {
             if (!soundLoaded(soundInfo)) {
                 std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
-                std::cout << std::filesystem::current_path().string() << '\n';
                 FMOD::Sound* sound;
                 ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath_inChar(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
                 ERRCHECK(sound->setMode(soundInfo.isLoop() ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF));

@@ -24,9 +24,6 @@ namespace TDS
 
 		sounds.clear();
 
-		std::cout << "AudioImgui Constructor" << '\n';
-		std::cout << "AudioImgui Constructor panelTitle: " << panelTitle << '\n';
-
 		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
 	}
 
@@ -39,8 +36,6 @@ namespace TDS
 	{
 		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;;
 		appear = true;
-
-		ImGui::BeginPopupModal("Audio Info", &appear);
 	}
 
 	void AudioImgui::deactivate_audio_controls()
@@ -48,7 +43,10 @@ namespace TDS
 		flags = ImGuiWindowFlags_None;
 		appear = false;
 
-		ImGui::EndPopup();
+		if (audeng->soundIsPlaying(sounds[0]))
+		{
+			audeng->stopSound(sounds[0]);
+		}
 	}
 
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
@@ -63,11 +61,13 @@ namespace TDS
 		test_path.setLoop(false);
 		test_path.set3DCoords(0.f, 0.f, 0.f);
 
-		audeng->loadSound(test_path);
-		audeng->playSound(test_path);
+		sounds.push_back(test_path);
 
-		audeng->loadSound(add_sound);
-		audeng->playSound(add_sound);
+		audeng->loadSound(sounds[0]);
+		audeng->playSound(sounds[0]);
+
+		/*audeng->loadSound(add_sound);
+		audeng->playSound(add_sound);*/
 	}
 
 	void AudioImgui::init()
