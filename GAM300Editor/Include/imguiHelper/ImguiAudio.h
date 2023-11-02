@@ -47,9 +47,7 @@ namespace TDS
 		/**
 		 * @brief Initialize
 		*/
-		virtual void init() {}
-
-		void init(bool show);
+		virtual void init();
 
 		/**
 		 * @brief Update loop.
@@ -57,7 +55,7 @@ namespace TDS
 		void update();
 
 	private:
-		AudioWerks::AudioEngine* audeng{ nullptr };
+		AudioWerks::AudioEngine* audeng;
 
 		bool appear;
 		float bar;

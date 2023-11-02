@@ -27,7 +27,10 @@ namespace TDS
             deactivate();
         }
 
-        void AudioEngine::init() {
+        void AudioEngine::init()
+        {
+            ERRCHECK(FMOD::System_Create(&lowLevelSystem));
+            ERRCHECK(lowLevelSystem->init(MAX_AUDIO_CHANNELS, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, 0));
             ERRCHECK(FMOD::Studio::System::create(&studioSystem));
             ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
             ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_STEREO, 0));
@@ -35,7 +38,6 @@ namespace TDS
             ERRCHECK(lowLevelSystem->set3DNumListeners(1));
             ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
             ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
-            ERRCHECK(FMOD::System_Create(&lowLevelSystem)); //I don't think need this //nvm this is needed for object handle here, but why?
             initReverb();
         }
 
@@ -51,7 +53,7 @@ namespace TDS
             if (audioE_instance == NULL)
             {
                 audioE_instance = new AudioEngine();
-                audioE_instance->init();
+                //audioE_instance->init();
                 return audioE_instance;
             }
 

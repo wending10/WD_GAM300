@@ -89,7 +89,7 @@ namespace TDS
 			{
 				m_curr_path = m_curr_path.parent_path();
 
-				audimg.init(false);
+				audimg.deactivate_audio_controls();
 			}
 		}
 		float cellSize = thumbnail_size + padding;
@@ -162,9 +162,9 @@ namespace TDS
 				//if .wav, play audio...
 				if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
 				{
-					audimg.init(true);
+					audimg.activate_audio_controls();
 
-					audimg.add_audio_files(path1);
+					audimg.add_audio_files(m_curr_path);
 				}
 
 

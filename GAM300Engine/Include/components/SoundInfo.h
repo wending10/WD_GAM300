@@ -37,6 +37,10 @@ namespace TDS{
         virtual bool Deserialize(const rapidjson::Value& obj)
         {
             position = { obj["PositionX"].GetFloat(), obj["PositionY"].GetFloat(), obj["PositionZ"].GetFloat() };
+            filePath = { obj["file"].GetString() };
+            isitLoop = { obj["Loop"].GetBool() };
+            isit3D = { obj["3D"].GetBool() };
+            
 
             return true; //Change this to return based of whether it's really successful or not
         }
