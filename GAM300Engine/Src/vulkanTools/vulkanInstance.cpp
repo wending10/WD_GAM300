@@ -134,7 +134,14 @@ namespace TDS
 			queueCreateInfos.push_back(queueCreateInfo);
 		}
 		
+		VkPhysicalDeviceFeatures2 features2 = { VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2 };
+		vkGetPhysicalDeviceFeatures2(m_PhysDeviceHandle, &features2);
+		VkPhysicalDeviceFeatures deviceFeatures{};
+		deviceFeatures = features2.features;
+		deviceFeatures.samplerAnisotropy = VK_TRUE;
+		deviceFeatures.shaderSampledImageArrayDynamicIndexing = VK_TRUE;
 
+		//deviceFeatures.sampleRateShading = VK_TRUE; // enable sample shading feature will affect performace cost
 
 		VkDeviceCreateInfo createInfo{};
 		createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
