@@ -29,6 +29,9 @@
 #include "vulkanTools/FrameBuffer.h"
 #include "Tools/DDSConverter.h"
 #include "imguiHelper/ImguiScene.h"
+#include "Physics/PhysicsSystem.h"
+
+
 bool isPlaying = false;
 
 namespace TDS
@@ -123,7 +126,7 @@ namespace TDS
         GraphicsManager::getInstance().Init(&m_window);
         AssetManager::GetInstance()->Init();
         AssetManager::GetInstance()->PreloadAssets();
-        //Run();
+        skyboxrender.Init();
     }
 
     void Application::Update()
@@ -149,7 +152,7 @@ namespace TDS
                 "ScriptAPI.EngineInterface",
                 "AddScriptViaName"
             );
-        auto toggleScript = GetFunctionPtr<bool(*)(int, const char*)>
+        SceneManager::GetInstance()->toggleScript = GetFunctionPtr<bool(*)(int, const char*)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
@@ -158,16 +161,7 @@ namespace TDS
 
         initImgui();
         float lightx = 0.f;
-    
-      /*  Texture data{};
-        data.LoadTexture("../../assets/textures/texture.dds");
-        VulkanTexture vkTexture{};
-        vkTexture.CreateBasicTexture(data.m_TextureInfo);
-        
-        vkTexture.m_DescSet = ImGui_ImplVulkan_AddTexture(vkTexture.getInfo().sampler, vkTexture.getInfo().imageView, vkTexture.getInfo().imageLayout);
-       */
 
-        VkDescriptorSet  m_DescSet{};
         GraphicsManager::getInstance().setCamera(m_camera);
         while (m_window.processInputEvent())
         {
@@ -190,27 +184,36 @@ namespace TDS
             }
             GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-             GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
-
+            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
+            std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+            skyboxrender.RenderSkyBox(commandBuffer, frame);
+           
             if (isPlaying)
             {
-                ecs.runSystems(1, DeltaTime);
+                ecs.runSystems(1, DeltaTime); // Other systems
             }
-
-            ecs.runSystems(2, DeltaTime);
+            else
+            {
+                if (PhysicsSystem::GetUpdate()) // consider moving it to another seperate system (EditorApp?)
+                {
+                    PhysicsSystem::SetUpdate(false);
+                }
+            }
+            ecs.runSystems(2, DeltaTime); // Event handler
+            ecs.runSystems(3, DeltaTime); // Graphics
          
-        
-            
             imguiHelper::Update();
+
+            // event handling systems 
+
+
             GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
             GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
-
 
             imguiHelper::Draw(commandBuffer);
 
             GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
             GraphicsManager::getInstance().EndFrame();
-            
             // Reloading
             if (GetKeyState(VK_F5) & 0x8000)
             {
@@ -218,18 +221,14 @@ namespace TDS
                 SceneManager::GetInstance()->saveCurrentScene();
                 reloadScripts();
                 SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
-                //addScript(1, "Test");
             }
 
-            if (GetKeyState(VK_SPACE) & 0x8000)
-            {
-                toggleScript(1, "Test");
-            }
             executeUpdate();
             Input::scrollStop();
+            
         }
         stopScriptEngine();
-        /*vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());*/
+      
 
         AssetManager::GetInstance()->ShutDown();
         vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
@@ -380,9 +379,17 @@ namespace TDS
                 "UpdateGameObjectName"
             );
 
+        SceneManager::GetInstance()->isScriptEnabled = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "IsScriptEnabled"
+            );
+
         SceneManager::GetInstance()->Init();
         ecs.initializeSystems(1);
         ecs.initializeSystems(2);
+        ecs.initializeSystems(3);
 
         awake();
     }

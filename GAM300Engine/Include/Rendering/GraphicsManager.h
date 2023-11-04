@@ -30,6 +30,7 @@ namespace TDS
 		RenderTarget*							m_RenderingDepthAttachment{ nullptr };
 		RenderPass*								m_Renderpass{ nullptr };
 		FrameBuffer*							m_Framebuffer{ nullptr };
+
 	public:
 		inline static std::shared_ptr<GraphicsManager> m_Instance;
 		GraphicsManager();
