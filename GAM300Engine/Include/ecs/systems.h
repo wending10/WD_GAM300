@@ -20,15 +20,18 @@ namespace TDS
 {
 	DLL_API ECS ecs;
 
-	//std::unique_ptr<ECS> ECS::m_instance;
+	// Layer 1 - Run only on play
+	// Layer 3 - Event Handler (always running)
+	// Layer 3 - Graphics (always running)
 
 	ECSSystem<Transform, RigidBody>					_PhysicsSystem(1);
 	ECSSystem<Transform, RigidBody, SphereCollider>	_ColliderSystem(1);
 	ECSSystem<AI>									_AISystem(1);
-	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(1);
-	//System<Transform, RigidBody> _AISystem(1);
-	//System<Transform> _GraphicsSystem(1);
-	//ECSSystem<AudioWerks::AudioEngine, SoundInfo>	_AudioSystem(1);
+
+	ECSSystem<Transform>							_EventHandler_ChildTransform(2);
+
+	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(3);
+	//ECSSystem<AudioWerks::AudioEngine, SoundInfo>	_AudioSystem(3);
 }
 
 #endif // SYSTEMS

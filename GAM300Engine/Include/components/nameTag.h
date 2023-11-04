@@ -42,6 +42,8 @@ namespace TDS
 		
 		DLL_API int& GetHierarchyIndex() { return mHierarchyIndex; }
 		DLL_API void SetHierarchyIndex(int hierarchyIndex) { mHierarchyIndex = hierarchyIndex; }
+		
+		DLL_API std::vector<EntityID>& GetHierarchyChildren() { return mHierarchyChildren; }
 
 		RTTR_ENABLE(IComponent);
 		RTTR_REGISTRATION_FRIEND
@@ -51,6 +53,7 @@ namespace TDS
 
 		EntityID mHierarchyParent;
 		int mHierarchyIndex;
+		std::vector<EntityID> mHierarchyChildren;
 	};
 }
 

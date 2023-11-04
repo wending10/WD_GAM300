@@ -27,10 +27,19 @@
 #include "winData.h"
 #include "components/SoundInfo.h"
 #include "fmod_engine/AudioEngine.h"
+#include "FontComponent.h"
 
 // Helper functions for components
 namespace TDS
 {
+	DLL_API struct ScriptValues
+	{
+		std::string name;
+		std::string value;
+		std::string type;
+		EntityID referenceEntityID = 0;
+	};
+
 	/*!*************************************************************************
 	This function is a helper function to add components by string name
 	****************************************************************************/
@@ -53,6 +62,14 @@ namespace TDS
 	This function is a helper function to remove components by string name
 	****************************************************************************/
 	DLL_API void removeComponentByName(std::string componentName, const EntityID& entityID);
+	/*!*************************************************************************
+	This function is a helper function to toggle components
+	****************************************************************************/
+	DLL_API void setComponentIsEnable(std::string componentName, const EntityID& entityID, bool isEnabled);
+	/*!*************************************************************************
+	This function is a helper function to return if component is enabled
+	****************************************************************************/
+	DLL_API bool getComponentIsEnable(std::string componentName, const EntityID& entityID);
 }
 
 #endif

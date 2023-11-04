@@ -5,13 +5,19 @@
 #include "Rendering/GraphicsManager.h"
 #include "vulkanTools/VulkanPipeline.h"
 #include "vulkanTools/vulkanSwapChain.h"
+#include "vulkanTools/VulkanTexture.h"
 #include "vulkanTools/Renderer.h"
 namespace TDS
 {
+	GlobalUBO ubo{};
+	
 	struct PushConstantData {
 		Mat4 ModelMat{ 1.f };
 		Mat4 NormalMat{ 1.f };
+		unsigned int textureIndex = 499;
+		float padding[3];
 	};
+
 	float RendererSystem::lightPosX = 0.f;
 	void RendererSystem::OnInit()
 	{
@@ -22,85 +28,120 @@ namespace TDS
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-		//GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
-			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
-			_Graphics[i].GetAsset().m_GUID = *assetManager->GetModelFactory().m_LoadedModelsGUID.begin();
-			_Graphics[i].GetAsset().m_Identifier.CreateTypeIDByName(assetManager->GetModelFactory().m_ModelMap.begin()->first);
-			_Graphics[i].GetAsset().m_Identifier.GetTypeName<AssetModel>();
-
-			assetManager->getResourceManager().getResource(_Graphics[i].GetAsset());
-
-			if (_Graphics[i].ShowMesh() == true)
+			PushConstantData pushData{};
+			if (_Graphics[i].m_ModelName != _Graphics[i].m_AssetReference.m_AssetName)
 			{
-				if (Renderer3D::getPipeline()->GetCreateEntry().m_EnableDoubleBuffering)
+				AssetModel* pModel = AssetManager::GetInstance()->GetModelFactory().GetModel(_Graphics[i].m_ModelName, _Graphics[i].m_AssetReference);
+				
+				if (pModel == nullptr)
 				{
-
-					GlobalUBO ubo = RendererDataManager::GetUBO(_Graphics->GetAsset().m_GUID.GetUniqueID());
-					ModelElement elem = RendererDataManager::GetModelElement(_Graphics->GetAsset().m_GUID.GetUniqueID(), _Graphics->GetAsset().m_Reference);
-					PushConstantData pushData{};
-					Mat4 temp{ 1.0f, 0.f, 0.f, 0.f,
-							0.f, 1.f, 0.f, 0.f,
-							0.f, 0.f, 1.f, 0.f,
-							0.f, 0.f, 0.f, 1.f };
-
-
-					Vec3 Position = _TransformComponent[i].GetPosition();
-					temp = temp.Translate(Position);
-					pushData.ModelMat = temp;
-
-					temp.transpose();
-					temp.inverse();
-					pushData.NormalMat = temp;
-
-					ubo.m_View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
-					ubo.m_vPointLights[0].m_Position = Vec4(lightPosX, 0.5f, 0.f, 0.2f);
-					ubo.m_vPointLights[0].m_Color = Vec4(1.f, 1.f, 1.f, 1.f);
-					ubo.m_Projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
-						GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 10.f);
-					ubo.m_Projection.m[1][1] *= -1;
-
-					Renderer3D::getPipeline()->BindPipeline();
-					Renderer3D::getPipeline()->UpdateUBO(&ubo, sizeof(GlobalUBO), 0, frame);
-					Renderer3D::getPipeline()->BindDescriptor(frame);
-					Renderer3D::getPipeline()->SubmitPushConstant(&pushData, sizeof(PushConstantData), SHADER_FLAG::VERTEX);
-					/*Renderer3D::getInstance()->models->bind(commandBuffer);
-					Renderer3D::getInstance()->models->draw(commandBuffer);*/
-					Renderer3D::getPipeline()->BindVertexBuffer(*elem.m_VertexBuffer);
-					Renderer3D::getPipeline()->BindIndexBuffer(*elem.m_IndexBuffer);
-					Renderer3D::getPipeline()->DrawIndexed(*elem.m_VertexBuffer, *elem.m_IndexBuffer, frame);
-
-
-
-
-
-
-
+					//TDS_WARN("No such model called {}", _Graphics[i].m_AssetReference.m_AssetName);
+				}
+				else
+				{
+					_Graphics[i].m_AssetReference.m_AssetName = _Graphics[i].m_ModelName;
+					_Graphics[i].m_AssetReference.m_ResourcePtr = pModel;
 				}
 
+			}
+			std::string texName = _Graphics[i].m_TextureName;
+			int textureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(_Graphics[i].m_TextureName);
+			
+			if (textureID == -1)
+			{
+				pushData.textureIndex = 499;
+			}
+			else
+			{
+				pushData.textureIndex = textureID;
+			}
+
+			/*if (_Graphics[i].m_TextureName != _Graphics[i].m_TextureReference.m_AssetName)
+			{
+
+
+				Texture* pTexture = AssetManager::GetInstance()->GetTextureFactory().GetTexture(_Graphics[i].m_TextureName);
+				if (pTexture == nullptr)
+				{
+					TDS_WARN("No such texture called {}", _Graphics[i].m_AssetReference.m_AssetName);
+				}
+				else
+				{
+					_Graphics[i].m_TextureReference.m_AssetName = _Graphics[i].m_ModelName;
+					_Graphics[i].m_TextureReference.m_ResourcePtr = pTexture;
+					
+				}
+				
+			}*/
+
+			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
+			GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
+
+
+			if (Renderer3D::getPipeline()->GetCreateEntry().m_EnableDoubleBuffering)
+			{
+
+
+				if (Vec3 Scale = _TransformComponent[i].GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f) {
+				}
+				else {
+					_TransformComponent[i].GenerateTransfom();
+				}
+				Mat4 temp = _TransformComponent[i].GetTransformMatrix();
+				pushData.ModelMat = temp;
+				temp.transpose();
+				temp.inverse();
+				pushData.NormalMat = temp;
+
+				ubo.m_View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
+				GraphicsManager::getInstance().m_PointLightRenderer->update(ubo, &_Graphics[i], &_TransformComponent[i]);
+				ubo.m_Projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
+					GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 10.f);
+				ubo.m_Projection.m[1][1] *= -1;
+
+				if (_Graphics[i].IsPointLight())
+				{ 
+					GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().BindDescriptor(frame,1);
+					GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().UpdateUBO(&ubo, sizeof(GlobalUBO), 1, frame);
+					GraphicsManager::getInstance().m_PointLightRenderer->render(&_Graphics[i], &_TransformComponent[i]);
+				}
+				else {//if not point light render using model
+					if (_Graphics[i].ShowMesh() == true && _Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
+					{
+						if (_Graphics[i].m_AssetReference.m_ResourcePtr->BufferIsNull())
+							_Graphics[i].m_AssetReference.m_ResourcePtr->CreateBuffers();
+
+
+						Renderer3D::getPipeline()->BindPipeline();
+	
+						if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray)
+						{
+							Renderer3D::getPipeline()->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetManager::GetInstance()->GetTextureFactory().GetTextureArray());
+							AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray = false;
+						}
+						
+						
+
+						Renderer3D::getPipeline()->UpdateUBO(&ubo, sizeof(GlobalUBO), 0, frame);
+					
+						Renderer3D::getPipeline()->SubmitPushConstant(&pushData, sizeof(PushConstantData), SHADER_FLAG::VERTEX | SHADER_FLAG::FRAGMENT);
+						Renderer3D::getPipeline()->BindVertexBuffer(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetVertexBuffer());
+						Renderer3D::getPipeline()->BindIndexBuffer(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer());
+						Renderer3D::getPipeline()->BindDescriptor(frame, 1);
+						Renderer3D::getPipeline()->BindArrayDescriptorSet(0, 1, 1);
+						Renderer3D::getPipeline()->DrawIndexed(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetVertexBuffer(),
+							*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer(),
+							frame);
+					}
+				}
 
 			}
 		}
-		//GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
-
-
-	/*	OnRender(entities, &_transform, _Graphics)*/
-		/*SubmitModels(entities, &_transform, _Graphics);*/
-	/*	Renderer3D::DrawFrame(*RendererDataManager::GetInstance());*/
 	}
 	void RendererSystem::OnRender(const float dt, const std::vector<EntityID>& entities, GraphicsComponent* _Graphics)
 	{
 	}
-	void RendererSystem::SubmitPointLights()
-	{
-	}
-	void RendererSystem::SubmitModels(const std::vector<EntityID>& entities, Transform* _transform, GraphicsComponent* _Graphics)
-	{
 
-
-	}
-	void RendererSystem::SubmitTextures()
-	{
-	}
 }
