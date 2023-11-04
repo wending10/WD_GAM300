@@ -27,6 +27,7 @@ namespace TDS
 		VkCommandBuffer							currentCommand = nullptr;
 		WindowsWin*								m_pWindow = nullptr;
 		RenderTarget*							m_RenderingAttachment{ nullptr };
+		RenderTarget*							m_RenderingDepthAttachment{ nullptr };
 		RenderPass*								m_Renderpass{ nullptr };
 		FrameBuffer*							m_Framebuffer{ nullptr };
 	public:
