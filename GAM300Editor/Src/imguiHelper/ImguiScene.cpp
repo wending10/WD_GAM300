@@ -9,6 +9,7 @@
 #include "Rendering/RenderTarget.h"
 #include "vulkanTools/Renderer.h"
 #include "imgui/ImGuizmo.h"
+//#include "Input/Input.h"
 namespace TDS
 {
 	Texture data{};
@@ -24,7 +25,6 @@ namespace TDS
 		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 		panelTitle = "Scene";
 		windowPadding = ImVec2(0.f, 0.f);
-
 	}
 
 	std::string tempPath = "../../assets/textures/texture.dds";
@@ -113,7 +113,7 @@ namespace TDS
 			//projection.m[1][1] *= -1;
 			Mat4 view = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
 
-			const auto& trans = ecs.getComponent<Transform>(selectedEntity)/*->GetTransformMatrix()*/;
+			const auto& trans = ecs.getComponent<Transform>(selectedEntity);
 
 			Vec3 snap = 1.0f;
 

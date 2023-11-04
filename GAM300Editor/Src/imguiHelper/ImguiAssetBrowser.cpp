@@ -216,9 +216,6 @@ namespace TDS
 					AssetManager::GetInstance()->LoadAsset(OutPath, graphComp->GetTexture());
 
 
-
-
-
 				}
 				if (strstr(filename.c_str(), ".obj") || strstr(filename.c_str(), ".fbx") || strstr(filename.c_str(), ".gltf") || strstr(filename.c_str(), ".bin"))
 				{
