@@ -99,7 +99,10 @@ namespace TDS
 			{
 				m_curr_path = m_curr_path.parent_path();
 
-				audimg.deactivate_audio_controls();
+				if (audimg.ToggleControls())
+				{
+					std::cout << "Stopping Audio Imgui controls" << '\n';
+				}
 			}
 		}
 		float cellSize = thumbnail_size + padding;
@@ -263,7 +266,7 @@ namespace TDS
 				//if .wav, play audio...
 				if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
 				{
-					audimg.activate_audio_controls();
+					audimg.ToggleControls(true);
 
 					audimg.add_audio_files(m_curr_path);
 				}

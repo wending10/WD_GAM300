@@ -147,7 +147,7 @@ namespace TDS
     {
         if (key == "")
         {
-            auto components = {Component<Cs>::getTypeID()...};
+            auto components = { Component<Cs>::getTypeID()... };
 
             for (std::uint32_t i = 0; i < ecs.getNumberOfComponents(); ++i)
             {
@@ -179,7 +179,7 @@ namespace TDS
             doAction<0>(elapsedMilliseconds,
                 archetype->type,
                 archetype->entityIds,
-                archetype->componentData);
+                MemoryManager::GetInstance()->getComponents(archetype->type));
     }
 
     // --doAction--
@@ -316,6 +316,12 @@ namespace TDS
         dummyRecord.index = 0;
         dummyRecord.isEnabled = true;
         mEntityArchetypeMap[entityId] = dummyRecord;
+
+        //ScriptAPI
+        if (addScriptList)
+        {
+            addScriptList(entityId);
+        }
     }
 
     // --addComponent--
@@ -727,6 +733,8 @@ namespace TDS
         }
 
         mEntityArchetypeMap.erase(entityID);
+
+        removeScriptList(entityID);
     }
 
     // --removeAllEntities--
@@ -850,17 +858,18 @@ namespace TDS
         {
             if (id[i] == '1')
             {
-                newArchetype->componentData.emplace_back(MemoryManager::GetInstance()->newPage(id, i));
+                MemoryManager::GetInstance()->newPage(id, i);
+                //newArchetype->componentData.emplace_back(MemoryManager::GetInstance()->newPage(id, i));
 
                 if (commit)
                 {
                     MemoryManager::GetInstance()->reserveComponentSpace(id, i, mComponentMap[i]->getSize());
                 }
             }
-            else
-            {
-                newArchetype->componentData.emplace_back(nullptr);
-            }
+            //else
+            //{
+            //    newArchetype->componentData.emplace_back(nullptr);
+            //}
             newArchetype->componentDataSize.emplace_back(0);
         }
         if (commit)

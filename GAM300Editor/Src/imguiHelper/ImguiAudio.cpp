@@ -24,7 +24,9 @@ namespace TDS
 
 		sounds.clear();
 
-		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
+		std::cout << "AudImg Constructor" << '\n';
+
+		audeng = audeng = AudioWerks::AudioEngine::get_audioengine_instance();
 	}
 
 	AudioImgui::~AudioImgui()
@@ -32,21 +34,22 @@ namespace TDS
 		delete audeng;
 	}
 
-	void AudioImgui::activate_audio_controls()
+	bool& AudioImgui::ToggleControls(bool state)
 	{
-		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;;
-		appear = true;
-	}
+		appear = state;
 
-	void AudioImgui::deactivate_audio_controls()
-	{
-		flags = ImGuiWindowFlags_None;
-		appear = false;
-
-		if (audeng->soundIsPlaying(sounds[0]))
+		if (appear)
 		{
+			flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
+		}
+		else
+		{
+			flags = ImGuiWindowFlags_None;
+			
 			audeng->stopSound(sounds[0]);
 		}
+
+		return appear;
 	}
 
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
@@ -54,12 +57,11 @@ namespace TDS
 		std::filesystem::path pathing = folder_path;
 		std::cout << "The file path is " << pathing.string() << '\n';
 
-		audeng->init();
-
 		SoundInfo add_sound(pathing.string());
 		SoundInfo test_path("../../assets/audioFiles/Songs/test.flac");
 		test_path.setLoop(false);
 		test_path.set3DCoords(0.f, 0.f, 0.f);
+		test_path.setVolume(0.5f);
 
 		sounds.push_back(test_path);
 

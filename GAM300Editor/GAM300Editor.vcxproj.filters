@@ -282,5 +282,9 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <None Include="GAM300Engine.dll" />
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudio.dll" />
+    <None Include="fmodstudioL.dll" />
   </ItemGroup>
 </Project>

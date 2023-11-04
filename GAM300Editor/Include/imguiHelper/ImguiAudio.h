@@ -33,14 +33,11 @@ namespace TDS
 		~AudioImgui();
 
 		/**
-		 * @brief Shows ImGui Controls for audio when user navigates to audio assets in the editor.
+		 * @brief Show or hide audio controls. Also can be used to see if active or not
+		 * @param state 
+		 * @return 
 		*/
-		void activate_audio_controls();
-
-		/**
-		 * @brief Hides ImGui Constrols for audio.
-		*/
-		void deactivate_audio_controls();
+		bool& ToggleControls(bool state = false);
 
 		void add_audio_files(std::filesystem::path folder_path);
 

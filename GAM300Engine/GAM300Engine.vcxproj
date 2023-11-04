@@ -122,7 +122,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;CORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions);DLL_API_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;CORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions);DLL_API_EXPORT;JPH_PROFILE_ENABLED;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies;$(SolutionDir)Include;$(SolutionDir)..\Shared_Libs;$(SolutionDir)Include\Geometry;$(SolutionDir)..\Dependencies\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -200,7 +200,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\components\boxCollider.cpp" />
     <ClCompile Include="Src\components\cameraComponent.cpp" />
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
-    <ClCompile Include="Src\components\collider.cpp" />
     <ClCompile Include="Src\components\componentHelperFunctions.cpp" />
     <ClCompile Include="Src\components\FontComponent.cpp" />
     <ClCompile Include="Src\components\graphicsComponent.cpp" />
@@ -302,7 +301,6 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\components\boxCollider.h" />
     <ClInclude Include="Include\components\cameraComponent.h" />
     <ClInclude Include="Include\components\capsuleCollider.h" />
-    <ClInclude Include="Include\components\collider.h" />
     <ClInclude Include="Include\components\components.h" />
     <ClInclude Include="Include\components\FontComponent.h" />
     <ClInclude Include="Include\components\graphicsComponent.h" />
@@ -343,6 +341,7 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\Model\Skeleton.h" />
+    <ClInclude Include="Include\Physics\JPHLayers.h" />
     <ClInclude Include="Include\Physics\CollisionSystem.h" />
     <ClInclude Include="Include\Physics\PhysicsSystem.h" />
     <ClInclude Include="Include\propertyManager\registration.h" />
@@ -355,6 +354,8 @@ xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\Renderer3D.h" />
     <ClInclude Include="Include\Rendering\RendererSystem.h" />
     <ClInclude Include="Include\Rendering\RenderLayer.h" />
+    <ClInclude Include="Include\Rendering\renderPass.h" />
+    <ClInclude Include="Include\Rendering\RenderTarget.h" />
     <ClInclude Include="Include\Rendering\Skybox.h" />
     <ClInclude Include="Include\sceneManager\serializationHelperFunctions.h" />
     <ClInclude Include="Include\Shader\ShaderData.h" />

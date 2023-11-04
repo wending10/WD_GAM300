@@ -20,7 +20,10 @@ namespace TDS
         AudioEngine* AudioEngine::audioE_instance = 0;
 
         AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
-            eventDescriptions(), eventInstances(), reverb() {}
+            eventDescriptions(), eventInstances(), reverb()
+        {
+            std::cout << "AudioEngine Constructor" << '\n';
+        }
 
         AudioEngine::~AudioEngine()
         {
@@ -29,6 +32,7 @@ namespace TDS
 
         void AudioEngine::init()
         {
+            std::cout << "FMOD Engine Init" << '\n';
             ERRCHECK(FMOD::System_Create(&lowLevelSystem));
             ERRCHECK(lowLevelSystem->init(MAX_AUDIO_CHANNELS, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, 0));
             ERRCHECK(FMOD::Studio::System::create(&studioSystem));
@@ -55,7 +59,7 @@ namespace TDS
             if (audioE_instance == NULL)
             {
                 audioE_instance = new AudioEngine();
-                //audioE_instance->init();
+                audioE_instance->init();
                 return audioE_instance;
             }
 

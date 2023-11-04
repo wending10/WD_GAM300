@@ -11,8 +11,6 @@
 #ifndef COMPONENTS
 #define COMPONENTS
 
-#include "collider.h"
-
 #include "ai.h"
 #include "boxCollider.h"
 #include "cameraComponent.h"
@@ -25,8 +23,6 @@
 #include "tag.h"
 #include "transform.h"
 #include "winData.h"
-#include "components/SoundInfo.h"
-#include "fmod_engine/AudioEngine.h"
 #include "FontComponent.h"
 
 // Helper functions for components

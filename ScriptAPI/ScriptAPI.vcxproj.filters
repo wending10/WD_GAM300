@@ -27,9 +27,6 @@
     <ClInclude Include="Vector3.hxx">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\ColliderComponent.hxx">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IncludeFromEngine.hxx">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cxx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\ColliderComponent.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\NameTagComponent.cxx">

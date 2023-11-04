@@ -43,7 +43,6 @@
     <ClCompile Include="Src\Geometry\Triangle.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
     <ClCompile Include="Src\components\cameraComponent.cpp" />
-    <ClCompile Include="Src\components\collider.cpp" />
     <ClCompile Include="Src\components\componentHelperFunctions.cpp" />
     <ClCompile Include="Src\components\nameTag.cpp" />
     <ClCompile Include="Src\components\rigidBody.cpp" />
@@ -72,9 +71,9 @@
     <ClCompile Include="Src\vulkanTools\DirectFrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\VMATypes\VMABuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\VulkanPipeline.cpp" />
-    <ClCompile Include="Src\Renderer\RendererSystem.cpp" />
-    <ClCompile Include="Src\Renderer\RenderDataManager.cpp" />
-    <ClCompile Include="Src\Renderer\Renderer3D.cpp" />
+    <ClCompile Include="Src\Rendering\RendererSystem.cpp" />
+    <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
+    <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
     <ClCompile Include="Src\components\graphicsComponent.cpp" />
     <ClCompile Include="..\Shared_Libs\Color.cpp" />
     <ClCompile Include="..\Shared_Libs\Color8UNorm.cpp" />
@@ -139,7 +138,6 @@
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\components\ai.h" />
     <ClInclude Include="Include\components\cameraComponent.h" />
-    <ClInclude Include="Include\components\collider.h" />
     <ClInclude Include="Include\components\components.h" />
     <ClInclude Include="Include\components\iComponent.h" />
     <ClInclude Include="Include\components\nameTag.h" />

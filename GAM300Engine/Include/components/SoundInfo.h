@@ -131,14 +131,12 @@ namespace TDS{
         */
         void setVolume(float vol)
         {
-            /*volume = 20.0f * log10f(vol);
+            volume = 20.0f * log10f(vol);
 
             if (volume > 150.f)
             {
                 volume = 149.f;
-            }*/
-            (void)vol;
-            volume = 1.f;
+            }
         }
 
         void setMSLength(unsigned int len)
