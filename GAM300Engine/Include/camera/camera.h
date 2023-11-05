@@ -19,6 +19,14 @@ namespace TDS
 
 		DLL_API bool moving();
 
+		DLL_API void ProcessMouseMovement(float mousex, float mousey);
+
+	/*	DLL_API Mat4 GetProjMatrix()
+		{
+
+		}*/
+		DLL_API Vec3 getPosition()const { return m_Position; }
+
 		float m_Fov{45.f};
 	private:
 		
@@ -51,11 +59,8 @@ namespace TDS
 		void updateViewMatrix();
 		//void updateProjection();
 		void translate(const float& deltaWheel); // act like zoom?
-		void ProcessMouseMovement(float mousex, float mousey);
+		
 	};
-
-
-
 
 }//namespace TDS
 
