@@ -263,13 +263,17 @@ namespace TDS
 
 				}
 
-				//if .wav, play audio...
-				if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
+				if(strstr(filename.c_str(), "audioFiles"))
 				{
-					audimg.ToggleControls(true);
-
 					audimg.add_audio_files(filename);
-					audimg.play();
+					
+					//if .wav, play audio...
+					if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
+					{
+						audimg.ToggleControls(true);
+
+						//audimg.play();
+					}
 				}
 
 

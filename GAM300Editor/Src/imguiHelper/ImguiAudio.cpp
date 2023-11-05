@@ -70,8 +70,15 @@ namespace TDS
 		std::filesystem::path pathing = folder_path;
 		std::cout << "The file path is " << pathing.string() << '\n';
 
-		/*SoundInfo add_sound(pathing.string());
-		sounds.push_back(add_sound);*/
+		/*while(folder_path)
+
+		SoundInfo add_sound(pathing.string());
+		music.push_back(add_sound);
+		add_sound.setLoop(false);
+		add_sound.set3DCoords(0.f, 0.f, 0.f);
+		add_sound.setVolume(0.5f);
+		music.push_back(add_sound);*/
+
 		SoundInfo test_path("../../assets/audioFiles/Songs/test.flac");
 		test_path.setLoop(false);
 		test_path.set3DCoords(0.f, 0.f, 0.f);
