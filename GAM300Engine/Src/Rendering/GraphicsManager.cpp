@@ -115,6 +115,7 @@ namespace TDS
 			renderlayer->ShutDown();
 		}
 		Renderer3D::getInstance()->ShutDown();
+		m_DebugRenderer->GetPipeline().ShutDown();
 		GlobalBufferPool::GetInstance()->Destroy();
 		m_RenderingAttachment->~RenderTarget();
 		m_RenderingDepthAttachment->~RenderTarget();
