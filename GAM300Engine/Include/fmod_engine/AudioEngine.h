@@ -306,6 +306,13 @@ namespace TDS
             std::map<unsigned int, FMOD::Channel*> loopsPlaying{};
 
             /*
+             * Map which stores the current playback channels of any playing sound
+             * Key is the SoundInfo's uniqueKey field.
+             * Value is the FMOD::Channel* the FMOD::Sound* is playing back on.
+             */
+            std::map<unsigned int, FMOD::Channel*> normalPlaying{};
+
+            /*
              * Map which stores the soundbanks loaded with loadFMODStudioBank()
              */
             std::map<std::string, FMOD::Studio::Bank*> soundBanks{};

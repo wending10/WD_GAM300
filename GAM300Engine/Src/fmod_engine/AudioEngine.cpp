@@ -105,7 +105,13 @@ namespace TDS
                 channel->setVolume(soundInfo.getVolume());
 
                 if (soundInfo.isLoop()) // add to channel map of sounds currently playing, to stop later
+                {
                     loopsPlaying.insert({ soundInfo.getUniqueID(), channel });
+                }
+                else
+                {
+                    normalPlaying.insert({ soundInfo.getUniqueID(), channel });
+                }
 
                 ERRCHECK(channel->setReverbProperties(0, soundInfo.getReverbAmount()));
 
@@ -123,10 +129,20 @@ namespace TDS
 
         void AudioEngine::stopSound(SoundInfo & soundInfo)
         {
-            if (soundIsPlaying(soundInfo)) {
-                ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
-                loopsPlaying.erase(soundInfo.getUniqueID());
-                soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
+            if (soundIsPlaying(soundInfo))
+            {
+                if(soundInfo.isLoop())
+                {
+                    ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
+                    loopsPlaying.erase(soundInfo.getUniqueID());
+                    soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
+                }
+                else
+                {
+                    ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->stop());
+                    normalPlaying.erase(soundInfo.getUniqueID());
+                    soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
+                }
             }
             else
                 std::cout << "Audio Engine: Can't stop a looping sound that's not playing!\n";

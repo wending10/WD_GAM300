@@ -39,12 +39,18 @@ namespace TDS
 		*/
 		bool& ToggleControls(bool state = false);
 
+		/**
+		 * @brief Add sound into vector container
+		 * @param folder_path 
+		*/
 		void add_audio_files(std::filesystem::path folder_path);
+
+		void play(); //temp testing
 
 		/**
 		 * @brief Initialize
 		*/
-		virtual void init();
+		virtual void init() {}
 
 		/**
 		 * @brief Update loop.
@@ -57,7 +63,9 @@ namespace TDS
 		bool appear;
 		float bar;
 
-		std::vector<SoundInfo> sounds;
+		std::vector<SoundInfo> music;
+		std::vector<SoundInfo> SFX;
+		std::vector<SoundInfo> background;
 	};
 }
 

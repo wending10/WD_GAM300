@@ -268,7 +268,8 @@ namespace TDS
 				{
 					audimg.ToggleControls(true);
 
-					audimg.add_audio_files(m_curr_path);
+					audimg.add_audio_files(filename);
+					audimg.play();
 				}
 
 
