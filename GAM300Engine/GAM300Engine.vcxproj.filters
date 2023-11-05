@@ -92,6 +92,7 @@
     <ClCompile Include="Src\GraphicsResource\FontInfo.cpp" />
     <ClCompile Include="Src\eventManager\eventHandler.cpp" />
     <ClCompile Include="Src\camera\camerasystem\CameraSystem.cpp" />
+    <ClCompile Include="Src\Rendering\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
