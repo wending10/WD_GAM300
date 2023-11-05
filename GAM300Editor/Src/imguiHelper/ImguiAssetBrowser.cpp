@@ -265,17 +265,17 @@ namespace TDS
 
 				if(strstr(filename.c_str(), "audioFiles"))
 				{
-					audimg.add_audio_files(filename);
+					std::cout << "Asset Browser: " << filename << '\n';
 					
-					//if .wav, play audio...
-					if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
-					{
-						audimg.ToggleControls(true);
-
-						//audimg.play();
-					}
+					audimg.add_audio_files(filename);
 				}
+				//if .wav, play audio...
+				if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
+				{
+					audimg.ToggleControls(true);
 
+					audimg.play();
+				}
 
 			}
 			ImGui::Text(filename.c_str());

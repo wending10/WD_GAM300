@@ -45,6 +45,11 @@ namespace TDS
 		*/
 		void add_audio_files(std::filesystem::path folder_path);
 
+		/**
+		 * @brief Step into multiple levels of folders
+		*/
+		std::vector<std::filesystem::path> go_deeper(std::filesystem::path f_path);
+
 		void play(); //temp testing
 
 		/**
@@ -66,6 +71,7 @@ namespace TDS
 		std::vector<SoundInfo> music;
 		std::vector<SoundInfo> SFX;
 		std::vector<SoundInfo> background;
+		std::vector<SoundInfo> VO;
 	};
 }
 

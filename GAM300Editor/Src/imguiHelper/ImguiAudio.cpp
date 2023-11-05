@@ -25,6 +25,7 @@ namespace TDS
 		music.clear();
 		SFX.clear();
 		background.clear();
+		VO.clear();
 
 		std::cout << "AudImg Constructor" << '\n';
 
@@ -60,6 +61,10 @@ namespace TDS
 			{
 				audeng->stopSound(sort);
 			}
+			for (SoundInfo& sort : VO)
+			{
+				audeng->stopSound(sort);
+			}
 		}
 
 		return appear;
@@ -69,6 +74,15 @@ namespace TDS
 	{
 		std::filesystem::path pathing = folder_path;
 		std::cout << "The file path is " << pathing.string() << '\n';
+
+		std::string path = "../../assets/" + pathing.string();
+		std::vector<std::filesystem::path> all_files;
+
+		if (std::filesystem::is_directory(folder_path))
+		{
+			all_files = go_deeper(pathing);
+		}
+
 
 		/*while(folder_path)
 
@@ -85,6 +99,31 @@ namespace TDS
 		test_path.setVolume(0.5f);
 
 		music.push_back(test_path);
+	}
+
+	std::vector<std::filesystem::path> AudioImgui::go_deeper(std::filesystem::path f_path)
+	{
+		std::vector<std::filesystem::path> folders;
+		std::vector<std::filesystem::path> files;
+
+		for (auto& temp : std::filesystem::directory_iterator(f_path))
+		{
+			if (temp.is_directory())
+			{
+				folders = go_deeper(temp);
+
+				for (const auto& temp2 : folders)
+				{
+					files.push_back(temp2);
+				}
+			}
+			else
+			{
+				files.push_back(temp);
+			}
+		}
+
+		return files;
 	}
 
 	void AudioImgui::play()
