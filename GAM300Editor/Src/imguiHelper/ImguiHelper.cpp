@@ -1,10 +1,10 @@
 
 #include "ImguiHelper/ImguiSceneBrowser.h"
-#include "ImguiHelper/ImguiScriptBrowser.h"
 #include "imguiHelper/ImguiHelper.h"
 #include "imguiHelper/ImguiHierarchy.h"
 #include "imguiHelper/ImguiProperties.h"
 #include "imguiHelper/ImguiAssetBrowser.h"
+#include "imguiHelper/ImguiScriptBrowser.h"
 #include "imguiHelper/ImguiAudio.h"
 #include "imguiHelper/ImguiBehaviourTree.h"
 
@@ -13,6 +13,7 @@
 #include "imguiHelper/ImguiProfiler.h"
 #include "ImguiHelper/ImguiFunctionHelper.h"
 #include "imguiHelper/ImguiScene.h"
+#include "imguiHelper/ImguiGamePlayScene.h"
 
 namespace TDS
 {
@@ -36,6 +37,7 @@ namespace TDS
 			m_instance->panels[PanelTypes::PROFILER] = std::make_shared<Profiler>();
 			m_instance->panels[PanelTypes::BEHAVIOURTREEEDITOR] = std::make_shared<BehaviourTreePanel>();
 			m_instance->panels[PanelTypes::SCENE] = std::make_shared<EditorScene>();
+			m_instance->panels[PanelTypes::GAMEPLAYSCENE] = std::make_shared<GamePlayScene>();
 		}
 		return m_instance;
 	}
@@ -199,7 +201,7 @@ namespace TDS
 				{
 					currentPanel.second->rightClick = false;
 				}
-
+			
 				currentPanel.second->update();
 			}
 			ImGui::End();
@@ -223,5 +225,6 @@ namespace TDS
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
+		AssetBrowser::destroyIcons(); //temp to prevent mem leak
 	}
 }

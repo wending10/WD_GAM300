@@ -29,6 +29,7 @@
 #include "vulkanTools/FrameBuffer.h"
 #include "Tools/DDSConverter.h"
 #include "imguiHelper/ImguiScene.h"
+#include "imguiHelper/ImguiGamePlayScene.h"
 #include "Physics/PhysicsSystem.h"
 
 
@@ -126,7 +127,7 @@ namespace TDS
         GraphicsManager::getInstance().Init(&m_window);
         AssetManager::GetInstance()->Init();
         AssetManager::GetInstance()->PreloadAssets();
-        //Run();
+        skyboxrender.Init();
     }
 
     void Application::Update()
@@ -161,42 +162,43 @@ namespace TDS
 
         initImgui();
         float lightx = 0.f;
-    
-      /*  Texture data{};
-        data.LoadTexture("../../assets/textures/texture.dds");
-        VulkanTexture vkTexture{};
-        vkTexture.CreateBasicTexture(data.m_TextureInfo);
-        
-        vkTexture.m_DescSet = ImGui_ImplVulkan_AddTexture(vkTexture.getInfo().sampler, vkTexture.getInfo().imageView, vkTexture.getInfo().imageLayout);
-       */
 
-        VkDescriptorSet  m_DescSet{};
-        GraphicsManager::getInstance().setCamera(m_camera);
         while (m_window.processInputEvent())
         {
 
             TimeStep::CalculateDeltaTime();
             float DeltaTime = TimeStep::GetDeltaTime();
-            
-
-            
+             if (std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]); pGamePlatScene->isFocus)
+            {
+                GraphicsManager::getInstance().setCamera(m_GameCamera);
+            }
+             else
+            {
+                GraphicsManager::getInstance().setCamera(m_camera);
+            }
+       
             m_camera.UpdateCamera(DeltaTime);
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
 
-            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
-            if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension)
+            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight(), 1.f)};
+            if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x >0 && m_windowdimension.y > 0)
             {
                 GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
                 std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
                 pScene->Resize();
+
+                std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
+                pGamePlatScene->Resize();
+
+
             }
             GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
             GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
-            
-
-			
+            std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+            skyboxrender.RenderSkyBox(commandBuffer, frame);
+           
             if (isPlaying)
             {
                 ecs.runSystems(1, DeltaTime); // Other systems
@@ -208,7 +210,6 @@ namespace TDS
                     PhysicsSystem::SetUpdate(false);
                 }
             }
-
             ecs.runSystems(2, DeltaTime); // Event handler
             ecs.runSystems(3, DeltaTime); // Graphics
          
@@ -224,7 +225,6 @@ namespace TDS
 
             GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
             GraphicsManager::getInstance().EndFrame();
-            
             // Reloading
             if (GetKeyState(VK_F5) & 0x8000)
             {
@@ -236,9 +236,10 @@ namespace TDS
 
             executeUpdate();
             Input::scrollStop();
+            
         }
         stopScriptEngine();
-        /*vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());*/
+      
 
         AssetManager::GetInstance()->ShutDown();
         vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
@@ -249,6 +250,8 @@ namespace TDS
         }
         imguiHelper::Exit();
         ecs.destroy();
+        
+        skyboxrender.ShutDown();
         GraphicsManager::getInstance().ShutDown();
         DDSConverter::Destroy();
     }

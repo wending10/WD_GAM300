@@ -1,7 +1,7 @@
 #pragma once
 #include "FactoryBase.h"
 #include "../GraphicsResource/TextureInfo.h"
-#define MAX_NUM_PRELOAD_TEXTURE 10
+#define MAX_NUM_PRELOAD_TEXTURE 500
 #define TEXTURE_PATH "../assets/textures/"
 namespace TDS
 {
@@ -71,6 +71,10 @@ namespace TDS
 				const std::filesystem::path& path = entry.path();
 				if (path.extension() == ".dds")
 				{
+					if (path.filename().string() == "skybox1.dds")
+					{
+						continue;
+					}
 					std::string fileName = path.filename().string();
 					m_TextureArray[m_CurrentIndex].LoadTexture(path.string());
 					m_TextureIndices[fileName] = m_CurrentIndex++;

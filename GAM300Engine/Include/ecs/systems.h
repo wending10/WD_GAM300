@@ -32,6 +32,7 @@ namespace TDS
 
 	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(3);
 	//ECSSystem<AudioWerks::AudioEngine, SoundInfo>	_AudioSystem(3);
+	ECSSystem<Transform, CameraComponent>			_CameraSystem(1);
 }
 
 #endif // SYSTEMS

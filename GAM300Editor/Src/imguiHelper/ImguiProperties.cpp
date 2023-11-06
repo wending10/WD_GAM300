@@ -16,6 +16,8 @@
 #include "imguiHelper/ImguiHierarchy.h"
 
 #include "eventManager/eventHandler.h"
+#include "imguiHelper/ImguiAssetBrowser.h"
+
 
 namespace TDS
 {
@@ -491,7 +493,56 @@ namespace TDS
 			{
 				std::string newValue = propertyName.get_value(componentInstance).convert<std::string>();
 				ImguiInput(propertyName.get_name().to_string(), newValue);
-				propertyName.set_value(componentInstance, newValue);
+
+				// To drag drop texture name - will change and take out after
+				if (componentName == "Graphics Component" && ImGui::BeginDragDropTarget())
+				{
+					GraphicsComponent* g = reinterpret_cast<GraphicsComponent*>(componentBase);
+					std::string finaltexture = g->GetTextureName();
+					std::string finalmodel = g->GetModelName();
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::wstring ws(path);
+						// your new String
+						std::string str(ws.begin(), ws.end());
+						const std::filesystem::path filesystempath = str;
+
+						if (filesystempath.extension() == ".dds")
+						{
+
+							AssetBrowser assetbroswer;
+							assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finaltexture, nullptr);
+							//g.m_TextureName = final;
+							g->SetTextureName(finaltexture);
+
+							std::wcout << " Path of dragged file is: " << path << std::endl;
+						}
+						if (filesystempath.extension() == ".bin")
+						{
+
+							AssetBrowser assetbroswer;
+							assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finalmodel, nullptr);
+							//g.m_TextureName = final;
+							g->SetModelName(finalmodel);
+
+							std::wcout << " Path of dragged file is: " << path << std::endl;
+						}
+						else
+						{
+							TDS_INFO("invalid file type, please drag a .dds for TextureName or .bin for ModelName ");
+						}
+					}
+					else
+					{
+						propertyName.set_value(componentInstance, newValue);
+					}
+					ImGui::EndDragDropTarget();
+				}
+				else
+				{
+					propertyName.set_value(componentInstance, newValue);
+				}
 			}
 			else if (propertyName.get_type() == rttr::type::get<Vec2>())
 			{

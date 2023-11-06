@@ -4,6 +4,9 @@
 #include "vulkan/vulkan.h"
 #include "camera/camera.h"
 #include "vulkanTools/PointLightSystem.h"
+#include "camera/Camerasystem/CameraSystem.h"
+#include "DebugRenderer.h"
+
 namespace TDS
 {
 
@@ -27,8 +30,10 @@ namespace TDS
 		VkCommandBuffer							currentCommand = nullptr;
 		WindowsWin*								m_pWindow = nullptr;
 		RenderTarget*							m_RenderingAttachment{ nullptr };
+		RenderTarget*							m_RenderingDepthAttachment{ nullptr };
 		RenderPass*								m_Renderpass{ nullptr };
 		FrameBuffer*							m_Framebuffer{ nullptr };
+
 	public:
 		inline static std::shared_ptr<GraphicsManager> m_Instance;
 		GraphicsManager();
@@ -52,6 +57,7 @@ namespace TDS
 		FrameBuffer& getFrameBuffer() { return *m_Framebuffer; }
 		RenderPass& getRenderPass() { return *m_Renderpass; }
 		std::unique_ptr<PointLightSystem> m_PointLightRenderer;
+		std::unique_ptr<DebugRenderer> m_DebugRenderer;
 	};
 
 

@@ -47,16 +47,30 @@ namespace TDS
 			false,
 			VK_SAMPLE_COUNT_1_BIT
 		};
-	
+		RenderTargetCI rendertargetCI2{
+				VK_FORMAT_D32_SFLOAT,
+				VK_IMAGE_ASPECT_DEPTH_BIT,
+				VK_IMAGE_VIEW_TYPE_2D,
+				size,
+				VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+				VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
+				RenderTargetType::DEPTH,
+				false,
+				VK_SAMPLE_COUNT_1_BIT
+		};
 		m_RenderingAttachment = new RenderTarget(m_MainVkContext, rendertargetCI);
+		m_RenderingDepthAttachment = new RenderTarget(m_MainVkContext, rendertargetCI2);
 		attachmentInfos.push_back({ m_RenderingAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
+		attachmentInfos.push_back({ m_RenderingDepthAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
 		attachments.push_back(m_RenderingAttachment);
+		attachments.push_back(m_RenderingDepthAttachment);
 		
 		m_Renderpass = new RenderPass(m_MainVkContext->getVkLogicalDevice(), attachmentInfos);
 		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);
 		
 		Renderer3D::Init();
 		m_PointLightRenderer = std::make_unique<PointLightSystem>(*m_MainVkContext);
+		m_DebugRenderer = std::make_unique<DebugRenderer>(*m_MainVkContext);
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->Setup(m_pWindow);
@@ -101,8 +115,10 @@ namespace TDS
 			renderlayer->ShutDown();
 		}
 		Renderer3D::getInstance()->ShutDown();
+		m_DebugRenderer->GetPipeline().ShutDown();
 		GlobalBufferPool::GetInstance()->Destroy();
 		m_RenderingAttachment->~RenderTarget();
+		m_RenderingDepthAttachment->~RenderTarget();
 		m_Renderpass->~RenderPass();
 		m_Framebuffer->~FrameBuffer();
 		DefaultTextures::GetInstance().DestroyDefaultTextures();
@@ -120,7 +136,6 @@ namespace TDS
 	{
 		m_Camera = &camera;
 	}
-
 	TDSCamera& GraphicsManager::GetCamera()
 	{
 		return *m_Camera;
