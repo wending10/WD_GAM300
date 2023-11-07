@@ -71,7 +71,6 @@ namespace TDS
 				const std::filesystem::path& path = entry.path();
 				if (path.extension() == ".dds")
 				{
-
 					if (path.filename().string() == "skybox1.dds")
 					{
 						continue;

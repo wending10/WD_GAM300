@@ -38,24 +38,16 @@ namespace TDS
 			/*!*************************************************************************
 			Gets mouse position
 			****************************************************************************/
-			static void GetMousePosition();
+			static void SetGameCamera(CameraComponent* _camera);
 
 			/*!*************************************************************************
 			Calculates the vectors 
 			****************************************************************************/
-			static void UpdateViewMatrixSystem(CameraComponent* _cameracomponent);
-
 			static bool movingCameraSystem();
 
-			static void ProcessMouseMovementSystem(float mousex, float mousey, CameraComponent* _cameracomponent);
-
-			static void SetUpdate(bool input) { isUpdate = input; }
-			static bool GetUpdate() { return isUpdate; }
+			static void SetIsPlaying(bool input) { isPlaying = input; }
+			static bool GetIsPlaying() { return isPlaying; }
 		private:
-			static Vec3 m_Front;
-			static Vec3 m_Right;
-			static Vec3 m_Up;
-			static Vec3 m_Down;
 
 			struct key
 			{
@@ -64,8 +56,9 @@ namespace TDS
 				bool up{ false };
 				bool down{ false };
 			};
-			inline static bool isUpdate = false;
-
+			inline static bool isPlaying = false;
+			static TDSCamera* m_GameCamera;
+			
 	};
 }
 

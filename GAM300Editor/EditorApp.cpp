@@ -168,16 +168,24 @@ namespace TDS
 
             TimeStep::CalculateDeltaTime();
             float DeltaTime = TimeStep::GetDeltaTime();
-             if (std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]); pGamePlatScene->isFocus)
-            {
-                GraphicsManager::getInstance().setCamera(m_GameCamera);
-            }
-             else
+            std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
+			std::shared_ptr<GamePlayScene> pGamePlayScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
+            if (pScene->isFocus)
             {
                 GraphicsManager::getInstance().setCamera(m_camera);
-            }
-       
+                GraphicsManager::getInstance().GetCamera().setEditorCamera(true);
+                GraphicsManager::getInstance().GetCamera().setScrollWheel(true);
 
+            }
+            else if (pGamePlayScene->isFocus)
+            {
+                GraphicsManager::getInstance().setCamera(m_GameCamera);
+                GraphicsManager::getInstance().GetCamera().setEditorCamera(false);
+            }
+            else
+            {
+                GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
+            }
             GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime);
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
@@ -192,7 +200,6 @@ namespace TDS
                 std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
                 pGamePlatScene->Resize();
 
-
             }
             GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
@@ -206,9 +213,10 @@ namespace TDS
             }
             else
             {
-                if (PhysicsSystem::GetUpdate()) // consider moving it to another seperate system (EditorApp?)
+                if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
                 {
-                    PhysicsSystem::SetUpdate(false);
+                    PhysicsSystem::SetIsPlaying(false);
+                    CameraSystem::SetIsPlaying(false);
                 }
             }
             ecs.runSystems(2, DeltaTime); // Event handler
@@ -251,6 +259,8 @@ namespace TDS
         }
         imguiHelper::Exit();
         ecs.destroy();
+        
+        skyboxrender.ShutDown();
         GraphicsManager::getInstance().ShutDown();
         DDSConverter::Destroy();
     }
