@@ -109,7 +109,7 @@ namespace TDS
 					GraphicsManager::getInstance().m_PointLightRenderer->render(&_Graphics[i], &_TransformComponent[i]);
 				}
 				else {//if not point light render using model
-					if (_Graphics[i].ShowMesh() == true && _Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
+					if (_Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
 					{
 						if (_Graphics[i].m_AssetReference.m_ResourcePtr->BufferIsNull())
 							_Graphics[i].m_AssetReference.m_ResourcePtr->CreateBuffers();
@@ -132,9 +132,12 @@ namespace TDS
 						Renderer3D::getPipeline()->BindIndexBuffer(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer());
 						Renderer3D::getPipeline()->BindDescriptor(frame, 1);
 						Renderer3D::getPipeline()->BindArrayDescriptorSet(0, 1, 1);
-						Renderer3D::getPipeline()->DrawIndexed(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetVertexBuffer(),
-							*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer(),
-							frame);
+						if (_Graphics[i].ShowMesh())
+						{
+							Renderer3D::getPipeline()->DrawIndexed(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetVertexBuffer(),
+								*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer(),
+								frame);
+						}
 						if (_Graphics[i].IsDebugOn()) {
 							GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().BindDescriptor(frame, 1);
 							GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().UpdateUBO(&ubo, sizeof(GlobalUBO), 0, frame);
