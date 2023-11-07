@@ -16,9 +16,17 @@ RTTR_REGISTRATION
 	using namespace TDS;
 
 	rttr::registration::class_<BoxCollider>("Box Collider")
-		.property("IsTrigger", &BoxCollider::GetIsTrigger, &BoxCollider::SetIsTrigger)
-		.property("Center", &BoxCollider::GetCenter, rttr::select_overload<void(Vec3)>(&BoxCollider::SetCenter))
-		.property("Size", &BoxCollider::GetSize, rttr::select_overload<void(Vec3)>(&BoxCollider::SetSize));
+		.method("GetIsTrigger", &BoxCollider::GetIsTrigger)
+		.method("SetIsTrigger", &BoxCollider::SetIsTrigger)
+		.property("IsTrigger", &BoxCollider::mIsTrigger)
+		.method("GetCenter", &BoxCollider::GetCenter)
+		.method("SetCenter", rttr::select_overload<void(Vec3)>(&BoxCollider::SetCenter))
+		.method("SetCenter", rttr::select_overload<void(float, float, float)>(&BoxCollider::SetCenter))
+		.property("Center", &BoxCollider::mCenter)
+		.method("GetSize", &BoxCollider::GetSize)
+		.method("SetSize", rttr::select_overload<void(Vec3)>(&BoxCollider::SetSize))
+		.method("SetSize", rttr::select_overload<void(float, float, float)>(&BoxCollider::SetSize))
+		.property("Size", &BoxCollider::mSize);
 }
 
 namespace TDS
