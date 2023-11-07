@@ -40,12 +40,12 @@ namespace TDS
 		/*!*************************************************************************
 		Getter functions
 		****************************************************************************/
-		DLL_API float getYaw() { return m_Yaw; }
-		DLL_API float getPitch() { return m_Pitch; }
-		DLL_API Vec3 getPosition() { return m_Position; }
-		DLL_API float getSpeed() { return m_Speed; }
-		DLL_API float getMouseSensitivity() { return m_mouseSensitivity; }
-		DLL_API float getFOV() { return m_Fov; }
+		DLL_API float& getYaw() { return m_Yaw; }
+		DLL_API float& getPitch() { return m_Pitch; }
+		DLL_API Vec3& getPosition() { return m_Position; }
+		DLL_API float& getSpeed() { return m_Speed; }
+		DLL_API float& getMouseSensitivity() { return m_mouseSensitivity; }
+		DLL_API float& getFOV() { return m_Fov; }
 
 
 		/*!*************************************************************************

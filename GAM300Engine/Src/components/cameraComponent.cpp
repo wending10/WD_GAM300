@@ -15,24 +15,12 @@ RTTR_REGISTRATION
 	using namespace TDS;
 
 rttr::registration::class_<CameraComponent>("Camera Component")
-.method("GetYaw", &CameraComponent::getYaw)
-.method("SetYaw", &CameraComponent::setYaw)
-.property("Yaw", &CameraComponent::m_Yaw)
-.method("GetPitch", &CameraComponent::getPitch)
-.method("SetPitch", &CameraComponent::setPitch)
-.property("Pitch", &CameraComponent::m_Pitch)
-.method("GetPosition", &CameraComponent::getPosition)
-.method("SetPosition", &CameraComponent::setPosition)
-.property("Position", &CameraComponent::m_Position)
-.method("GetSpeed", &CameraComponent::getSpeed)
-.method("SetSpeed", &CameraComponent::setSpeed)
-.property("Speed", &CameraComponent::m_Speed)
-.method("GetFOV", &CameraComponent::getFOV)
-.method("SetFOV", &CameraComponent::setFOV)
-.property("FOV", &CameraComponent::m_Fov)
-.method("GetMouseSensitivity", &CameraComponent::getMouseSensitivity)
-.method("SetMouseSensitivity", &CameraComponent::setMouseSensitivity)
-.property("MouseSensitivity", &CameraComponent::m_mouseSensitivity);
+	.property("Yaw", &CameraComponent::m_Yaw)
+	.property("Pitch", &CameraComponent::m_Pitch)
+	.property("Position", &CameraComponent::m_Position)
+	.property("Speed", &CameraComponent::m_Speed)
+	.property("FOV", &CameraComponent::m_Fov)
+	.property("MouseSensitivity", &CameraComponent::m_mouseSensitivity);
 }
 
 namespace TDS 
