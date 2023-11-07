@@ -177,7 +177,8 @@ namespace TDS
                 GraphicsManager::getInstance().setCamera(m_camera);
             }
        
-            m_camera.UpdateCamera(DeltaTime);
+
+            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime);
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
 
