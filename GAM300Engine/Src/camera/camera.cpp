@@ -1,18 +1,22 @@
 #include "camera/camera.h"
+#include "camera/Camerasystem/CameraSystem.h"
+
 #include<iostream>
 namespace TDS
 {
-	TDSCamera::TDSCamera(float Yaw, float pitch, Vec3 position, Vec3 up)
+	TDSCamera::TDSCamera(float Yaw, float pitch, /*float aspectRatio,*/ float zNear, float zFar, Vec3 position, Vec3 up)
 	{
 
 		m_Position = position;
 		m_WorldUp = up;
 		m_Yaw = Yaw;
 		m_Pitch = pitch;
+		//m_ProjMatrix = Mat4::Perspective(m_Fov
+
 		updateViewMatrix();
 	}
 
-	
+
 	Mat4 TDSCamera::GetViewMatrix() const
 	{
 		return Mat4::LookAt(m_Position, m_Position + m_Front, m_Up);
@@ -38,54 +42,115 @@ namespace TDS
 
 	void TDSCamera::UpdateCamera(float deltaTime)
 	{
-	
-		if (moving())
-		{
-			float CameraSpeed = m_Speed;
-			if (keys.up)
-			{
-				m_Position += m_Front * CameraSpeed;
-			}
-			if(keys.down)
-				m_Position -= m_Front * CameraSpeed;
-			if(keys.left)
-				m_Position -= m_Right * CameraSpeed;
-			if(keys.right)
-				m_Position += m_Right * CameraSpeed;
-		}
-
-		translate(static_cast<float>(Input::wheelDelta * 0.005f));
-
 		static Input::mousePosition mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
-		
-		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT))
+		if (getEditorCamera() && getScrollWheel())
 		{
-			if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+			translate(static_cast<float>(Input::wheelDelta * 0.05f));
+			if (moving())
 			{
-				mouse = Input::getMousePosition();
+				float CameraSpeed = m_Speed;
+				if (keys.up)
+				{
+					m_Position += m_Front * CameraSpeed;
+				}
+				if (keys.down)
+					m_Position -= m_Front * CameraSpeed;
+				if (keys.left)
+					m_Position -= m_Right * CameraSpeed;
+				if (keys.right)
+					m_Position += m_Right * CameraSpeed;
 			}
 
-			if (!Input::isMouseButtonReleased(TDS_MOUSE_LEFT))
+			if (Input::isMouseButtonPressed(TDS_MOUSE_RIGHT))
 			{
+				if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+				{
+					mouse = Input::getMousePosition();
+				}
+
+				if (!Input::isMouseButtonReleased(TDS_MOUSE_RIGHT))
+				{
+					float GetMousex = static_cast<float>(mouse.x);
+					float GetMousey = static_cast<float>(mouse.y);
+
+					float getNewMousex = static_cast<float>(Input::getMousePosition().x);
+					float getNewMousey = static_cast<float>(Input::getMousePosition().y);
+
+					float offsetx = getNewMousex - GetMousex;
+					float offsety = GetMousey - getNewMousey;
+
+					ProcessMouseMovement(offsetx, offsety);
+
+					mouse = Input::getMousePosition();
+				}
+
+			}
+			else
+			{
+				mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+			}
+		}
+		else // TODO: refactor so that we dont copy and paste similar function
+		{		
+			if (CameraSystem::GetIsPlaying())
+			{
+				if (moving())
+				{
+					float CameraSpeed = m_Speed;
+					if (keys.up)
+					{
+						m_Position += m_Front * CameraSpeed;
+					}
+					if (keys.down)
+						m_Position -= m_Front * CameraSpeed;
+					if (keys.left)
+						m_Position -= m_Right * CameraSpeed;
+					if (keys.right)
+						m_Position += m_Right * CameraSpeed;
+				}
+
+				if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+				{
+					mouse = Input::getMousePosition();
+				}
+
 				float GetMousex = static_cast<float>(mouse.x);
 				float GetMousey = static_cast<float>(mouse.y);
 
 				float getNewMousex = static_cast<float>(Input::getMousePosition().x);
 				float getNewMousey = static_cast<float>(Input::getMousePosition().y);
 
-				float offsetx = getNewMousex - GetMousex;
-				float offsety = GetMousey - getNewMousey;
+				/*float offsetx = getNewMousex - GetMousex;
+				float offsety = GetMousey - getNewMousey;*/
+
+				float offsetx{ 0.f }, offsety{ 0.f };
+
+				if (getNewMousex != GetMousex)
+				{
+					offsetx = getNewMousex - GetMousex;
+				}
+				else
+				{
+					offsetx = GetMousex;
+				}
+
+				if (getNewMousey != GetMousey)
+				{
+					offsety = getNewMousey - GetMousey;
+				}
+				else
+				{
+					offsety = GetMousey;
+				}
 
 				ProcessMouseMovement(offsetx, offsety);
 
+				//Input::SetMousePosition(scenewindow.x + halfsety, scenewindow.y + halfsety);
+
 				mouse = Input::getMousePosition();
 			}
+		}
 
-		}
-		else
-		{
-			mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
-		}
 		updateViewMatrix();
 	}
 
@@ -96,31 +161,31 @@ namespace TDS
 		{
 			switch (Input::keyCode)
 			{
-				case TDS_W:
-					return keys.up = true;
-					break;
+			case TDS_W:
+				return keys.up = true;
+				break;
 
-				case TDS_A:
-					return keys.left = true;
-					break;
+			case TDS_A:
+				return keys.left = true;
+				break;
 
-				case TDS_S:
-					return keys.down = true;
-					break;
+			case TDS_S:
+				return keys.down = true;
+				break;
 
-				case TDS_D:
-					return keys.right = true;
+			case TDS_D:
+				return keys.right = true;
 
-				default:
-					return false;
+			default:
+				return false;
 			}
 		}
 		else
 		{
-			keys.up		= false;		  
-			keys.left	= false;				  
-			keys.down	= false;			  
-			keys.right	= false;
+			keys.up = false;
+			keys.left = false;
+			keys.down = false;
+			keys.right = false;
 		}
 		return false;
 	}

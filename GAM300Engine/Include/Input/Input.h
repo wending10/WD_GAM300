@@ -174,6 +174,11 @@ namespace TDS
 		static mousePosition getMousePosition();
 
 		/*!*************************************************************************
+		Set mouse position
+		****************************************************************************/
+		static void setMousePosition(float x, float y);
+
+		/*!*************************************************************************
 		Returns true if mouse button is being pressed.
 		****************************************************************************/
 		static bool isMouseButtonPressed(unsigned int buttonCode);

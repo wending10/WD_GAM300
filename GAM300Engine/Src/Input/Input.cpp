@@ -214,6 +214,11 @@ namespace TDS
 		return mouse.position;
 	}
 
+	void Input::setMousePosition(float x, float y)
+	{
+		mouse.position = { static_cast<int>(x), static_cast<int>(y) };
+	}
+
 	bool Input::isMouseButtonPressed(unsigned int buttonCode)
 	{
 		return mouse.buttons[buttonCode].isDown;
