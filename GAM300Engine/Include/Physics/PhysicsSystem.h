@@ -21,6 +21,7 @@
 #include "Timestep/Timestep.h"
 #include "Logger/Logger.h"
 #include "Physics/JPHLayers.h"
+#include "eventmanager/eventHandler.h"
 
 #include "JoltPhysics/Utils/JoltConversionUtils.h"
 
@@ -56,23 +57,10 @@ namespace TDS
 		static void PhysicsSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody);
 		
 		// potentially need move somewhere
-		static void SetUpdate(bool input) { m_oneTimeInit = input; }
-		static bool GetUpdate() { return m_oneTimeInit; }
-		//std::unique_ptr<JPH::PhysicsSystem>& getPhysicsSystem() { return m_pSystem; }
+		static void SetIsPlaying(bool input) { m_oneTimeInit = input; }
+		static bool GetIsPlaying() { return m_oneTimeInit; }
+		static std::unique_ptr<JPH::PhysicsSystem>			m_pSystem; // unsafe to be public but for now it is
 	private:
-		/*!*************************************************************************
-		 * Calculate the total force acting on the object.
-		 ***************************************************************************/
-		static Vec3 CalculateTotalForce(RigidBody& _collider);
-		/*!*************************************************************************
-		 * With the total force, calculate the new position with Newton's law
-		 ***************************************************************************/
-		static void NewtonianPhysics(Transform& _transform, RigidBody& _rigidbody);
-		/*!*************************************************************************
-		 * Set the object direction based on the force
-		 ***************************************************************************/
-		static void SettingObjectDirection(Vec3& totalForce, RigidBody& _rigidbody);
-
 		void JPH_SystemShutdown();
 
 		static void JPH_SystemUpdate(Transform* _transform, RigidBody* _rigidbody);
@@ -87,7 +75,6 @@ namespace TDS
 	
 	private:
 		// Jolt Physics Global Settings
-		static std::unique_ptr<JPH::PhysicsSystem>			m_pSystem;
 		static std::unique_ptr<JPH::TempAllocatorImpl>		m_pTempAllocator;
 		static std::unique_ptr<JPH::JobSystemThreadPool>	m_pJobSystem;
 		inline static bool m_oneTimeInit					= false;

@@ -11,6 +11,7 @@ RTTR_REGISTRATION
 		.property("TextureName", &GraphicsComponent::m_TextureName)
 		.method("IsDebugOn", &GraphicsComponent::IsDebugOn)
 		.method("ToggleDebug", &GraphicsComponent::ToggleDebug)
+		.property("Mesh Renderer", & GraphicsComponent::m_ShowMesh)
 		.property("Debug", &GraphicsComponent::m_Debug)
 		//.method("SetTextureName", &GraphicsComponent::SetTextureName)
 		//.property("TextureName", &GraphicsComponent::m_TextureName, rttr::select_overload<void(std::string)>(&GraphicsComponent::SetTextureName))
@@ -42,5 +43,9 @@ namespace TDS
 																			   m_TextureReference(toMove.m_TextureReference), 
 																			   m_ShowMesh(toMove.m_ShowMesh),
 																				m_UsedIn2D(toMove.m_UsedIn2D)
+																			   m_TextureName(toMove.m_TextureName),
+																			   m_ModelName(toMove.m_ModelName)
+																			
+																								
 	{ }
 }

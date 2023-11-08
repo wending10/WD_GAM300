@@ -16,15 +16,8 @@ RTTR_REGISTRATION
 	using namespace TDS;
 
 	rttr::registration::class_<SphereCollider>("Sphere Collider")
-		.method("GetIsTrigger", &SphereCollider::GetIsTrigger)
-		.method("SetIsTrigger", &SphereCollider::SetIsTrigger)
 		.property("IsTrigger", &SphereCollider::mIsTrigger)
-		.method("GetCenter", &SphereCollider::GetCenter)
-		.method("SetCenter", rttr::select_overload<void(Vec3)>(&SphereCollider::SetCenter))
-		.method("SetCenter", rttr::select_overload<void(float, float, float)>(&SphereCollider::SetCenter))
 		.property("Center", &SphereCollider::mCenter)
-		.method("GetRadius", &SphereCollider::GetRadius)
-		.method("SetRadius", &SphereCollider::SetRadius)
 		.property("Radius", &SphereCollider::mRadius);
 
 }

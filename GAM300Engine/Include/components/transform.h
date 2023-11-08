@@ -33,7 +33,7 @@ namespace TDS
 		****************************************************************************/
 		DLL_API ~Transform() = default;
 		/*!*************************************************************************
-		Getter and setter functions for the variables in the Transform component 
+		Getter and setter functions for the variables in the Transform component
 		class
 		****************************************************************************/
 		DLL_API Vec3 GetPosition() { return mPosition;  }
@@ -95,7 +95,7 @@ namespace TDS
 		Vec3 mPosition;
 		Vec3 mScale;
 		Vec3 mRotation;
-		
+
 		Vec3 mOffsetScale;
 		Vec3 mOffsetPos;
 
