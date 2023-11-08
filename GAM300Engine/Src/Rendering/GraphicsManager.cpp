@@ -14,6 +14,7 @@
 #include "Rendering/RenderTarget.h"
 #include "Rendering/renderPass.h"
 #include "vulkanTools/FrameBuffer.h"
+#include "Rendering/Renderer2D.h"
 namespace TDS
 {
 	GraphicsManager::GraphicsManager()
@@ -69,6 +70,7 @@ namespace TDS
 		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);
 		
 		Renderer3D::Init();
+		Renderer2D::GetInstance()->Init();
 		m_PointLightRenderer = std::make_unique<PointLightSystem>(*m_MainVkContext);
 		m_DebugRenderer = std::make_unique<DebugRenderer>(*m_MainVkContext);
 		for (auto& renderLayer : m_RenderLayer)
@@ -79,6 +81,10 @@ namespace TDS
 
 
 	}
+	void GraphicsManager::ToggleViewFrom2D(bool condition)
+	{
+		m_ViewingFrom2D = condition;
+	}
 	void GraphicsManager::StartFrame()
 	{
 		for (auto& renderLayer : m_RenderLayer)
@@ -87,6 +93,11 @@ namespace TDS
 		}
 		currentCommand = m_SwapchainRenderer->BeginFrame();
 
+	}
+
+	bool GraphicsManager::IsViewingFrom2D()
+	{
+		return m_ViewingFrom2D;
 	}
 
 	void GraphicsManager::AddRenderLayer(RenderLayer* layer)
@@ -115,6 +126,7 @@ namespace TDS
 			renderlayer->ShutDown();
 		}
 		Renderer3D::getInstance()->ShutDown();
+		Renderer2D::GetInstance()->ShutDown();
 		m_DebugRenderer->GetPipeline().ShutDown();
 		GlobalBufferPool::GetInstance()->Destroy();
 		m_RenderingAttachment->~RenderTarget();
@@ -135,6 +147,10 @@ namespace TDS
 	void GraphicsManager::setCamera(TDSCamera& camera)
 	{
 		m_Camera = &camera;
+	}
+	WindowsWin* GraphicsManager::GetWindow()
+	{
+		return m_pWindow;
 	}
 	TDSCamera& GraphicsManager::GetCamera()
 	{
@@ -159,6 +175,10 @@ namespace TDS
 	VulkanInstance& GraphicsManager::getVkInstance()
 	{
 		return *m_MainVkContext;
+	}
+	std::shared_ptr<VulkanInstance> GraphicsManager::getVkInstancePtr()
+	{
+		return m_MainVkContext;
 	}
 	GraphicsManager& GraphicsManager::getInstance()
 	{

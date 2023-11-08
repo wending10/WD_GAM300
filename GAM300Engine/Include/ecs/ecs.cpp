@@ -15,6 +15,7 @@
 #include "AI/aiSystem.h"
 #include "Rendering/RendererSystem.h"
 #include "camera/Camerasystem/CameraSystem.h"
+#include "Rendering/UiSystem.h"
 #include "eventManager/eventHandler.h"
 
 namespace TDS
@@ -29,5 +30,6 @@ namespace TDS
 		_RenderSystem.action(RendererSystem::OnInit, RendererSystem::OnUpdate);
 		_CameraSystem.action(CameraSystem::CameraSystemInit, CameraSystem::CameraSystemUpdate);
 		_EventHandler_ChildTransform.action(EventHandler::childTransformationHandlerInit, EventHandler::childTransformationHandlerUpdate);
+		_UiSystem.action(UiSystem::Init, UiSystem::Update);
 	}
 }

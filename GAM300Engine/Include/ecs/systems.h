@@ -32,6 +32,7 @@ namespace TDS
 
 	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(3);
 	ECSSystem<Transform, CameraComponent>			_CameraSystem(1);
+	ECSSystem<Transform, UISprite>					_UiSystem(3);
 }
 
 #endif // SYSTEMS

@@ -94,6 +94,10 @@
     <ClCompile Include="Src\Rendering\Skybox.cpp" />
     <ClCompile Include="Src\Rendering\DebugRenderer.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
+    <ClCompile Include="Src\components\UiSprite.cpp" />
+    <ClCompile Include="Src\Rendering\UiSystem.cpp" />
+    <ClCompile Include="Src\camera\SphereFrustum.cpp" />
+    <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -217,6 +221,10 @@
     <ClInclude Include="Include\camera\Camerasystem\CameraSystem.h" />
     <ClInclude Include="Include\Rendering\DebugRenderer.h" />
     <ClInclude Include="Include\components\ai.h" />
+    <ClInclude Include="Include\Rendering\Renderer2D.h" />
+    <ClInclude Include="Include\components\UiSprite.h" />
+    <ClInclude Include="Include\Rendering\UiSystem.h" />
+    <ClInclude Include="Include\camera\SphereFrustum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />
