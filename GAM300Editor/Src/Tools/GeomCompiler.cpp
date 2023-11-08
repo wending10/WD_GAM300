@@ -338,9 +338,9 @@ void TDS::GeomCompiler::Apply(const aiNode& Node, std::vector<InputMesh>& Nodes)
 	aiVector3D scaling((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Scale[0], (ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Scale[1], (ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Scale[2]);
 	aiMatrix4x4 descriptorMatrix{};
 	descriptorMatrix.Scaling(scaling, descriptorMatrix);
-	descriptorMatrix.RotationX((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Scale[0], descriptorMatrix);
-	descriptorMatrix.RotationY((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Scale[1], descriptorMatrix);
-	descriptorMatrix.RotationZ((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Scale[2], descriptorMatrix);
+	descriptorMatrix.RotationX((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Rotate[0], descriptorMatrix);
+	descriptorMatrix.RotationY((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Rotate[1], descriptorMatrix);
+	descriptorMatrix.RotationZ((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Rotate[2], descriptorMatrix);
 	aiVector3D translation((ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Translate[0], (ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Translate[1], (ai_real)m_CurrDesc.m_Descriptor.m_L2W.m_Translate[2]);
 	descriptorMatrix.Translation(translation, descriptorMatrix);
 
@@ -568,7 +568,8 @@ bool TDS::GeomCompiler::LoadDescriptor()
 		| aiProcess_PreTransformVertices
 		// aiProcess_TransformUVCoords          
 		//| aiProcess_FindInstances             
-		| aiProcess_GenNormals
+		| aiProcess_GenSmoothNormals
+		| aiProcess_ForceGenNormals
 		| aiProcess_CalcTangentSpace
 		| aiProcess_RemoveRedundantMaterials
 		//| aiProcess_FindInvalidData           

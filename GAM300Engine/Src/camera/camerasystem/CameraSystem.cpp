@@ -13,75 +13,33 @@
 
 namespace TDS 
 {
-	Vec3 CameraSystem::m_Front{};
-	Vec3 CameraSystem::m_Right{};
-	Vec3 CameraSystem::m_Up{ 0.f,0.f,1.f };
-	Vec3 CameraSystem::m_Down{};
-
+	TDSCamera* CameraSystem::m_GameCamera = nullptr;
 	void CameraSystem::CameraSystemInit()
 	{
-
 	}
 
 	void CameraSystem::CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, CameraComponent* _cameracomponent)
 	{
-		if (!GetUpdate)
+		if (!GetIsPlaying())
 		{
-			//GraphicsManager::getInstance().setCamera(*_cameracomponent);
-			SetUpdate(true);
+			m_GameCamera = &GraphicsManager::getInstance().GetCamera();
+			SetGameCamera(_cameracomponent);
+			SetIsPlaying(true);
 		}
-		static Input::mousePosition mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
-		
-		//only calls when entity has transform and camera component
-		for (int i = 0; i < entities.size(); i++)
-		{
-			UpdateViewMatrixSystem(&_cameracomponent[i]);
-
-			//if (movingCameraSystem())
-			//{
-			//	float CameraSpeed = _cameracomponent[i].getSpeed() * dt;
-			//	key keys;
-			//	if (keys.up)
-			//	{
-			//		_cameracomponent[i].getPosition() += m_Front * CameraSpeed;
-			//	}
-			//	if (keys.down)
-			//		_cameracomponent[i].getPosition() -= m_Front * CameraSpeed;
-			//	if (keys.left)
-			//		_cameracomponent[i].getPosition() -= m_Front * CameraSpeed;
-			//	if (keys.right)
-			//		_cameracomponent[i].getPosition() += m_Front * CameraSpeed;
-			//}
-
-			if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
-			{
-				mouse = Input::getMousePosition();
-			}
-
-			float GetMousex = static_cast<float>(mouse.x);
-			float GetMousey = static_cast<float>(mouse.y);
-
-			float getNewMousex = static_cast<float>(Input::getMousePosition().x);
-			float getNewMousey = static_cast<float>(Input::getMousePosition().y);
-
-			float offsetx = getNewMousex - GetMousex;
-			float offsety = GetMousey - getNewMousey;
-
-			ProcessMouseMovementSystem(offsetx, offsety, &_cameracomponent[i]);
-
-			mouse = Input::getMousePosition();
-			
-			std::cout << "Mouse x:" << mouse.x << std::endl;
-			std::cout << "Mouse y:" << mouse.y << std::endl;
-		}
+		m_GameCamera->GetUpdateViewMatrix();
 	}
 
-	void CameraSystem::GetMousePosition()
+	void CameraSystem::SetGameCamera(CameraComponent* _camera)
 	{
-
+		m_GameCamera->setYaw(_camera->getYaw());
+		m_GameCamera->setPitch(_camera->getPitch());
+		m_GameCamera->setPosition(_camera->getPosition());
+		m_GameCamera->setSpeed(_camera->getSpeed());
+		m_GameCamera->setFov(_camera->getFOV());
+		m_GameCamera->setMouseSensitivity(_camera->getMouseSensitivity());
 	}
 
-	void CameraSystem::UpdateViewMatrixSystem(CameraComponent* _cameracomponent)
+	/*void CameraSystem::UpdateViewMatrixSystem(CameraComponent* _cameracomponent)
 	{
 		// calculate the new Front vector
 		Vec3 front;
@@ -97,7 +55,7 @@ namespace TDS
 		TDS_INFO(m_Front);
 		TDS_INFO(m_Right);
 		TDS_INFO(m_Up);
-	}
+	}*/
 
 	bool CameraSystem::movingCameraSystem()
 	{
@@ -134,24 +92,4 @@ namespace TDS
 		}
 		return false;
 	}
-
-	void CameraSystem::ProcessMouseMovementSystem(float offsetX, float offsetY, CameraComponent* _cameracomponent)
-	{
-		offsetX *= _cameracomponent->getMouseSensitivity();
-		offsetY *= _cameracomponent->getMouseSensitivity();
-
-		_cameracomponent->setYaw(_cameracomponent->getYaw() + offsetX);
-		_cameracomponent->setPitch(_cameracomponent->getPitch() + offsetY);
-
-		//prevent from out of bound
-		if (_cameracomponent->getPitch() > 89.f)
-			_cameracomponent->setPitch(89.f);
-		if (_cameracomponent->getPitch() < -89.f)
-			_cameracomponent->setPitch(-89.f);
-
-		UpdateViewMatrixSystem(_cameracomponent);
-	}
-
-
-
 }
