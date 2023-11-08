@@ -33,7 +33,7 @@ namespace TDS
 		RenderTarget*							m_RenderingDepthAttachment{ nullptr };
 		RenderPass*								m_Renderpass{ nullptr };
 		FrameBuffer*							m_Framebuffer{ nullptr };
-		bool									m_ViewingFrom2D = true;
+		bool									m_ViewingFrom2D = false;
 
 	public:
 		inline static std::shared_ptr<GraphicsManager> m_Instance;

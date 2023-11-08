@@ -337,8 +337,8 @@ namespace TDS
 				1.f,
 				-1.f,
 				1.f,
-				-1.f,
-				1.f
+				-20.f,
+				20.f
 			);
 			m_SceneUBO.Projection.m[1][1] *= -1;
 

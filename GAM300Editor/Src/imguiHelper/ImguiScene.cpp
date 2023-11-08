@@ -106,10 +106,12 @@ namespace TDS
 		std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
 		if (EntityID selectedEntity = hierarchyPanel->getSelectedEntity())
 		{
+
 			if (GraphicsManager::getInstance().IsViewingFrom2D())
 			{
 				GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(getComponentByName("Graphics Component", selectedEntity));
-				if (graphComp->m_UsedIn2D)
+
+				if (graphComp != nullptr && graphComp->m_UsedIn2D)
 				{
 					view2D = false;
 					ImGuizmo::SetOrthographic(false);
