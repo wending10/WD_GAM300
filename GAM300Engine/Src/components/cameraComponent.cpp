@@ -28,13 +28,13 @@ namespace TDS
 	/*!*************************************************************************
 	Initializes the CameraComponent when created
 	****************************************************************************/
-	CameraComponent::CameraComponent() : m_Position(Vec3(0.f, 0.f, 0.f)),
-		m_Yaw(-90.f),
-		m_Pitch(0.f),
-		m_Speed(1.0f),
-		m_Fov(45.f),
-		m_mouseSensitivity(0.1f)
-
+	CameraComponent::CameraComponent(): m_Position(Vec3 (0.f, 0.f, 0.f)),
+										m_Yaw(-90.f),
+										m_Pitch(0.f),
+										m_Speed(1.0f),
+										m_Fov(45.f),
+										m_mouseSensitivity(0.1f)
+										
 	{ }
 
 	//Mat4 CameraComponent::GetViewMatrix() const
@@ -47,11 +47,11 @@ namespace TDS
 	to move (for ECS)
 	****************************************************************************/
 	CameraComponent::CameraComponent(CameraComponent&& toMove) noexcept : m_Position(toMove.m_Position),
-		m_Yaw(toMove.m_Yaw),
-		m_Pitch(toMove.m_Pitch),
-		m_Speed(toMove.m_Speed),
-		m_Fov(toMove.m_Fov),
-		m_mouseSensitivity(toMove.m_mouseSensitivity)
+																		 m_Yaw(toMove.m_Yaw),
+																		 m_Pitch(toMove.m_Pitch),
+																		 m_Speed(toMove.m_Speed),
+																		 m_Fov(toMove.m_Fov),
+																		 m_mouseSensitivity(toMove.m_mouseSensitivity)
 	{ }
 
 	CameraComponent* GetCameraComponent(EntityID entityID)

@@ -194,10 +194,12 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="Include\ecs\ecs.cpp" />
+    <ClCompile Include="Src\Physics\Interface\PhysicsInterface.cpp" />
     <ClCompile Include="Src\AI\aiSystem.cpp" />
     <ClCompile Include="Src\AI\behaviourTree.cpp" />
     <ClCompile Include="Src\AssetManagement\ResourceAllocator.cpp" />
     <ClCompile Include="Src\camera\camerasystem\CameraSystem.cpp" />
+    <ClCompile Include="Src\camera\SphereFrustum.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
     <ClCompile Include="src\components\AudioSource.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
@@ -212,6 +214,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\components\sprite.cpp" />
     <ClCompile Include="Src\components\tag.cpp" />
     <ClCompile Include="Src\components\transform.cpp" />
+    <ClCompile Include="Src\components\UiSprite.cpp" />
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\eventManager\eventHandler.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
@@ -247,11 +250,13 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Src\Rendering\GridRenderer.cpp" />
     <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
+    <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
     <ClCompile Include="Src\Rendering\RendererSystem.cpp" />
     <ClCompile Include="Src\Rendering\renderPass.cpp" />
     <ClCompile Include="Src\Rendering\RenderTarget.cpp" />
     <ClCompile Include="Src\Rendering\Skybox.cpp" />
+    <ClCompile Include="Src\Rendering\UiSystem.cpp" />
     <ClCompile Include="Src\ResourceManagement\ResouceManager.cpp" />
     <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
     <ClCompile Include="Src\sceneManager\serialization.cpp" />
@@ -302,6 +307,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\AssetManagement\ResourceAllocator.h" />
     <ClInclude Include="Include\AssetManagement\TextureFactory.h" />
     <ClInclude Include="Include\camera\Camerasystem\CameraSystem.h" />
+    <ClInclude Include="Include\camera\SphereFrustum.h" />
     <ClInclude Include="Include\components\ai.h" />
     <ClInclude Include="Include\components\AudioSource.h" />
     <ClInclude Include="Include\components\boxCollider.h" />
@@ -317,6 +323,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\components\sprite.h" />
     <ClInclude Include="Include\components\tag.h" />
     <ClInclude Include="Include\components\transform.h" />
+    <ClInclude Include="Include\components\UiSprite.h" />
     <ClInclude Include="Include\components\winData.h" />
     <ClInclude Include="Include\ecs\ecs.h" />
     <ClInclude Include="Include\ecs\ecs.hpp" />
@@ -347,6 +354,8 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\Model\Skeleton.h" />
+    <ClInclude Include="Include\Physics\CollisionSystem.h" />
+    <ClInclude Include="Include\Physics\Interface\PhysicsInterface.h" />
     <ClInclude Include="Include\Physics\JPHLayers.h" />
     <ClInclude Include="Include\Physics\CollisionSystem.h" />
     <ClInclude Include="Include\Physics\PhysicsSystem.h" />
@@ -358,12 +367,14 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\Material.h" />
     <ClInclude Include="Include\Rendering\ModelElement.h" />
     <ClInclude Include="Include\Rendering\RenderDataManager.h" />
+    <ClInclude Include="Include\Rendering\Renderer2D.h" />
     <ClInclude Include="Include\Rendering\Renderer3D.h" />
     <ClInclude Include="Include\Rendering\RendererSystem.h" />
     <ClInclude Include="Include\Rendering\RenderLayer.h" />
     <ClInclude Include="Include\Rendering\renderPass.h" />
     <ClInclude Include="Include\Rendering\RenderTarget.h" />
     <ClInclude Include="Include\Rendering\Skybox.h" />
+    <ClInclude Include="Include\Rendering\UiSystem.h" />
     <ClInclude Include="Include\sceneManager\serializationHelperFunctions.h" />
     <ClInclude Include="Include\Shader\ShaderData.h" />
     <ClInclude Include="Include\Shader\ShaderLoader.h" />

@@ -10,7 +10,7 @@ namespace TDS
 	{
 	public:
 
-		DLL_API TDSCamera(float Yaw, float pitch,/* float aspectRatio,*/ float zNear = 0.1f, float zFar = 1000.f, Vec3 position = { 0.0f, 0.0f, 3.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
+		DLL_API TDSCamera(float Yaw, float pitch,/* float aspectRatio,*/ float zNear = 0.1f, float zFar = 1000.f, Vec3 position = {0.0f, 0.0f, 3.0f}, Vec3 up = {0.0f, 1.0f, 0.0f});
 
 		//using lookat and Euler Angles
 		DLL_API Mat4 GetViewMatrix() const;
@@ -35,7 +35,7 @@ namespace TDS
 		DLL_API bool getEditorCamera() const { return m_EditorCamera; }
 		DLL_API bool getScrollWheel() const { return m_ScrollWheel; }
 		DLL_API void setScrollWheel(bool scrollWheel) { m_ScrollWheel = scrollWheel; }
-		float m_Fov{ 45.f };
+		float m_Fov{45.f};
 	private:
 
 		struct {
@@ -70,7 +70,7 @@ namespace TDS
 
 		bool m_EditorCamera = true;
 		bool m_ScrollWheel = true;
-
+		
 	};
 
 }//namespace TDS

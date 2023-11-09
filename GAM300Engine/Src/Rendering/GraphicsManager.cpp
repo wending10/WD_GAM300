@@ -14,6 +14,7 @@
 #include "Rendering/RenderTarget.h"
 #include "Rendering/renderPass.h"
 #include "vulkanTools/FrameBuffer.h"
+#include "Rendering/Renderer2D.h"
 namespace TDS
 {
 	GraphicsManager::GraphicsManager()
@@ -32,7 +33,9 @@ namespace TDS
 		m_CommandManager->Init();
 		m_SwapchainRenderer = std::make_shared<Renderer>(*m_pWindow, *m_MainVkContext);
 		DefaultTextures::GetInstance().Init();
-	
+		
+
+
 		Vec3 size = { static_cast<float>(window->getWidth()), static_cast<float>(window->getHeight()), 1.f };
 		std::vector<AttachmentInfo> attachmentInfos{};
 		std::vector<RenderTarget*> attachments{};
@@ -48,15 +51,15 @@ namespace TDS
 			VK_SAMPLE_COUNT_1_BIT
 		};
 		RenderTargetCI rendertargetCI2{
-				VK_FORMAT_D32_SFLOAT,
-				VK_IMAGE_ASPECT_DEPTH_BIT,
-				VK_IMAGE_VIEW_TYPE_2D,
-				size,
-				VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
-				VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-				RenderTargetType::DEPTH,
-				false,
-				VK_SAMPLE_COUNT_1_BIT
+			VK_FORMAT_D32_SFLOAT,
+			VK_IMAGE_ASPECT_DEPTH_BIT,
+			VK_IMAGE_VIEW_TYPE_2D,
+			size,
+			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+			VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
+			RenderTargetType::DEPTH,
+			false,
+			VK_SAMPLE_COUNT_1_BIT
 		};
 		m_RenderingAttachment = new RenderTarget(m_MainVkContext, rendertargetCI);
 		m_RenderingDepthAttachment = new RenderTarget(m_MainVkContext, rendertargetCI2);
@@ -69,6 +72,7 @@ namespace TDS
 		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);
 		
 		Renderer3D::Init();
+		Renderer2D::GetInstance()->Init();
 		m_PointLightRenderer = std::make_unique<PointLightSystem>(*m_MainVkContext);
 		m_DebugRenderer = std::make_unique<DebugRenderer>(*m_MainVkContext);
 		for (auto& renderLayer : m_RenderLayer)
@@ -79,6 +83,10 @@ namespace TDS
 
 
 	}
+	void GraphicsManager::ToggleViewFrom2D(bool condition)
+	{
+		m_ViewingFrom2D = condition;
+	}
 	void GraphicsManager::StartFrame()
 	{
 		for (auto& renderLayer : m_RenderLayer)
@@ -87,6 +95,11 @@ namespace TDS
 		}
 		currentCommand = m_SwapchainRenderer->BeginFrame();
 
+	}
+
+	bool GraphicsManager::IsViewingFrom2D()
+	{
+		return m_ViewingFrom2D;
 	}
 
 	void GraphicsManager::AddRenderLayer(RenderLayer* layer)
@@ -115,6 +128,7 @@ namespace TDS
 			renderlayer->ShutDown();
 		}
 		Renderer3D::getInstance()->ShutDown();
+		Renderer2D::GetInstance()->ShutDown();
 		m_DebugRenderer->GetPipeline().ShutDown();
 		GlobalBufferPool::GetInstance()->Destroy();
 		m_RenderingAttachment->~RenderTarget();
@@ -135,6 +149,10 @@ namespace TDS
 	void GraphicsManager::setCamera(TDSCamera& camera)
 	{
 		m_Camera = &camera;
+	}
+	WindowsWin* GraphicsManager::GetWindow()
+	{
+		return m_pWindow;
 	}
 	TDSCamera& GraphicsManager::GetCamera()
 	{
@@ -159,6 +177,10 @@ namespace TDS
 	VulkanInstance& GraphicsManager::getVkInstance()
 	{
 		return *m_MainVkContext;
+	}
+	std::shared_ptr<VulkanInstance> GraphicsManager::getVkInstancePtr()
+	{
+		return m_MainVkContext;
 	}
 	GraphicsManager& GraphicsManager::getInstance()
 	{

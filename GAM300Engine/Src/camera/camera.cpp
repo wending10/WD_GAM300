@@ -91,7 +91,7 @@ namespace TDS
 			}
 		}
 		else // TODO: refactor so that we dont copy and paste similar function
-		{		
+		{
 			if (CameraSystem::GetIsPlaying())
 			{
 				if (moving())
@@ -108,7 +108,7 @@ namespace TDS
 					if (keys.right)
 						m_Position += m_Right * CameraSpeed;
 				}
-
+				
 				if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
 				{
 					mouse = Input::getMousePosition();

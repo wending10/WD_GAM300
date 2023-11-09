@@ -35,30 +35,30 @@ namespace TDS
 		static void CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities,
 			Transform* _transform, CameraComponent* _cameracomponent);
 
-		/*!*************************************************************************
-		Gets mouse position
-		****************************************************************************/
-		static void SetGameCamera(CameraComponent* _camera);
+			/*!*************************************************************************
+			Gets mouse position
+			****************************************************************************/
+			static void SetGameCamera(CameraComponent* _camera);
 
-		/*!*************************************************************************
-		Calculates the vectors
-		****************************************************************************/
-		static bool movingCameraSystem();
+			/*!*************************************************************************
+			Calculates the vectors 
+			****************************************************************************/
+			static bool movingCameraSystem();
 
-		static void SetIsPlaying(bool input) { isPlaying = input; }
-		static bool GetIsPlaying() { return isPlaying; }
-	private:
+			static void SetIsPlaying(bool input) { isPlaying = input; }
+			static bool GetIsPlaying() { return isPlaying; }
+		private:
 
-		struct key
-		{
-			bool left{ false };
-			bool right{ false };
-			bool up{ false };
-			bool down{ false };
-		};
-		inline static bool isPlaying = false;
-		static TDSCamera* m_GameCamera;
-
+			struct key
+			{
+				bool left{ false };
+				bool right{ false };
+				bool up{ false };
+				bool down{ false };
+			};
+			inline static bool isPlaying = false;
+			static TDSCamera* m_GameCamera;
+			
 	};
 }
 

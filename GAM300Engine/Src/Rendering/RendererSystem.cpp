@@ -25,11 +25,18 @@ namespace TDS
 	}
 	void RendererSystem::OnUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _TransformComponent, GraphicsComponent* _Graphics)
 	{
+
+		
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
+			if (GraphicsManager::getInstance().IsViewingFrom2D())
+			{
+				if (_Graphics[i].m_UsedIn2D == false)
+					continue;
+			}
 			PushConstantData pushData{};
 			if (_Graphics[i].m_ModelName != _Graphics[i].m_AssetReference.m_AssetName)
 			{
@@ -77,14 +84,16 @@ namespace TDS
 			}*/
 
 			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
+			if (GraphicsManager::getInstance().m_PointLightRenderer == nullptr)
+			{
+				std::cout << "Why" << std::endl;
+			}
 			GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 			GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 
 
 			if (Renderer3D::getPipeline()->GetCreateEntry().m_EnableDoubleBuffering)
 			{
-
-
 				if (Vec3 Scale = _TransformComponent[i].GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f) {
 				}
 				else {
@@ -109,7 +118,7 @@ namespace TDS
 					GraphicsManager::getInstance().m_PointLightRenderer->render(&_Graphics[i], &_TransformComponent[i]);
 				}
 				else {//if not point light render using model
-					if (_Graphics[i].ShowMesh() == true && _Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
+					if (_Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
 					{
 						if (_Graphics[i].m_AssetReference.m_ResourcePtr->BufferIsNull())
 							_Graphics[i].m_AssetReference.m_ResourcePtr->CreateBuffers();
@@ -117,10 +126,10 @@ namespace TDS
 
 						Renderer3D::getPipeline()->BindPipeline();
 	
-						if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray)
+						if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray3D)
 						{
 							Renderer3D::getPipeline()->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetManager::GetInstance()->GetTextureFactory().GetTextureArray());
-							AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray = false;
+							AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray3D = false;
 						}
 						
 						
@@ -132,9 +141,12 @@ namespace TDS
 						Renderer3D::getPipeline()->BindIndexBuffer(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer());
 						Renderer3D::getPipeline()->BindDescriptor(frame, 1);
 						Renderer3D::getPipeline()->BindArrayDescriptorSet(0, 1, 1);
-						Renderer3D::getPipeline()->DrawIndexed(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetVertexBuffer(),
-							*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer(),
-							frame);
+						if (_Graphics[i].ShowMesh())
+						{
+							Renderer3D::getPipeline()->DrawIndexed(*_Graphics[i].m_AssetReference.m_ResourcePtr->GetVertexBuffer(),
+								*_Graphics[i].m_AssetReference.m_ResourcePtr->GetIndexBuffer(),
+								frame);
+						}
 						if (_Graphics[i].IsDebugOn()) {
 							GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().BindDescriptor(frame, 1);
 							GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().UpdateUBO(&ubo, sizeof(GlobalUBO), 0, frame);
