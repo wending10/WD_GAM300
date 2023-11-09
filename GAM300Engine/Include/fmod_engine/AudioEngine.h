@@ -22,6 +22,8 @@
 #include "components/SoundInfo.h"
 #include "dotnet/ImportExport.h"
 
+#include "ecs/ecs.h"
+
 namespace TDS
 {
     namespace AudioWerks
@@ -82,6 +84,16 @@ namespace TDS
             * Method which should be called every frame of the game loop
             */
             DLL_API  void update();
+
+            /**
+            * Fake init for ecs.cpp
+            */
+            static void fake_init();
+
+            /**
+            * Fake update for ecs.cpp
+            */
+            static void fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test);
 
             /**
              * Loads a sound from disk using provided settings

@@ -3,6 +3,8 @@
 #include "Rendering/RenderTarget.h"
 
 
+//static float TDS::TDSCamera::length_x, TDS::TDSCamera::length_y;
+
 TDS::GamePlayScene::GamePlayScene()
 {
 	flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
@@ -24,7 +26,8 @@ void TDS::GamePlayScene::update()
 
 
 	ImGui::Image((ImTextureID)m_GamePlayDesc, vSize);
-
+	
+	//TDSCamera::getImguiWindowSize({ImGui::GetWindowWidth(), ImGui::GetWindowHeight()});
 }
 
 void TDS::GamePlayScene::Resize()

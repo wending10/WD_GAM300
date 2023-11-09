@@ -71,6 +71,16 @@ namespace TDS
             ERRCHECK(studioSystem->update()); // also updates the low level system
         }
 
+        void AudioEngine::fake_init()
+        {
+
+        }
+
+        void AudioEngine::fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test)
+        {
+
+        }
+
         void AudioEngine::loadSound(SoundInfo & soundInfo)
         {
             if (!soundLoaded(soundInfo)) {

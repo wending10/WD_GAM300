@@ -19,7 +19,7 @@ namespace TDS{
         SOUND_PLAYING
     };
 
-    struct DLL_API SoundInfo : public IComponent
+    struct SoundInfo : public IComponent
     {
 
         unsigned int uniqueID, MSLength;

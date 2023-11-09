@@ -22,6 +22,7 @@ namespace TDS
 		DLL_API void ProcessMouseMovement(float mousex, float mousey);
 
 		DLL_API Vec3 getPosition()const { return m_Position; }
+		//static void getImguiWindowSize(Vec2 sizing) { length_x = sizing.x; length_y = sizing.y; }
 
 		// Setters for Game Camera System
 		DLL_API void setPosition(Vec3 position) { m_Position = position; }
@@ -56,6 +57,14 @@ namespace TDS
 		//euler angles
 		float	m_Yaw{};
 		float	m_Pitch{};
+
+		//Imgui Window
+		struct
+		{
+			Vec2 top_left, top_right,
+				bottom_left, bottom_right;
+		}ImCoordinates;
+		float length_x, length_y;
 
 		//option to toggle with
 		float	m_Speed{ 1.0f };

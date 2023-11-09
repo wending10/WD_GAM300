@@ -50,7 +50,7 @@ namespace TDS
 		*/
 		std::vector<std::filesystem::path> go_deeper(std::filesystem::path f_path);
 
-		void play(); //temp testing
+		void play(std::string file); //temp testing
 
 		/**
 		 * @brief Initialize

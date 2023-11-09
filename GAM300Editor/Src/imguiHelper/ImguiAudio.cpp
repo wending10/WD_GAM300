@@ -10,6 +10,7 @@
 ***/
 
 #include "imguiHelper/ImguiAudio.h"
+#include <string.h>
 
 namespace TDS
 {
@@ -72,33 +73,76 @@ namespace TDS
 
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
 	{
-		std::filesystem::path pathing = folder_path;
-		std::cout << "The file path is " << pathing.string() << '\n';
+		std::filesystem::path append = folder_path;
+		std::cout << "The file path is " << append.string() << '\n';
 
-		std::string path = "../../assets/" + pathing.string();
+		std::filesystem::path pathing("../../assets");
+		std::filesystem::path full_path = pathing / append;
 		std::vector<std::filesystem::path> all_files;
 
-		if (std::filesystem::is_directory(folder_path))
+		if (std::filesystem::is_directory(full_path))
 		{
-			all_files = go_deeper(pathing);
+			all_files = go_deeper(full_path);
 		}
 
+		for (auto& temp : all_files)
+		{
+			std::cout << "Files: " << temp.string() << '\n';
+		}
 
-		/*while(folder_path)
+		for (auto& str : all_files)
+		{
+			if (str.string().find("Music"))
+			{
+				SoundInfo temp(str.string());
+				temp.setLoop(false);
+				temp.set3DCoords(0.f, 0.f, 0.f);
+				temp.setVolume(0.5f);
 
-		SoundInfo add_sound(pathing.string());
+				background.push_back(temp);
+			}
+			else if (str.string().find("Songs"))
+			{
+				SoundInfo temp(str.string());
+				temp.setLoop(false);
+				temp.set3DCoords(0.f, 0.f, 0.f);
+				temp.setVolume(0.5f);
+
+				music.push_back(temp);
+			}
+			else if (str.string().find("Sound Effects"))
+			{
+				SoundInfo temp(str.string());
+				temp.setLoop(false);
+				temp.set3DCoords(0.f, 0.f, 0.f);
+				temp.setVolume(0.5f);
+
+				SFX.push_back(temp);
+			}
+			else if (str.string().find("Voice Overs"))
+			{
+				SoundInfo temp(str.string());
+				temp.setLoop(false);
+				temp.set3DCoords(0.f, 0.f, 0.f);
+				temp.setVolume(0.5f);
+
+				VO.push_back(temp);
+			}
+		}
+
+		/*SoundInfo add_sound(pathing.string());
 		music.push_back(add_sound);
 		add_sound.setLoop(false);
 		add_sound.set3DCoords(0.f, 0.f, 0.f);
 		add_sound.setVolume(0.5f);
 		music.push_back(add_sound);*/
 
-		SoundInfo test_path("../../assets/audioFiles/Songs/test.flac");
+		/*SoundInfo test_path("../../assets/audioFiles/Songs/test.flac");
 		test_path.setLoop(false);
 		test_path.set3DCoords(0.f, 0.f, 0.f);
 		test_path.setVolume(0.5f);
 
-		music.push_back(test_path);
+		music.push_back(test_path);*/
 	}
 
 	std::vector<std::filesystem::path> AudioImgui::go_deeper(std::filesystem::path f_path)
@@ -126,10 +170,12 @@ namespace TDS
 		return files;
 	}
 
-	void AudioImgui::play()
+	void AudioImgui::play(std::string file)
 	{
-		audeng->loadSound(music[0]);
-		audeng->playSound(music[0]);
+		
+		
+		audeng->loadSound(temp);
+		audeng->playSound(temp);
 
 		/*audeng->loadSound(add_sound);
 		audeng->playSound(add_sound);*/

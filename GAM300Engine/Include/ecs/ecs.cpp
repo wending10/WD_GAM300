@@ -28,8 +28,9 @@ namespace TDS
 	{
 		_PhysicsSystem.action(PhysicsSystem::PhysicsSystemInit, PhysicsSystem::PhysicsSystemUpdate);
 		_AISystem.action(AISystem::AISystemInit, AISystem::AISystemUpdate);
+		_RenderSystem.action(RendererSystem::OnInit, RendererSystem::OnUpdate);
+		//_AudioSystem.action(AudioWerks::AudioEngine::fake_init, AudioWerks::AudioEngine::fake_update);
 		_CameraSystem.action(CameraSystem::CameraSystemInit, CameraSystem::CameraSystemUpdate);
-		//_AudioSystem.action(AudioWerks::AudioEngine::init, AudioWerks::AudioEngine::update);
 		_EventHandler_ChildTransform.action(EventHandler::childTransformationHandlerInit, EventHandler::childTransformationHandlerUpdate);
 		_UiSystem.action(UiSystem::Init, UiSystem::Update);
 		_ColliderDebugSystem.action(CollisionSystem::CollisionSystemInit, CollisionSystem::CollisionSystemUpdate);

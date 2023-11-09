@@ -25,6 +25,9 @@
 #include "winData.h"
 #include "FontComponent.h"
 #include "UiSprite.h"
+#include "fmod_engine/AudioEngine.h"
+#include "SoundInfo.h"
+
 // Helper functions for components
 namespace TDS
 {

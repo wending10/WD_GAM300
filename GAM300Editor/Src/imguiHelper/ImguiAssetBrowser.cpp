@@ -289,7 +289,7 @@ namespace TDS
 				{
 					audimg.ToggleControls(true);
 
-					audimg.play();
+					audimg.play(filename);
 				}
 
 			}
