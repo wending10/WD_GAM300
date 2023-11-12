@@ -22,7 +22,10 @@ namespace TDS
 		std::string selectedpath;
 		AudioImgui audimg;
 		bool loadonce = true;
-
+		bool show_fbx = false;
+		bool show_bin = true;
+		bool show_png = false;
+		bool show_dds = true;
 	};
 }
 
