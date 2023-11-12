@@ -130,19 +130,22 @@ namespace TDS
 			}
 		}
 
-		/*SoundInfo add_sound(pathing.string());
-		music.push_back(add_sound);
-		add_sound.setLoop(false);
-		add_sound.set3DCoords(0.f, 0.f, 0.f);
-		add_sound.setVolume(0.5f);
-		music.push_back(add_sound);*/
-
-		/*SoundInfo test_path("../../assets/audioFiles/Songs/test.flac");
-		test_path.setLoop(false);
-		test_path.set3DCoords(0.f, 0.f, 0.f);
-		test_path.setVolume(0.5f);
-
-		music.push_back(test_path);*/
+		for (SoundInfo& temp : background)
+		{
+			audeng->loadSound(temp);
+		}
+		for (SoundInfo& temp : music)
+		{
+			audeng->loadSound(temp);
+		}
+		for (SoundInfo& temp : SFX)
+		{
+			audeng->loadSound(temp);
+		}
+		for (SoundInfo& temp : VO)
+		{
+			audeng->loadSound(temp);
+		}
 	}
 
 	std::vector<std::filesystem::path> AudioImgui::go_deeper(std::filesystem::path f_path)
@@ -172,13 +175,38 @@ namespace TDS
 
 	void AudioImgui::play(std::string file)
 	{
+		SoundInfo this_one{};
 		
+		for (SoundInfo& temp : music)
+		{
+			if (temp.getFilePath().find(file))
+			{
+				this_one = temp;
+			}
+		}
+		for (SoundInfo& temp : background)
+		{
+			if (temp.getFilePath().find(file))
+			{
+				this_one = temp;
+			}
+		}
+		for (SoundInfo& temp : SFX)
+		{
+			if (temp.getFilePath().find(file))
+			{
+				this_one = temp;
+			}
+		}
+		for (SoundInfo& temp : VO)
+		{
+			if (temp.getFilePath().find(file))
+			{
+				this_one = temp;
+			}
+		}
 		
-		audeng->loadSound(temp);
-		audeng->playSound(temp);
-
-		/*audeng->loadSound(add_sound);
-		audeng->playSound(add_sound);*/
+		audeng->playSound(this_one);
 	}
 
 	void AudioImgui::update()
