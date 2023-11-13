@@ -439,13 +439,9 @@ namespace TDS
 		}
 		VK_ASSERT(vkCreateDescriptorPool(device, &descriptorPoolInfo, nullptr, &m_DescriptorPool), "Failed to create descriptor Pool!");
 
-
 		CreateDescriptorSet(shaderInputs, m_PipelineDescriptor);
 		CreateUniformBuffers(shaderInputs, m_PipelineDescriptor);
 		CreateSamplerDescriptors(shaderInputs, m_PipelineDescriptor);
-
-
-
 
 	}
 	void VulkanPipeline::Draw(VMABuffer& vertexBuffer, std::uint32_t frameIndex)
@@ -874,6 +870,7 @@ namespace TDS
 		for (auto& descSet : descriptor.m_DescriptorSets)
 		{
 			VkResult result = vkAllocateDescriptorSets(device, &allocateInfo, &descSet);
+			std::cout << "device: " << device << " allocateInfo: " << &allocateInfo << " descSet: " << descSet << '\n';
 			VK_ASSERT(result, "Failed to allocate decsriptor set!");
 		}
 		for (auto& Set : descriptor.m_TextureOrBindless)

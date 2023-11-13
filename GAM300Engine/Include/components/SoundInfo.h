@@ -8,8 +8,9 @@
 #include "components/iComponent.h"
 #include "Vector3.h"
 
-namespace TDS{
-    static unsigned int counter{ 0 };
+namespace TDS
+{
+    static unsigned int ID_Count{ 0 };
 
     enum SOUND_STATE
     {
@@ -169,7 +170,7 @@ namespace TDS{
             
             position.Set(_x, _y, _z);
             MSLength = 0;
-            uniqueID = counter++; //Change UID to include time when added
+            uniqueID = ID_Count++; //Change UID to include time when added
         }
 
         // TODO  implement sound instancing
