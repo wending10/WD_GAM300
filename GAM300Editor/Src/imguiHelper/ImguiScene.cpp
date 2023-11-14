@@ -54,6 +54,9 @@ namespace TDS
 			}
 			ImGui::EndMenuBar();
 		}
+
+		window_size = ImGui::GetWindowSize();
+
 		//ImGui::Image(reinterpret_cast<void*>(vkTexture.m_DescSet), ImVec2{ 200, 200 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		//if (ImGui::BeginDragDropTarget())
 		//{
@@ -233,5 +236,10 @@ namespace TDS
 			m_DescSet = ImGui_ImplVulkan_AddTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
 		}
+	}
+
+	Vec2 EditorScene::get_scene_window_size()
+	{
+		return Vec2({ window_size.x, window_size.y });
 	}
 }
