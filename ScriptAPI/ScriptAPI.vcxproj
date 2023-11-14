@@ -146,6 +146,7 @@
     <ClInclude Include="Script.hxx" />
     <ClInclude Include="TypeConversion.hxx" />
     <ClInclude Include="Vector3.hxx" />
+    <ClInclude Include="Vector4.hxx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\BoxColliderComponent.cxx" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Script.cxx" />
     <ClCompile Include="TypeConversion.cxx" />
     <ClCompile Include="Vector3.cxx" />
+    <ClCompile Include="Vector4.cxx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
