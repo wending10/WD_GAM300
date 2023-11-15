@@ -216,4 +216,10 @@ namespace TDS
 		updateViewMatrix();
 
 	}
+
+	void TDSCamera::getImguiWindowSize(float x, float y)
+	{
+		length_x = x;
+		length_y = y;
+	}
 }

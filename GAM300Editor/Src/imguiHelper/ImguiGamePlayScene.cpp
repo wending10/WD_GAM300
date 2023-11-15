@@ -54,10 +54,10 @@ void TDS::GamePlayScene::update()
 
 		ImGui::SetCursorPos({window_size.x / 2, window_size.y / 2});
 	}
+	TDSCamera::getImguiWindowSize({ImGui::GetWindowWidth(), ImGui::GetWindowHeight()});
 
 	ImGui::Image((ImTextureID)m_GamePlayDesc, vSize);
 	
-	//TDSCamera::getImguiWindowSize({ImGui::GetWindowWidth(), ImGui::GetWindowHeight()});
 }
 
 void TDS::GamePlayScene::Resize()

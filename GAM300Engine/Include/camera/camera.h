@@ -37,6 +37,8 @@ namespace TDS
 		DLL_API bool getScrollWheel() const { return m_ScrollWheel; }
 		DLL_API void setScrollWheel(bool scrollWheel) { m_ScrollWheel = scrollWheel; }
 		float m_Fov{45.f};
+
+		DLL_API static void getImguiWindowSize(float x, float y);
 	private:
 
 		struct {
@@ -63,6 +65,14 @@ namespace TDS
 		{
 			Vec2 top_left, top_right,
 				bottom_left, bottom_right;
+
+			void get_ImGui_coord(Vec2 tl = { -1.f, 1.f }, Vec2 tr = { 1.f, 1.f }, Vec2 bl = { -1.f, -1.f }, Vec2 br = { 1.f, -1.f })
+			{
+				top_left = tl;
+				top_right = tr;
+				bottom_left = bl;
+				bottom_right = br;
+			}
 		}ImCoordinates;
 		float length_x, length_y;
 
