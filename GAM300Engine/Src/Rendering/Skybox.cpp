@@ -44,6 +44,7 @@ namespace TDS
 		skyboxCE.m_PipelineConfig.m_CullMode = VK_CULL_MODE_FRONT_BIT;
 		skyboxCE.m_ShaderInputs.m_Shaders.insert(std::make_pair(SHADER_FLAG::VERTEX, "../assets/shaders/skybox.spv"));
 		skyboxCE.m_ShaderInputs.m_Shaders.insert(std::make_pair(SHADER_FLAG::FRAGMENT, "../assets/shaders/skyboxfrag.spv"));
+		skyboxCE.m_EnableDoubleBuffering = false; //false for now
 		VertexLayout layout{ VertexBufferElement(VAR_TYPE::VEC3, "inPos") };
 		skyboxCE.m_ShaderInputs.m_InputVertex.push_back(VertexBufferInfo(false, layout, sizeof(SkyBoxVertexData)));
 
@@ -69,6 +70,8 @@ namespace TDS
 			GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 1000.f);
 		skyboxubo.m_Projection.m[1][1] *= -1;
 		
+		frameIndex = 0;
+
 		m_SkyBoxPipeline->BindPipeline();
 		m_SkyBoxPipeline->BindDescriptor(frameIndex, 1, 0);
 		m_SkyBoxPipeline->UpdateUBO(&skyboxubo, sizeof(SkyBoxUBO),2, frameIndex);

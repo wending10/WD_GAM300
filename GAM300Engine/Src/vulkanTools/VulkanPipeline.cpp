@@ -439,9 +439,13 @@ namespace TDS
 		}
 		VK_ASSERT(vkCreateDescriptorPool(device, &descriptorPoolInfo, nullptr, &m_DescriptorPool), "Failed to create descriptor Pool!");
 
+
 		CreateDescriptorSet(shaderInputs, m_PipelineDescriptor);
 		CreateUniformBuffers(shaderInputs, m_PipelineDescriptor);
 		CreateSamplerDescriptors(shaderInputs, m_PipelineDescriptor);
+
+
+
 
 	}
 	void VulkanPipeline::Draw(VMABuffer& vertexBuffer, std::uint32_t frameIndex)
@@ -870,7 +874,6 @@ namespace TDS
 		for (auto& descSet : descriptor.m_DescriptorSets)
 		{
 			VkResult result = vkAllocateDescriptorSets(device, &allocateInfo, &descSet);
-			//std::cout << "device: " << device << " allocateInfo: " << &allocateInfo << " descSet: " << descSet << '\n';
 			VK_ASSERT(result, "Failed to allocate decsriptor set!");
 		}
 		for (auto& Set : descriptor.m_TextureOrBindless)
@@ -1147,7 +1150,14 @@ namespace TDS
 		auto findItr = m_PipelineDescriptor.m_WriteSetFrames.find(bindingPoint);
 		if (findItr != m_PipelineDescriptor.m_WriteSetFrames.end())
 		{
-			findItr->second.dstSet = m_PipelineDescriptor.m_DescriptorSets[frame];
+			if (m_PipelineEntry.m_EnableDoubleBuffering)
+			{
+				findItr->second.dstSet = m_PipelineDescriptor.m_DescriptorSets[frame];
+			}
+			else
+			{
+				findItr->second.dstSet = m_PipelineDescriptor.m_DescriptorSets[0];
+			}
 			findItr->second.descriptorType = type;
 			findItr->second.dstBinding = bindingPoint;
 			findItr->second.dstArrayElement = 0;
@@ -1157,6 +1167,7 @@ namespace TDS
 			vkUpdateDescriptorSets(GraphicsManager::getInstance().getInstance().getVkInstance().getVkLogicalDevice()
 				, 1, &findItr->second, 0, 0);
 		}
+		
 	}
 	VkDescriptorSetLayout VulkanPipeline::GetLayout(std::uint32_t index) const
 	{

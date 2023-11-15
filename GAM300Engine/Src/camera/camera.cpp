@@ -217,9 +217,9 @@ namespace TDS
 
 	}
 
-	void TDSCamera::getImguiWindowSize(float x, float y)
+	/*void TDSCamera::getImguiWindowSize(float x, float y)
 	{
 		length_x = x;
 		length_y = y;
-	}
+	}*/
 }

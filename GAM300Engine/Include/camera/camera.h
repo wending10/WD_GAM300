@@ -38,7 +38,7 @@ namespace TDS
 		DLL_API void setScrollWheel(bool scrollWheel) { m_ScrollWheel = scrollWheel; }
 		float m_Fov{45.f};
 
-		DLL_API static void getImguiWindowSize(float x, float y);
+		//DLL_API static void getImguiWindowSize(float x, float y);
 	private:
 
 		struct {
@@ -74,7 +74,7 @@ namespace TDS
 				bottom_right = br;
 			}
 		}ImCoordinates;
-		float length_x, length_y;
+		static float length_x, length_y;
 
 		//option to toggle with
 		float	m_Speed{ 1.0f };
