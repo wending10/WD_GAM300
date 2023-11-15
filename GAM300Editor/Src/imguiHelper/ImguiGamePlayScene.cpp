@@ -42,6 +42,18 @@ void TDS::GamePlayScene::update()
 	isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
 	ImVec2 vSize = ImGui::GetContentRegionAvail();
 
+	window_size = ImGui::GetWindowSize();
+	if (Input::isKeyPressed(TDS_P))
+	{
+		auto& [x, y] = window_size;
+		
+		std::cout << "Window.x: " << x << " Window.y: " << y << '\n';
+
+		/*ImGuiMouseCursor invisible_mouse(-1);
+		ImGui::SetMouseCursor(invisible_mouse);*/
+
+		ImGui::SetCursorPos({window_size.x / 2, window_size.y / 2});
+	}
 
 	ImGui::Image((ImTextureID)m_GamePlayDesc, vSize);
 	
@@ -56,6 +68,9 @@ void TDS::GamePlayScene::Resize()
 		m_GamePlayDesc = ImGui_ImplVulkan_AddTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
 	}
+}
 
-
+TDS::Vec2 TDS::GamePlayScene::get_scene_window_size()
+{
+	return Vec2({ window_size.x, window_size.y });
 }

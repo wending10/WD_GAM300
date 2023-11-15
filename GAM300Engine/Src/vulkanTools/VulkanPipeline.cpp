@@ -870,7 +870,7 @@ namespace TDS
 		for (auto& descSet : descriptor.m_DescriptorSets)
 		{
 			VkResult result = vkAllocateDescriptorSets(device, &allocateInfo, &descSet);
-			std::cout << "device: " << device << " allocateInfo: " << &allocateInfo << " descSet: " << descSet << '\n';
+			//std::cout << "device: " << device << " allocateInfo: " << &allocateInfo << " descSet: " << descSet << '\n';
 			VK_ASSERT(result, "Failed to allocate decsriptor set!");
 		}
 		for (auto& Set : descriptor.m_TextureOrBindless)

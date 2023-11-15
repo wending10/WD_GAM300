@@ -13,9 +13,14 @@ namespace TDS
 		void init();
 		void update();
 		void Resize();
+
+		Vec2 get_scene_window_size();
+
 		bool isFocus{ false };
 	private:
 		VkDescriptorSet m_GamePlayDesc{};
+
+		ImVec2 window_size;
 	};
 }
 

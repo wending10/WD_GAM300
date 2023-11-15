@@ -14,14 +14,10 @@ namespace TDS
 		void update();
 		void Resize();
 
-		Vec2 get_scene_window_size();
-
 		bool isFocus {true};
 	private:
 		int m_gizmoType = 7;
 		bool m_gizmoActive = false;
-
-		ImVec2 window_size;
 	};
 }
 
