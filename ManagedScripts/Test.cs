@@ -59,22 +59,22 @@ public class Test : Script
     {
         Vector3 pos = gameObject.GetComponent<TransformComponent>().GetPosition();
         //Console.WriteLine("Aye Lmao");
-        if (Input.GetKeyDown(Input.Key_W))
+        if (Input.GetKeyDown(Keycode.W))
         {
             pos.Y += floatTest;
             gameObject.GetComponent<TransformComponent>().SetPositionX(pos.Y);
         }
-        if (Input.GetKeyDown(Input.Key_S))
+        if (Input.GetKeyDown(Keycode.S))
         {
             pos.Y -= floatTest;
             gameObject.GetComponent<TransformComponent>().SetPositionX(pos.Y);
         }
-        if (Input.GetKeyDown(Input.Key_A))
+        if (Input.GetKeyDown(Keycode.A))
         {
             pos.X -= floatTest;
             gameObject.GetComponent<TransformComponent>().SetPositionX(pos.X);
         }
-        if (Input.GetKeyDown(Input.Key_D))
+        if (Input.GetKeyDown(Keycode.D))
         {
             pos.X += floatTest;
             gameObject.GetComponent<TransformComponent>().SetPositionX(pos.X);
