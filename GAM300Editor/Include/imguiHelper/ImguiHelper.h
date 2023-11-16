@@ -50,6 +50,7 @@ namespace TDS
 		std::string panelTitle;
 		ImGuiWindowFlags flags{};
 		ImVec2 windowPadding;
+		ImGuiConfigFlags IO_flags{};
 
 		bool rightClick{};
 	private:

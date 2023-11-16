@@ -1150,7 +1150,7 @@ namespace TDS
 		auto findItr = m_PipelineDescriptor.m_WriteSetFrames.find(bindingPoint);
 		if (findItr != m_PipelineDescriptor.m_WriteSetFrames.end())
 		{
-			if (m_PipelineEntry.m_EnableDoubleBuffering)
+			if (m_PipelineEntry.m_EnableDoubleBuffering) //if statement here for now
 			{
 				findItr->second.dstSet = m_PipelineDescriptor.m_DescriptorSets[frame];
 			}

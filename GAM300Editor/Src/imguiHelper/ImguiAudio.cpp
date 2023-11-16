@@ -74,7 +74,7 @@ namespace TDS
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
 	{
 		std::filesystem::path append = folder_path;
-		std::cout << "The file path is " << append.string() << '\n';
+		//std::cout << "The file path is " << append.string() << '\n';
 
 		std::filesystem::path pathing("../../assets");
 		std::filesystem::path full_path = pathing / append;
@@ -85,12 +85,15 @@ namespace TDS
 			all_files = go_deeper(full_path);
 		}
 
-		for (auto& temp : all_files)
+		SoundInfo temp{ "../../assets\audioFiles\Songs\test.flac" };
+		audeng->loadSound(temp);
+
+		/*for (auto& temp : all_files)
 		{
 			std::cout << "Files: " << temp.string() << '\n';
-		}
+		}*/
 
-		for (auto& str : all_files)
+		/*for (auto& str : all_files)
 		{
 			if (str.string().find("Music"))
 			{
@@ -145,7 +148,7 @@ namespace TDS
 		for (SoundInfo& temp : VO)
 		{
 			audeng->loadSound(temp);
-		}
+		}*/
 	}
 
 	std::vector<std::filesystem::path> AudioImgui::go_deeper(std::filesystem::path f_path)

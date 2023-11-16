@@ -281,6 +281,9 @@ namespace TDS
 		mouse.buttons[TDS_MOUSE_SCROLL].isScrollUp = false;
 	}
 
-
+	void Input::catch_cursor(bool state)
+	{
+		CURSORINFO;
+	}
 
 } //end of namespace

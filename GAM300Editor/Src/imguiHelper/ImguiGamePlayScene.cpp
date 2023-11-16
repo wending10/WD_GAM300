@@ -52,8 +52,9 @@ void TDS::GamePlayScene::update()
 		/*ImGuiMouseCursor invisible_mouse(-1);
 		ImGui::SetMouseCursor(invisible_mouse);*/
 
-		ImGui::SetCursorPos({ 0.f, 0.f });
+		//ImGui::SetCursorPos({ 0.f, 0.f });
 	}
+
 	//TDSCamera::getImguiWindowSize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 
 	ImGui::Image((ImTextureID)m_GamePlayDesc, vSize);

@@ -219,6 +219,8 @@ namespace TDS
 		to track global position of the mouse.
 		****************************************************************************/
 		static void updateMousePosition(LPARAM lParam);
+
+		static void catch_cursor(bool state);
 	private:
 
 
