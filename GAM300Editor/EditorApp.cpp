@@ -149,6 +149,13 @@ namespace TDS
                 "ExecuteUpdate"
             );
 
+        auto executeLateUpdate = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteLateUpdate"
+            );
+
         auto reloadScripts = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
@@ -594,7 +601,7 @@ namespace TDS
         // Failed build
         else
         {
-            throw std::runtime_error("Failed to build managed scripts!");
+             throw std::runtime_error("Failed to build managed scripts!");
         }
     }
 

@@ -48,7 +48,7 @@ namespace ScriptAPI
         GameObject^ GameObjectScriptFind(System::String^ name);
         GameObject^ gameObject;
 
-        Input^ Input;
+        //Input^ Input;
 
     internal:
         void SetFlags();
