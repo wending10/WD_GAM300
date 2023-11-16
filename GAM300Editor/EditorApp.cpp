@@ -140,6 +140,13 @@ namespace TDS
                 "ExecuteUpdate"
             );
 
+        auto executeLateUpdate = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteLateUpdate"
+            );
+
         auto reloadScripts = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
@@ -211,6 +218,7 @@ namespace TDS
             if (isPlaying)
             {
                 ecs.runSystems(1, DeltaTime); // Other systems
+                executeUpdate();
             }
             else
             {
@@ -243,8 +251,6 @@ namespace TDS
                 reloadScripts();
                 SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
             }
-
-            executeUpdate();
             Input::scrollStop();
             
         }
@@ -585,7 +591,7 @@ namespace TDS
         // Failed build
         else
         {
-            throw std::runtime_error("Failed to build managed scripts!");
+             throw std::runtime_error("Failed to build managed scripts!");
         }
     }
 
