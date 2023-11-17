@@ -281,4 +281,9 @@ namespace TDS
 		mouse.buttons[TDS_MOUSE_SCROLL].isScrollUp = false;
 	}
 
+	void Input::releaseTheKey(uint32_t key)
+	{
+		keyboard.keys[key].isDown = false;
+	}
+
 } //end of namespace

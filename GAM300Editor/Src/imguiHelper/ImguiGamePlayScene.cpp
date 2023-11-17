@@ -29,6 +29,7 @@ void TDS::GamePlayScene::update()
 			if (Input::isKeyPressed(TDS_ESCAPE))
 			{
 				++exit_cursor;
+				Input::keyboard.keys
 			}
 
 			if((exit_cursor % 2) == 0)
@@ -40,7 +41,7 @@ void TDS::GamePlayScene::update()
 				cursor_input.WantSetMousePos = true;
 				cursor_input.MousePos = { window_pos.x + (window_size.x / 2), window_pos.y + (window_size.y / 2) };
 
-				//ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+				ImGui::SetMouseCursor(ImGuiMouseCursor_None);
 			}
 			
 			if (ImGui::BeginMenu("Game is Running..."))
