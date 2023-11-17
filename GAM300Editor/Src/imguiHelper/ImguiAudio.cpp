@@ -30,7 +30,8 @@ namespace TDS
 
 		std::cout << "AudImg Constructor" << '\n';
 
-		audeng = audeng = AudioWerks::AudioEngine::get_audioengine_instance();
+		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
+		add_audio_files(std::filesystem::current_path());
 	}
 
 	AudioImgui::~AudioImgui()
@@ -71,6 +72,7 @@ namespace TDS
 		return appear;
 	}
 
+	static SoundInfo temp{ "../../../assets/audioFiles/Songs/test.flac" };
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
 	{
 		std::filesystem::path append = folder_path;
@@ -85,7 +87,7 @@ namespace TDS
 			all_files = go_deeper(full_path);
 		}
 
-		SoundInfo temp{ "../../assets\audioFiles\Songs\test.flac" };
+		background.push_back(temp);
 		audeng->loadSound(temp);
 
 		/*for (auto& temp : all_files)
@@ -209,7 +211,8 @@ namespace TDS
 			}
 		}
 		
-		audeng->playSound(this_one);
+		//audeng->playSound(this_one);
+		audeng->playSound(temp);
 	}
 
 	void AudioImgui::update()

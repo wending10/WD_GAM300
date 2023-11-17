@@ -49,8 +49,8 @@ void TDS::GamePlayScene::update()
 		
 		std::cout << "Window.x: " << x << " Window.y: " << y << '\n';
 
-		/*ImGuiMouseCursor invisible_mouse(-1);
-		ImGui::SetMouseCursor(invisible_mouse);*/
+		//ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+		
 
 		//ImGui::SetCursorPos({ 0.f, 0.f });
 	}

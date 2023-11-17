@@ -343,12 +343,6 @@ namespace TDS
 
 				}
 
-				if(strstr(filename.c_str(), "audioFiles"))
-				{
-					std::cout << "Asset Browser: " << filename << '\n';
-					
-					audimg.add_audio_files(filename);
-				}
 				//if .wav, play audio...
 				if (strstr(filename.c_str(), ".wav") || strstr(filename.c_str(), ".flac") || strstr(filename.c_str(), ".mp3"))
 				{

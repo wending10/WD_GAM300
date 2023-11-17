@@ -283,7 +283,10 @@ namespace TDS
 
 	void Input::catch_cursor(bool state)
 	{
-		CURSORINFO;
+		if (state)
+		{
+
+		}
 	}
 
 } //end of namespace

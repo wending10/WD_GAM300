@@ -27,7 +27,7 @@ namespace TDS
         std::string filePath;
         bool isitLoop, isit3D;
         SOUND_STATE whatState;
-        Vec3 position; //!!!!!!!To be replaced when vec container is used
+        Vec3 position;
         float volume, ReverbAmount;
 
         /**
@@ -175,6 +175,18 @@ namespace TDS
 
         // TODO  implement sound instancing
         // int instanceID = -1; 
+        void operator=(const SoundInfo& rhs)
+        {
+            uniqueID = rhs.uniqueID;
+            MSLength = rhs.MSLength;
+            filePath = rhs.filePath;
+            isitLoop = rhs.isitLoop;
+            isit3D = rhs.isit3D;
+            whatState = rhs.whatState;
+            position = rhs.position;
+            volume = rhs.volume;
+            ReverbAmount = rhs.ReverbAmount;
+        }
 
     };
 }
