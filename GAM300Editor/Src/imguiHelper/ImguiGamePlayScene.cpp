@@ -29,7 +29,7 @@ void TDS::GamePlayScene::update()
 			if (Input::isKeyPressed(TDS_ESCAPE))
 			{
 				++exit_cursor;
-				Input::keyboard.keys
+				Input::releaseTheKey(TDS_ESCAPE);
 			}
 
 			if((exit_cursor % 2) == 0)
