@@ -25,6 +25,8 @@ namespace TDS
 	}
 	void RendererSystem::OnUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _TransformComponent, GraphicsComponent* _Graphics)
 	{
+
+		
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();

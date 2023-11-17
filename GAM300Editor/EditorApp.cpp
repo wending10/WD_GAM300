@@ -54,7 +54,8 @@ namespace TDS
         IMGUI_WIN32_WNDPROCHANDLER_FORWARD_DECLARATION;
         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
         //can extern  some imgui wndproc handler | tbc
-
+        SetWindowHandle(hWnd);
+        
         switch (uMsg)
         {
 
@@ -120,6 +121,14 @@ namespace TDS
         }break;
         }
     }
+    void Application::SetWindowHandle(HWND hWnd)
+    {
+        m_handler = hWnd;
+    }
+    HWND Application::GetWindowHandle()
+    {
+        return m_handler;
+    }
     void Application::Initialize()
     {
 
@@ -138,6 +147,13 @@ namespace TDS
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "ExecuteUpdate"
+            );
+
+        auto executeLateUpdate = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteLateUpdate"
             );
 
         auto reloadScripts = GetFunctionPtr<void(*)(void)>
@@ -211,6 +227,7 @@ namespace TDS
             if (isPlaying)
             {
                 ecs.runSystems(1, DeltaTime); // Other systems
+                executeUpdate();
             }
             else
             {
@@ -244,7 +261,6 @@ namespace TDS
                 SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
             }
 
-            executeUpdate();
             Input::scrollStop();
             
         }
@@ -585,7 +601,7 @@ namespace TDS
         // Failed build
         else
         {
-            throw std::runtime_error("Failed to build managed scripts!");
+             throw std::runtime_error("Failed to build managed scripts!");
         }
     }
 

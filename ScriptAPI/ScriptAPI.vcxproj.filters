@@ -54,6 +54,15 @@
     <ClInclude Include="GameObject.hxx">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Input.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RigidBodyComponent.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineInterface.cxx">
@@ -84,6 +93,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\RigidBodyComponent.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
