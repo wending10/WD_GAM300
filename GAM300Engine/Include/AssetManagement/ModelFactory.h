@@ -27,16 +27,23 @@ namespace TDS
 	class AssetFactory<AssetModel>
 	{
 	public:
+		inline static std::shared_ptr<AssetFactory<AssetModel>> m_Instance = nullptr;
 		std::array<const char*, 6> m_PrimitiveModels = { "capsule_bin.bin", "cube_bin.bin", "Quad1_bin.bin",
 			"Quad2_bin.bin","sphere_bin.bin", "torus_bin.bin" };
 
-		std::array<AssetModel, 4096> m_Models;
-		std::unordered_map<std::string, std::uint32_t> m_ModelIndices; //Map with string and instance ID/index
-		std::unordered_map<std::string, std::uint32_t> m_InstanceCnt; //Each instance count
+		std::array<AssetModel, 8196> m_Models;
+		std::unordered_map<std::string, std::uint32_t> m_ModelIndices; 
+		std::unordered_map<std::string, std::uint32_t> m_InstanceCnt; 
 		std::uint32_t m_CurrentIndex = 0;
 
+		static AssetFactory<AssetModel>& GetInstance()
+		{
+			if (m_Instance == nullptr)
+				m_Instance = std::make_shared<AssetFactory<AssetModel>>();
+			return *m_Instance;
+		}
 
-		std::array<AssetModel, 4096>& GetModelArray()
+		std::array<AssetModel, 8196>& GetModelArray()
 		{
 			return m_Models;
 		}
@@ -264,37 +271,76 @@ namespace TDS
 
 		//}
 
-		static void Load(std::string_view path, TypeReference<AssetModel>& model, AssetFactory<AssetModel>& modelFactory)
+
+		/*
+		
+		struct Geom
+		{
+			struct Mesh
+			{
+				std::array<char, 64> m_Name;
+			};
+
+			struct SubMesh
+			{
+				std::uint32_t m_nFaces;
+				std::uint32_t m_iIndices;
+				std::uint32_t m_iVertices;
+				std::uint32_t m_nVertices;
+				std::uint16_t m_iMaterial;
+			};
+
+			struct ExtraVertices
+			{
+				Vec2 m_UV;
+				Vec3 m_Normal;
+				Vec3 m_Tanget;
+				Vec3 m_Bitangent;
+				std::uint32_t m_Colour;
+			};
+			std::vector<Mesh> m_Mesh;
+			std::vector<SubMesh> m_SubMesh;
+			std::vector<Vec3> m_Pos;
+			std::vector<ExtraVertices> m_Extra;
+			std::vector<std::uint32_t> m_Indices;
+		};
+		
+		*/
+		void LoadMeshes(Geom& geom, TypeReference<AssetModel>& model)
+		{
+			model.m_ResourcePtr->Load(geom);
+		}
+
+		void Load(std::string_view path, TypeReference<AssetModel>& model)
 		{
 			std::filesystem::path FilePath(path);
 			std::string fileName = FilePath.filename().string();
 		
-			
-			auto& modelIndices = modelFactory.m_ModelIndices;
-			auto& modelArray = modelFactory.m_Models;
-			auto& instanceContainer = modelFactory.m_InstanceCnt;
+			auto itr = m_ModelIndices.find(fileName);
 
-			auto itr = modelIndices.find(fileName);
-
-			if (itr != modelIndices.end())
+			if (itr != m_ModelIndices.end())
 			{
-				--instanceContainer[model.m_AssetName];
+				--m_InstanceCnt[model.m_AssetName];
 				model.m_AssetName = fileName;
 				TDS_INFO("Model {} is already loaded!", model.m_AssetName);
-				++instanceContainer[fileName];
-				model.m_ResourcePtr = &modelArray[itr->second];
+				++m_InstanceCnt[fileName];
+				model.m_ResourcePtr = &m_Models[itr->second];
 				return;
 			}
 
 			//its a new model
 			model.m_AssetName = fileName;
-			std::uint32_t& newIndex = modelFactory.m_CurrentIndex;
+			std::uint32_t& newIndex = AssetFactory<AssetModel>().GetInstance().m_CurrentIndex;
 			Geom geom{};
+			
 			DeserializeGeom(geom, path);
-			modelArray[newIndex].LoadGeomData(geom);
-			model.m_ResourcePtr = &modelArray[newIndex];
-			modelIndices[fileName] = newIndex++;
-			instanceContainer[fileName] = 1;
+
+
+
+			m_Models[newIndex].LoadGeomData(geom);
+			model.m_ResourcePtr = &m_Models[newIndex];
+			m_ModelIndices[fileName] = newIndex++;
+			m_InstanceCnt[fileName] = 1;
 		}
 
 		void DestroyAllModels()

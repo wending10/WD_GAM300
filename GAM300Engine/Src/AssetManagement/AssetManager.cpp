@@ -1,5 +1,5 @@
 #include "AssetManagement/AssetManager.h"
-
+#include "AssetManagement/FontFactory.h"
 
 namespace TDS
 {
@@ -15,17 +15,17 @@ namespace TDS
 	}
 	void AssetManager::PreloadAssets()
 	{
-		//m_ModelFactory.Preload(m_ResourceAllocator);
-		//m_TextureFactory.Preload(m_ResourceAllocator);
-		m_ModelFactory.Preload();
-		m_TextureFactory.Preload();
+		AssetFactory<AssetModel>::GetInstance().Preload();
+		AssetFactory<Texture>::GetInstance().Preload();
+		AssetFactory<FontAtlas>::GetInstance().Preload();
+
 	}
 
 	void DLL_API AssetManager::ShutDown()
 	{
-		/*m_ResourceAllocator.FreeAllResources();*/
-		m_ModelFactory.DestroyAllModels();
-		m_TextureFactory.DestroyAllTextures();
+		AssetFactory<AssetModel>::GetInstance().DestroyAllModels();
+		AssetFactory<Texture>::GetInstance().DestroyAllTextures();
+
 	}
 
 	std::shared_ptr<AssetManager> AssetManager::GetInstance()

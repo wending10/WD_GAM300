@@ -37,12 +37,12 @@ namespace TDS
 											
 	{ }
 
-	GraphicsComponent::GraphicsComponent(GraphicsComponent&& toMove) noexcept: m_AssetReference(toMove.m_AssetReference), 
-																			   m_TextureReference(toMove.m_TextureReference), 
-																			   m_ShowMesh(toMove.m_ShowMesh),
-																			   m_UsedIn2D(toMove.m_UsedIn2D),
-																			   m_TextureName(toMove.m_TextureName),
-																			   m_ModelName(toMove.m_ModelName)
+	GraphicsComponent::GraphicsComponent(GraphicsComponent&& toMove) noexcept: m_AssetReference(std::move(toMove.m_AssetReference)), 
+																			   m_TextureReference(std::move(toMove.m_TextureReference)),
+																			   m_ShowMesh(std::move(toMove.m_ShowMesh)),
+																			   m_UsedIn2D(std::move(toMove.m_UsedIn2D)),
+																			   m_TextureName(std::move(toMove.m_TextureName)),
+																			   m_ModelName(std::move(toMove.m_ModelName))
 																			
 																								
 	{ }

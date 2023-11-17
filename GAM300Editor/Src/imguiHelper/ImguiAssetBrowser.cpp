@@ -221,7 +221,7 @@ namespace TDS
 				{
 					lookUp = false;
 					std::string& OutPath = GeomCompiler::GetInstance()->OutPath;
-					OutPath = MODEL_PATH;
+					OutPath = "../../assets/models/";
 					OutPath += filename.c_str();
 					if (strstr(filename.c_str(), ".fbx"))
 						OutPath = RemoveFileExtension(OutPath, ".fbx");
@@ -258,6 +258,50 @@ namespace TDS
 
 				}
 				//if .json, load scene...
+				if (strstr(filename.c_str(), ".ttf"))
+				{
+					std::string selectedTextureDir = m_curr_path.string();
+					selectedTextureDir += "/";
+					selectedTextureDir += filename;
+					std::string inputPath = selectedTextureDir;
+					std::string outPath = m_curr_path.string();
+					selectedTextureDir = RemoveFileExtension(selectedTextureDir, ".ttf");
+
+					std::string FileName = std::filesystem::path(selectedTextureDir).filename().string();
+
+					outPath += ("/OutFont_" + FileName);
+					if (!std::filesystem::exists(outPath))
+					{
+						if (!std::filesystem::create_directory(outPath))
+							TDS_ERROR("Failed to create directory");
+					}
+					std::string folderName = outPath;
+					outPath += "/" + FileName;
+					LoaderDescriptor FontDescriptor{};
+					FontDescriptor.OutPath = outPath;
+					FontDescriptor.m_InputPath = inputPath;
+
+					if (FontLoader::RunFontLoader(FontDescriptor))
+					{
+						std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+
+						IComponent* font = getComponentByName("UI Sprite", panel->getSelectedEntity());
+						if (font != nullptr)
+						{
+							UISprite* spriteComp = reinterpret_cast<UISprite*>(font);
+							AssetManager::GetInstance()->LoadAsset(folderName, spriteComp->GetFontReference());
+						}
+					}
+					
+
+				}
+
+
+				if (strstr(filename.c_str(), ".json"))
+				{
+
+				}
+
 				if (strstr(filename.c_str(), ".json"))
 				{
 

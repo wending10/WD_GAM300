@@ -62,6 +62,44 @@ namespace TDS
 
 
 	}
+	void DLL_API AssetModel::Load(Geom& geom)
+	{
+		if (geom.m_Mesh.empty() || geom.m_SubMesh.empty())
+		{
+			return;
+		}
+
+		const auto& baseSubMesh = geom.m_SubMesh[0];
+
+
+		m_VertexData.resize(baseSubMesh.m_nVertices);
+		m_IndexData.resize(baseSubMesh.m_nFaces * 3);
+		std::copy_n(geom.m_Indices.begin() + baseSubMesh.m_iIndices, m_IndexData.size(), m_IndexData.begin());
+
+		for (size_t i = 0; i < baseSubMesh.m_nVertices; ++i) {
+			auto vertexIndex = baseSubMesh.m_iVertices + i;
+			m_VertexData[i].m_Pos = geom.m_Pos[vertexIndex];
+
+			if (vertexIndex < geom.m_Extra.size())
+			{
+				m_VertexData[i].m_UV = geom.m_Extra[vertexIndex].m_UV;
+				m_VertexData[i].m_fNormal = Vec4(geom.m_Extra[vertexIndex].m_Normal.x, geom.m_Extra[vertexIndex].m_Normal.y, geom.m_Extra[vertexIndex].m_Normal.z, 1.0f);
+
+				m_VertexData[i].m_Color = { 255.f, 0.f, 0.f };
+			}
+		}
+
+		Vec3 centroid(0.0f, 0.0f, 0.0f);
+		for (const auto& vertex : m_VertexData) {
+			centroid += vertex.m_Pos;
+		}
+		centroid /= static_cast<float>(m_VertexData.size());
+
+		BoundingBox.setNull();
+		for (const auto& vertex : m_VertexData) {
+			BoundingBox.extend(vertex.m_Pos - centroid);
+		}
+	}
 	void DLL_API AssetModel::CreateBuffers()
 	{
 		if (m_VertexData.empty() && m_IndexData.empty())

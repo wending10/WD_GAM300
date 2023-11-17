@@ -12,14 +12,12 @@
 ***/
 #include "AssetManagement/ModelFactory.h"
 #include "TextureFactory.h"
+#include "FontFactory.h"
 #include "dotnet/ImportExport.h"
 #include "ResourceAllocator.h"
 
 namespace TDS
 {
-
-	template <typename T>
-	inline constexpr bool wrong_factory_type = false;
 
 	class AssetManager
 	{
@@ -30,45 +28,17 @@ namespace TDS
 		void DLL_API PreloadAssets();
 		void DLL_API ShutDown();
 
-		//Runtime load
-		//template <typename T>
-		//void LoadAsset(std::string_view FilePath, TypeReference<T>& ref)
-		//{
-		//	AssetFactory<T>::Load(FilePath, ref);
-		//}
 		template <typename T>
 		void LoadAsset(std::string_view FilePath, TypeReference<T>& ref)
 		{
-			(FilePath);
-			(ref);
-			static_assert(wrong_factory_type<T>, "No such factory");
+			AssetFactory<T>::GetInstance().Load(FilePath, ref);
+		}
+		template <typename T>
+		AssetFactory<T>& GetFactory()
+		{
+			return AssetFactory<T>::GetInstance();
 		}
 
-		template <>
-		void LoadAsset<AssetModel>(std::string_view FilePath, TypeReference<AssetModel>& ref)
-		{
-			AssetFactory<AssetModel>::Load(FilePath, ref, m_ModelFactory);
-		}
-		template <>
-		void LoadAsset<Texture>(std::string_view FilePath, TypeReference<Texture>& ref)
-		{
-			AssetFactory<Texture>::Load(FilePath, ref, m_TextureFactory);
-		}
-		//template <typename T>
-		//T* GetResource(TypeReference<T>& ref)
-		//{
-		//	return m_ResourceAllocator.GetResource(ref);
-		//}
-
-		AssetFactory<AssetModel>& GetModelFactory()
-		{
-			return m_ModelFactory;
-		}
-
-		AssetFactory<Texture>& GetTextureFactory()
-		{
-			return m_TextureFactory;
-		}
 
 		//inline ResourceAllocator& getResourceAllocator()
 		//{
@@ -79,10 +49,7 @@ namespace TDS
 
 	private:
 		inline static std::shared_ptr<AssetManager> m_Instance = nullptr;
-		/*ResourceManager m_ResourceManager;*/
-		//ResourceAllocator m_ResourceAllocator;
-		AssetFactory<AssetModel> m_ModelFactory;
-		AssetFactory<Texture> m_TextureFactory;
+
 
 
 	};

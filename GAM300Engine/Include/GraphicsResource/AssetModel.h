@@ -29,7 +29,7 @@ namespace TDS
 		 * Load the geometry data from GeomCompiled
 		 ***************************************************************************/
 		void DLL_API LoadGeomData(Geom& geom);
-
+		void DLL_API Load(Geom& geom);
 		void DLL_API CreateBuffers();
 
 		void DLL_API DestroyBuffers();

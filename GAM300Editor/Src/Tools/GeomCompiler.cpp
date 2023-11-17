@@ -64,12 +64,14 @@ void TDS::GeomCompiler::MergeData(std::vector<InputMesh>& InputNodes)
 		for (size_t j = i + 1; j < InputNodes.size(); ++j)
 		{
 			if (InputNodes[i].m_iMaterialInstance == InputNodes[j].m_iMaterialInstance
-				&& InputNodes[i].m_MeshName == InputNodes[j].m_MeshName)
+				&& InputNodes[i].m_Name == InputNodes[j].m_Name)
 			{
 				const int  iBaseVertex = static_cast<int>(InputNodes[i].m_RawVertices.size());
 				const auto iBaseIndex = InputNodes[i].m_InputIndices.size();
 				InputNodes[i].m_RawVertices.insert(InputNodes[i].m_RawVertices.end(), InputNodes[j].m_RawVertices.begin(), InputNodes[j].m_RawVertices.end());
 				InputNodes[i].m_InputIndices.insert(InputNodes[i].m_InputIndices.end(), InputNodes[j].m_InputIndices.begin(), InputNodes[j].m_InputIndices.end());
+				InputNodes[i].m_Name = InputNodes[j].m_Name;
+				InputNodes[i].m_iMaterialInstance = InputNodes[j].m_iMaterialInstance;
 
 				for (size_t index = iBaseIndex; index < InputNodes[i].m_InputIndices.size(); ++index)
 				{
@@ -89,7 +91,7 @@ void TDS::GeomCompiler::CreateFinalGeom(const std::vector<OptimizedMesh>& Nodes)
 		size_t FinalMeshIndex = UINT64_MAX;
 		for (size_t j = 0; j < m_Final->m_Meshes.size(); ++j)
 		{
-			if (m_Final->m_Meshes[j].m_Name == Nodes[i].m_MeshName)
+			if (m_Final->m_Meshes[j].m_Name == Nodes[i].m_Name)
 			{
 				FinalMeshIndex = j;
 				break;
@@ -100,7 +102,7 @@ void TDS::GeomCompiler::CreateFinalGeom(const std::vector<OptimizedMesh>& Nodes)
 		{
 			FinalMeshIndex = m_Final->m_Meshes.size();
 			m_Final->m_Meshes.emplace_back();
-			m_Final->m_Meshes.back().m_Name = Nodes[i].m_MeshName;
+			m_Final->m_Meshes.back().m_Name = Nodes[i].m_Name;
 		}
 
 		m_Final->m_Meshes[(std::int32_t)FinalMeshIndex].m_SubMeshes.emplace_back();
@@ -158,7 +160,7 @@ void TDS::GeomCompiler::Optimize(std::vector<InputMesh>& InputNodes)
 		compressedSubMesh.m_InputIndices.resize(mesh.m_InputIndices.size());
 		compressedSubMesh.m_RawVertices.resize(VtxCnt);
 		compressedSubMesh.m_iMaterialInstance = mesh.m_iMaterialInstance;
-
+		compressedSubMesh.m_Name = mesh.m_Name;
 		meshopt_remapIndexBuffer(compressedSubMesh.m_InputIndices.data(), mesh.m_InputIndices.data(), mesh.m_InputIndices.size(), &remappedIndices[0]);
 		meshopt_remapVertexBuffer(compressedSubMesh.m_RawVertices.data(), mesh.m_RawVertices.data(), mesh.m_InputIndices.size(), sizeof(RawVertex), &remappedIndices[0]);
 		meshopt_optimizeVertexCache(compressedSubMesh.m_InputIndices.data(), compressedSubMesh.m_InputIndices.data(), compressedSubMesh.m_InputIndices.size(), VtxCnt);
@@ -561,18 +563,18 @@ bool TDS::GeomCompiler::LoadDescriptor()
 	std::cout << "Importing Model : " << m_CurrDesc.m_Descriptor.m_FilePath.c_str() << "...\n";
 	Assimp::Importer importer{};
 	importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, true);
-	std::uint32_t AssimpFlag = aiProcess_Triangulate
-		/*		| aiProcess_LimitBoneWeights   */
+	std::uint32_t AssimpFlag = 
+		aiProcess_Triangulate
+		| aiProcess_LimitBoneWeights   
 		| aiProcess_GenUVCoords
-		| aiProcess_JoinIdenticalVertices
-		| aiProcess_PreTransformVertices
-		// aiProcess_TransformUVCoords          
-		//| aiProcess_FindInstances             
+		//| aiProcess_PreTransformVertices
+		| aiProcess_TransformUVCoords          
+		| aiProcess_FindInstances             
 		| aiProcess_GenSmoothNormals
 		| aiProcess_ForceGenNormals
 		| aiProcess_CalcTangentSpace
 		| aiProcess_RemoveRedundantMaterials
-		//| aiProcess_FindInvalidData           
+		| aiProcess_FindInvalidData           
 		| aiProcess_FlipUVs
 		;
 	std::string filePath = "../../assets/models/" + m_CurrDesc.m_Descriptor.m_FilePath;
