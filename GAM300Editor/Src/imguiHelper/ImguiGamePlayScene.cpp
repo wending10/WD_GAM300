@@ -11,6 +11,7 @@ TDS::GamePlayScene::GamePlayScene()
 	panelTitle = "GamePlayScene";
 	windowPadding = ImVec2(0.f, 0.f);
 
+	exit_cursor = 0;
 }
 
 void TDS::GamePlayScene::init()
@@ -24,7 +25,24 @@ void TDS::GamePlayScene::update()
 	if (ImGui::BeginMenuBar())
 	{
 		if (isPlaying)
-		{
+		{			
+			if (Input::isKeyPressed(TDS_ESCAPE))
+			{
+				++exit_cursor;
+			}
+
+			if((exit_cursor % 2) == 0)
+			{
+				window_size = ImGui::GetWindowSize();
+				window_pos = ImGui::GetWindowPos();
+
+				ImGuiIO& cursor_input = ImGui::GetIO();
+				cursor_input.WantSetMousePos = true;
+				cursor_input.MousePos = { window_pos.x + (window_size.x / 2), window_pos.y + (window_size.y / 2) };
+
+				//ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+			}
+			
 			if (ImGui::BeginMenu("Game is Running..."))
 			{
 				ImGui::EndMenu();
@@ -41,19 +59,6 @@ void TDS::GamePlayScene::update()
 	}
 	isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
 	ImVec2 vSize = ImGui::GetContentRegionAvail();
-
-	window_size = ImGui::GetWindowSize();
-	if (Input::isKeyPressed(TDS_P))
-	{
-		auto& [x, y] = window_size;
-		
-		std::cout << "Window.x: " << x << " Window.y: " << y << '\n';
-
-		//ImGui::SetMouseCursor(ImGuiMouseCursor_None);
-		
-
-		//ImGui::SetCursorPos({ 0.f, 0.f });
-	}
 
 	//TDSCamera::getImguiWindowSize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 
