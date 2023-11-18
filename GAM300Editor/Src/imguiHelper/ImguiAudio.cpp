@@ -31,7 +31,7 @@ namespace TDS
 		std::cout << "AudImg Constructor" << '\n';
 
 		audeng = AudioWerks::AudioEngine::get_audioengine_instance();
-		add_audio_files(std::filesystem::current_path());
+		add_audio_files("../assets/audioFiles/");
 	}
 
 	AudioImgui::~AudioImgui()
@@ -74,22 +74,39 @@ namespace TDS
 
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
 	{
-		std::filesystem::path append = folder_path;
-		//std::cout << "The file path is " << append.string() << '\n';
+		std::filesystem::path full_path = folder_path; //pathing / append;
+		std::vector<std::filesystem::path> all_files; //store all file path
 
-		std::filesystem::path pathing("../assets");
-		std::filesystem::path full_path = pathing / append;
-		std::vector<std::filesystem::path> all_files;
-
-		if (std::filesystem::is_directory(full_path))
+		if (std::filesystem::is_directory(folder_path))
 		{
 			all_files = go_deeper(full_path);
 		}
 
-		/*for (auto& temp : all_files)
+		for (auto& temp : all_files)
 		{
 			std::cout << "Files: " << temp.string() << '\n';
-		}*/
+		}
+
+		for (std::vector<std::filesystem::path>::iterator it = all_files.begin(); it != all_files.end();)
+		{
+			if (it->string().find(".meta"))
+			{
+				it = all_files.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		all_files.begin();
+
+		std::cout << '\n' << '\n' << "Spacing Spacing Spacing" << '\n' << '\n';
+
+		for (auto& temp : all_files)
+		{
+			std::cout << "Files: " << temp.string() << '\n';
+		}
 
 		for (auto& str : all_files)
 		{

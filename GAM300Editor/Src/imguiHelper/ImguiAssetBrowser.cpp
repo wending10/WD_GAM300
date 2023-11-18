@@ -205,7 +205,6 @@ namespace TDS
 						continue;
 					}
 				}
-
 			}
 			ImGui::PushID(filename.c_str()); //store the current id in each button that is created in each iteration of files
 			
