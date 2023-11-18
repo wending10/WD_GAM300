@@ -82,23 +82,6 @@ namespace TDS
 			all_files = go_deeper(full_path);
 		}
 
-		for (auto& temp : all_files)
-		{
-			std::cout << "Files: " << temp.string() << '\n';
-		}
-
-		for (std::vector<std::filesystem::path>::iterator it = all_files.begin(); it != all_files.end();)
-		{
-			if (it->string().find(".meta"))
-			{
-				it = all_files.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
-
 		all_files.begin();
 
 		std::cout << '\n' << '\n' << "Spacing Spacing Spacing" << '\n' << '\n';
