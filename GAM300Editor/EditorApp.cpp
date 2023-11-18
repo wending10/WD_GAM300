@@ -132,16 +132,17 @@ namespace TDS
     }
     void Application::Initialize()
     {
-
         ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
         GraphicsManager::getInstance().Init(&m_window);
-        AssetManager::GetInstance()->Init();
         AssetManager::GetInstance()->PreloadAssets();
+ 
+
         skyboxrender.Init();
     }
 
     void Application::Update()
     {
+        
         DDSConverter::Init();
         auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
@@ -269,6 +270,7 @@ namespace TDS
       
 
         AssetManager::GetInstance()->ShutDown();
+
         vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
         if (m_ImGuiDescPool)
         {
