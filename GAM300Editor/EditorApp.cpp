@@ -28,6 +28,7 @@
 #include "Rendering/renderPass.h"
 #include "vulkanTools/FrameBuffer.h"
 #include "Tools/DDSConverter.h"
+#include "imguiHelper/ImguiProperties.h"
 #include "imguiHelper/ImguiScene.h"
 #include "imguiHelper/ImguiGamePlayScene.h"
 #include "Physics/PhysicsSystem.h"
@@ -320,6 +321,14 @@ namespace TDS
         // Step 2: Initialize
         init();
 
+        std::shared_ptr<Properties> properties = static_pointer_cast<Properties>(LevelEditorManager::GetInstance()->panels[PanelTypes::PROPERTIES]);
+        properties->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetScriptVariablesEditor"
+            );
+
         SceneManager::GetInstance()->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
@@ -396,6 +405,13 @@ namespace TDS
         //        "ScriptAPI.EngineInterface",
         //        "SetValueChar"
         //    );
+
+        SceneManager::GetInstance()->setVector3 = GetFunctionPtr<void(*)(EntityID, std::string, std::string, Vec3)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVector3"
+            );
 
         SceneManager::GetInstance()->setGameObject = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
             (
