@@ -91,7 +91,7 @@ namespace TDS
 		static bool view2D = false;
 	
 		ImGui::Image((ImTextureID)m_DescSet, vSize);
-		//drag drop code MUST be ddirecvtly under imgui::image code
+		//drag drop code MUST be directly under imgui::image code
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
@@ -122,11 +122,9 @@ namespace TDS
 			ImGui::EndDragDropTarget();
 		}
 
-
 		std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
 		if (EntityID selectedEntity = hierarchyPanel->getSelectedEntity())
 		{
-
 			if (GraphicsManager::getInstance().IsViewingFrom2D())
 			{
 				GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(getComponentByName("Graphics Component", selectedEntity));
