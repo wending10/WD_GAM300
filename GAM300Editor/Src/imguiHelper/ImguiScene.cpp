@@ -36,6 +36,8 @@ namespace TDS
 	}
 	void EditorScene::update()
 	{
+		isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
+
 		if (ImGui::BeginMenuBar())
 		{
 			if (isPlaying)
@@ -86,7 +88,6 @@ namespace TDS
 		//}
 		//data.LoadTexture(tempPath);
 		//vkTexture.CreateBasicTexture(data.m_TextureInfo);
-		isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
 		ImVec2 vSize = ImGui::GetContentRegionAvail();
 		static bool view2D = false;
 	
