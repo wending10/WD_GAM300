@@ -212,10 +212,10 @@ namespace TDS
 		m_SceneUBO.View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
 		m_Pipeline->UpdateUBO(&m_SceneUBO, sizeof(SceneUBO), 25, Frame);
 		m_Pipeline->UpdateUBO(m_BatchList.m_Instances.data(), sizeof(Instance2D) * m_BatchList.m_InstanceCnt, 10, Frame);
-		if (AssetManager::GetInstance()->GetFactory<Texture>().m_UpdateTextureArray2D)
+		if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray2D)
 		{
-			m_Pipeline->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetManager::GetInstance()->GetFactory<Texture>().GetTextureArray());
-			AssetManager::GetInstance()->GetFactory<Texture>().m_UpdateTextureArray2D = false;
+			m_Pipeline->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetFactory<Texture>().GetTextureArray());
+			AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray2D = false;
 		}
 	}
 	void Renderer2D::ShutDown()
@@ -261,7 +261,7 @@ namespace TDS
 			componentSprite->m_IsDirty = false;
 		}
 
-		int TextureID = AssetManager::GetInstance()->GetFactory<Texture>().GetTextureIndex(componentSprite->m_TextureName);
+		int TextureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(componentSprite->m_TextureName);
 	
 		if (TextureID == -1)
 		{

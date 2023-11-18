@@ -252,11 +252,11 @@ namespace TDS
 		m_FontBatch.m_SceneUpdate.View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
 		m_Pipeline->UpdateUBO(&m_FontBatch.m_SceneUpdate, sizeof(FontSceneUBO), 25, Frame);
 		m_Pipeline->UpdateUBO(m_FontBatch.m_Instances.data(), sizeof(InstanceFont) * m_FontBatch.m_InstanceCnt, 10, Frame);
-		auto& fontfactory = AssetManager::GetInstance()->GetFactory<FontAtlas>();
+		auto& fontfactory = AssetManager::GetInstance()->GetFontFactory();
 		if (fontfactory.m_UpdateFontTextures)
 		{
 			m_Pipeline->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, fontfactory.GetFontAtlasTextures());
-			AssetManager::GetInstance()->GetFactory<FontAtlas>().m_UpdateFontTextures = false;
+			fontfactory.m_UpdateFontTextures = false;
 		}
 	}
 
@@ -272,7 +272,7 @@ namespace TDS
 		UISprite* UiSprite = reinterpret_cast<UISprite*>(componentSprite);
 		if (UiSprite->m_LayerID == -1)
 			return;
-		AssetFactory<FontAtlas>& factoryRef = AssetManager::GetInstance()->GetFactory<FontAtlas>();
+		AssetFactory<FontAtlas>& factoryRef = AssetManager::GetInstance()->GetFontFactory();
 		if (UiSprite->m_TextureName != UiSprite->GetReference().m_AssetName)
 			UiSprite->m_TextureName = UiSprite->GetReference().m_AssetName;
 

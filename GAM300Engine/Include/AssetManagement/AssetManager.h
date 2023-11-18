@@ -28,27 +28,19 @@ namespace TDS
 		void DLL_API PreloadAssets();
 		void DLL_API ShutDown();
 
-		template <typename T>
-		void LoadAsset(std::string_view FilePath, TypeReference<T>& ref)
-		{
-			AssetFactory<T>::GetInstance().Load(FilePath, ref);
-		}
-		template <typename T>
-		AssetFactory<T>& GetFactory()
-		{
-			return AssetFactory<T>::GetInstance();
-		}
+		DLL_API AssetFactory<AssetModel>& 			GetModelFactory();
+		DLL_API AssetFactory<Texture>&	   			GetTextureFactory();
+		DLL_API AssetFactory<FontAtlas>&  			GetFontFactory();
 
-
-		//inline ResourceAllocator& getResourceAllocator()
-		//{
-		//	return m_ResourceAllocator;
-		//}
 		static DLL_API std::shared_ptr<AssetManager> GetInstance();
 
 
 	private:
 		inline static std::shared_ptr<AssetManager> m_Instance = nullptr;
+		AssetFactory<AssetModel>					m_ModelFactory;
+		AssetFactory<Texture>						m_TextureFactory;
+		AssetFactory<FontAtlas>						m_FontFactory;
+
 
 
 

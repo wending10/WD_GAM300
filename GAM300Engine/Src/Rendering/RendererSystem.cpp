@@ -40,7 +40,7 @@ namespace TDS
 			PushConstantData pushData{};
 			if (_Graphics[i].m_ModelName != _Graphics[i].m_AssetReference.m_AssetName)
 			{
-				AssetModel* pModel = AssetManager::GetInstance()->GetFactory<AssetModel>().GetModel(_Graphics[i].m_ModelName, _Graphics[i].m_AssetReference);
+				AssetModel* pModel = AssetManager::GetInstance()->GetModelFactory().GetModel(_Graphics[i].m_ModelName, _Graphics[i].m_AssetReference);
 				
 				if (pModel == nullptr)
 				{
@@ -54,7 +54,7 @@ namespace TDS
 
 			}
 			std::string texName = _Graphics[i].m_TextureName;
-			int textureID = AssetManager::GetInstance()->GetFactory<Texture>().GetTextureIndex(_Graphics[i].m_TextureName);
+			int textureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(_Graphics[i].m_TextureName);
 			
 			if (textureID == -1)
 			{
@@ -65,28 +65,9 @@ namespace TDS
 				pushData.textureIndex = textureID;
 			}
 
-			/*if (_Graphics[i].m_TextureName != _Graphics[i].m_TextureReference.m_AssetName)
-			{
-
-
-				Texture* pTexture = AssetManager::GetInstance()->GetTextureFactory().GetTexture(_Graphics[i].m_TextureName);
-				if (pTexture == nullptr)
-				{
-					TDS_WARN("No such texture called {}", _Graphics[i].m_AssetReference.m_AssetName);
-				}
-				else
-				{
-					_Graphics[i].m_TextureReference.m_AssetName = _Graphics[i].m_ModelName;
-					_Graphics[i].m_TextureReference.m_ResourcePtr = pTexture;
-					
-				}
-				
-			}*/
-
 			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
 			if (GraphicsManager::getInstance().m_PointLightRenderer == nullptr)
 			{
-				std::cout << "Why" << std::endl;
 			}
 			GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 			GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
@@ -120,16 +101,46 @@ namespace TDS
 				else {//if not point light render using model
 					if (_Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
 					{
-						if (_Graphics[i].m_AssetReference.m_ResourcePtr->BufferIsNull())
-							_Graphics[i].m_AssetReference.m_ResourcePtr->CreateBuffers();
+
+						auto& ModelReference = _Graphics[i].m_AssetReference;
+						
+						//Means we did not split any mesh and the whole model is one mesh
+						if (ModelReference.m_ResourcePtr->m_Meshes.size() == 1)
+						{
+							if (ModelReference.m_ResourcePtr->BufferIsNull())
+								ModelReference.m_ResourcePtr->CreateBuffers();
+
+							
+						}
+						else
+						{
+							MeshData* ptr = nullptr;
+							auto findItr = ModelReference.m_ResourcePtr->m_Meshes.find(_Graphics[i].m_MeshName);
+							if (findItr != ModelReference.m_ResourcePtr->m_Meshes.end())
+							{
+								ptr = &findItr->second;
+								ModelReference.m_ResourcePtr->m_CurrMeshData = ptr;
+								if (ModelReference.m_ResourcePtr->m_CurrMeshData->BufferIsNull())
+									ModelReference.m_ResourcePtr->m_CurrMeshData->CreateBuffers();
+							}
+							else
+							{
+								findItr = ModelReference.m_ResourcePtr->m_Meshes.begin();
+								ptr = &findItr->second;
+								ModelReference.m_ResourcePtr->m_CurrMeshData = ptr;
+								if (ModelReference.m_ResourcePtr->m_CurrMeshData->BufferIsNull())
+									ModelReference.m_ResourcePtr->m_CurrMeshData->CreateBuffers();
+							}
+						}
+
 
 
 						Renderer3D::getPipeline()->BindPipeline();
 	
-						if (AssetManager::GetInstance()->GetFactory<Texture>().m_UpdateTextureArray3D)
+						if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray3D)
 						{
-							Renderer3D::getPipeline()->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetManager::GetInstance()->GetFactory<Texture>().GetTextureArray());
-							AssetManager::GetInstance()->GetFactory<Texture>().m_UpdateTextureArray3D = false;
+							Renderer3D::getPipeline()->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetManager::GetInstance()->GetTextureFactory().GetTextureArray());
+							AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray3D = false;
 						}
 						
 						

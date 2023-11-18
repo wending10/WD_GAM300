@@ -22,7 +22,6 @@ namespace TDS
 
 		void Load(std::string_view path, TypeReference<T>& model);
 
-		static AssetFactory<T>& GetInstance();
 
 	};
 

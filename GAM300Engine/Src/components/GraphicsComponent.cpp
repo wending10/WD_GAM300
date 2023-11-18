@@ -16,6 +16,7 @@ RTTR_REGISTRATION
 		//.method("SetTextureName", &GraphicsComponent::SetTextureName)
 		//.property("TextureName", &GraphicsComponent::m_TextureName, rttr::select_overload<void(std::string)>(&GraphicsComponent::SetTextureName))
 		.property("ModelName", &GraphicsComponent::m_ModelName)
+		.property("MeshName", &GraphicsComponent::m_MeshName)
 		.method("SetColor", rttr::select_overload<void(Vec4)>(&GraphicsComponent::SetColor))
 		.method("SetColor", rttr::select_overload<void(float, float, float, float)>(&GraphicsComponent::SetColor))
 		.method("GetColor", &GraphicsComponent::GetColor)

@@ -4,6 +4,7 @@
 namespace TDS
 {
 
+
 	AssetManager::AssetManager()
 	{
 	}
@@ -15,17 +16,32 @@ namespace TDS
 	}
 	void AssetManager::PreloadAssets()
 	{
-		AssetFactory<AssetModel>::GetInstance().Preload();
-		AssetFactory<Texture>::GetInstance().Preload();
-		AssetFactory<FontAtlas>::GetInstance().Preload();
-
+		m_ModelFactory.Preload();
+		m_TextureFactory.Preload();
+		m_FontFactory.Preload();
 	}
 
 	void DLL_API AssetManager::ShutDown()
 	{
-		AssetFactory<AssetModel>::GetInstance().DestroyAllModels();
-		AssetFactory<Texture>::GetInstance().DestroyAllTextures();
+		m_ModelFactory.DestroyAllModels();
+		m_TextureFactory.DestroyAllTextures();
+		m_FontFactory.DestroyAllFonts();
 
+	}
+
+	AssetFactory<AssetModel>& AssetManager::GetModelFactory()
+	{
+		return m_ModelFactory;
+	}
+
+	AssetFactory<Texture>& AssetManager::GetTextureFactory()
+	{
+		return m_TextureFactory;
+	}
+
+	AssetFactory<FontAtlas>& AssetManager::GetFontFactory()
+	{
+		return m_FontFactory;
 	}
 
 	std::shared_ptr<AssetManager> AssetManager::GetInstance()

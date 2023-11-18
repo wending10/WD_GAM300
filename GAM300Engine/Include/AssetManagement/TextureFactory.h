@@ -11,7 +11,6 @@ namespace TDS
 	{
 
 	public:
-		inline static std::shared_ptr<AssetFactory<Texture>> m_Instance = nullptr;
 
 		std::array<Texture, 500> m_TextureArray;
 		std::unordered_map<std::string, std::uint32_t> m_TextureIndices;
@@ -52,16 +51,6 @@ namespace TDS
 				}
 			}
 		}*/
-
-		static AssetFactory<Texture>& GetInstance()
-		{
-			if (m_Instance == nullptr)
-				m_Instance = std::make_shared<AssetFactory<Texture>>();
-			return *m_Instance;
-		}
-
-
-
 		std::array<Texture, 500>& GetTextureArray()
 		{
 			return m_TextureArray;
@@ -147,11 +136,11 @@ namespace TDS
 				textureRef.m_ResourcePtr = &m_TextureArray[itr->second];
 				return;
 			}
-			std::uint32_t& newIndex = AssetFactory<Texture>::GetInstance().m_CurrentIndex;
+			std::uint32_t& newIndex = m_CurrentIndex;
 			m_TextureArray[newIndex].LoadTexture(path);
 			textureRef.m_ResourcePtr = &m_TextureArray[newIndex];
-			AssetFactory<Texture>::GetInstance().m_UpdateTextureArray3D = true;
-			AssetFactory<Texture>::GetInstance().m_UpdateTextureArray2D = true;
+			m_UpdateTextureArray3D = true;
+			m_UpdateTextureArray2D = true;
 			m_TextureIndices[fileName] = newIndex++;
 		}
 		void DestroyAllTextures()

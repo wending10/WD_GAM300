@@ -21,6 +21,100 @@ namespace TDS
 	VkDescriptorSet file_DescSet{}, folder_DescSet{};
 	//int file_image_count = 0, folder_image_count = 0;
 
+	aiVector3D ExtractEulerAngles(const aiMatrix4x4& mat) 
+	{
+		aiVector3D euler{};
+
+
+		float sy = sqrt(mat.a1 * mat.a1 + mat.b1 * mat.b1);
+
+		bool singular = sy < 1e-6;
+
+		if (!singular) 
+		{
+			euler.x = atan2(mat.c2, mat.c3); 
+			euler.y = atan2(-mat.c1, sy);    
+			euler.z = atan2(mat.b1, mat.a1); 
+		}
+		else 
+		{
+
+			euler.x = atan2(-mat.b3, mat.b2); 
+			euler.y = atan2(-mat.c1, sy);     
+			euler.z = 0;                     
+		}
+
+		return euler;
+	}
+	void ExtractTranslation(const aiMatrix4x4& mat, aiVector3D& translation) 
+	{
+		translation.x = mat.a4;
+		translation.y = mat.b4;
+		translation.z = mat.c4;
+	}
+
+	void ExtractScale(const aiMatrix4x4& mat, aiVector3D& scale)
+	{
+		scale.x = sqrt(mat.a1 * mat.a1 + mat.b1 * mat.b1 + mat.c1 * mat.c1);
+		scale.y = sqrt(mat.a2 * mat.a2 + mat.b2 * mat.b2 + mat.c2 * mat.c2);
+		scale.z = sqrt(mat.a3 * mat.a3 + mat.b3 * mat.b3 + mat.c3 * mat.c3);
+	}
+	void CreateNewEntityWithSubMesh(EntityID ParentEntity, aiMatrix4x4& aiTransform, TypeReference<AssetModel>& model, std::string_view MeshName)
+	{
+		std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+		Entity newEntity;
+		EntityID newEntityID = newEntity.getID();
+
+		//newEntity.add<NameTag>();
+		//newEntity.add<Transform>();
+		//newEntity.add<GraphicsComponent>();
+
+		addComponentByName("Name Tag", newEntityID);
+		addComponentByName("Graphics Component", newEntityID);
+		addComponentByName("Transform", newEntityID);
+		
+		IComponent* nameTag = getComponentByName("Name Tag", newEntityID);
+		IComponent* GraphicComponent = getComponentByName("Graphics Component", newEntityID);
+		IComponent* TransformComp = getComponentByName("Transform", newEntityID);
+
+		GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(GraphicComponent);
+		graphComp->m_ModelName = model.m_AssetName;
+		graphComp->m_MeshName = MeshName;
+		graphComp->m_AssetReference = model;
+		NameTag* NameTagComp = reinterpret_cast<NameTag*>(nameTag);
+		Transform* transformComp = reinterpret_cast<Transform*>(TransformComp);
+		NameTagComp->SetHierarchyParent(0);
+		NameTagComp->SetHierarchyIndex(panel->hierarchyList.size());
+		NameTagComp->SetName(MeshName.data());
+		aiVector3D scale{};
+		
+		aiVector3D Translate{};
+
+		ExtractScale(aiTransform, scale);
+		aiVector3D EulerRotate = ExtractEulerAngles(aiTransform);
+		ExtractTranslation(aiTransform, Translate);
+
+		transformComp->SetPosition(Vec3(Translate.x, Translate.y, Translate.z));
+		transformComp->SetRotation(Vec3(EulerRotate.x, EulerRotate.y, EulerRotate.z));
+		transformComp->SetScale(Vec3(scale.x, scale.y, scale.z));
+
+		panel->hierarchyList.emplace_back(newEntityID);
+
+		panel->makingChildHierarchy(newEntityID, ParentEntity);
+	}
+	void DivideSubmesh(EntityID entity, TypeReference<AssetModel>& model)
+	{
+		for (auto& childMeshes : model.m_ResourcePtr->m_Meshes)
+		{
+			aiMatrix4x4& originalModelTransform = GeomCompiler::GetInstance()->m_CurrTransforms[childMeshes.first];
+
+			CreateNewEntityWithSubMesh(entity, originalModelTransform, model, childMeshes.first);
+		}
+		
+	}
+
+	
+
 	AssetBrowser::AssetBrowser()
 	{
 		//selected = 0;
@@ -90,6 +184,7 @@ namespace TDS
 	static const std::filesystem::path s_AssetDirectory = "../../assets";
 	static const std::filesystem::path s_ModelDirectory = "../../assets/models";
 	static const std::filesystem::path s_TextureDirectory = "../../assets/textures";
+	static const std::filesystem::path s_FontDirectory = "../../assets/Fonts";
 	void AssetBrowser::update()
 	{
 		if (m_curr_path != std::filesystem::path(s_AssetDirectory))
@@ -278,7 +373,7 @@ namespace TDS
 
 					GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
 					if (graphComp)
-						AssetManager::GetInstance()->LoadAsset(OutPath, graphComp->GetTexture());
+						AssetManager::GetInstance()->GetTextureFactory().Load(OutPath, graphComp->GetTexture());
 
 
 				}
@@ -303,6 +398,8 @@ namespace TDS
 					std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
 
 					EntityID currEntity = panel->getSelectedEntity();
+					if (currEntity < 1)
+						return;
 					IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
 					if (Graph == nullptr)
 						Graph = addComponentByName("Graphics Component", panel->getSelectedEntity());
@@ -314,11 +411,19 @@ namespace TDS
 						m_GeomDescriptor.m_Descriptor.m_FilePath = std::filesystem::path(filename).filename().string();
 						GeomCompiler::GetInstance()->InitDesc(m_GeomDescriptor);
 						std::string OutputFile = GeomCompiler::GetInstance()->LoadModel();
-						AssetManager::GetInstance()->LoadAsset(OutputFile, graphComp->GetAsset());
+
+						AssetManager::GetInstance()->GetModelFactory().LoadModel(OutputFile, graphComp->GetAsset());
+
 					}
 					else
-						AssetManager::GetInstance()->LoadAsset(OutPath, graphComp->GetAsset());
+					{
+						AssetManager::GetInstance()->GetModelFactory().LoadModel(OutPath, graphComp->GetAsset());
 
+					}
+					if (graphComp->m_AssetReference.m_ResourcePtr->m_Meshes.size() > 1)
+						DivideSubmesh(currEntity, graphComp->m_AssetReference);
+					
+					
 
 
 				}
@@ -354,7 +459,7 @@ namespace TDS
 						if (font != nullptr)
 						{
 							UISprite* spriteComp = reinterpret_cast<UISprite*>(font);
-							AssetManager::GetInstance()->LoadAsset(folderName, spriteComp->GetFontReference());
+							AssetManager::GetInstance()->GetFontFactory().Load(folderName, spriteComp->GetFontReference());
 						}
 					}
 					

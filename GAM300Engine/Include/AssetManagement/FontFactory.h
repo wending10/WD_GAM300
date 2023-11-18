@@ -16,20 +16,12 @@ namespace TDS
 	{
 	public:
 
-		inline static std::shared_ptr<AssetFactory<FontAtlas>> m_Instance = nullptr;
-
 		std::array<Texture, 500> m_TextureAtlas;
 		std::array<FontAtlas, 500> m_FontAtlasInfo;
 		std::unordered_map<std::string, std::uint32_t> m_FontIndices;
 		std::uint32_t m_CurrentIndex = 0;
 		bool m_UpdateFontTextures = false;
 
-		static AssetFactory<FontAtlas>& GetInstance()
-		{
-			if (m_Instance == nullptr)
-				m_Instance = std::make_shared<AssetFactory<FontAtlas>>();
-			return *m_Instance;
-		}
 		std::array<Texture, 500>& GetFontAtlasTextures()
 		{
 			return m_TextureAtlas;
@@ -49,6 +41,13 @@ namespace TDS
 				return (int)itr->second;
 			}
 			return -1;
+		}
+		void DestroyAllFonts()
+		{
+			for (auto& fontTexture : m_TextureAtlas)
+			{
+				fontTexture.Destroy();
+			}
 		}
 		void Preload()
 		{
@@ -144,4 +143,5 @@ namespace TDS
 
 
 	};
+
 }
