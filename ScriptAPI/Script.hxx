@@ -45,7 +45,7 @@ namespace ScriptAPI
         generic <typename TResult>
         IAsyncEnumerable<TResult>^ Coroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration);
         
-        GameObject^ GameObjectScriptFind(System::String^ name);
+        //GameObject^ GameObjectScriptFind(System::String^ name);
         GameObject^ gameObject;
 
         //Input^ Input;

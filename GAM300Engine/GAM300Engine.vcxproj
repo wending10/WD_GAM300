@@ -141,7 +141,7 @@
       <AdditionalDependencies>vulkan-1.lib;fmodL_vc.lib;fmodstudioL_vc.lib;Jolt.lib;rttr_core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "$(SolutionDir)Dependencies\dotnet\bin" "$(OutDir)"
+      <Command>
 xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"
 xcopy /y /d "$(SolutionDir)Libs\rttr_core_d.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
@@ -177,7 +177,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core_d.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>vulkan-1.lib;fmod_vc.lib;fmodstudio_vc.lib;rttr_core.lib;Jolt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "$(SolutionDir)Dependencies\dotnet\bin" "$(OutDir)"
+      <Command>
 xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"
 xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
