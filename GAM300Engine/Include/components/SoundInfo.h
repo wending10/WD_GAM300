@@ -17,7 +17,8 @@ namespace TDS
         SOUND_ERR = 0,
         SOUND_LOADED,
         SOUND_UNLOAD,
-        SOUND_PLAYING
+        SOUND_PLAYING,
+        SOUND_PAUSED
     };
 
     struct SoundInfo : public IComponent
@@ -85,6 +86,11 @@ namespace TDS
             return (whatState == SOUND_PLAYING);
         }
 
+        SOUND_STATE getState()
+        {
+            return whatState;
+        }
+
         unsigned int getUniqueID()
         {
             return uniqueID;
@@ -134,9 +140,9 @@ namespace TDS
         {
             volume = 20.0f * log10f(vol);
 
-            if (volume > 150.f)
+            if (volume > 1.f)
             {
-                volume = 149.f;
+                volume = 1.f;
             }
         }
 
@@ -188,7 +194,7 @@ namespace TDS
             ReverbAmount = rhs.ReverbAmount;
         }
 
-    };
-}
+    }; //end of SoundInfo struct
+} //end of namespace TDS
 
 #endif

@@ -55,19 +55,31 @@ namespace TDS
 			{
 				for (SoundInfo& sort : music)
 				{
-					audeng->stopSound(sort);
+					if(sort.isPlaying())
+					{
+						audeng->stopSound(sort);
+					}
 				}
 				for (SoundInfo& sort : SFX)
 				{
-					audeng->stopSound(sort);
+					if (sort.isPlaying())
+					{
+						audeng->stopSound(sort);
+					}
 				}
 				for (SoundInfo& sort : background)
 				{
-					audeng->stopSound(sort);
+					if (sort.isPlaying())
+					{
+						audeng->stopSound(sort);
+					}
 				}
 				for (SoundInfo& sort : VO)
 				{
-					audeng->stopSound(sort);
+					if (sort.isPlaying())
+					{
+						audeng->stopSound(sort);
+					}
 				}
 
 				playing = false;
@@ -94,37 +106,25 @@ namespace TDS
 		{
 			if (str.string().find("/Music\\") != std::string::npos)
 			{
-				SoundInfo temp(str.string());
-				temp.setLoop(false);
-				temp.set3DCoords(0.f, 0.f, 0.f);
-				temp.setVolume(0.5f);
+				SoundInfo temp("../" + str.string());
 
 				background.push_back(temp);
 			}
 			else if (str.string().find("/Songs\\") != std::string::npos)
 			{
-				SoundInfo temp(str.string());
-				temp.setLoop(false);
-				temp.set3DCoords(0.f, 0.f, 0.f);
-				temp.setVolume(0.5f);
+				SoundInfo temp("../" + str.string());
 
 				music.push_back(temp);
 			}
 			else if (str.string().find("/Sound Effects\\") != std::string::npos)
 			{
-				SoundInfo temp(str.string());
-				temp.setLoop(false);
-				temp.set3DCoords(0.f, 0.f, 0.f);
-				temp.setVolume(0.5f);
+				SoundInfo temp("../" + str.string());
 
 				SFX.push_back(temp);
 			}
 			else if (str.string().find("/Voice Overs\\") != std::string::npos)
 			{
-				SoundInfo temp(str.string());
-				temp.setLoop(false);
-				temp.set3DCoords(0.f, 0.f, 0.f);
-				temp.setVolume(0.5f);
+				SoundInfo temp("../" + str.string());
 
 				VO.push_back(temp);
 			}
@@ -144,21 +144,11 @@ namespace TDS
 
 				for (auto& temp2 : folders)
 				{
-					std::size_t pos{ temp2.string().find("\\") };
-					if (pos != std::string::npos)
-					{
-						temp2.string().replace(pos, pos + 1, "/");
-					}
 					files.push_back(temp2);
 				}
 			}
 			else
 			{
-				std::size_t pos{ temp.path().string().find("\\") };
-				if (pos != std::string::npos)
-				{
-					temp.path().string().replace(pos, pos + 1, "/");
-				}
 				files.push_back(temp);
 			}
 		}
@@ -168,39 +158,40 @@ namespace TDS
 
 	void AudioImgui::play(std::string file)
 	{
-		SoundInfo this_one{};
+		SoundInfo incase{};
+		SoundInfo* this_one{&incase};
 		
 		for (SoundInfo& temp : music)
 		{
-			if (temp.getFilePath().find(file) != std::string::npos)
+			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
-				this_one = temp;
+				this_one = &temp;
 			}
 		}
 		for (SoundInfo& temp : background)
 		{
-			if (temp.getFilePath().find(file) != std::string::npos)
+			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
-				this_one = temp;
+				this_one = &temp;
 			}
 		}
 		for (SoundInfo& temp : SFX)
 		{
-			if (temp.getFilePath().find(file) != std::string::npos)
+			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
-				this_one = temp;
+				this_one = &temp;
 			}
 		}
 		for (SoundInfo& temp : VO)
 		{
-			if (temp.getFilePath().find(file) != std::string::npos)
+			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
-				this_one = temp;
+				this_one = &temp;
 			}
 		}
 
-		audeng->loadSound(this_one);
-		audeng->playSound(this_one);
+		audeng->loadSound(*this_one);
+		audeng->playSound(*this_one);
 
 		playing = true;
 	}

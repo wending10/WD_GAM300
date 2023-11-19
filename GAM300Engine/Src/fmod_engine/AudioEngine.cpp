@@ -127,6 +127,7 @@ namespace TDS
 
                 // start audio playback
                 ERRCHECK(channel->setPaused(false));
+                soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
             }
             else
             {
@@ -135,6 +136,14 @@ namespace TDS
                 return playSound(soundInfo);
             }
 
+        }
+
+        void AudioEngine::pauseSound(SoundInfo& soundInfo)
+        {
+            /*if (soundInfo.isPlaying())
+            {
+                ERRCHECK(channel->setPaused(true));
+            }*/
         }
 
         void AudioEngine::stopSound(SoundInfo & soundInfo)

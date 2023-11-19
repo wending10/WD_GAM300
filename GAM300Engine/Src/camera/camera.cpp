@@ -120,12 +120,12 @@ namespace TDS
 				float getNewMousex = static_cast<float>(Input::getMousePosition().x);
 				float getNewMousey = static_cast<float>(Input::getMousePosition().y);
 
-				/*float offsetx = getNewMousex - GetMousex;
-				float offsety = GetMousey - getNewMousey;*/
+				float offsetx = getNewMousex - GetMousex;
+				float offsety = GetMousey - getNewMousey;
 
-				float offsetx{ 0.f }, offsety{ 0.f };
+				//float offsetx{ 0.f }, offsety{ 0.f };
 
-				if (getNewMousex != GetMousex)
+				/*if (getNewMousex != GetMousex)
 				{
 					offsetx = getNewMousex - GetMousex;
 				}
@@ -141,11 +141,9 @@ namespace TDS
 				else
 				{
 					offsety = GetMousey;
-				}
+				}*/
 
 				ProcessMouseMovement(offsetx, offsety);
-
-				//Input::SetMousePosition(scenewindow.x + halfsety, scenewindow.y + halfsety);
 
 				mouse = Input::getMousePosition();
 			}

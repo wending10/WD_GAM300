@@ -40,8 +40,11 @@ namespace TDS
          * Deals with all FMOD calls so that FMOD-specific code does not need to be used outside this class.
          * Only one AudioEngine should be constructed for an application.
          */
-        class AudioEngine
+        class AudioEngine : public IComponent
         {
+        public:
+            friend ECSSystem; //allow system to access constructor
+
         public:
             /**
              * Remove AudioEngine copy constructor.
@@ -111,6 +114,14 @@ namespace TDS
             *                 or any other FMOD-supported audio format)
             */
             DLL_API  int playSound(SoundInfo& soundInfo);
+
+            /**
+            * Pause a sound file using FMOD's low level audio system.
+            *
+            * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
+            *                 or any other FMOD-supported audio format)
+            */
+            DLL_API void pauseSound(SoundInfo& soundInfo);
 
             /**
              * Stops a looping sound if it's currently playing.
