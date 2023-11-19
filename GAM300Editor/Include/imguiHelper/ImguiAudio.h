@@ -65,7 +65,7 @@ namespace TDS
 	private:
 		AudioWerks::AudioEngine* audeng;
 
-		bool appear;
+		bool appear, playing;
 		float bar;
 
 		std::vector<SoundInfo> music;

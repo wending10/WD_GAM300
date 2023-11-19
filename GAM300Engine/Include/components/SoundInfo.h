@@ -160,7 +160,7 @@ namespace TDS
             isit3D = condition;
         }
 
-        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, SOUND_STATE _theState = SOUND_UNLOAD, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 50.f, float _reverbamount = 0.f)
+        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, SOUND_STATE _theState = SOUND_UNLOAD, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)
             : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), whatState(_theState), volume(_volume), ReverbAmount(_reverbamount)  //!!!!!!!To be replaced when vec container is used
         {
             if (filePath != "")

@@ -20,7 +20,7 @@ namespace TDS
 		panelTitle = "Audio Files";
 		windowPadding = ImVec2(0.f, 0.f);
 
-		appear = false;
+		appear = playing = false;
 		bar = 0.f;
 
 		music.clear();
@@ -51,21 +51,26 @@ namespace TDS
 		{
 			flags = ImGuiWindowFlags_None;
 			
-			for(SoundInfo& sort : music)
+			if(playing)
 			{
-				audeng->stopSound(sort);
-			}
-			for (SoundInfo& sort : SFX)
-			{
-				audeng->stopSound(sort);
-			}
-			for (SoundInfo& sort : background)
-			{
-				audeng->stopSound(sort);
-			}
-			for (SoundInfo& sort : VO)
-			{
-				audeng->stopSound(sort);
+				for (SoundInfo& sort : music)
+				{
+					audeng->stopSound(sort);
+				}
+				for (SoundInfo& sort : SFX)
+				{
+					audeng->stopSound(sort);
+				}
+				for (SoundInfo& sort : background)
+				{
+					audeng->stopSound(sort);
+				}
+				for (SoundInfo& sort : VO)
+				{
+					audeng->stopSound(sort);
+				}
+
+				playing = false;
 			}
 		}
 
@@ -74,6 +79,9 @@ namespace TDS
 
 	void AudioImgui::add_audio_files(std::filesystem::path folder_path)
 	{
+		/*std::filesystem::path Music_path{ folder_path / "Music" }, Background_path{ folder_path / "Songs" },
+			SFX_path{ folder_path / "Sound Effects" }, Voice_path{ folder_path / "Voice Overs" };*/
+		
 		std::filesystem::path full_path = folder_path; //pathing / append;
 		std::vector<std::filesystem::path> all_files; //store all file path
 
@@ -82,18 +90,9 @@ namespace TDS
 			all_files = go_deeper(full_path);
 		}
 
-		all_files.begin();
-
-		std::cout << '\n' << '\n' << "Spacing Spacing Spacing" << '\n' << '\n';
-
-		for (auto& temp : all_files)
-		{
-			std::cout << "Files: " << temp.string() << '\n';
-		}
-
 		for (auto& str : all_files)
 		{
-			if (str.string().find("Music"))
+			if (str.string().find("/Music\\") != std::string::npos)
 			{
 				SoundInfo temp(str.string());
 				temp.setLoop(false);
@@ -102,7 +101,7 @@ namespace TDS
 
 				background.push_back(temp);
 			}
-			else if (str.string().find("Songs"))
+			else if (str.string().find("/Songs\\") != std::string::npos)
 			{
 				SoundInfo temp(str.string());
 				temp.setLoop(false);
@@ -111,7 +110,7 @@ namespace TDS
 
 				music.push_back(temp);
 			}
-			else if (str.string().find("Sound Effects"))
+			else if (str.string().find("/Sound Effects\\") != std::string::npos)
 			{
 				SoundInfo temp(str.string());
 				temp.setLoop(false);
@@ -120,7 +119,7 @@ namespace TDS
 
 				SFX.push_back(temp);
 			}
-			else if (str.string().find("Voice Overs"))
+			else if (str.string().find("/Voice Overs\\") != std::string::npos)
 			{
 				SoundInfo temp(str.string());
 				temp.setLoop(false);
@@ -129,23 +128,6 @@ namespace TDS
 
 				VO.push_back(temp);
 			}
-		}
-
-		for (SoundInfo& temp : background)
-		{
-			audeng->loadSound(temp);
-		}
-		for (SoundInfo& temp : music)
-		{
-			audeng->loadSound(temp);
-		}
-		for (SoundInfo& temp : SFX)
-		{
-			audeng->loadSound(temp);
-		}
-		for (SoundInfo& temp : VO)
-		{
-			audeng->loadSound(temp);
 		}
 	}
 
@@ -160,13 +142,23 @@ namespace TDS
 			{
 				folders = go_deeper(temp);
 
-				for (const auto& temp2 : folders)
+				for (auto& temp2 : folders)
 				{
+					std::size_t pos{ temp2.string().find("\\") };
+					if (pos != std::string::npos)
+					{
+						temp2.string().replace(pos, pos + 1, "/");
+					}
 					files.push_back(temp2);
 				}
 			}
 			else
 			{
+				std::size_t pos{ temp.path().string().find("\\") };
+				if (pos != std::string::npos)
+				{
+					temp.path().string().replace(pos, pos + 1, "/");
+				}
 				files.push_back(temp);
 			}
 		}
@@ -180,34 +172,37 @@ namespace TDS
 		
 		for (SoundInfo& temp : music)
 		{
-			if (temp.getFilePath().find(file))
+			if (temp.getFilePath().find(file) != std::string::npos)
 			{
 				this_one = temp;
 			}
 		}
 		for (SoundInfo& temp : background)
 		{
-			if (temp.getFilePath().find(file))
+			if (temp.getFilePath().find(file) != std::string::npos)
 			{
 				this_one = temp;
 			}
 		}
 		for (SoundInfo& temp : SFX)
 		{
-			if (temp.getFilePath().find(file))
+			if (temp.getFilePath().find(file) != std::string::npos)
 			{
 				this_one = temp;
 			}
 		}
 		for (SoundInfo& temp : VO)
 		{
-			if (temp.getFilePath().find(file))
+			if (temp.getFilePath().find(file) != std::string::npos)
 			{
 				this_one = temp;
 			}
 		}
-		
+
+		audeng->loadSound(this_one);
 		audeng->playSound(this_one);
+
+		playing = true;
 	}
 
 	void AudioImgui::update()
