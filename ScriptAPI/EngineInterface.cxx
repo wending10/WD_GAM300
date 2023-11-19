@@ -1001,7 +1001,7 @@ namespace ScriptAPI
     }
 
     // To do
-    GameObject^ FindGameObjectViaName(String^ name)
+    GameObject^ FindGameObjectViaName(System::String^ name)
     {
         //System::Console::WriteLine("called in engine interfacee");
         for each (auto entityNameID in EngineInterface::GetGameObjectList())

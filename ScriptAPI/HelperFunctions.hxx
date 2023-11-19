@@ -2,5 +2,5 @@
 
 namespace ScriptAPI
 {
-	GameObject^ FindGameObjectViaName(String^ name);
+	GameObject^ FindGameObjectViaName(System::String^ name);
 }

@@ -12,6 +12,7 @@
 #include "GameObject.hxx"
 #include "Input.hxx"
 #include "Time.hxx"
+#include "HelperFunctions.hxx"
 #include <iostream>
 #include <chrono>
 #include <thread>
