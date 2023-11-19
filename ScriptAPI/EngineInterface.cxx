@@ -2,6 +2,7 @@
 #include "Debug.hxx"
 #include "TypeConversion.hxx"
 #include "HelperFunctions.hxx"
+#include "Time.hxx"
 using namespace System;
 using namespace System::Runtime::InteropServices;
 #pragma comment (lib, "GAM300Engine.lib")
@@ -248,6 +249,8 @@ namespace ScriptAPI
     ***************************************************************************/
     void EngineInterface::ExecuteUpdate()
     {
+        Time::deltaTime = TDS::GetDeltaTime();
+
         for each (auto i in TDS::ecs.getEntities())
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEntityIsEnabled(i))
@@ -474,11 +477,38 @@ namespace ScriptAPI
                     // Components =====================================================================================
                     else if (field->FieldType->ToString() == "ScriptAPI.BoxColliderComponent")
                     {
+                        newScriptValue.type = "Box Collider";
                         newScriptValue.referenceEntityID = safe_cast<BoxColliderComponent^>(field->GetValue(obj))->GetEntityID();
                     }
                     else if (field->FieldType->ToString() == "ScriptAPI.CameraComponent")
                     {
+                        newScriptValue.type = "Camera";
                         newScriptValue.referenceEntityID = safe_cast<CameraComponent^>(field->GetValue(obj))->GetEntityID();
+                    }
+                    else if (field->FieldType->ToString() == "ScriptAPI.CapsuleColliderComponent")
+                    {
+                        newScriptValue.type = "Capsule Collider";
+                        newScriptValue.referenceEntityID = safe_cast<CapsuleColliderComponent^>(field->GetValue(obj))->GetEntityID();
+                    }
+                    else if (field->FieldType->ToString() == "ScriptAPI.NameTagComponent")
+                    {
+                        newScriptValue.type = "Name Tag";
+                        newScriptValue.referenceEntityID = safe_cast<NameTagComponent^>(field->GetValue(obj))->GetEntityID();
+                    }
+                    else if (field->FieldType->ToString() == "ScriptAPI.RigidBodyComponent")
+                    {
+                        newScriptValue.type = "Rigid Body";
+                        newScriptValue.referenceEntityID = safe_cast<RigidBodyComponent^>(field->GetValue(obj))->GetEntityID();
+                    }
+                    else if (field->FieldType->ToString() == "ScriptAPI.SphereColliderComponent")
+                    {
+                        newScriptValue.type = "Sphere Collider";
+                        newScriptValue.referenceEntityID = safe_cast<SphereColliderComponent^>(field->GetValue(obj))->GetEntityID();
+                    }
+                    else if (field->FieldType->ToString() == "ScriptAPI.TransformComponent")
+                    {
+                        newScriptValue.type = "Transform";
+                        newScriptValue.referenceEntityID = safe_cast<TransformComponent^>(field->GetValue(obj))->GetEntityID();
                     }
                     // Script =========================================================================================
                     else 
@@ -558,13 +588,38 @@ namespace ScriptAPI
                 // Components =====================================================================================
                 else if (field->FieldType->ToString() == "ScriptAPI.BoxColliderComponent")
                 {
-                    newScriptValue.type = toStdString("Component");
+                    newScriptValue.type = "Component";
                     newScriptValue.referenceEntityID = safe_cast<BoxColliderComponent^>(field->GetValue(obj))->GetEntityID();
                 }
                 else if (field->FieldType->ToString() == "ScriptAPI.CameraComponent")
                 {
-                    newScriptValue.type = toStdString("Component");
+                    newScriptValue.type = "Component";
                     newScriptValue.referenceEntityID = safe_cast<CameraComponent^>(field->GetValue(obj))->GetEntityID();
+                }
+                else if (field->FieldType->ToString() == "ScriptAPI.CapsuleColliderComponent")
+                {
+                    newScriptValue.type = "Component";
+                    newScriptValue.referenceEntityID = safe_cast<CapsuleColliderComponent^>(field->GetValue(obj))->GetEntityID();
+                }
+                else if (field->FieldType->ToString() == "ScriptAPI.NameTagComponent")
+                {
+                    newScriptValue.type = "Component";
+                    newScriptValue.referenceEntityID = safe_cast<NameTagComponent^>(field->GetValue(obj))->GetEntityID();
+                }
+                else if (field->FieldType->ToString() == "ScriptAPI.RigidBodyComponent")
+                {
+                    newScriptValue.type = "Component";
+                    newScriptValue.referenceEntityID = safe_cast<RigidBodyComponent^>(field->GetValue(obj))->GetEntityID();
+                }
+                else if (field->FieldType->ToString() == "ScriptAPI.SphereColliderComponent")
+                {
+                    newScriptValue.type = "Component";
+                    newScriptValue.referenceEntityID = safe_cast<SphereColliderComponent^>(field->GetValue(obj))->GetEntityID();
+                }
+                else if (field->FieldType->ToString() == "ScriptAPI.TransformComponent")
+                {
+                    newScriptValue.type = "Component";
+                    newScriptValue.referenceEntityID = safe_cast<TransformComponent^>(field->GetValue(obj))->GetEntityID();
                 }
                 else // Script
                 {
@@ -598,7 +653,7 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 field->SetValue(currentObject, value);
                 return;
@@ -606,7 +661,7 @@ namespace ScriptAPI
         }
     }
 
-    void EngineInterface::SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value)
+    void EngineInterface::SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value, bool isInt)
     {
         String^ variable = toSystemString(variableName);
 
@@ -626,9 +681,16 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
-                field->SetValue(currentObject, value);
+                if (!isInt)
+                {
+                    field->SetValue(currentObject, (uint32_t)value);
+                }
+                else
+                {
+                    field->SetValue(currentObject, value);
+                }
                 return;
             }
         }
@@ -654,7 +716,7 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 field->SetValue(currentObject, value);
                 return;
@@ -682,7 +744,7 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 field->SetValue(currentObject, value);
                 return;
@@ -710,7 +772,7 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 field->SetValue(currentObject, toSystemString(value));
                 return;
@@ -738,7 +800,7 @@ namespace ScriptAPI
 
     //    for each (FieldInfo^ field in currentFieldArray)
     //    {
-    //        if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+    //        if (field->Name == variable)
     //        {
     //            if (value == '\0')
     //            {
@@ -772,7 +834,7 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 Vector3 newValue(value);
                 field->SetValue(currentObject, newValue);
@@ -801,9 +863,39 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 field->SetValue(currentObject, (gameObjectEntityID > 0 ? gameObjectList[gameObjectEntityID]->Item2 : nullptr));
+                return;
+            }
+        }
+    }
+
+    void EngineInterface::SetComponent(TDS::EntityID entityId, std::string script, std::string variableName, TDS::EntityID gameObjectEntityID)
+    {
+        String^ variable = toSystemString(variableName);
+
+        Object^ currentObject = scripts[entityId][toSystemString(script)];
+
+        if (currentObject == nullptr)
+        {
+            return;
+        }
+
+        array<FieldInfo^>^ currentFieldArray = currentObject->GetType()->GetFields(BindingFlags::Public | BindingFlags::Instance | BindingFlags::NonPublic);
+
+        if (currentFieldArray == nullptr)
+        {
+            return;
+        }
+
+        for each (FieldInfo ^ field in currentFieldArray)
+        {
+            if (field->Name == variable)
+            {
+                auto component = static_cast<ComponentBase^>(field->GetValue(currentObject));
+                component->SetEntityID(gameObjectEntityID);
+                field->SetValue(currentObject, component);
                 return;
             }
         }
@@ -829,7 +921,7 @@ namespace ScriptAPI
 
         for each (FieldInfo^ field in currentFieldArray)
         {
-            if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 && field->Name == variable)
+            if (field->Name == variable)
             {
                 field->SetValue(currentObject, (gameObjectEntityID > 0 ? scripts[gameObjectEntityID][toSystemString(scriptReference)] : nullptr));
                 return;

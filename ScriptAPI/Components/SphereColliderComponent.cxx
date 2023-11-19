@@ -129,4 +129,14 @@ namespace ScriptAPI
 	// CONSTRUCTOR ===========================================================================
 	SphereColliderComponent::SphereColliderComponent(TDS::EntityID ID) : entityID(ID)
 	{ }
+
+	void SphereColliderComponent::SetEntityID(TDS::EntityID ID)
+	{
+		entityID = ID;
+	}
+
+	TDS::EntityID SphereColliderComponent::GetEntityID()
+	{
+		return entityID;
+	}
 }

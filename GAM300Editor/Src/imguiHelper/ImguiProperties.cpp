@@ -18,6 +18,7 @@
 #include "eventManager/eventHandler.h"
 #include "imguiHelper/ImguiAssetBrowser.h"
 
+#include "Input/Input.h"
 
 namespace TDS
 {
@@ -305,19 +306,98 @@ namespace TDS
 									sceneManagerInstance->setBool(selectedEntity, scriptName, scriptValue.name, value);
 								}
 							}
+							else if (scriptValue.type == "System.UInt16" || scriptValue.type == "System.UInt32" || scriptValue.type == "System.UInt64")
+							{
+								static std::vector<std::string> KeyCodeTypeString =
+								{
+									"A",
+									"B",
+									"C",
+									"D",
+									"E",
+									"F",
+									"G",
+									"H",
+									"I",
+									"J",
+									"K",
+									"L",
+									"M",
+									"N",
+									"O",
+									"P",
+									"Q",
+									"R",
+									"S",
+									"T",
+									"U",
+									"V",
+									"W",
+									"X",
+									"Y",
+									"Z",
+									"Up Arrow",
+									"Down Arrow",
+									"Left Arrow",
+									"Right Arrow",
+									"Numpad 0",
+									"Numpad 1",
+									"Numpad 2",
+									"Numpad 3",
+									"Numpad 4",
+									"Numpad 5",
+									"Numpad 6",
+									"Numpad 7",
+									"Numpad 8",
+									"Numpad 9",
+									"Minus",
+									"Plus",
+									"Shift",
+									"Control",
+									"Alt",
+									"Space",
+									"Escape",
+									"Capslock",
+									"Tab",
+									"Enter",
+									"Backspace",
+									"Tilde",
+									"Comma",
+									"Period",
+									"Slash",
+									"Semicolon",
+									"Mouse1",
+									"Mouse2",
+									"Mouse3",
+									"Mouse4",
+									"Mouse5",
+									"Mouse6",
+									"Mouse7"
+								};
+
+								int value = std::stoi(scriptValue.value);
+
+								if (value > TDS_MAX_KEYS) 
+								{
+									value -= TDS_MAX_KEYS;
+									value += 55; // cus shift
+								}
+
+								if (ImguiInput(scriptValue.name, KeyCodeTypeString, value))
+								{
+									sceneManagerInstance->setInt(selectedEntity, scriptName, scriptValue.name, value, false);
+								}
+							}
 							else if (scriptValue.type == "System.Int16"
 								|| scriptValue.type == "System.Int32"
 								|| scriptValue.type == "System.Int64"
-								|| scriptValue.type == "System.UInt16"
-								|| scriptValue.type == "System.UInt32"
-								|| scriptValue.type == "System.UInt64"
 								|| scriptValue.type == "System.Byte"
 								|| scriptValue.type == "System.SByte")
 							{
 								int value = std::stoi(scriptValue.value);
 								if (ImguiInput(scriptValue.name, value))
 								{
-									sceneManagerInstance->setInt(selectedEntity, scriptName, scriptValue.name, value);
+									sceneManagerInstance->setInt(selectedEntity, scriptName, scriptValue.name, value, true);
 								}
 							}
 							else if (scriptValue.type == "System.Double")
@@ -403,17 +483,18 @@ namespace TDS
 								{
 									popupPosition = ImGui::GetCursorPos();
 									popupPosition.x += ImGui::GetWindowPos().x;
+									popupPosition.y -= ImGui::GetScrollY();
 									ImGui::SetNextWindowPos(popupPosition);
 									ImGui::SetNextWindowSize(ImVec2(300.f, 175.f));
 
 									ImVec4* colors = ImGui::GetStyle().Colors;
 									colors[ImGuiCol_ModalWindowDimBg] = ImVec4(1.00f, 0.00f, 0.00f, 0.00f);
 
-									ImGui::OpenPopup(("selectGameObject" + scriptValue.name).c_str());
+									ImGui::OpenPopup(("selectGameObject: " + scriptValue.name).c_str());
 								}
 
 								bool unused_open = true;
-								if (ImGui::BeginPopupModal(("selectGameObject" + scriptValue.name).c_str(), &unused_open, ImGuiWindowFlags_AlwaysVerticalScrollbar))
+								if (ImGui::BeginPopupModal(("selectGameObject: " + scriptValue.name).c_str(), &unused_open, ImGuiWindowFlags_AlwaysVerticalScrollbar))
 								{
 									if (scriptValue.type == "ScriptAPI.GameObject")
 									{
@@ -437,7 +518,163 @@ namespace TDS
 											}
 										}
 									}
-									else // Script
+									// Components =====================================================================================
+									else if (scriptValue.type == "Box Collider")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetBoxCollider(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									else if (scriptValue.type == "Camera")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetCameraComponent(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									else if (scriptValue.type == "Capsule Collider")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetCapsuleCollider(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									else if (scriptValue.type == "Name Tag")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetNameTag(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									else if (scriptValue.type == "Rigid Body")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetRigidBody(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									else if (scriptValue.type == "Sphere Collider")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetSphereCollider(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									else if (scriptValue.type == "Transform")
+									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
+										for (EntityID entityID : ecs.getEntities())
+										{
+											if (entityID == selectedEntity || GetTransform(entityID) == nullptr)
+											{
+												continue;
+											}
+
+											if (ImGui::Selectable(ecs.getComponent<NameTag>(entityID)->GetName().c_str(), entityID == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+											{
+												sceneManagerInstance->setComponent(selectedEntity, scriptName, scriptValue.name, entityID);
+												ImGui::CloseCurrentPopup();
+											}
+										}
+									}
+									// Script =========================================================================================
+									else
 									{
 										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
 										{

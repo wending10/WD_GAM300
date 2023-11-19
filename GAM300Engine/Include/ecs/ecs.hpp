@@ -648,8 +648,6 @@ namespace TDS
 
         Record& record = mEntityArchetypeMap[entityId];
 
-        mArchetypes;
-
         if (!record.archetype)
             return nullptr; // there's no components anyway
 

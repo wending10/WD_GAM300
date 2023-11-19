@@ -58,16 +58,16 @@ namespace ScriptAPI
 
 	bool Input::GetMouseButton(uint32_t button)
 	{
-		return TDS::Input::isMouseButtonPressed(button);
+		return TDS::Input::isMouseButtonPressed(button - Keycode::MAX_KEYS);
 	}
 
 	bool Input::GetMouseButtonDown(uint32_t button)
 	{
-		return TDS::Input::isMouseButtonPressed(button);
+		return TDS::Input::isMouseButtonPressed(button - Keycode::MAX_KEYS);
 	}
 
 	bool Input::GetMouseButtonUp(uint32_t button)
 	{
-		return TDS::Input::isMouseButtonReleased(button);
+		return TDS::Input::isMouseButtonReleased(button - Keycode::MAX_KEYS);
 	}
 }

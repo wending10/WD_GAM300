@@ -11,6 +11,7 @@
 #include "IncludeFromEngine.hxx"
 #include "GameObject.hxx"
 #include "Input.hxx"
+#include "Time.hxx"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -121,10 +122,10 @@ namespace ScriptAPI
 
         //static void OnTriggerExit(CapsuleColliderComponent collider);
 
-        static float Clamp(float num1, float num2, float num3)
-        {
-            return std::clamp(num1, num2, num3);
-        }
+        //static float Clamp(float num1, float num2, float num3)
+        //{
+        //    return std::clamp(num1, num2, num3);
+        //}
 
     };
 }

@@ -203,4 +203,14 @@ namespace ScriptAPI
 	// CONSTRUCTOR ===========================================================================
 	CapsuleColliderComponent::CapsuleColliderComponent(TDS::EntityID ID) : entityID(ID)
 	{ }
+
+	void CapsuleColliderComponent::SetEntityID(TDS::EntityID ID)
+	{
+		entityID = ID;
+	}
+
+	TDS::EntityID CapsuleColliderComponent::GetEntityID()
+	{
+		return entityID;
+	}
 }
