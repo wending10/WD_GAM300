@@ -44,7 +44,6 @@ namespace ScriptAPI
         IAsyncEnumerable<TResult>^ Coroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration);
         
         //GameObject^ GameObjectScriptFind(System::String^ name);
-        GameObject^ gameObject;
 
 
         [HideInInspector]
