@@ -4,6 +4,8 @@
 
 #include "../GAM300Engine/Include/eventManager/eventHandler.h"
 
+#include "../GAM300Engine/Include/eventManager/eventHandler.h"
+
 namespace ScriptAPI
 {
 	public value class TransformComponent : ComponentBase
