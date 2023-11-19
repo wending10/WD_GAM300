@@ -27,6 +27,8 @@
 // Helper functions for components
 namespace TDS
 {
+	DLL_API float GetDeltaTime();
+
 	DLL_API struct ScriptValues
 	{
 		std::string name;

@@ -191,7 +191,12 @@ namespace TDS
 					else if (variableType == "Int")
 					{
 						int value = variableTypeValue.MemberBegin()->value.GetInt();
-						setInt(currentEntity, scriptName, variableName, value);
+						setInt(currentEntity, scriptName, variableName, value, true);
+					}
+					else if (variableType == "UInt")
+					{
+						int value = variableTypeValue.MemberBegin()->value.GetUint();
+						setInt(currentEntity, scriptName, variableName, value, false);
 					}
 					else if (variableType == "Double")
 					{
@@ -222,12 +227,20 @@ namespace TDS
 						Vec3 value = Vec3(object["X"].GetFloat(), object["Y"].GetFloat(), object["Z"].GetFloat());
 						setVector3(currentEntity, scriptName, variableName, value);
 					}
-					else if (variableType == "GameObject" || variableType == "Component")
+					else if (variableType == "GameObject")
 					{
 						EntityID value = variableTypeValue.MemberBegin()->value.GetInt();
 						if (value > 0)
 						{
 							setGameObject(currentEntity, scriptName, variableName, value);
+						}
+					}
+					else if (variableType == "Component")
+					{
+						EntityID value = variableTypeValue.MemberBegin()->value.GetInt();
+						if (value > 0)
+						{
+							setComponent(currentEntity, scriptName, variableName, value);
 						}
 					}
 					else if (variableTypeValue.MemberBegin()->value.GetInt() > 0) // scripts (saving to add later)
@@ -348,12 +361,16 @@ namespace TDS
 							writer->String("Bool", static_cast<rapidjson::SizeType>(std::string("Bool").length()), false);
 							scriptValues.value == "False" ? writer->Bool(false) : writer->Bool(true);
 						}
+						else if (scriptValues.type == "System.UInt16"
+							|| scriptValues.type == "System.UInt32"
+							|| scriptValues.type == "System.UInt64")
+						{
+							writer->String("UInt", static_cast<rapidjson::SizeType>(std::string("UInt").length()), false);
+							scriptValues.value == "" ? writer->Uint(0) : writer->Uint(std::stoi(scriptValues.value));
+						}
 						else if (scriptValues.type == "System.Int16"
 							|| scriptValues.type == "System.Int32"
 							|| scriptValues.type == "System.Int64"
-							|| scriptValues.type == "System.UInt16"
-							|| scriptValues.type == "System.UInt32"
-							|| scriptValues.type == "System.UInt64"
 							|| scriptValues.type == "System.Byte"
 							|| scriptValues.type == "System.SByte")
 						{

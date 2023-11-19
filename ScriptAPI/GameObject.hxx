@@ -3,6 +3,7 @@
 #include "Components/CameraComponent.hxx"
 #include "Components/CapsuleColliderComponent.hxx"
 #include "Components/NameTagComponent.hxx"
+#include "Components/RigidBodyComponent.hxx"
 #include "Components/SphereColliderComponent.hxx"
 #include "Components/TransformComponent.hxx"
 
@@ -18,6 +19,7 @@ namespace ScriptAPI
         CameraComponent GetCameraComponent();
         CapsuleColliderComponent GetCapsuleColliderComponent();
         NameTagComponent GetNameTagComponent();
+        RigidBodyComponent GetRigidBodyComponent();
         SphereColliderComponent GetSphereColliderComponent();
         TransformComponent GetTransformComponent();
 

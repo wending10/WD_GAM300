@@ -165,4 +165,14 @@ namespace ScriptAPI
 	// CONSTRUCTOR ===========================================================================
 	TransformComponent::TransformComponent(TDS::EntityID ID) : entityID (ID)
 	{ }
+
+	void TransformComponent::SetEntityID(TDS::EntityID ID)
+	{
+		entityID = ID;
+	}
+
+	TDS::EntityID TransformComponent::GetEntityID()
+	{
+		return entityID;
+	}
 }
