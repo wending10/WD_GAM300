@@ -23,7 +23,7 @@ namespace TDS
 		ImVec2 window_size;
 		ImVec2 window_pos;
 
-		short exit_cursor;
+		bool exit_cursor;
 	};
 }
 

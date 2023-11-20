@@ -11,7 +11,7 @@ TDS::GamePlayScene::GamePlayScene()
 	panelTitle = "GamePlayScene";
 	windowPadding = ImVec2(0.f, 0.f);
 
-	exit_cursor = 0;
+	exit_cursor = true;
 }
 
 void TDS::GamePlayScene::init()
@@ -30,14 +30,14 @@ void TDS::GamePlayScene::update()
 		{			
 			if (Input::isKeyPressed(TDS_ESCAPE))
 			{
-				++exit_cursor;
+				exit_cursor = !exit_cursor;
 				Input::releaseTheKey(TDS_ESCAPE);
 				CameraSystem::SetIsPlaying(false);
 			}
 
-			if((exit_cursor % 2) == 0)
+			if(exit_cursor)
 			{
-				CameraSystem::SetIsPlaying(true);
+				//CameraSystem::SetIsPlaying(true);
 
 				window_size = ImGui::GetWindowSize();
 				window_pos = ImGui::GetWindowPos();
@@ -56,7 +56,7 @@ void TDS::GamePlayScene::update()
 		}
 		else
 		{
-			CameraSystem::SetIsPlaying(false);
+			//CameraSystem::SetIsPlaying(false);
 			
 			if (ImGui::BeginMenu("Game is Paused"))
 			{
