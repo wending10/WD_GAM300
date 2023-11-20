@@ -84,7 +84,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)\scriptDLL</OutDir>
+    <OutDir>$(SolutionDir)\$(Configuration)-$(Platform)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
