@@ -10,10 +10,10 @@ namespace ScriptAPI
     {
     public:        
         void add_clips(std::filesystem::path file);
+        System::String^ GetElement();
         
         System::Collections::Generic::List<System::String^> clips;
-        short sub;
-        // One AudioClip can hold more than 1 audio; is an array
+        int sub;
     };
     
     public ref class AudioSource
@@ -47,6 +47,8 @@ namespace ScriptAPI
         T& operator=(float val);
 
         bool isPlaying();
+
+        System::String^ GetElementFromAudioClip(int index);
 
         AudioClip^ clip; //AudioClips are attached to AudioSource
                      //returns a clip,

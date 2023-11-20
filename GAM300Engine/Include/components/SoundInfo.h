@@ -86,6 +86,11 @@ namespace TDS
             return (whatState == SOUND_PLAYING);
         }
 
+        bool isPaused()
+        {
+            return (whatState == SOUND_PAUSED);
+        }
+
         SOUND_STATE getState()
         {
             return whatState;

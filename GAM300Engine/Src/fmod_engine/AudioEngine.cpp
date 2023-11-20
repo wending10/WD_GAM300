@@ -102,32 +102,48 @@ namespace TDS
         int AudioEngine::playSound(SoundInfo & soundInfo)
         {
             if (soundLoaded(soundInfo)) {
-                std::cout << "Playing Sound\n";
-                FMOD::Channel* channel{ nullptr };
-                // start play in 'paused' state
-                ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
-                soundInfo.setState(SOUND_PLAYING);
-
-                if (soundInfo.is3D())
-                    set3dChannelPosition(soundInfo, channel);
-
-                //std::cout << "Playing sound at volume " << soundInfo.getVolume() << '\n';
-                channel->setVolume(soundInfo.getVolume());
-
-                if (soundInfo.isLoop()) // add to channel map of sounds currently playing, to stop later
+                if(!soundInfo.isPaused())
                 {
-                    loopsPlaying.insert({ soundInfo.getUniqueID(), channel });
+                    std::cout << "Playing Sound\n";
+                    FMOD::Channel* channel{ nullptr };
+                    // start play in 'paused' state
+                    ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
+                    soundInfo.setState(SOUND_PLAYING);
+
+                    if (soundInfo.is3D())
+                        set3dChannelPosition(soundInfo, channel);
+
+                    //std::cout << "Playing sound at volume " << soundInfo.getVolume() << '\n';
+                    channel->setVolume(soundInfo.getVolume());
+
+                    if (soundInfo.isLoop()) // add to channel map of sounds currently playing, to stop later
+                    {
+                        loopsPlaying.insert({ soundInfo.getUniqueID(), channel });
+                    }
+                    else
+                    {
+                        normalPlaying.insert({ soundInfo.getUniqueID(), channel });
+                    }
+
+                    ERRCHECK(channel->setReverbProperties(0, soundInfo.getReverbAmount()));
+
+                    // start audio playback
+                    ERRCHECK(channel->setPaused(false));
+                    soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
                 }
                 else
                 {
-                    normalPlaying.insert({ soundInfo.getUniqueID(), channel });
+                    if (soundInfo.isLoop())
+                    {
+                        ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setPaused(false));
+                        soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
+                    }
+                    else
+                    {
+                        ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setPaused(false));
+                        soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
+                    }
                 }
-
-                ERRCHECK(channel->setReverbProperties(0, soundInfo.getReverbAmount()));
-
-                // start audio playback
-                ERRCHECK(channel->setPaused(false));
-                soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
             }
             else
             {
@@ -140,10 +156,19 @@ namespace TDS
 
         void AudioEngine::pauseSound(SoundInfo& soundInfo)
         {
-            /*if (soundInfo.isPlaying())
+            if (soundInfo.isPlaying())
             {
-                ERRCHECK(channel->setPaused(true));
-            }*/
+                if (soundInfo.isLoop() && soundInfo.getState())
+                {
+                    ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setPaused(true));
+                    soundInfo.setState(SOUND_STATE::SOUND_PAUSED);
+                }
+                else
+                {
+                    ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setPaused(true));
+                    soundInfo.setState(SOUND_STATE::SOUND_PAUSED);
+                }
+            }
         }
 
         void AudioEngine::stopSound(SoundInfo & soundInfo)

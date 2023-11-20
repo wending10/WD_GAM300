@@ -17,12 +17,12 @@ namespace ScriptAPI
 	{
 		if (delay > 0)
 		{
-			deltatime = time(NULL);
+			//deltatime = time(NULL);
 		}
 		else
 		{
 			msclr::interop::marshal_context context;
-			std::string str = context.marshal_as<std::string>(clip->clips[0]);
+			std::string str = context.marshal_as<std::string>(clip->clips[clip->sub]);
 			
 			TDS::SoundInfo temp();
 			
@@ -32,7 +32,7 @@ namespace ScriptAPI
 
 	void AudioSource::Pause()
 	{
-		
+		audio_engine->pauseSound(clip->clips[clip->sub]);
 	}
 
 	void AudioSource::Stop()
@@ -52,12 +52,22 @@ namespace ScriptAPI
 
 	void AudioSource::Loop(bool set)
 	{
+		if (set)
+		{
+			TDS::SoundInfo temp(clip->clips[clip->sub]);
 
+			if (!temp.isPlaying() && temp.isLoaded())
+			{
+				audio_engine->playSound(temp);
+			}
+		}
 	}
 
 	bool AudioSource::enabled()
 	{
+		TDS::SoundInfo temp(clip->clips[clip->sub]);
 
+		return temp.isLoaded();
 	}
 
 	/*float AudioSource::get_pitch()
@@ -72,7 +82,17 @@ namespace ScriptAPI
 
 	bool AudioSource::isPlaying()
 	{
+		TDS::SoundInfo temp(clip->clips[clip->sub]);
 
+		return temp.isPlaying();
+	}
+
+	System::String^ AudioSource::GetElementFromAudioClip(int index)
+	{
+		if (clip != nullptr)
+		{
+			return
+		}
 	}
 
 	template<typename T>
@@ -87,5 +107,13 @@ namespace ScriptAPI
 		
 		clips.Add(temp);
 		++sub;
+	}
+
+	System::String^ AudioClip::GetElement()
+	{
+		if(sub >= 0 && sub < clips.Count)
+		{
+			return clips[sub];
+		}
 	}
 }
