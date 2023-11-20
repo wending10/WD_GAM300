@@ -3,7 +3,7 @@ using System;
 
 public class FPS_Controller_Script : Script
 {
-    #region Camera Movement Variables
+/*    #region Camera Movement Variables
     [Header("Camera Movement Variables")]
     public CameraComponent playerCamera;
     public float fov = 60f;
@@ -108,7 +108,7 @@ public class FPS_Controller_Script : Script
     // Internal Variables
     private Vector3 jointOriginalPos;
     private float timer = 0;
-    #endregion
+    #endregion*/
 
     public override void Awake()
     {
