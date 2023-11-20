@@ -23,7 +23,6 @@
 #include "tag.h"
 #include "transform.h"
 #include "winData.h"
-#include "FontComponent.h"
 #include "UiSprite.h"
 #include "fmod_engine/AudioEngine.h"
 #include "SoundInfo.h"
@@ -37,6 +36,11 @@ namespace TDS
 		std::string value;
 		std::string type;
 		EntityID referenceEntityID = 0;
+
+		float vectorValueX;
+		float vectorValueY;
+		float vectorValueZ;
+		std::string headerString;
 	};
 
 	/*!*************************************************************************

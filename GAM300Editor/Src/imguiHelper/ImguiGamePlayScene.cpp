@@ -22,6 +22,8 @@ void TDS::GamePlayScene::init()
 
 void TDS::GamePlayScene::update()
 {
+	isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
+
 	if (ImGui::BeginMenuBar())
 	{
 		if (isPlaying)
@@ -58,7 +60,6 @@ void TDS::GamePlayScene::update()
 		}
 		ImGui::EndMenuBar();
 	}
-	isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
 	ImVec2 vSize = ImGui::GetContentRegionAvail();
 
 	//TDSCamera::getImguiWindowSize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
