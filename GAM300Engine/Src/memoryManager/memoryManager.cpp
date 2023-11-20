@@ -100,8 +100,7 @@ namespace TDS
 				continue;
 			}
 
-			auto& commitSize = books[archetypeID].committedSize[componentID];
-			commit(commitSize, books[archetypeID].startOfComponent[componentID]);
+			commit(books[archetypeID].committedSize[componentID], books[archetypeID].startOfComponent[componentID]);
 		}
 	}
 

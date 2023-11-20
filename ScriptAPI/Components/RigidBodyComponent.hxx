@@ -1,10 +1,12 @@
 #pragma once
 
-#include "ComponentBase.hxx"
+#include "../IncludeFromEngine.hxx"
+#include "../Vector3.hxx"
+#include "../Vector4.hxx"
 
 namespace ScriptAPI
 {
-	public value class RigidBodyComponent : ComponentBase
+	public value class RigidBodyComponent
 	{
 	public:
 		enum class MotionType
@@ -49,11 +51,8 @@ namespace ScriptAPI
 		void SetGravityFactor(float inGravityFactor);
 		float GetGravityFactor();
 
-		virtual void SetEntityID(TDS::EntityID ID);
-
 	internal:
 		RigidBodyComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		TDS::EntityID entityID;

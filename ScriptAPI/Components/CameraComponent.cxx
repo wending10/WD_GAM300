@@ -231,11 +231,6 @@ namespace ScriptAPI
 	CameraComponent::CameraComponent(TDS::EntityID ID) : entityID (ID)
 	{ }
 
-	void CameraComponent::SetEntityID(TDS::EntityID ID)
-	{
-		entityID = ID;
-	}
-
 	TDS::EntityID CameraComponent::GetEntityID()
 	{
 		return entityID;

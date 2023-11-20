@@ -1,10 +1,11 @@
 #pragma once
 
-#include "ComponentBase.hxx"
+#include "../IncludeFromEngine.hxx"
+#include "../Vector3.hxx"
 
 namespace ScriptAPI
 {
-	public value class CameraComponent : ComponentBase
+	public value class CameraComponent
 	{
 	public:
 		Vector3 GetCameraOffset();
@@ -27,8 +28,6 @@ namespace ScriptAPI
 
 		float GetMouseSensitivity();
 		void SetMouseSensitivity(float value);
-
-		virtual void SetEntityID(TDS::EntityID ID);
 
 	internal:
 		CameraComponent(TDS::EntityID ID);

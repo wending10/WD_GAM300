@@ -1,10 +1,11 @@
 #pragma once
 
-#include "ComponentBase.hxx"
+#include "../IncludeFromEngine.hxx"
+#include "../Vector3.hxx"
 
 namespace ScriptAPI
 {
-	public value class BoxColliderComponent : ComponentBase
+	public value class BoxColliderComponent
 	{
 	public:
 		bool GetIsTrigger();
@@ -21,8 +22,6 @@ namespace ScriptAPI
 		void SetSizeX(float valueX);
 		void SetSizeY(float valueY);
 		void SetSizeZ(float valueZ);
-
-		virtual void SetEntityID(TDS::EntityID ID);
 
 	internal:
 		BoxColliderComponent(TDS::EntityID ID);

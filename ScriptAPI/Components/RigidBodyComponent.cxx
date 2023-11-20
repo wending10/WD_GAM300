@@ -319,17 +319,6 @@ namespace ScriptAPI
 		return TDS::GetGravityFactor(*TDS::GetRigidBody(entityID));
 	}
 
-	// CONSTRUCTOR ===========================================================================
 	RigidBodyComponent::RigidBodyComponent(TDS::EntityID ID) : entityID (ID)
 	{ }
-
-	void RigidBodyComponent::SetEntityID(TDS::EntityID ID)
-	{
-		entityID = ID;
-	}
-
-	TDS::EntityID RigidBodyComponent::GetEntityID()
-	{
-		return entityID;
-	}
 }

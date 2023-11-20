@@ -111,14 +111,4 @@ namespace ScriptAPI
 	// CONSTRUCTOR ===========================================================================
 	NameTagComponent::NameTagComponent(TDS::EntityID ID) : entityID (ID)
 	{ }
-
-	void NameTagComponent::SetEntityID(TDS::EntityID ID)
-	{
-		entityID = ID;
-	}
-
-	TDS::EntityID NameTagComponent::GetEntityID()
-	{
-		return entityID;
-	}
 }

@@ -186,50 +186,50 @@ namespace TDS
         static constexpr float Epsilon = std::numeric_limits<float>::epsilon();
         
         // Clamps a value between a minimum float and maximum float value.
-        /*DLL_API*/ static float Clamp(float value, float min, float max);
-        DLL_API static float Clamp(int value, int min, int max);
+        static float Clamp(float value, float min, float max);
+        static float Clamp(int value, int min, int max);
         // Clamps value between 0 and 1 and returns value.
-        /*DLL_API*/ static float Clamp01(float value);
+        static float Clamp01(float value);
 
 		// Color Conversion Functions
-        DLL_API static uint8_t ColorFloatToByte(float value);
-        DLL_API static int8_t ColorFloatToSignedByte(float value);
+        static uint8_t ColorFloatToByte(float value);
+        static int8_t ColorFloatToSignedByte(float value);
 
-        DLL_API static float ColorByteToFloat(uint8_t value);
-        DLL_API static float ColorSignedByteToFloat(int8_t value);
+        static float ColorByteToFloat(uint8_t value);
+        static float ColorSignedByteToFloat(int8_t value);
 
         // Linearly interpolates between a and b by t. t is clamped between 0 and 1.
-        DLL_API static float Lerp(float a, float b, float t);
+        static float Lerp(float a, float b, float t);
        
         // Linearly interpolates between a and b by t. t is not clamped.
-        DLL_API static float LerpUnclamped(float a, float b, float t);
+        static float LerpUnclamped(float a, float b, float t);
 
         // Same as Lerp but makes sure the values interpolate correctly when they wrap around 360 degrees.
-        DLL_API static float LerpAngle(float a, float b, float t);
+        static float LerpAngle(float a, float b, float t);
         
         // Moves a value current towards target.
-        DLL_API static float MoveTowards(float current, float target, float maxDelta);
+        static float MoveTowards(float current, float target, float maxDelta);
         
         // Same as MoveTowards but makes sure the values interpolate correctly when they wrap around 360 degrees.
-        DLL_API static float MoveTowardsAngle(float current, float target, float maxDelta);
+        static float MoveTowardsAngle(float current, float target, float maxDelta);
 
         // Interpolates between min and max with smoothing at the limits.
-        DLL_API static float SmoothStep(float from, float to, float t);
+        static float SmoothStep(float from, float to, float t);
 
         // Compares two floating point values if they are similar.
-        DLL_API static bool Approximately(float a, float b);
+        static bool Approximately(float a, float b);
 
         // Loops the value t, so that it is never larger than length and never smaller than 0.
-        DLL_API static float Repeat(float t, float length);
+        static float Repeat(float t, float length);
 
         // PingPongs the value t, so that it is never larger than length and never smaller than 0.
-        DLL_API static float PingPong(float t, float length);
+        static float PingPong(float t, float length);
 
         // Calculates the linear parameter t that produces the interpolant value within the range [a, b].
-        DLL_API static float InverseLerp(float a, float b, float value);
+        static float InverseLerp(float a, float b, float value);
 
         // Calculates the shortest difference between two given angles given in degrees.
-        DLL_API static float DeltaAngle(float current, float target);
+        static float DeltaAngle(float current, float target);
     
     };
 }

@@ -6,6 +6,7 @@
 #define Mouse_X TDS::Input::getMousePosition()->x
 #define Mouse_Y TDS::Input::getMousePosition()->y
 
+
 namespace ScriptAPI
 {
     public ref class Keycode
@@ -71,14 +72,12 @@ namespace ScriptAPI
         static uint32_t SLASH = TDS_SLASH;
         static uint32_t SEMICOLON = TDS_SEMICOLON;
 
-        static uint32_t MAX_KEYS = TDS_MAX_KEYS;
-
-        static uint32_t M1 = TDS_MOUSE_LEFT + MAX_KEYS;
-        static uint32_t M2 = TDS_MOUSE_RIGHT + MAX_KEYS;
-        static uint32_t MIDDLE = TDS_MOUSE_MIDDLE + MAX_KEYS;
-        static uint32_t M4 = TDS_MOUSE_X1 + MAX_KEYS;
-        static uint32_t M5 = TDS_MOUSE_X2 + MAX_KEYS;
-        static uint32_t SCROLL = TDS_MOUSE_SCROLL + MAX_KEYS;
+        static uint32_t M1 = TDS_MOUSE_LEFT;
+        static uint32_t M2 = TDS_MOUSE_RIGHT;
+        static uint32_t MIDDLE = TDS_MOUSE_MIDDLE;
+        static uint32_t M4 = TDS_MOUSE_X1;
+        static uint32_t M5 = TDS_MOUSE_X2;
+        static uint32_t SCROLL = TDS_MOUSE_SCROLL;
     };
 
     public ref class Input

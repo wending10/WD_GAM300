@@ -54,9 +54,10 @@ namespace ScriptAPI
 		return ScriptSystem::UnityCoroutineC<TResult>(func, std::chrono::milliseconds(duration));
 	}
 
-	GameObject^ Script::GameObjectScriptFind(System::String^ name)
-	{
-		//System::Console::WriteLine("called");
-		return FindGameObjectViaName(name);
-	}
+
+	//GameObject^ Script::GameObjectScriptFind(System::String^ name)
+	//{
+	//	//System::Console::WriteLine("called");
+	//	return FindGameObjectViaName(name);
+	//}
 }

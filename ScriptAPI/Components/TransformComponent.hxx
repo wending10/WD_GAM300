@@ -1,14 +1,13 @@
 #pragma once
 
-#include "ComponentBase.hxx"
-
-#include "../GAM300Engine/Include/eventManager/eventHandler.h"
+#include "../IncludeFromEngine.hxx"
+#include "../Vector3.hxx"
 
 #include "../GAM300Engine/Include/eventManager/eventHandler.h"
 
 namespace ScriptAPI
 {
-	public value class TransformComponent : ComponentBase
+	public value class TransformComponent
 	{
 	public:
 		Vector3 GetPosition();
@@ -29,11 +28,8 @@ namespace ScriptAPI
 		void SetRotationY(float valueY);
 		void SetRotationZ(float valueZ);
 
-		virtual void SetEntityID(TDS::EntityID ID);
-
 	internal:
 		TransformComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		property Vector3 Position

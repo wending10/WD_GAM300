@@ -18,10 +18,6 @@ namespace ScriptAPI
 	{
 		return NameTagComponent(entityID);
 	}
-	RigidBodyComponent GameObject::GetRigidBodyComponent()
-	{
-		return RigidBodyComponent(entityID);
-	}
 	SphereColliderComponent GameObject::GetSphereColliderComponent()
 	{
 		return SphereColliderComponent(entityID);

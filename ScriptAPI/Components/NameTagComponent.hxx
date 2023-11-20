@@ -1,10 +1,11 @@
 #pragma once
 
-#include "ComponentBase.hxx"
+#include "../IncludeFromEngine.hxx"
+#include "../Vector3.hxx"
 
 namespace ScriptAPI
 {
-	public value class NameTagComponent : ComponentBase
+	public value class NameTagComponent
 	{
 	public:
 		std::string GetName();
@@ -16,12 +17,8 @@ namespace ScriptAPI
 		bool GetIsActive();
 		void SetIsActive(bool value);
 
-		virtual void SetEntityID(TDS::EntityID ID);
-
 	internal:
 		NameTagComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
-
 	private:
 		property std::string Name
 		{

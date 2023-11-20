@@ -135,7 +135,6 @@
     <ClInclude Include="Components\BoxColliderComponent.hxx" />
     <ClInclude Include="Components\CameraComponent.hxx" />
     <ClInclude Include="Components\CapsuleColliderComponent.hxx" />
-    <ClInclude Include="Components\ComponentBase.hxx" />
     <ClInclude Include="Components\NameTagComponent.hxx" />
     <ClInclude Include="Components\RigidBodyComponent.hxx" />
     <ClInclude Include="Components\SphereColliderComponent.hxx" />
@@ -147,7 +146,6 @@
     <ClInclude Include="HelperFunctions.hxx" />
     <ClInclude Include="IncludeFromEngine.hxx" />
     <ClInclude Include="Input.hxx" />
-    <ClInclude Include="Mathf.hxx" />
     <ClInclude Include="Script.hxx" />
     <ClInclude Include="TypeConversion.hxx" />
     <ClInclude Include="Vector3.hxx" />
@@ -164,9 +162,7 @@
     <ClCompile Include="EngineInterface.cxx" />
     <ClCompile Include="GameObject.cxx" />
     <ClCompile Include="Input.cxx" />
-    <ClCompile Include="Mathf.cxx" />
     <ClCompile Include="Script.cxx" />
-    <ClCompile Include="Time.hxx" />
     <ClCompile Include="TypeConversion.cxx" />
     <ClCompile Include="Vector3.cxx" />
     <ClCompile Include="Vector4.cxx" />

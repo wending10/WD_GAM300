@@ -9,15 +9,9 @@
 ***/
 
 #include "components/components.h"
-#include "Timestep/Timestep.h"
 
 namespace TDS
 {
-	float GetDeltaTime()
-	{
-		return TimeStep::GetDeltaTime();
-	}
-
 	/*!*************************************************************************
 	This function is a helper function to add components by string name
 	****************************************************************************/

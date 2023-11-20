@@ -145,11 +145,6 @@ namespace ScriptAPI
 	BoxColliderComponent::BoxColliderComponent(TDS::EntityID ID) : entityID(ID)
 	{ }
 
-	void BoxColliderComponent::SetEntityID(TDS::EntityID ID)
-	{
-		entityID = ID;
-	}
-
 	TDS::EntityID BoxColliderComponent::GetEntityID()
 	{
 		return entityID;

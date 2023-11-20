@@ -1,10 +1,11 @@
 #pragma once
 
-#include "ComponentBase.hxx"
+#include "../IncludeFromEngine.hxx"
+#include "../Vector3.hxx"
 
 namespace ScriptAPI
 {
-	public value class CapsuleColliderComponent : ComponentBase
+	public value class CapsuleColliderComponent
 	{
 	public:
 		enum class Axis
@@ -32,11 +33,8 @@ namespace ScriptAPI
 		Axis GetDirection();
 		void SetDirection(Axis value);
 
-		virtual void SetEntityID(TDS::EntityID ID);
-
 	internal:
 		CapsuleColliderComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		property bool IsTrigger
