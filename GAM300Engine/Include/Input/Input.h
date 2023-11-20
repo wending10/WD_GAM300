@@ -227,6 +227,11 @@ namespace TDS
 		static void mouseGameplay(bool set);
 
 		/*!*************************************************************************
+		Returns the center position of the game window.
+		****************************************************************************/
+		static Vec2 centeredMouse();
+
+		/*!*************************************************************************
 		Get HWND.
 		****************************************************************************/
 		static void storeWindowHandleAndRect(HWND sethandle, RECT setrect);

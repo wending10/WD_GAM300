@@ -293,6 +293,11 @@ namespace TDS
 		}
 	}
 
+	Vec2 Input::centeredMouse()
+	{
+		return Vec2({ rect.left + ((rect.right - rect.left) / 2), rect.top + ((rect.bottom - rect.top) / 2) });
+	}
+
 	void Input::storeWindowHandleAndRect(HWND sethandle, RECT setrect)
 	{
 		handle = sethandle;
