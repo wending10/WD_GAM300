@@ -78,7 +78,7 @@ namespace TDS
 
         void AudioEngine::fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test)
         {
-
+            //update();
         }
 
         void AudioEngine::loadSound(SoundInfo & soundInfo)
@@ -93,7 +93,7 @@ namespace TDS
                 unsigned int msLength = 0;
                 ERRCHECK(sounds[soundInfo.getUniqueID()]->getLength(&msLength, FMOD_TIMEUNIT_MS));
                 //soundInfo.setMSLength(msLength);
-                soundInfo.setState(SOUND_LOADED);
+                soundInfo.setState(SOUND_LOADED, true);
             }
             else
                 std::cout << "Audio Engine: Sound File was already loaded!\n";
@@ -102,13 +102,13 @@ namespace TDS
         int AudioEngine::playSound(SoundInfo & soundInfo)
         {
             if (soundLoaded(soundInfo)) {
-                if(!soundInfo.isPaused())
+                if(soundInfo.isPaused())
                 {
                     std::cout << "Playing Sound\n";
                     FMOD::Channel* channel{ nullptr };
                     // start play in 'paused' state
                     ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
-                    soundInfo.setState(SOUND_PLAYING);
+                    soundInfo.setState(SOUND_PLAYING, true);
 
                     if (soundInfo.is3D())
                         set3dChannelPosition(soundInfo, channel);
@@ -129,19 +129,19 @@ namespace TDS
 
                     // start audio playback
                     ERRCHECK(channel->setPaused(false));
-                    soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
+                    soundInfo.setState(SOUND_PLAYING, true);
                 }
                 else
                 {
                     if (soundInfo.isLoop())
                     {
                         ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setPaused(false));
-                        soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
+                        soundInfo.setState(SOUND_PLAYING, true);
                     }
                     else
                     {
                         ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setPaused(false));
-                        soundInfo.setState(SOUND_STATE::SOUND_PLAYING);
+                        soundInfo.setState(SOUND_PLAYING, true);
                     }
                 }
             }
@@ -158,16 +158,16 @@ namespace TDS
         {
             if (soundInfo.isPlaying())
             {
-                if (soundInfo.isLoop() && soundInfo.getState())
+                if (soundInfo.isLoop())
                 {
                     ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setPaused(true));
-                    soundInfo.setState(SOUND_STATE::SOUND_PAUSED);
                 }
                 else
                 {
                     ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setPaused(true));
-                    soundInfo.setState(SOUND_STATE::SOUND_PAUSED);
                 }
+
+                soundInfo.setState(SOUND_PLAYING, false);
             }
         }
 
@@ -179,13 +179,14 @@ namespace TDS
                 {
                     ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
                     loopsPlaying.erase(soundInfo.getUniqueID());
-                    soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
+                    soundInfo.setState(SOUND_PLAYING, false); //set the sound back to loaded state
                 }
                 else
                 {
                     ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->stop());
                     normalPlaying.erase(soundInfo.getUniqueID());
-                    soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
+                    soundInfo.setState(SOUND_PLAYING, false);
+                    soundInfo.setState(SOUND_STOP, true);
                 }
             }
             else
@@ -329,6 +330,39 @@ namespace TDS
             return playbackState == FMOD_STUDIO_PLAYBACK_PLAYING;
         }
 
+        void AudioEngine::mute(SoundInfo& soundInfo)
+        {
+            if (soundInfo.isPlaying())
+            {
+                if (soundInfo.isLoop())
+                {
+                    ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setMute(true));
+                }
+                else
+                {
+                    ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setMute(true));
+                }
+
+                soundInfo.setState(SOUND_MUTED, true);
+            }
+        }
+
+        void AudioEngine::unmute(SoundInfo& soundInfo)
+        {
+            if (soundInfo.isMuted())
+            {
+                if (soundInfo.isLoop())
+                {
+                    ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setMute(false));
+                }
+                else
+                {
+                    ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setMute(false));
+                }
+
+                soundInfo.setState(SOUND_MUTED, false);
+            }
+        }
 
         void AudioEngine::muteAllSounds()
         {

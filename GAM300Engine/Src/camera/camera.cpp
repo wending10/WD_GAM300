@@ -120,6 +120,11 @@ namespace TDS
 				float getNewMousex = static_cast<float>(Input::getMousePosition().x);
 				float getNewMousey = static_cast<float>(Input::getMousePosition().y);
 
+				if (getNewMousex != static_cast<float>(Input::getMousePosition().x))
+				{
+					std::cout << "getNewMousex: " << getNewMousex << " getMousePosition: " << static_cast<float>(Input::getMousePosition().x) << '\n';
+				}
+
 				float offsetx = getNewMousex - GetMousex;
 				float offsety = GetMousey - getNewMousey;
 

@@ -174,11 +174,6 @@ namespace TDS
 		static mousePosition getMousePosition();
 
 		/*!*************************************************************************
-		Set mouse position
-		****************************************************************************/
-		static void setMousePosition(float x, float y);
-
-		/*!*************************************************************************
 		Returns true if mouse button is being pressed.
 		****************************************************************************/
 		static bool isMouseButtonPressed(unsigned int buttonCode);
@@ -220,10 +215,29 @@ namespace TDS
 		****************************************************************************/
 		static void updateMousePosition(LPARAM lParam);
 
+		/*!*************************************************************************
+		Releases the key after it is pressed.
+		****************************************************************************/
 		static void releaseTheKey(uint32_t key);
+
+		/*!*************************************************************************
+		Set mouse into gameplay mode. Restricted to the middle of the screen and
+		hidden.
+		****************************************************************************/
+		static void mouseGameplay(bool set);
+
+		/*!*************************************************************************
+		Get HWND.
+		****************************************************************************/
+		static void storeWindowHandleAndRect(HWND sethandle, RECT setrect);
+		
+		/*!*************************************************************************
+		Normalize mouse position to 1 and -1.
+		****************************************************************************/
+		static void normalizeMouse(bool set);
 	private:
-
-
+		static HWND handle;
+		static RECT rect;
 
 	}; //end of Input class
 

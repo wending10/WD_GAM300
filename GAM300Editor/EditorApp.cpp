@@ -138,6 +138,7 @@ namespace TDS
  
 
         skyboxrender.Init();
+        Run();
     }
 
     void Application::Update()

@@ -13,6 +13,8 @@
 ***/
 
 #include "Input/Input.h"
+
+
 namespace TDS
 {
 	Input::keyboardInputMap Input::keyboard;
@@ -214,11 +216,6 @@ namespace TDS
 		return mouse.position;
 	}
 
-	void Input::setMousePosition(float x, float y)
-	{
-		mouse.position = { static_cast<int>(x), static_cast<int>(y) };
-	}
-
 	bool Input::isMouseButtonPressed(unsigned int buttonCode)
 	{
 		return mouse.buttons[buttonCode].isDown;
@@ -284,6 +281,27 @@ namespace TDS
 	void Input::releaseTheKey(uint32_t key)
 	{
 		keyboard.keys[key].isDown = false;
+	}
+
+	void Input::mouseGameplay(bool set)
+	{
+		if (set)
+		{
+			COORD pos = { rect.left + ((rect.right - rect.left) / 2), rect.top + ((rect.bottom - rect.top) / 2) };
+			
+			SetCursorPos(pos.X, pos.Y);
+		}
+	}
+
+	void Input::storeWindowHandleAndRect(HWND sethandle, RECT setrect)
+	{
+		handle = sethandle;
+		rect = setrect;
+	}
+
+	void Input::normalizeMouse(bool set)
+	{
+		
 	}
 
 } //end of namespace

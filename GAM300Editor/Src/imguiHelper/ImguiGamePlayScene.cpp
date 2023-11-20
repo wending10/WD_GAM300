@@ -32,10 +32,13 @@ void TDS::GamePlayScene::update()
 			{
 				++exit_cursor;
 				Input::releaseTheKey(TDS_ESCAPE);
+				CameraSystem::SetIsPlaying(false);
 			}
 
 			if((exit_cursor % 2) == 0)
 			{
+				CameraSystem::SetIsPlaying(true);
+
 				window_size = ImGui::GetWindowSize();
 				window_pos = ImGui::GetWindowPos();
 
@@ -53,6 +56,8 @@ void TDS::GamePlayScene::update()
 		}
 		else
 		{
+			CameraSystem::SetIsPlaying(false);
+			
 			if (ImGui::BeginMenu("Game is Paused"))
 			{
 				ImGui::EndMenu();
@@ -61,8 +66,6 @@ void TDS::GamePlayScene::update()
 		ImGui::EndMenuBar();
 	}
 	ImVec2 vSize = ImGui::GetContentRegionAvail();
-
-	//TDSCamera::getImguiWindowSize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 
 	ImGui::Image((ImTextureID)m_GamePlayDesc, vSize);
 	

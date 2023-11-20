@@ -43,7 +43,7 @@ namespace TDS
         class AudioEngine : public IComponent
         {
         public:
-            friend ECSSystem; //allow system to access constructor
+            //friend ECSSystem; //allow system to access constructor
 
         public:
             /**
@@ -91,12 +91,12 @@ namespace TDS
             /**
             * Fake init for ecs.cpp
             */
-            static void fake_init();
+            void fake_init();
 
             /**
             * Fake update for ecs.cpp
             */
-            static void fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test);
+            void fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test);
 
             /**
              * Loads a sound from disk using provided settings
@@ -206,6 +206,16 @@ namespace TDS
              * Checks if an event is playing.
              */
             DLL_API  bool eventIsPlaying(const char* eventName, int instance = 0);
+
+            /**
+            * Mute a sound
+            */
+            DLL_API void mute(SoundInfo& soundInfo);
+
+            /**
+            * Unmute a sound
+            */
+            DLL_API void unmute(SoundInfo& soundInfo);
 
             /**
              * Mutes all sounds for the audio engine
