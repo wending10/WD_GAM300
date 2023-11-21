@@ -102,7 +102,7 @@ namespace TDS
         int AudioEngine::playSound(SoundInfo & soundInfo)
         {
             if (soundLoaded(soundInfo)) {
-                if(soundInfo.isPaused())
+                if(!soundInfo.isPaused())
                 {
                     std::cout << "Playing Sound\n";
                     FMOD::Channel* channel{ nullptr };

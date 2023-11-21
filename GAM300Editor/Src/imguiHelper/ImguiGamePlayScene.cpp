@@ -16,7 +16,6 @@ TDS::GamePlayScene::GamePlayScene()
 
 void TDS::GamePlayScene::init()
 {
-
 	m_GamePlayDesc = ImGui_ImplVulkan_AddTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 }
 
@@ -32,21 +31,27 @@ void TDS::GamePlayScene::update()
 			{
 				exit_cursor = !exit_cursor;
 				Input::releaseTheKey(TDS_ESCAPE);
-				CameraSystem::SetIsPlaying(false);
 			}
 
 			if(exit_cursor)
 			{
-				//CameraSystem::SetIsPlaying(true);
-
 				window_size = ImGui::GetWindowSize();
 				window_pos = ImGui::GetWindowPos();
 
+				Input::setCurrentMousePos(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+
 				ImGuiIO& cursor_input = ImGui::GetIO();
 				cursor_input.WantSetMousePos = true;
-				cursor_input.MousePos = { window_pos.x + (window_size.x / 2), window_pos.y + (window_size.y / 2) };
+				cursor_input.MousePos = { window_pos.x + (window_size.x * .5f), window_pos.y + (window_size.y * .5f) };
+
+				Input::setCenteredMouse(cursor_input.MousePos.x, cursor_input.MousePos.y);
 
 				ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+			}
+			else
+			{
+				ImGuiIO& cursor_input = ImGui::GetIO();
+				cursor_input.WantSetMousePos = false;
 			}
 			
 			if (ImGui::BeginMenu("Game is Running..."))
@@ -56,19 +61,19 @@ void TDS::GamePlayScene::update()
 		}
 		else
 		{
-			//CameraSystem::SetIsPlaying(false);
+			CameraSystem::SetIsPlaying(false);
 			
 			if (ImGui::BeginMenu("Game is Paused"))
 			{
 				ImGui::EndMenu();
 			}
 		}
+
 		ImGui::EndMenuBar();
 	}
 	ImVec2 vSize = ImGui::GetContentRegionAvail();
 
 	ImGui::Image((ImTextureID)m_GamePlayDesc, vSize);
-	
 }
 
 void TDS::GamePlayScene::Resize()

@@ -1,5 +1,6 @@
 #include "camera/camera.h"
 #include "camera/Camerasystem/CameraSystem.h"
+#include <imgui/imgui.h>
 
 #include<iostream>
 namespace TDS
@@ -109,43 +110,28 @@ namespace TDS
 						m_Position += m_Right * CameraSpeed;
 				}
 				
-				if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+				/*if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
 				{
 					mouse = Input::getMousePosition();
-				}
-
-				float GetMousex = Input::centeredMouse().x;
-				float GetMousey = Input::centeredMouse().y;
-
-				float getNewMousex = static_cast<float>(Input::getMousePosition().x);
-				float getNewMousey = static_cast<float>(Input::getMousePosition().y);
-
-				float offsetx = getNewMousex - GetMousex;
-				float offsety = GetMousey - getNewMousey;
-
-				//float offsetx{ 0.f }, offsety{ 0.f };
-
-				/*if (getNewMousex != GetMousex)
-				{
-					offsetx = getNewMousex - GetMousex;
-				}
-				else
-				{
-					offsetx = GetMousex;
-				}
-
-				if (getNewMousey != GetMousey)
-				{
-					offsety = getNewMousey - GetMousey;
-				}
-				else
-				{
-					offsety = GetMousey;
 				}*/
 
-				ProcessMouseMovement(offsetx, offsety);
+				/*float GetMousex = Input::centeredMouse().x;
+				float GetMousey = Input::centeredMouse().y;
 
-				mouse = Input::mousePosition(GetMousex, GetMousey);
+				float getNewMousex = static_cast<float>(Input::CurrentMousePos().x);
+				float getNewMousey = static_cast<float>(Input::CurrentMousePos().y);
+
+				float offsetx = getNewMousex - GetMousex;
+				float offsety = GetMousey - getNewMousey;*/
+
+				//float offsetx = Input::CurrentMousePos().x - Input::centeredMouse().x;
+				//float offsety = Input::CurrentMousePos().y - Input::centeredMouse().y;
+
+				Vec2 offset = Input::CurrentMousePos() - Input::centeredMouse();
+
+				ProcessMouseMovement(offset.x, offset.y);
+
+				//mouse = Input::mousePosition(GetMousex, GetMousey);
 			}
 		}
 
@@ -203,7 +189,7 @@ namespace TDS
 		offsetY *= m_mouseSensitivity;
 
 		m_Yaw += offsetX;
-		m_Pitch += offsetY;
+		m_Pitch -= offsetY;
 
 		//prevent from out of bound
 		if (m_Pitch > 89.f)
@@ -212,7 +198,6 @@ namespace TDS
 			m_Pitch = -89.f;
 
 		updateViewMatrix();
-
 	}
 
 	/*void TDSCamera::getImguiWindowSize(float x, float y)

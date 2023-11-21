@@ -20,7 +20,7 @@ namespace TDS
 
 	void CameraSystem::CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, CameraComponent* _cameracomponent)
 	{
-		if (!GetIsPlaying())
+		if (GetIsPlaying() == false)
 		{
 			m_GameCamera = &GraphicsManager::getInstance().GetCamera();
 			SetGameCamera(_cameracomponent);

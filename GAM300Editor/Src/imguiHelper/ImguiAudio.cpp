@@ -39,7 +39,7 @@ namespace TDS
 		delete audeng;
 	}
 
-	bool& AudioImgui::ToggleControls(bool state)
+	bool AudioImgui::ToggleControls(bool state)
 	{
 		appear = state;
 
@@ -106,25 +106,25 @@ namespace TDS
 		{
 			if (str.string().find("/Music\\") != std::string::npos)
 			{
-				SoundInfo temp("../" + str.string());
+				SoundInfo temp(str.string());
 
 				background.push_back(temp);
 			}
 			else if (str.string().find("/Songs\\") != std::string::npos)
 			{
-				SoundInfo temp("../" + str.string());
+				SoundInfo temp(str.string());
 
 				music.push_back(temp);
 			}
 			else if (str.string().find("/Sound Effects\\") != std::string::npos)
 			{
-				SoundInfo temp("../" + str.string());
+				SoundInfo temp(str.string());
 
 				SFX.push_back(temp);
 			}
 			else if (str.string().find("/Voice Overs\\") != std::string::npos)
 			{
-				SoundInfo temp("../" + str.string());
+				SoundInfo temp(str.string());
 
 				VO.push_back(temp);
 			}
@@ -166,6 +166,7 @@ namespace TDS
 			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
 				this_one = &temp;
+				goto FOUND;
 			}
 		}
 		for (SoundInfo& temp : background)
@@ -173,6 +174,7 @@ namespace TDS
 			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
 				this_one = &temp;
+				goto FOUND;
 			}
 		}
 		for (SoundInfo& temp : SFX)
@@ -180,6 +182,7 @@ namespace TDS
 			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
 				this_one = &temp;
+				goto FOUND;
 			}
 		}
 		for (SoundInfo& temp : VO)
@@ -187,8 +190,11 @@ namespace TDS
 			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
 			{
 				this_one = &temp;
+				goto FOUND;
 			}
 		}
+
+		FOUND:
 
 		audeng->loadSound(*this_one);
 		audeng->playSound(*this_one);

@@ -12,10 +12,9 @@ namespace TDS
 {
     static unsigned int ID_Count{ 0 };
 
-    enum SOUND_STATE
+    enum SOUND_STATE : uint16_t
     {
-        SOUND_ERR = 0,
-        SOUND_LOADED,
+        SOUND_LOADED = 0,
         SOUND_PLAYING,
         SOUND_STOP,
         SOUND_MUTED
@@ -83,17 +82,17 @@ namespace TDS
 
         bool isPlaying()
         {
-            return (whatState & (1 << SOUND_PLAYING));
+            return (bool)(whatState & (1 << SOUND_PLAYING));
         }
 
         bool isPaused()
         {
-            return (whatState | (0 << SOUND_PLAYING));
+            return (bool)(whatState & (0 << SOUND_PLAYING));
         }
 
         bool isMuted()
         {
-            return (whatState & (1 << SOUND_MUTED));
+            return (bool)(whatState & (1 << SOUND_MUTED));
         }
 
         uint16_t getState()
@@ -163,7 +162,7 @@ namespace TDS
 
         void setState(SOUND_STATE setting, bool set)
         {
-            whatState = (whatState & (set << setting));
+            whatState |= (set << setting);
         }
 
         void setLoop(bool condition)
@@ -176,14 +175,9 @@ namespace TDS
             isit3D = condition;
         }
 
-        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)
+        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, uint16_t _theState = 0, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)
             : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), whatState(_theState), volume(_volume), ReverbAmount(_reverbamount) 
-        {
-            if (filePath != "")
-            {
-                whatState = SOUND_LOADED;
-            }
-            
+        {            
             position.Set(_x, _y, _z);
             MSLength = 0;
             uniqueID = ID_Count++; //Change UID to include time when added

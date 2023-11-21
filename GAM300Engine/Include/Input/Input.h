@@ -231,10 +231,16 @@ namespace TDS
 		****************************************************************************/
 		static Vec2 centeredMouse();
 
+		static void setCenteredMouse(float x, float y);
+
 		/*!*************************************************************************
 		Get HWND.
 		****************************************************************************/
 		static void storeWindowHandleAndRect(HWND sethandle, RECT setrect);
+
+		static void setCurrentMousePos(float x, float y);
+
+		static Vec2 CurrentMousePos();
 		
 		/*!*************************************************************************
 		Normalize mouse position to 1 and -1.
@@ -243,6 +249,8 @@ namespace TDS
 	private:
 		static HWND handle;
 		static RECT rect;
+		static mousePosition center_mouse_pos;
+		static mousePosition current_mouse_pos;
 
 	}; //end of Input class
 

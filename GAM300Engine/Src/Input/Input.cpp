@@ -22,6 +22,8 @@ namespace TDS
 	Input::KeyStatus		Input::keystatus;
 	uint32_t				Input::keyCode;
 	short					Input::wheelDelta;
+	Input::mousePosition	Input::current_mouse_pos;
+	Input::mousePosition	Input::center_mouse_pos;
 
 	Input::keyState Input::GetKeyState(uint32_t keycode)
 	{
@@ -285,23 +287,49 @@ namespace TDS
 
 	void Input::mouseGameplay(bool set)
 	{
-		if (set)
+		/*if (set)
 		{
 			COORD pos = { rect.left + ((rect.right - rect.left) / 2), rect.top + ((rect.bottom - rect.top) / 2) };
 			
 			SetCursorPos(pos.X, pos.Y);
+			ShowCursor(false);
 		}
+		else
+		{
+			ShowCursor(true);
+		}*/
 	}
 
 	Vec2 Input::centeredMouse()
 	{
-		return Vec2({ rect.left + ((rect.right - rect.left) / 2), rect.top + ((rect.bottom - rect.top) / 2) });
+		/*GetWindowRect(GetConsoleWindow(), &rect);
+		
+		return Vec2({ rect.left + ((rect.right - rect.left) / 2.f), rect.top + ((rect.bottom - rect.top) / 2.f) });*/
+
+		return Vec2(center_mouse_pos.x, center_mouse_pos.y);
+	}
+
+	void Input::setCenteredMouse(float x, float y)
+	{
+		center_mouse_pos.x = x;
+		center_mouse_pos.y = y;
 	}
 
 	void Input::storeWindowHandleAndRect(HWND sethandle, RECT setrect)
 	{
 		handle = sethandle;
 		rect = setrect;
+	}
+
+	void Input::setCurrentMousePos(float x, float y)
+	{
+		current_mouse_pos.x = x;
+		current_mouse_pos.y = y;
+	}
+
+	Vec2 Input::CurrentMousePos()
+	{
+		return Vec2(current_mouse_pos.x, current_mouse_pos.y);
 	}
 
 	void Input::normalizeMouse(bool set)

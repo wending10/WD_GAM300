@@ -37,7 +37,7 @@ namespace TDS
 		 * @param state 
 		 * @return 
 		*/
-		bool& ToggleControls(bool state = false);
+		bool ToggleControls(bool state = false);
 
 		/**
 		 * @brief Add sound into vector container
