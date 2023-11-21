@@ -162,7 +162,6 @@ namespace TDS
 		ImGui_ImplVulkan_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-		std::cout << "cursor after: " << ImGui::GetMouseCursor() << '\n';
 
 		// Docking 
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
