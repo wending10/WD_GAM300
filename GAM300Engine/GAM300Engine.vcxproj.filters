@@ -98,6 +98,8 @@
     <ClCompile Include="Src\camera\SphereFrustum.cpp" />
     <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Src\Physics\Interface\PhysicsInterface.cpp" />
+    <ClCompile Include="Src\Rendering\ObjectPicking.cpp" />
+    <ClCompile Include="Src\vulkanTools\Synchronization.cpp" />
     <ClCompile Include="Src\Rendering\FontSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +229,8 @@
     <ClInclude Include="Include\camera\SphereFrustum.h" />
     <ClInclude Include="Include\Physics\CollisionSystem.h" />
     <ClInclude Include="Include\Physics\Interface\PhysicsInterface.h" />
+    <ClInclude Include="Include\Rendering\ObjectPicking.h" />
+    <ClInclude Include="Include\vulkanTools\Synchronization.h" />
     <ClInclude Include="Include\AssetManagement\FontFactory.h" />
     <ClInclude Include="Include\Rendering\Batch2D.h" />
     <ClInclude Include="Include\Rendering\FontSystem.h" />
