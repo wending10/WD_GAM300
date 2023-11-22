@@ -8,9 +8,12 @@ layout(set = 1, binding = 4) uniform sampler2D texArraySampler[500];
 layout(location = 0) in vec3 fragColor;
 layout(location = 1) in vec2 fragTexCoord;
 layout(location = 2) in vec3 fragPosWorld;
-layout(location = 3) in vec3 fragNormalWorld;  
+layout(location = 3) in vec3 fragNormalWorld; 
+layout(location = 4) in flat uint id;
+
 
 layout(location = 0) out vec4 outColor;
+layout(location = 1) out uint outID;
 
 struct PointLight{
     vec4 Position;
@@ -42,6 +45,7 @@ layout(push_constant) uniform Push {
     mat4 normalMatrix;
     uint textureIndex;
     float padding[3]; 
+    uint id;
 } push;
 
 
@@ -70,7 +74,7 @@ void main() {
         
         diffuselight += intensity * cosAngleIncidence;
     }
-    
+    outID = id;
     vec4 texColor = texture(texArraySampler[textureID], fragTexCoord);
     //vec4 texColor = texture(texArraySampler, fragTexCoord);
     //outColor = vec4((diffuselight*ambientlight)*fragColor,1.0);

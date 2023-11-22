@@ -145,6 +145,7 @@ namespace TDS
 				VK_ASSERT(vkCreateSampler(inst->getVkLogicalDevice(), &samplerInfo, nullptr, &m_Sampler), "Failed to create sampler");
 			}
 		}
+	
 		m_Dimensions = { attachmentCI._dim.x, attachmentCI._dim.y,attachmentCI._dim.z };
 
 	}

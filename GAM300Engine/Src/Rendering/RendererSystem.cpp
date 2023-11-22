@@ -16,6 +16,8 @@ namespace TDS
 		Mat4 NormalMat{ 1.f };
 		unsigned int textureIndex = 499;
 		float padding[3];
+		uint32_t Id{};
+
 	};
 
 	float RendererSystem::lightPosX = 0.f;
@@ -28,7 +30,6 @@ namespace TDS
 
 		
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
-
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
@@ -37,7 +38,9 @@ namespace TDS
 				if (_Graphics[i].m_UsedIn2D == false)
 					continue;
 			}
+			
 			PushConstantData pushData{};
+			pushData.Id = entities[i];
 			if (_Graphics[i].m_ModelName != _Graphics[i].m_AssetReference.m_AssetName)
 			{
 				AssetModel* pModel = AssetManager::GetInstance()->GetModelFactory().GetModel(_Graphics[i].m_ModelName, _Graphics[i].m_AssetReference);
@@ -172,6 +175,8 @@ namespace TDS
 
 			}
 		}
+
+
 	}
 	void RendererSystem::OnRender(const float dt, const std::vector<EntityID>& entities, GraphicsComponent* _Graphics)
 	{

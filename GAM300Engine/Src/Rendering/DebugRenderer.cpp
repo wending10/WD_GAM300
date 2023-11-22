@@ -23,7 +23,9 @@ namespace TDS {
 		m_Pipeline->Create(PipelineEntry);
 	}
 
-	DebugRenderer::~DebugRenderer() {}
+	DebugRenderer::~DebugRenderer() 
+	{
+	}
 
 	void DebugRenderer::Render(GraphicsComponent* Gp, Transform* Transform) {
 		m_Pipeline->BindPipeline(VK_PRIMITIVE_TOPOLOGY_LINE_LIST);
