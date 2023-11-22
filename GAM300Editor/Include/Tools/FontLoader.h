@@ -25,6 +25,6 @@ namespace TDS
 
 	namespace FontLoader
 	{
-		bool RunFontLoader(LoaderDescriptor& desc);
+		bool RunFontLoader(LoaderDescriptor& desc, std::string& ddsTexturePath);
 	}
 }

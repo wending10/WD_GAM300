@@ -52,7 +52,6 @@ namespace TDS
 	{
 		ecs.registerComponent<NameTag>("Name Tag");
 		ecs.registerComponent<Transform>("Transform");
-
 		ecs.registerComponent<AI>("AI");
 		ecs.registerComponent<BoxCollider>("Box Collider");
 		ecs.registerComponent<CameraComponent>("Camera Component");

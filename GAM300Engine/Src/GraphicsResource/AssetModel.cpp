@@ -157,8 +157,6 @@ namespace TDS
 
 	DLL_API void AssetModel::Destroy()
 	{
-
-
 		for (auto& mesh : m_Meshes)
 		{
 			mesh.second.Destroy();

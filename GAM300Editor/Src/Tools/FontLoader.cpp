@@ -8,7 +8,7 @@
 #define FONT_COMPILER_PATH "../assets/Fonts/FontCompiler/msdf-atlas-gen.exe"
 namespace TDS
 {
-	bool FontLoader::RunFontLoader(LoaderDescriptor& desc)
+	bool FontLoader::RunFontLoader(LoaderDescriptor& desc, std::string& ddsTexturePath)
 	{
 
 		//Get the absolute path of the input file
@@ -60,7 +60,7 @@ namespace TDS
 			std::string output = desc.OutPath;
 			output += ".dds";
 			DDSConverter::ConvertToDDS(Input, output);
-
+			ddsTexturePath = output;
 
 			return true;
 		}

@@ -12,7 +12,7 @@ namespace TDS
 		Vec3			m_Rotate;
 		Vec3			m_Translate;
 		Mat4			m_Transform{ 1.f };
-		Color*			m_Color = nullptr;
+		Vec4*			m_Color = nullptr;
 		std::uint32_t	m_LayerID;
 		std::uint32_t	m_TextureIndex = 499;
 	};
@@ -86,11 +86,9 @@ namespace TDS
 		private:
 			inline static std::shared_ptr<Renderer2D> m_Instance = nullptr;
 			std::shared_ptr<VulkanPipeline> m_Pipeline = nullptr;
-			//std::shared_ptr<VulkanPipeline> m_CanvasRenderer = nullptr;
 			SpriteBatch m_BatchList{};
 			RenderedSprite m_SpriteTexture{};
 			OffScreenFrameBuffer m_FrameBuffer; //Not using for now
-			//TypeReference<AssetModel> m_AssetModel;
 			VMABuffer* m_VertexBuffer = nullptr;
 			VMABuffer* m_IndexBuffer = nullptr;
 			SceneUBO m_SceneUBO{}; //Probably not in used.

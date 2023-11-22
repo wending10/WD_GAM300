@@ -93,10 +93,12 @@ namespace TDS
 		ExtractScale(aiTransform, scale);
 		aiVector3D EulerRotate = ExtractEulerAngles(aiTransform);
 		ExtractTranslation(aiTransform, Translate);
-
-		transformComp->SetPosition(Vec3(Translate.x, Translate.y, Translate.z));
-		transformComp->SetRotation(Vec3(EulerRotate.x, EulerRotate.y, EulerRotate.z));
-		transformComp->SetScale(Vec3(scale.x, scale.y, scale.z));
+		Vec3 Translation = Vec3(Translate.x, Translate.y, Translate.z);
+		Vec3 Rotatation = Vec3(EulerRotate.x, EulerRotate.y, EulerRotate.z);
+		Vec3 Scaling = Vec3(scale.x, scale.y, scale.z);
+		transformComp->SetPosition(Translation);
+		transformComp->SetRotation(Rotatation);
+		transformComp->SetScale(Scaling);
 
 		panel->hierarchyList.emplace_back(newEntityID);
 
@@ -113,7 +115,8 @@ namespace TDS
 		
 	}
 
-	
+
+
 
 	AssetBrowser::AssetBrowser()
 	{
@@ -246,8 +249,8 @@ namespace TDS
 					ImGui::ImageButton(reinterpret_cast<void*>(folder_DescSet), ImVec2{ thumbnail_size, thumbnail_size }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 					//folder_image_count++;
 				}
-				if (!show_bin && !show_fbx) { continue; }
-				else if (show_bin && !show_fbx)
+				//if (!show_bin && !show_fbx) { continue; }
+				if (show_bin && !show_fbx)
 				{
 					if (!strstr(filename.c_str(), ".bin")) //if its not bin, continue
 					{
@@ -270,17 +273,17 @@ namespace TDS
 					ImGui::ImageButton(reinterpret_cast<void*>(folder_DescSet), ImVec2{ thumbnail_size, thumbnail_size }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 					//folder_image_count++;
 				}
-				if (!show_dds && !show_png) { continue; }
-				else if (show_dds && !show_png)
+				//if (!show_dds && !show_png) { continue; }
+				if (show_dds && !show_png)
 				{
-					if (!strstr(filename.c_str(), ".dds")) //if its not dds, continue
+					if (!strstr(filename.c_str(), ".dds"))
 					{
 						continue;
 					}
 				}
 				else if (show_png && !show_dds)
 				{
-					if (!strstr(filename.c_str(), ".png")) //if its not png, continue
+					if (!strstr(filename.c_str(), ".png")) 
 					{
 						continue;
 					}
@@ -338,133 +341,133 @@ namespace TDS
 				//use the rest of the checks below to handle what happens when u press different kinds of file extensions
 
 				//if .jpg/.PNG, load 2d texture...
-				if (strstr(filename.c_str(), ".jpg") || strstr(filename.c_str(), ".png") || strstr(filename.c_str(), ".dds"))
-				{
-					lookUp = false;
+				//if (strstr(filename.c_str(), ".jpg") || strstr(filename.c_str(), ".png") || strstr(filename.c_str(), ".dds"))
+				//{
+				//	lookUp = false;
 
 
 
-					std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+				//	std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
 
-					EntityID currEntity = panel->getSelectedEntity();
-					IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
-					if (Graph == nullptr)
-						Graph = addComponentByName("Graphics Component", panel->getSelectedEntity());
-					
+				//	EntityID currEntity = panel->getSelectedEntity();
+				//	IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
+				//	if (Graph == nullptr)
+				//		Graph = addComponentByName("Graphics Component", panel->getSelectedEntity());
+				//	
 
-					std::string OutPath = ASSET_PATH;
-					OutPath += "/textures/";
-					OutPath += filename.c_str();
-					std::string inPath = OutPath;
-					if (strstr(filename.c_str(), ".jpg"))
-						OutPath = RemoveFileExtension(OutPath, ".jpg");
-					else if (strstr(filename.c_str(), ".png"))
-						OutPath = RemoveFileExtension(OutPath, ".png");
-
-
-					if (strstr(filename.c_str(), ".dds"))
-						lookUp = true;
-					else
-						OutPath += ".dds";
+				//	std::string OutPath = ASSET_PATH;
+				//	OutPath += "/textures/";
+				//	OutPath += filename.c_str();
+				//	std::string inPath = OutPath;
+				//	if (strstr(filename.c_str(), ".jpg"))
+				//		OutPath = RemoveFileExtension(OutPath, ".jpg");
+				//	else if (strstr(filename.c_str(), ".png"))
+				//		OutPath = RemoveFileExtension(OutPath, ".png");
 
 
-					if (lookUp == false)
-						TextureCompressor::GetInstance().Run(inPath, OutPath);
-
-					GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
-					if (graphComp)
-						AssetManager::GetInstance()->GetTextureFactory().Load(OutPath, graphComp->GetTexture());
+				//	if (strstr(filename.c_str(), ".dds"))
+				//		lookUp = true;
+				//	else
+				//		OutPath += ".dds";
 
 
-				}
-				if (strstr(filename.c_str(), ".obj") || strstr(filename.c_str(), ".fbx") || strstr(filename.c_str(), ".gltf") || strstr(filename.c_str(), ".bin"))
-				{
-					lookUp = false;
-					std::string& OutPath = GeomCompiler::GetInstance()->OutPath;
-					OutPath = "../assets/models/";
-					OutPath += filename.c_str();
-					if (strstr(filename.c_str(), ".fbx"))
-						OutPath = RemoveFileExtension(OutPath, ".fbx");
-					else if (strstr(filename.c_str(), ".gltf"))
-						OutPath = RemoveFileExtension(OutPath, ".gltf");
-					else if (strstr(filename.c_str(), ".obj"))
-						OutPath = RemoveFileExtension(OutPath, ".obj");
-					else if (strstr(filename.c_str(), ".bin"))
-					{
-						lookUp = true;
-						/*OutPath = std::filesystem::path(OutPath).filename().string();*/
-					}
+				//	if (lookUp == false)
+				//		TextureCompressor::GetInstance().Run(inPath, OutPath);
 
-					std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
-
-					EntityID currEntity = panel->getSelectedEntity();
-					if (currEntity < 1)
-						return;
-					IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
-					if (Graph == nullptr)
-						Graph = addComponentByName("Graphics Component", panel->getSelectedEntity());
-					GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
-
-					if (lookUp == false)
-					{
-						GeomDescriptor m_GeomDescriptor{};
-						m_GeomDescriptor.m_Descriptor.m_FilePath = std::filesystem::path(filename).filename().string();
-						GeomCompiler::GetInstance()->InitDesc(m_GeomDescriptor);
-						std::string OutputFile = GeomCompiler::GetInstance()->LoadModel();
-
-						AssetManager::GetInstance()->GetModelFactory().LoadModel(OutputFile, graphComp->GetAsset());
-
-					}
-					else
-					{
-						AssetManager::GetInstance()->GetModelFactory().LoadModel(OutPath, graphComp->GetAsset());
-
-					}
-					if (graphComp->m_AssetReference.m_ResourcePtr->m_Meshes.size() > 1)
-						DivideSubmesh(currEntity, graphComp->m_AssetReference);
-					
-					
+				//	GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
+				//	if (graphComp)
+				//		AssetManager::GetInstance()->GetTextureFactory().Load(OutPath, graphComp->GetTexture());
 
 
-				}
-				//if .json, load scene...
-				if (strstr(filename.c_str(), ".ttf"))
-				{
-					std::string selectedTextureDir = m_curr_path.string();
-					selectedTextureDir += "/";
-					selectedTextureDir += filename;
-					std::string inputPath = selectedTextureDir;
-					std::string outPath = m_curr_path.string();
-					selectedTextureDir = RemoveFileExtension(selectedTextureDir, ".ttf");
+				//}
+				//if (strstr(filename.c_str(), ".obj") || strstr(filename.c_str(), ".fbx") || strstr(filename.c_str(), ".gltf") || strstr(filename.c_str(), ".bin"))
+				//{
+				//	lookUp = false;
+				//	std::string& OutPath = GeomCompiler::GetInstance()->OutPath;
+				//	OutPath = "../assets/models/";
+				//	OutPath += filename.c_str();
+				//	if (strstr(filename.c_str(), ".fbx"))
+				//		OutPath = RemoveFileExtension(OutPath, ".fbx");
+				//	else if (strstr(filename.c_str(), ".gltf"))
+				//		OutPath = RemoveFileExtension(OutPath, ".gltf");
+				//	else if (strstr(filename.c_str(), ".obj"))
+				//		OutPath = RemoveFileExtension(OutPath, ".obj");
+				//	else if (strstr(filename.c_str(), ".bin"))
+				//	{
+				//		lookUp = true;
+				//		/*OutPath = std::filesystem::path(OutPath).filename().string();*/
+				//	}
 
-					std::string FileName = std::filesystem::path(selectedTextureDir).filename().string();
+				//	std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
 
-					outPath += ("/OutFont_" + FileName);
-					if (!std::filesystem::exists(outPath))
-					{
-						if (!std::filesystem::create_directory(outPath))
-							TDS_ERROR("Failed to create directory");
-					}
-					std::string folderName = outPath;
-					outPath += "/" + FileName;
-					LoaderDescriptor FontDescriptor{};
-					FontDescriptor.OutPath = outPath;
-					FontDescriptor.m_InputPath = inputPath;
+				//	EntityID currEntity = panel->getSelectedEntity();
+				//	if (currEntity < 1)
+				//		return;
+				//	IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
+				//	if (Graph == nullptr)
+				//		Graph = addComponentByName("Graphics Component", panel->getSelectedEntity());
+				//	GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
 
-					if (FontLoader::RunFontLoader(FontDescriptor))
-					{
-						std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+				//	if (lookUp == false)
+				//	{
+				//		GeomDescriptor m_GeomDescriptor{};
+				//		m_GeomDescriptor.m_Descriptor.m_FilePath = std::filesystem::path(filename).filename().string();
+				//		GeomCompiler::GetInstance()->InitDesc(m_GeomDescriptor);
+				//		std::string OutputFile = GeomCompiler::GetInstance()->LoadModel();
 
-						IComponent* font = getComponentByName("UI Sprite", panel->getSelectedEntity());
-						if (font != nullptr)
-						{
-							UISprite* spriteComp = reinterpret_cast<UISprite*>(font);
-							AssetManager::GetInstance()->GetFontFactory().Load(folderName, spriteComp->GetFontReference());
-						}
-					}
-					
+				//		AssetManager::GetInstance()->GetModelFactory().LoadModel(OutputFile, graphComp->GetAsset());
 
-				}
+				//	}
+				//	else
+				//	{
+				//		AssetManager::GetInstance()->GetModelFactory().LoadModel(OutPath, graphComp->GetAsset());
+
+				//	}
+				//	if (graphComp->m_AssetReference.m_ResourcePtr->m_Meshes.size() > 1)
+				//		DivideSubmesh(currEntity, graphComp->m_AssetReference);
+				//	
+				//	
+
+
+				//}
+				////if .json, load scene...
+				//if (strstr(filename.c_str(), ".ttf"))
+				//{
+				//	std::string selectedTextureDir = m_curr_path.string();
+				//	selectedTextureDir += "/";
+				//	selectedTextureDir += filename;
+				//	std::string inputPath = selectedTextureDir;
+				//	std::string outPath = m_curr_path.string();
+				//	selectedTextureDir = RemoveFileExtension(selectedTextureDir, ".ttf");
+
+				//	std::string FileName = std::filesystem::path(selectedTextureDir).filename().string();
+
+				//	outPath += ("/OutFont_" + FileName);
+				//	if (!std::filesystem::exists(outPath))
+				//	{
+				//		if (!std::filesystem::create_directory(outPath))
+				//			TDS_ERROR("Failed to create directory");
+				//	}
+				//	std::string folderName = outPath;
+				//	outPath += "/" + FileName;
+				//	LoaderDescriptor FontDescriptor{};
+				//	FontDescriptor.OutPath = outPath;
+				//	FontDescriptor.m_InputPath = inputPath;
+				//	std::string ddsPath{};
+				//	if (FontLoader::RunFontLoader(FontDescriptor, ddsPath))
+				//	{
+				//		std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+
+				//		IComponent* font = getComponentByName("UI Sprite", panel->getSelectedEntity());
+				//		if (font != nullptr)
+				//		{
+				//			UISprite* spriteComp = reinterpret_cast<UISprite*>(font);
+				//			AssetManager::GetInstance()->GetFontFactory().Load(folderName, spriteComp->GetFontReference());
+				//		}
+				//	}
+				//	
+
+				//}
 
 
 				if (strstr(filename.c_str(), ".json"))
@@ -510,6 +513,139 @@ namespace TDS
 		ImGui::Columns(1);
 		//ImGui::SliderFloat("Thumbnail Size", &thumbnail_size, 16, 512);
 		//ImGui::SliderFloat("Padding", &padding, 0, 32);
+	}
+	std::string AssetBrowser::LoadAsset(const std::string& FileName)
+	{
+		std::string OutputPath{};
+		if (strstr(FileName.c_str(), ".jpg") || strstr(FileName.c_str(), ".png") || strstr(FileName.c_str(), ".dds"))
+		{
+			lookUp = false;
+			std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+
+			EntityID currEntity = panel->getSelectedEntity();
+			//IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
+			//if (Graph == nullptr)
+			//	return std::string();
+
+			
+			std::string OutPath = ASSET_PATH;
+			OutPath += "/textures/";
+			OutPath += FileName.c_str();
+			std::string inPath = OutPath;
+			if (strstr(FileName.c_str(), ".jpg"))
+				OutPath = RemoveFileExtension(OutPath, ".jpg");
+			else if (strstr(FileName.c_str(), ".png"))
+				OutPath = RemoveFileExtension(OutPath, ".png");
+
+
+			if (strstr(FileName.c_str(), ".dds"))
+				lookUp = true;
+			else
+				OutPath += ".dds";
+
+
+			if (lookUp == false)
+				TextureCompressor::GetInstance().Run(inPath, OutPath);
+
+			//GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
+			//if (graphComp)
+				AssetManager::GetInstance()->GetTextureFactory().Load(OutPath);
+			OutputPath = OutPath;
+
+		}
+		if (strstr(FileName.c_str(), ".obj") || strstr(FileName.c_str(), ".fbx") || strstr(FileName.c_str(), ".gltf") || strstr(FileName.c_str(), ".bin"))
+		{
+			lookUp = false;
+			std::string &OutPath = GeomCompiler::GetInstance()->OutPath;
+			OutPath = "../assets/models/";
+			OutPath += FileName.c_str();
+			if (strstr(FileName.c_str(), ".fbx"))
+				OutPath = RemoveFileExtension(OutPath, ".fbx");
+			else if (strstr(FileName.c_str(), ".gltf"))
+				OutPath = RemoveFileExtension(OutPath, ".gltf");
+			else if (strstr(FileName.c_str(), ".obj"))
+				OutPath = RemoveFileExtension(OutPath, ".obj");
+			else if (strstr(FileName.c_str(), ".bin"))
+			{
+				lookUp = true;
+				/*OutPath = std::filesystem::path(OutPath).filename().string();*/
+			}
+
+			std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+
+			EntityID currEntity = panel->getSelectedEntity();
+			if (currEntity < 1)
+				return std::string();
+			IComponent* Graph = getComponentByName("Graphics Component", panel->getSelectedEntity());
+			if (Graph == nullptr)
+				Graph = addComponentByName("Graphics Component", panel->getSelectedEntity());
+			GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(Graph);
+
+			if (lookUp == false)
+			{
+				GeomDescriptor m_GeomDescriptor{};
+				m_GeomDescriptor.m_Descriptor.m_FilePath = std::filesystem::path(FileName).filename().string();
+				GeomCompiler::GetInstance()->InitDesc(m_GeomDescriptor);
+				std::string OutputFile = GeomCompiler::GetInstance()->LoadModel();
+
+				AssetManager::GetInstance()->GetModelFactory().LoadModel(OutputFile);
+				OutputPath = OutputFile;
+				
+				
+			}
+			else
+			{
+				AssetManager::GetInstance()->GetModelFactory().LoadModel(OutPath);
+				OutputPath = OutPath;
+			}
+			graphComp->m_AssetReference.m_ResourcePtr = AssetManager::GetInstance()->GetModelFactory().GetModel(std::filesystem::path(OutputPath).filename().string(), graphComp->m_AssetReference);
+			if (graphComp->m_AssetReference.m_ResourcePtr->m_Meshes.size() > 1)
+				DivideSubmesh(currEntity, graphComp->m_AssetReference);
+
+
+			
+
+		}
+		//if .json, load scene...
+		if (strstr(FileName.c_str(), ".ttf"))
+		{
+			std::string selectedTextureDir = m_curr_path.string();
+			selectedTextureDir += "/";
+			selectedTextureDir += FileName;
+			std::string inputPath = selectedTextureDir;
+			std::string outPath = m_curr_path.string();
+			selectedTextureDir = RemoveFileExtension(selectedTextureDir, ".ttf");
+
+			std::string FileName = std::filesystem::path(selectedTextureDir).filename().string();
+
+			outPath += ("/OutFont_" + FileName);
+			if (!std::filesystem::exists(outPath))
+			{
+				if (!std::filesystem::create_directory(outPath))
+					TDS_ERROR("Failed to create directory");
+			}
+			std::string folderName = outPath;
+			outPath += "/" + FileName;
+			LoaderDescriptor FontDescriptor{};
+			FontDescriptor.OutPath = outPath;
+			FontDescriptor.m_InputPath = inputPath;
+
+			std::string ddsFontPath{};
+			if (FontLoader::RunFontLoader(FontDescriptor, ddsFontPath))
+			{
+				std::shared_ptr<Hierarchy> panel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[HIERARCHY]);
+
+				IComponent* font = getComponentByName("UI Sprite", panel->getSelectedEntity());
+				if (font != nullptr)
+				{
+					AssetManager::GetInstance()->GetFontFactory().Load(folderName);
+				}
+			}
+			OutputPath = ddsFontPath;
+
+		}
+		std::filesystem::path FilePath(OutputPath);
+		return FilePath.filename().string();
 	}
 	void AssetBrowser::destroyIcons()
 	{
