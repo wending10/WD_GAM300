@@ -142,8 +142,13 @@ namespace ScriptAPI
 	}
 
 	// CONSTRUCTOR ===========================================================================
-	BoxColliderComponent::BoxColliderComponent(TDS::EntityID ID) : entityID(ID)
+	BoxColliderComponent::BoxColliderComponent(TDS::EntityID ID) : entityID(ID), transform(TransformComponent(ID))
 	{ }
+
+	void BoxColliderComponent::SetEntityID(TDS::EntityID ID)
+	{
+		entityID = ID;
+	}
 
 	TDS::EntityID BoxColliderComponent::GetEntityID()
 	{

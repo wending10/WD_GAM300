@@ -15,7 +15,7 @@ namespace TDS
 		//using lookat and Euler Angles
 		DLL_API Mat4 GetViewMatrix() const;
 
-		DLL_API void UpdateCamera(float deltaTime);
+		DLL_API void UpdateCamera(float deltaTime, bool gameIsPlaying);
 
 		DLL_API bool moving();
 

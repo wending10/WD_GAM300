@@ -67,7 +67,7 @@ namespace TDS
 			mTransformMatrix = transM4 * rotM4 * scaleM4;
 			mIsDirty = true;
 		}
-		DLL_API void GenerateTransfom() {
+		DLL_API Mat4 GenerateTransfom() {
 			Quat qRot = Quat(mRotation);
 			Mat4 scaleM4 = Mat4::Scale(mScale);
 			Mat4 rotM4 = Mat4(Quat::toMat4(qRot));
@@ -77,7 +77,18 @@ namespace TDS
 			scaleM4 = Mat4::Scale(mScale + mOffsetScale);
 			transM4 = Mat4::Translate(mPosition - mOffsetPos);
 			mOffsetMatrix = transM4 * rotM4 * scaleM4;
+
+			return mTransformMatrix;
 		}
+
+		DLL_API Vec4 getLocalPosition(EntityID parent);
+		DLL_API void setLocalPosition(EntityID parent, Vec4 localPosition);
+
+		DLL_API Vec4 getLocalScale(EntityID parent);
+		DLL_API void setLocalScale(EntityID parent, Vec4 localScale);
+
+		DLL_API Vec4 getLocalRotation(EntityID parent);
+		DLL_API void setLocalRotation(EntityID parent, Vec4 localRotation);
 
 		DLL_API void SetDirty(bool condition)
 		{

@@ -189,6 +189,11 @@ namespace TDS
 		// Panels
 		for (auto currentPanel : LevelEditorManager::GetInstance()->panels)
 		{
+			if (currentPanel.second->makeFocus)
+			{
+				ImGui::SetNextWindowFocus();
+				currentPanel.second->makeFocus = false;
+			}
 			//ImGui::GetStyle().WindowPadding = currentPanel.second->windowPadding;
 			if (currentPanel.first == PanelTypes::SCENE)
 			{

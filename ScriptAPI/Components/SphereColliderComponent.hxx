@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../IncludeFromEngine.hxx"
-#include "../Vector3.hxx"
+#include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
-	public value class SphereColliderComponent
+	public value class SphereColliderComponent : ComponentBase
 	{
 	public:
 		bool GetIsTrigger();
@@ -20,8 +20,13 @@ namespace ScriptAPI
 		float GetRadius();
 		void SetRadius(float value);
 
+		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent^transform;
+
 	internal:
 		SphereColliderComponent(TDS::EntityID ID);
+		TDS::EntityID GetEntityID();
 
 	private:
 		property bool IsTrigger
