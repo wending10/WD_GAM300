@@ -44,7 +44,7 @@ namespace TDS
 	{
 		std::array<InstanceFont, 10000>				m_Instances;
 		std::array<InstanceFontInfo, 10000>			m_InstanceInfo;
-		virtual void DLL_API						AddToBatch(void* componentSprite, Transform* transform);
+		virtual void DLL_API						AddToBatch(void* componentSprite, Transform* transform, std::uint32_t entity);
 		virtual void DLL_API						PrepareBatch();
 		FontSceneUBO								m_SceneUpdate{};
 	};

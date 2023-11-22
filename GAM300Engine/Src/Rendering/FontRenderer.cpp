@@ -263,7 +263,7 @@ namespace TDS
 
 
 
-	void FontBatch::AddToBatch(void* componentSprite, Transform* transform)
+	void FontBatch::AddToBatch(void* componentSprite, Transform* transform, std::uint32_t entity)
 	{
 
 		std::uint32_t WindowWidth = GraphicsManager::getInstance().GetWindow()->getWidth();
