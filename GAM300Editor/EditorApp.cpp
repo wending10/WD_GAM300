@@ -35,6 +35,7 @@
 
 
 bool isPlaying = false;
+bool startPlaying = false;
 
 namespace TDS
 {
@@ -142,8 +143,15 @@ namespace TDS
 
     void Application::Update()
     {
-        
         DDSConverter::Init();
+
+        auto awake = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteAwake"
+            );
+
         auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
@@ -183,7 +191,6 @@ namespace TDS
 
         while (m_window.processInputEvent())
         {
-
             TimeStep::CalculateDeltaTime();
             float DeltaTime = TimeStep::GetDeltaTime();
             std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
@@ -204,7 +211,9 @@ namespace TDS
             {
                 GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
             }
-            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime);
+
+            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime, isPlaying);
+
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
 
@@ -228,11 +237,17 @@ namespace TDS
            
             if (isPlaying)
             {
+                if (startPlaying)
+                {
+                    awake();
+                    startPlaying = false;
+                }
                 ecs.runSystems(1, DeltaTime); // Other systems
                 executeUpdate();
             }
             else
             {
+                startPlaying = true;
                 if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
                 {
                     PhysicsSystem::SetIsPlaying(false);
@@ -305,19 +320,17 @@ namespace TDS
                 "Reload"
             );
 
-
         SceneManager::GetInstance()->addScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "AddScriptViaName"
             );
-
-        auto awake = GetFunctionPtr<void(*)(void)>
+        SceneManager::GetInstance()->removeScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
-                "ExecuteAwake"
+                "RemoveScriptViaName"
             );
 
         // Step 2: Initialize
@@ -373,7 +386,7 @@ namespace TDS
                 "SetValueBool"
             );
 
-        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int)>
+        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int, bool)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
@@ -422,6 +435,13 @@ namespace TDS
                 "SetGameObject"
             );
 
+        SceneManager::GetInstance()->setComponent = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetComponent"
+            );
+
         SceneManager::GetInstance()->setScriptReference = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID, std::string)>
             (
                 "ScriptAPI",
@@ -447,8 +467,6 @@ namespace TDS
         ecs.initializeSystems(1);
         ecs.initializeSystems(2);
         ecs.initializeSystems(3);
-
-        awake();
     }
 
     Application::~Application()

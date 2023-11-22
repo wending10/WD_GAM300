@@ -10,6 +10,7 @@
 #include "sceneManager/serialization.h" //create new files
 #include "sceneManager/sceneManager.h" //for scenemanager instance
 #include "imguiHelper/ImguiSceneBrowser.h" //for "savefile() save as" function
+#include "imguiHelper/ImguiGamePlayScene.h" //for "savefile() save as" function
 
 
 namespace TDS
@@ -67,6 +68,7 @@ namespace TDS
 				
 				isPlaying = false;
 				SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+				LevelEditorManager::GetInstance()->panels[PanelTypes::SCENE]->makeFocus = true;
 				
 			}
 			//when playing, make button red
@@ -79,6 +81,7 @@ namespace TDS
 			if (ImGui::ArrowButton("Play", ImGuiDir_Right))
 			{
 				SceneManager::GetInstance()->saveCurrentScene();
+				LevelEditorManager::GetInstance()->panels[PanelTypes::GAMEPLAYSCENE]->makeFocus = true;
 				isPlaying = true;
 			}
 		}
@@ -151,7 +154,7 @@ namespace TDS
 			//console->AddLog("Save Scene Button Pressed");
 			if (isSaveScene) {
 
-				std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
+				//std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
 				SceneManager::GetInstance()->saveCurrentScene();
 			}
 		}

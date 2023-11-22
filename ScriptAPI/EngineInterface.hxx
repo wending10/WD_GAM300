@@ -27,10 +27,9 @@ namespace ScriptAPI
 		***************************************************************************/
 		static bool AddScriptViaName(TDS::EntityID entityId, std::string scriptName);
 		/*!*************************************************************************
-		* Add GameObject to List
-		* Add this function to new Entities being Created
+		* Remove Scripts via name in managed script library
 		***************************************************************************/
-		//static bool AddGameObjectViaName(TDS::EntityID entityId, System::String^ scriptName);
+		static bool RemoveScriptViaName(TDS::EntityID entityId, std::string scriptName);
 		/*!*************************************************************************
 		* Updates GameObject Name
 		* Call this function if User changes the name of Entities
@@ -104,13 +103,14 @@ namespace ScriptAPI
 		static bool IsScriptEnabled(TDS::EntityID entityId, std::string script);
 
 		static void SetValueBool(TDS::EntityID entityId, std::string script, std::string variableName, bool value);
-		static void SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value);
+		static void SetValueInt(TDS::EntityID entityId, std::string script, std::string variableName, int value, bool isInt);
 		static void SetValueDouble(TDS::EntityID entityId, std::string script, std::string variableName, double value);
 		static void SetValueFloat(TDS::EntityID entityId, std::string script, std::string variableName, float value);
 		static void SetValueString(TDS::EntityID entityId, std::string script, std::string variableName, std::string value);
 		//static void SetValueChar(TDS::EntityID entityId, std::string script, std::string variableName, char value);
 		static void SetVector3(TDS::EntityID entityId, std::string script, std::string variableName, TDS::Vec3 value);
 		static void SetGameObject(TDS::EntityID entityId, std::string script, std::string variableName, TDS::EntityID gameObjectEntityID);
+		static void SetComponent(TDS::EntityID entityId, std::string script, std::string variableName, TDS::EntityID gameObjectEntityID);
 		static void SetScript(TDS::EntityID entityId, std::string script, std::string variableName, TDS::EntityID gameObjectEntityID, std::string scriptReference);
 		
 		using ScriptList = System::Collections::Generic::Dictionary<String^, Script^>;
@@ -127,6 +127,8 @@ namespace ScriptAPI
 		***************************************************************************/
 		static void updateScriptTypeList();
 		static System::Runtime::Loader::AssemblyLoadContext^ loadContext;
+
+		static float fixedUpdateTimer{0.02f};
 
 		//static array<FieldInfo^>^ currentFieldArray;
 		//static Object^ currentObject;

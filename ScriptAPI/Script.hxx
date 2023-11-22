@@ -11,6 +11,8 @@
 #include "IncludeFromEngine.hxx"
 #include "GameObject.hxx"
 #include "Input.hxx"
+#include "Time.hxx"
+#include "HelperFunctions.hxx"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -43,11 +45,12 @@ namespace ScriptAPI
         generic <typename TResult>
         IAsyncEnumerable<TResult>^ Coroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration);
         
-        //GameObject^ GameObjectScriptFind(System::String^ name);
-
+        GameObject^ GameObjectScriptFind(System::String^ name);
 
         [HideInInspector]
         GameObject^ gameObject;
+
+        TransformComponent transform;
 
     internal:
         void SetFlags();
@@ -122,10 +125,10 @@ namespace ScriptAPI
 
         //static void OnTriggerExit(CapsuleColliderComponent collider);
 
-        static float Clamp(float num1, float num2, float num3)
-        {
-            return std::clamp(num1, num2, num3);
-        }
+        //static float Clamp(float num1, float num2, float num3)
+        //{
+        //    return std::clamp(num1, num2, num3);
+        //}
 
     };
 }

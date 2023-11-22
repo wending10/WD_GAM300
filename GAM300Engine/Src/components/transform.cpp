@@ -44,6 +44,66 @@ namespace TDS
 														mTransformMatrix	(toMove.mTransformMatrix)
 	{ }
 
+	Vec4 Transform::getLocalPosition(EntityID parent)
+	{
+		Mat4 parentTransformationMatrix = GetTransform(parent)->GetTransformMatrix().inverse();
+		Vec4 localPosition = parentTransformationMatrix * Vec4(mPosition, 1.f);
+
+		localPosition.x /= localPosition.w;
+		localPosition.y /= localPosition.w;
+		localPosition.z /= localPosition.w;
+
+		return localPosition;
+	}
+	void Transform::setLocalPosition(EntityID parent, Vec4 localPosition)
+	{
+		localPosition.x *= localPosition.w;
+		localPosition.y *= localPosition.w;
+		localPosition.z *= localPosition.w;
+
+		mPosition = GetTransform(parent)->GetTransformMatrix() * localPosition;
+	}
+
+	Vec4 Transform::getLocalScale(EntityID parent)
+	{
+		Mat4 parentTransformationMatrix = GetTransform(parent)->GetTransformMatrix().inverse();
+		Vec4 localScale = parentTransformationMatrix * Vec4(mScale, 1.f);
+
+		localScale.x /= localScale.w;
+		localScale.y /= localScale.w;
+		localScale.z /= localScale.w;
+
+		return localScale;
+	}
+	void Transform::setLocalScale(EntityID parent, Vec4 localScale)
+	{
+		localScale.x *= localScale.w;
+		localScale.y *= localScale.w;
+		localScale.z *= localScale.w;
+
+		mPosition = GetTransform(parent)->GetTransformMatrix() * localScale;
+	}
+
+	Vec4 Transform::getLocalRotation(EntityID parent)
+	{
+		Mat4 parentTransformationMatrix = GetTransform(parent)->GetTransformMatrix().inverse();
+		Vec4 localRotation = parentTransformationMatrix * Vec4(mRotation, 1.f);
+
+		localRotation.x /= localRotation.w;
+		localRotation.y /= localRotation.w;
+		localRotation.z /= localRotation.w;
+
+		return localRotation;
+	}
+	void Transform::setLocalRotation(EntityID parent, Vec4 localRotation)
+	{
+		localRotation.x *= localRotation.w;
+		localRotation.y *= localRotation.w;
+		localRotation.z *= localRotation.w;
+
+		mPosition = GetTransform(parent)->GetTransformMatrix() * localRotation;
+	}
+
 	Transform* GetTransform(EntityID entityID)
 	{
 		return ecs.getComponent<Transform>(entityID);

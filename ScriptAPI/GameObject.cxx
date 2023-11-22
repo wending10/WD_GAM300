@@ -18,6 +18,10 @@ namespace ScriptAPI
 	{
 		return NameTagComponent(entityID);
 	}
+	RigidBodyComponent GameObject::GetRigidBodyComponent()
+	{
+		return RigidBodyComponent(entityID);
+	}
 	SphereColliderComponent GameObject::GetSphereColliderComponent()
 	{
 		return SphereColliderComponent(entityID);
@@ -38,7 +42,31 @@ namespace ScriptAPI
 	{
 		System::Type^ type = T::typeid;
 
-		if (type == TransformComponent::typeid)
+		if (type == BoxColliderComponent::typeid)
+		{
+			return safe_cast<T>(BoxColliderComponent());
+		}
+		else if (type == CameraComponent::typeid)
+		{
+			return safe_cast<T>(CameraComponent());
+		}
+		else if (type == CapsuleColliderComponent::typeid)
+		{
+			return safe_cast<T>(CapsuleColliderComponent());
+		}
+		else if (type == NameTagComponent::typeid)
+		{
+			return safe_cast<T>(NameTagComponent());
+		}
+		else if (type == RigidBodyComponent::typeid)
+		{
+			return safe_cast<T>(GetRigidBodyComponent());
+		}
+		else if (type == SphereColliderComponent::typeid)
+		{
+			return safe_cast<T>(GetSphereColliderComponent());
+		}
+		else if (type == TransformComponent::typeid)
 		{
 			return safe_cast<T>(GetTransformComponent());
 		}
@@ -49,5 +77,6 @@ namespace ScriptAPI
 	void GameObject::SetEntityID(TDS::EntityID id)
 	{
 		entityID = id;
+		transform = TransformComponent(id);
 	}
 }
