@@ -38,8 +38,9 @@ namespace TDS
 				if (_Graphics[i].m_UsedIn2D == false)
 					continue;
 			}
+			
 			PushConstantData pushData{};
-			pushData.Id = static_cast<uint32_t>(i + 1);
+			pushData.Id = entities[i];
 			if (_Graphics[i].m_ModelName != _Graphics[i].m_AssetReference.m_AssetName)
 			{
 				AssetModel* pModel = AssetManager::GetInstance()->GetModelFactory().GetModel(_Graphics[i].m_ModelName, _Graphics[i].m_AssetReference);
