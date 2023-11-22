@@ -13,11 +13,8 @@ namespace TDS
 	
 		m_SkyBoxTexture.LoadTexture("../assets/textures/skybox1.dds");
 
-
-		m_CubeMapModel.m_AssetName = "cube_Bin.bin";
-
 	
-		if (!AssetManager::GetInstance()->GetModelFactory().GetModel(m_CubeMapModel.m_AssetName, m_CubeMapModel))
+		if (!AssetManager::GetInstance()->GetModelFactory().GetModel("cube_Bin.bin", m_CubeMapModel))
 		{
 			TDS_ERROR("FAILED TO LOAD SKYBOX!");
 			return;

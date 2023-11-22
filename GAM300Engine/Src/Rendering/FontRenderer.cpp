@@ -278,7 +278,7 @@ namespace TDS
 
 
 
-		int TextureID = factoryRef.GetFontAtlasIndex(UiSprite->m_FontName);
+		int TextureID = factoryRef.GetFontAtlasIndex(UiSprite->m_FontName, UiSprite->GetFontReference());
 
 		if (TextureID == -1)
 		{
@@ -287,22 +287,19 @@ namespace TDS
 			return;
 		}
 		FontAtlas& atlasinfo = factoryRef.GetFontAtlas(TextureID);
-		m_SceneUpdate.padding[0] = float(atlasinfo.m_Atlas.m_DistanceRange);
-		double FontSize = atlasinfo.m_Atlas.m_Size;
+		double baselineOffset = atlasinfo.m_Metrics.m_Ascender; // Ascender for baseline
 		Vec2 CurrOffset = 0.f;
+		char prevChar = '\0'; // Keep track of the previous character for kerning
 		for (auto& eachchar : UiSprite->m_Message)
 		{
 
 			
 			m_InstanceInfo[m_InstanceCnt].m_LayerID = UiSprite->m_LayerID > 12 ? 12 : (std::uint32_t)UiSprite->m_LayerID;
-			m_InstanceInfo[m_InstanceCnt].m_FontColor.m_Color = UiSprite->m_Color.GetAsVec4();
+			m_InstanceInfo[m_InstanceCnt].m_FontColor.m_Color = UiSprite->m_Color;
 			m_InstanceInfo[m_InstanceCnt].m_FontColor.bgColor = UiSprite->m_BackGroundColour;
 			m_InstanceInfo[m_InstanceCnt].m_FontColor.fgColor = UiSprite->m_ForeGroundColour;
 
 
-
-			if (transform->isDirty())
-				transform->SetDirty(false);
 
 			m_InstanceInfo[m_InstanceCnt].m_TextureIndex = TextureID;
 			Glyph& glyph = atlasinfo.m_Glyphs[eachchar];
@@ -310,6 +307,7 @@ namespace TDS
 			{
 				CurrOffset.x = 0.f;
 				CurrOffset.y -= atlasinfo.m_Metrics.m_LineHeight;
+
 				continue;
 			}
 			if (Vec3 Scale = transform->GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f)
@@ -332,8 +330,22 @@ namespace TDS
 			m_InstanceInfo[m_InstanceCnt].m_StartEnd = { float(UV_left), float(UV_bottom), float(UV_right), float(UV_top) };
 			Mat4 internalTransform = Mat4::identity();
 
+			Vec3 finalOffset{};
+			finalOffset.x = float(CurrOffset.x + (charWidth * 0.5));
+			
+			finalOffset.z = 0.f;
 
-			internalTransform = internalTransform.Translate(Vec3(float(CurrOffset.x +( charWidth * 0.5)), float(CurrOffset.y + (charHeight * 0.5)), 0.f)) * internalTransform.Scale(Vec3(float(charWidth), float(charHeight), 0.f));
+			if (eachchar == 'g' || eachchar == 'j' || eachchar == 'p' || eachchar == 'q' || eachchar == 'y')
+			{
+				finalOffset.y = float(CurrOffset.y + (charHeight * 0.25));
+			}
+			else
+			{
+				finalOffset.y = float(CurrOffset.y + (charHeight * 0.5));
+			}
+
+			internalTransform = internalTransform.Translate(finalOffset)
+				* internalTransform.Scale(Vec3(float(charWidth), float(charHeight), 0.f));
 
 
 			m_InstanceInfo[m_InstanceCnt].m_Transform = temp * internalTransform;

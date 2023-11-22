@@ -14,6 +14,7 @@ namespace TDS
 
 		std::array<Texture, 500> m_TextureArray;
 		std::unordered_map<std::string, std::uint32_t> m_TextureIndices;
+		std::unordered_map<std::string, std::uint32_t> m_InstanceCnt;
 		std::uint32_t m_CurrentIndex = 0;
 		bool m_UpdateTextureArray3D = true;
 		bool m_UpdateTextureArray2D = true;
@@ -112,14 +113,50 @@ namespace TDS
 			return nullptr;
 			TDS_WARN("Texture {} doesnt exist!", textureName.data());
 		}
-		int GetTextureIndex(std::string_view textureName)
+		int GetTextureIndex(std::string_view textureName, TypeReference<Texture>& referenceTexture)
 		{
 			auto itr = m_TextureIndices.find(textureName.data());
 			if (itr != m_TextureIndices.end())
 			{
+				if (referenceTexture.m_AssetName.empty() == false)
+				{
+					--m_InstanceCnt[referenceTexture.m_AssetName];
+				}
+				++m_InstanceCnt[textureName.data()];
+				referenceTexture.m_AssetName = textureName;
 				return (int)itr->second;
 			}
 			return -1;
+		}
+		void Load(std::string_view path)
+		{
+			std::filesystem::path FilePath(path);
+			std::string fileName = FilePath.filename().string();
+
+
+			auto itr = m_TextureIndices.find(fileName);
+			if (itr != m_TextureIndices.end())
+			{
+				if (m_InstanceCnt[fileName] == 0)
+				{
+					std::uint32_t index = m_TextureIndices[fileName];
+					m_TextureArray[index].Destroy();
+					m_TextureArray[index].LoadTexture(path);
+					m_UpdateTextureArray3D = true;
+					m_UpdateTextureArray2D = true;
+					return;
+				}
+				else
+				{
+					TDS_INFO("texture {} has {} entity using it.", fileName, m_InstanceCnt[fileName]);
+					return;
+				}
+			}
+			std::uint32_t& newIndex = m_CurrentIndex;
+			m_TextureArray[newIndex].LoadTexture(path);
+			m_UpdateTextureArray3D = true;
+			m_UpdateTextureArray2D = true;
+			m_TextureIndices[fileName] = newIndex++;
 		}
 		void Load(std::string_view path, TypeReference<Texture>& textureRef)
 		{

@@ -13,6 +13,7 @@ namespace TDS
 		void getFileNameFromPath(const char* full_path, std::string* path, std::string* file, std::string* fileWithExtension, std::string* extension) const;
 		void init() {}
 		void update();
+		std::string LoadAsset(const std::string& fileName);
 		static void destroyIcons();
 		static inline std::filesystem::path m_curr_path;
 	private:
