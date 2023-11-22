@@ -118,7 +118,7 @@ namespace TDS
 			renderLayer->Render();
 		}
 		m_SwapchainRenderer->EndFrame();
-
+		m_FrameHasBegin = false;
 
 	}
 	void GraphicsManager::ShutDown()

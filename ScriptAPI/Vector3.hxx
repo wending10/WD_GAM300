@@ -12,5 +12,7 @@ namespace ScriptAPI
 
 		Vector3(float valueX, float valueY, float valueZ);
 		Vector3(TDS::Vec3 value);
+
+		static Vector3 operator-(Vector3 lhs, Vector3 rhs);
 	};
 }
