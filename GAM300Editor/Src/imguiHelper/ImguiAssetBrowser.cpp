@@ -250,7 +250,7 @@ namespace TDS
 					//folder_image_count++;
 				}
 				//if (!show_bin && !show_fbx) { continue; }
-				if (show_bin && !show_fbx)
+				/*else*/ if (show_bin && !show_fbx)
 				{
 					if (!strstr(filename.c_str(), ".bin")) //if its not bin, continue
 					{
