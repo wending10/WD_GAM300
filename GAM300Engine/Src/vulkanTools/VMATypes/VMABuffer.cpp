@@ -41,6 +41,7 @@ namespace TDS
 		m_BufferSize = size;
 		if (data)
 			MapData(data, m_BufferSize);
+	
 	}
 	VMABuffer VMABuffer::CreateStagingBuffer(size_t size, VulkanInstance& instance, void* data)
 	{
@@ -80,6 +81,19 @@ namespace TDS
 			UnMap();
 		}
 	}
+
+	void VMABuffer::ReadData(void* data, size_t size, std::uint32_t offset)
+	{
+		m_MappedMemory = Map();
+		if (m_MappedMemory)
+		{
+			m_MappedMemory = reinterpret_cast<std::int8_t*>(m_MappedMemory) + offset;
+			std::memcpy(data, m_MappedMemory, size);
+			UnMap();
+		}
+	}
+
+
 	void VMABuffer::DestroyBuffer()
 	{
 		/*

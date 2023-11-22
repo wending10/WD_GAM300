@@ -92,6 +92,10 @@ namespace TDS
 		bool									Create(PipelineCreateEntry& createEntry);
 		void									GeneratePipeline(VkPrimitiveTopology drawMode);
 		void									SetClearColor(iColor clearColor);
+		void									BindComputePipeline();
+		void									DispatchCompute(std::uint32_t groupCountX, std::uint32_t groupCountY, std::uint32_t groupCountz);
+
+
 
 		void									StartRenderPass();
 		void									EndRenderPass();
@@ -107,13 +111,13 @@ namespace TDS
 		void									DrawInstanced(VMABuffer& vertexBuffer, std::uint32_t instance = 1, std::uint32_t frameIndex = 0);
 		void									DrawInstancedIndexed(VMABuffer& vertexBuffer, VMABuffer& indexBuffer, std::uint32_t instance = 1, std::uint32_t frameIndex = 0);
 		void									SubmitPushConstant(void* data, size_t size, std::int32_t flags);
-		void									UpdateUBO(void* data, size_t size, std::uint32_t binding, std::uint32_t frameIndex = 0, std::uint32_t offset = 0);
+		void									UpdateUBO(void* data, size_t size, std::uint32_t binding, std::uint32_t frameIndex = 0, std::uint32_t offset = 0, bool readonly = false);
 		//void									UpdateTextureArray(std::uint32_t binding, VkDescriptorType descriptorType, std::vector<VulkanTexture*>& texture);
 		void									UpdateTextureArray(std::uint32_t binding, VkDescriptorType descriptorType, std::vector<Texture*>& texture);
 		void									UpdateTextureArray(std::uint32_t binding, VkDescriptorType descriptorType, std::array<Texture, 500>& texture);
 		void									UpdateTexture(std::uint32_t binding, VkDescriptorType descriptorType, VulkanTexture& texture);
 		void									BindPipeline(VkPrimitiveTopology drawMode = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST);
-		void									BindDescriptor(std::int32_t frame, std::uint32_t numofSet,  std::uint32_t firstSet = 0);
+		void									BindDescriptor(std::int32_t frame, std::uint32_t numofSet, std::uint32_t firstSet = 0, bool Compute = false);
 		void									BindAllDescriptors(std::int32_t frame);
 		void									BindDescriptorSet(VkDescriptorSet descriptorSet);
 		void									BindArrayDescriptorSet(std::uint32_t FrameIndex, std::uint32_t numOfSet, std::uint32_t firstSet = 0);
@@ -144,7 +148,11 @@ namespace TDS
 		const std::vector<VkDescriptorSet>& GetDescriptorSets(std::uint32_t index = 0) const;
 		void									SetRenderTarget(VkRenderPass& renderTarget );
 	private:
-
+		struct
+		{
+			VkPipelineCache m_Cache;
+			VkPipeline m_Pipeline;
+		}m_ComputePipeline;
 
 		bool									m_BlendingEnabled = false;
 		bool									m_Pipeline = false;

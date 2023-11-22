@@ -152,7 +152,23 @@ void TDS::GeomCompiler::Optimize(std::vector<InputMesh>& InputNodes)
 	{
 		size_t indxCnt = mesh.m_InputIndices.size();
 		std::vector<std::uint32_t> remappedIndices(indxCnt);
-		size_t VtxCnt = meshopt_generateVertexRemap(&remappedIndices[0], mesh.m_InputIndices.data(), indxCnt, mesh.m_RawVertices.data(), indxCnt, sizeof(RawVertex));
+
+
+
+		// Ensure the size of RawVertices is correct
+		size_t vertexCount = mesh.m_RawVertices.size();
+
+		// Check if indices are within bounds of vertices
+		for (size_t i = 0; i < indxCnt; ++i) {
+			if (mesh.m_InputIndices[i] >= vertexCount) {
+				// Handle or log index out-of-bounds error
+				// For debugging purposes, you can print the problematic index
+				std::cout << "Index out of bounds: " << mesh.m_InputIndices[i] << std::endl;
+				// You might want to consider how to handle this situation
+				// For example, skipping this mesh or correcting the indices
+			}
+		}
+		size_t VtxCnt = meshopt_generateVertexRemap(&remappedIndices[0], mesh.m_InputIndices.data(), indxCnt, mesh.m_RawVertices.data(), mesh.m_RawVertices.size(), sizeof(RawVertex));
 
 		InputMesh compressedSubMesh{};
 		compressedSubMesh.m_InputIndices.resize(mesh.m_InputIndices.size());
@@ -569,7 +585,7 @@ bool TDS::GeomCompiler::LoadDescriptor()
 		// aiProcess_TransformUVCoords          
 		//| aiProcess_FindInstances             
 		| aiProcess_GenSmoothNormals
-		| aiProcess_ForceGenNormals
+		//| aiProcess_ForceGenNormals
 		| aiProcess_CalcTangentSpace
 		| aiProcess_RemoveRedundantMaterials
 		//| aiProcess_FindInvalidData           

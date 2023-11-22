@@ -20,7 +20,7 @@ namespace TDS
 			{
 				Vec3 m_Pos{1.f,0.f,0.f};
 			};
-			//inline static std::shared_ptr<SkyBoxRenderer> m_Instance = nullptr;
+
 			Texture							m_SkyBoxTexture;
 			std::shared_ptr<VulkanPipeline> m_SkyBoxPipeline = nullptr;
 			Vec3				m_SkylinePositions{};
@@ -30,7 +30,6 @@ namespace TDS
 			std::shared_ptr<VMABuffer>		m_CubeMapVertexBuffer = nullptr;
 			std::shared_ptr<VMABuffer>		m_CubeMapIndexBuffer = nullptr;
 		public:
-			static std::shared_ptr<SkyBoxRenderer> getInstance();
 			DLL_API void Init();
 			DLL_API void RenderSkyBox(VkCommandBuffer commandBuffer, uint32_t frameIndex);
 			DLL_API void ShutDown();
