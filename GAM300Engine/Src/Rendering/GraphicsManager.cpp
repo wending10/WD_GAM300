@@ -91,7 +91,7 @@ namespace TDS
 	}
 	void GraphicsManager::StartFrame()
 	{
-		m_FrameHasBegin = true;
+		m_FrameHasBegin = false;
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->StartFrame();
