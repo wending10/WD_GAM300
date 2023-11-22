@@ -5,6 +5,7 @@
 #include "../vulkanTools/vulkanInstance.h"
 #include "Rendering/GraphicsManager.h"
 #include "vulkanTools/CommandManager.h"
+#include "vulkanTools/Renderer.h"
 #include "GraphicsResource/FontInfo.h"
 namespace TDS
 {
@@ -458,9 +459,9 @@ namespace TDS
 		VMABuffer staging = VMABuffer::CreateStagingBuffer(textureAssetData.m_ImageSize, instance, textureAssetData.m_Data);
 
 		std::vector<VkBufferImageCopy> CopyBuffers;
-		
+
 		std::uint32_t offset {};
-		
+
 		for (uint32_t face = 0; face < 6; face++)
 		{
 			for (uint32_t level = 0; level < textureAssetData.mipCount; level++)
@@ -484,7 +485,7 @@ namespace TDS
 				offset += imageData->m_memSlicePitch;
 			}
 		}
-		
+
 
 		CommandBufferInfo cmdInfo{};
 		CommandManager& cmdMgr = GraphicsManager::getInstance().getCommandManager();
@@ -770,9 +771,19 @@ namespace TDS
 
 	void VulkanTexture::Destroy()
 	{
-
 		VkDevice deviceRef = GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice();
-		vkQueueWaitIdle(GraphicsManager::getInstance().getVkInstance().getGraphicsQueue());
+		if (GraphicsManager::getInstance().IfFrameHasBegin())
+		{
+			vkQueueWaitIdle(GraphicsManager::getInstance().getVkInstance().getGraphicsQueue());
+
+			int index = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+			VkFence fence = GraphicsManager::getInstance().GetSwapchainRenderer().getSwapchain().GetInFlightFences(index);
+			VkResult result = vkGetFenceStatus(deviceRef, fence);
+			if (result != VK_SUCCESS)
+			{
+				vkWaitForFences(deviceRef, 1, &fence, VK_TRUE, UINT64_MAX);
+			}
+		}
 		if (deviceRef == nullptr)
 			return;
 
@@ -853,7 +864,7 @@ namespace TDS
 	}
 
 
-	
+
 
 	VkExtent2D VulkanTexture::GenMipsExtent(TextureData& data, std::uint32_t mip)
 	{

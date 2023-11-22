@@ -34,7 +34,7 @@ namespace TDS
 		RenderPass*								m_Renderpass{ nullptr };
 		FrameBuffer*							m_Framebuffer{ nullptr };
 		bool									m_ViewingFrom2D = false;
-
+		bool									m_FrameHasBegin = false;
 	public:
 		inline static std::shared_ptr<GraphicsManager> m_Instance;
 		GraphicsManager();
@@ -42,7 +42,10 @@ namespace TDS
 
 		void								ToggleViewFrom2D(bool condition);
 		bool								IsViewingFrom2D();
-				
+		inline bool							IfFrameHasBegin()
+		{
+			return m_FrameHasBegin;
+		}
 		void								AddRenderLayer(RenderLayer* layer);
 		void								Init(WindowsWin* window);
 		void								StartFrame();

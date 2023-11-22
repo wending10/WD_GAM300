@@ -73,7 +73,7 @@ namespace TDS
 		VkImageLayout					m_ImageLayout;
 		VkDescriptorImageInfo			m_DescriptorImageInfo;
 		VkWriteDescriptorSet			m_WriteSet = { VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET };
-		
+		bool							m_SetForDestruction;
 
 
 	};
@@ -84,11 +84,11 @@ namespace TDS
 		DefaultTextures();
 		~DefaultTextures();
 
-		void DLL_API							Init();
-		static							std::shared_ptr<VulkanTexture> GetDefaultTexture();
-		static							std::shared_ptr<VulkanTexture> GetDefaultCubeTexture();
-		static							std::shared_ptr<VulkanTexture> GetDefaultStorage();
-		void DLL_API							DestroyDefaultTextures();
+		void DLL_API						Init();
+		static								std::shared_ptr<VulkanTexture> GetDefaultTexture();
+		static								std::shared_ptr<VulkanTexture> GetDefaultCubeTexture();
+		static								std::shared_ptr<VulkanTexture> GetDefaultStorage();
+		void DLL_API						DestroyDefaultTextures();
 		static DefaultTextures& GetInstance();
 	;		private:
 		inline static					std::shared_ptr<DefaultTextures> m_Instance = nullptr;

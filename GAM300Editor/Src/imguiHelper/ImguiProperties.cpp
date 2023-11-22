@@ -844,32 +844,43 @@ namespace TDS
 
 						if (propertyName.get_name() == "TextureName")
 						{
-							if (filesystempath.extension() == ".dds")
+							if (filesystempath.extension() == ".dds" || filesystempath.extension() == ".jpg" || filesystempath.extension() == ".png")
 							{
 
 								AssetBrowser assetbroswer;
 								assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finaltexture, nullptr);
 								//g.m_TextureName = final;
-								g->SetTextureName(finaltexture);
+
+								if (filesystempath.extension() != ".dds")
+								{
+									g->SetTextureName(assetbroswer.LoadAsset(finaltexture));
+								}
+								else
+								{
+									g->SetTextureName(finaltexture);
+								}
+								
 
 								std::wcout << " Path of dragged file is: " << path << std::endl;
 							}
 							else
 							{
+
 								TDS_INFO("invalid file type, please drag a .dds for TextureName");
 							}
 
 						}
 						if (propertyName.get_name() == "ModelName")
 						{
-							if (filesystempath.extension() == ".bin")
+							if (filesystempath.extension() == ".bin" || filesystempath.extension() == ".obj" || filesystempath.extension() == ".fbx"
+								|| filesystempath.extension() == ".gltf")
 							{
 
 								AssetBrowser assetbroswer;
 								assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finalmodel, nullptr);
 								//g.m_TextureName = final;
-								g->SetModelName(finalmodel);
-
+								g->SetModelName(assetbroswer.LoadAsset(finalmodel));
+								
 								std::wcout << " Path of dragged file is: " << path << std::endl;
 							}
 							else
@@ -883,6 +894,62 @@ namespace TDS
 						propertyName.set_value(componentInstance, newValue);
 					}
 					ImGui::EndDragDropTarget();
+				}
+				else if (componentName == "UI Sprite" && ImGui::BeginDragDropTarget())
+				{
+					UISprite* ui = reinterpret_cast<UISprite*>(componentBase);
+					std::string finaltexture = ui->m_TextureName;
+					std::string finalFont = ui->m_FontName;
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						std::shared_ptr<AssetBrowser> Assetbrowser = static_pointer_cast<AssetBrowser>(LevelEditorManager::GetInstance()->panels[PanelTypes::ASSETBROWSER]);
+						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::wstring ws(path);
+						// your new String
+						std::string str(ws.begin(), ws.end());
+						const std::filesystem::path filesystempath = str;
+						if (propertyName.get_name() == "Texture")
+						{
+							if (filesystempath.extension() == ".dds" || filesystempath.extension() == ".jpg" || filesystempath.extension() == ".png")
+							{
+								Assetbrowser->getFileNameFromPath(str.c_str(), nullptr, nullptr, &finaltexture, nullptr);
+
+								if (filesystempath.extension() == ".dds")
+								{
+									ui->m_TextureName = finaltexture;
+								}
+								else
+								{
+									ui->m_TextureName = Assetbrowser->LoadAsset(finaltexture);
+								}
+
+								
+								std::wcout << " Path of dragged file is: " << path << std::endl;
+							}
+							else
+							{
+								TDS_INFO("invalid file type, please drag a .dds for TextureName");
+							}
+						}
+						else if (propertyName.get_name() == "Font Texture")
+						{
+							if (filesystempath.extension() == ".ttf")
+							{
+								Assetbrowser->getFileNameFromPath(str.c_str(), nullptr, nullptr, &finalFont, nullptr);
+								ui->m_FontName = Assetbrowser->LoadAsset(finalFont);
+								std::wcout << " Path of dragged file is: " << path << std::endl;
+							}
+							else if (filesystempath.extension() == ".dds")
+							{
+								ui->m_FontName = finalFont;
+							}
+							else
+							{
+
+								TDS_INFO("invalid file type, please drag a .ttf or a .dds for Font");
+							}
+						}
+					}
 				}
 				else
 				{
