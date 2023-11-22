@@ -12,6 +12,7 @@
 
 #include "sceneManager/sceneManager.h"
 #include "propertyManager/registration.h"
+#include "eventManager/eventManager.h"
 
 namespace TDS
 {
@@ -51,7 +52,6 @@ namespace TDS
 	{
 		ecs.registerComponent<NameTag>("Name Tag");
 		ecs.registerComponent<Transform>("Transform");
-
 		ecs.registerComponent<AI>("AI");
 		ecs.registerComponent<BoxCollider>("Box Collider");
 		ecs.registerComponent<CameraComponent>("Camera Component");
@@ -62,6 +62,7 @@ namespace TDS
 		ecs.registerComponent<Sprite>("Sprite");
 		ecs.registerComponent<Tag>("Tag");
 		ecs.registerComponent<WinData>("Win Data");
+		ecs.registerComponent<UISprite>("UI Sprite");
 
 		startScene = "";
 		//startScene = "MainMenu";
@@ -156,8 +157,8 @@ namespace TDS
 				rttr::instance addedComponent = getComponentByName(component, lastEntity);
 				fromJsonRecur(addedComponent, componentData);
 			}
-
 			updateName(lastEntity, ecs.getComponent<NameTag>(lastEntity)->GetName());
+
 		}
 
 		ecs.setIDCounter(lastEntity + 1);
@@ -171,7 +172,7 @@ namespace TDS
 			{
 				std::string scriptName = script.name.GetString();
 
-				std::cout << "script" << std::endl;
+				//std::cout << "script" << std::endl;
 				addScript(currentEntity, scriptName);
 
 				for (auto& variable : script.value.GetObject())
@@ -214,9 +215,15 @@ namespace TDS
 						//	setChar(currentEntity, scriptName, variableName, value[0]);
 						//}
 					}
-					else if (variableType == "GameObject")
+					else if (variableType == "Vector3")
 					{
-						EntityID value = variableTypeValue.MemberBegin()->value.GetDouble();
+						auto object = variableTypeValue.MemberBegin()->value.GetObj();
+						Vec3 value = Vec3(object["X"].GetFloat(), object["Y"].GetFloat(), object["Z"].GetFloat());
+						setVector3(currentEntity, scriptName, variableName, value);
+					}
+					else if (variableType == "GameObject" || variableType == "Component")
+					{
+						EntityID value = variableTypeValue.MemberBegin()->value.GetInt();
 						if (value > 0)
 						{
 							setGameObject(currentEntity, scriptName, variableName, value);
@@ -372,10 +379,29 @@ namespace TDS
 							writer->String("GameObject", static_cast<rapidjson::SizeType>(std::string("GameObject").length()), false);
 							writer->Int(scriptValues.referenceEntityID);
 						}
+						else if (scriptValues.type == "Component")
+						{
+							writer->String("Component", static_cast<rapidjson::SizeType>(std::string("Component").length()), false);
+							writer->Int(scriptValues.referenceEntityID);
+						}
 						else if (scriptValues.type == "System.Char")
 						{
 							writer->String("Char", static_cast<rapidjson::SizeType>(std::string("Char").length()), false);
 							writer->String(scriptValues.value.c_str(), static_cast<rapidjson::SizeType>(scriptValues.value.length()), false);
+						}
+						else if (scriptValues.type == "ScriptAPI.Vector3")
+						{
+							writer->String("Vector3", static_cast<rapidjson::SizeType>(std::string("Vector3").length()), false);
+							writer->StartObject();
+							{
+								writer->String("X", 1, false);
+								writer->Double(scriptValues.vectorValueX);
+								writer->String("Y", 1, false);
+								writer->Double(scriptValues.vectorValueY);
+								writer->String("Z", 1, false);
+								writer->Double(scriptValues.vectorValueZ);
+							}
+							writer->EndObject();
 						}
 						else // scripts 
 						{
@@ -540,6 +566,7 @@ namespace TDS
 	void SceneManager::loadScene(std::string scene)
 	{
 		ecs.removeAllEntities();
+		eventManager.clearQueues();
 		DeserializeFromFile(filePath + scene + ".json");
 		currentScene = scene;
 		currentSceneSaved = true;

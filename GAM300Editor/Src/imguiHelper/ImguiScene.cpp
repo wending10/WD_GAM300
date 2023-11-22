@@ -9,6 +9,8 @@
 #include "Rendering/RenderTarget.h"
 #include "vulkanTools/Renderer.h"
 #include "imgui/ImGuizmo.h"
+#include "eventManager/eventHandler.h"
+#include "../EditorApp.h"
 //#include "Input/Input.h"
 namespace TDS
 {
@@ -27,13 +29,33 @@ namespace TDS
 		windowPadding = ImVec2(0.f, 0.f);
 	}
 
-	std::string tempPath = "../../assets/textures/texture.dds";
+	std::string tempPath = "../assets/textures/texture.dds";
 	void EditorScene::init()
 	{
 		m_DescSet = ImGui_ImplVulkan_AddTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 	}
 	void EditorScene::update()
 	{
+		isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
+
+		if (ImGui::BeginMenuBar())
+		{
+			if (isPlaying)
+			{
+				if (ImGui::BeginMenu("Scene is Playing..."))
+				{
+					ImGui::EndMenu();
+				}
+			}
+			else
+			{
+				if (ImGui::BeginMenu("Scene is Paused"))
+				{
+					ImGui::EndMenu();
+				}
+			}
+			ImGui::EndMenuBar();
+		}
 		//ImGui::Image(reinterpret_cast<void*>(vkTexture.m_DescSet), ImVec2{ 200, 200 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		//if (ImGui::BeginDragDropTarget())
 		//{
@@ -74,13 +96,9 @@ namespace TDS
 		GraphicsManager::getInstance().getViewportScreen().y = ImGui::GetWindowPos().y;
 		GraphicsManager::getInstance().getViewportScreen().z = ImGui::GetContentRegionAvail().x;
 		GraphicsManager::getInstance().getViewportScreen().w = ImGui::GetContentRegionAvail().y;
-
-
-
-		
-		
+	
 		ImGui::Image((ImTextureID)m_DescSet, vSize);
-		//drag drop code MUST be ddirecvtly under imgui::image code
+		//drag drop code MUST be directly under imgui::image code
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
@@ -111,7 +129,6 @@ namespace TDS
 			ImGui::EndDragDropTarget();
 		}
 
-
 		std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
 
 
@@ -132,14 +149,51 @@ namespace TDS
 
 		if (selectedEntity)
 		{
-			ImGuizmo::SetOrthographic(false);
+			if (GraphicsManager::getInstance().IsViewingFrom2D())
+			{
+				GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(getComponentByName("Graphics Component", selectedEntity));
+
+				if (graphComp != nullptr && graphComp->m_UsedIn2D)
+				{
+					view2D = false;
+					ImGuizmo::SetOrthographic(false);
+				}
+				else
+				{
+					view2D = true;
+					ImGuizmo::SetOrthographic(true);
+				}
+
+			}
+			else
+			{
+				ImGuizmo::SetOrthographic(false);
+			}
 			ImGuizmo::SetDrawlist();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
-
-			Mat4 projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
-				GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 10.f);
+			Mat4 projection{};
 			//projection.m[1][1] *= -1;
-			Mat4 view = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
+
+			Mat4 view = Mat4::identity();
+			if (view2D)
+			{
+				projection = Mat4::Ortho(
+					-1.f,
+					1.f,
+					-1.f,
+					1.f,
+					-1.f,
+					1.f
+				);
+			}
+			else
+			{
+				projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
+					GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 10.f);
+				view = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
+				//projection.m[1][1] *= -1;
+			}
+
 
 			const auto& trans = ecs.getComponent<Transform>(selectedEntity);
 
@@ -161,10 +215,13 @@ namespace TDS
 
 			if (ImGuizmo::IsUsing() && m_gizmoType != -1)
 			{
-
 				Vec3 transl{};
 				Vec3 rotat{};
 				Vec3 scal{};
+
+				Vec3 oldPosition = trans->GetPosition();
+				Vec3 oldScale = trans->GetScale();
+				Vec3 oldRotation = trans->GetRotation();
 
 				float* _transl = Vec3::Vec3Value_ptr(transl);
 				float* _rotat = Vec3::Vec3Value_ptr(rotat);
@@ -177,6 +234,7 @@ namespace TDS
 				if (_scal[0] > 0.f && _scal[1] > 0.f && _scal[2] > 0.f)
 					trans->SetScale(_scal[0], _scal[1], _scal[2]);
 
+				EventHandler::postChildTransformationEvent(selectedEntity, oldPosition, oldScale, oldRotation);
 
 				delete[] _transl;
 				delete[] _rotat;

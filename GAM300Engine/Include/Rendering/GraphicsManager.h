@@ -48,6 +48,12 @@ namespace TDS
 		GraphicsManager();
 		~GraphicsManager();
 
+		void								ToggleViewFrom2D(bool condition);
+		bool								IsViewingFrom2D();
+		inline bool							IfFrameHasBegin()
+		{
+			return m_FrameHasBegin;
+		}
 		void								AddRenderLayer(RenderLayer* layer);
 		void								Init(WindowsWin* window);
 		void								StartFrame();
@@ -55,6 +61,12 @@ namespace TDS
 		void								ShutDown();
 		void								ResizeFrameBuffer(std::uint32_t width, std::uint32_t height);
 		void								setCamera(TDSCamera& camera);
+		std::shared_ptr<VulkanInstance>		getVkInstancePtr();
+
+		WindowsWin*							GetWindow();
+		
+		
+
 		TDSCamera& GetCamera();
 
 		VkCommandBuffer& getCommandBuffer();

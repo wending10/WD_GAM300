@@ -180,15 +180,21 @@ namespace TDS
 
 								Vec3 parentRotation = parentTransformComponent->GetRotation();
 								Vec3 reflectedRotation = oldRotation - parentRotation;
-								ImguiInput("Position", reflectedRotation);
+								ImguiInput("Rotation", reflectedRotation);
 								transformComponent->SetRotation(reflectedRotation + parentRotation);
 							}
 							else
 							{
 								ImguiComponentDisplay(componentName, componentBase);
-							}
 
-							EventHandler::postChildTransformationEvent(selectedEntity, oldPosition, oldScale, oldRotation);
+								if (nameTagComponent->GetHierarchyChildren().size() > 0 && 
+									(oldPosition != transformComponent->GetPosition() ||
+									oldScale != transformComponent->GetScale() ||
+									oldRotation != transformComponent->GetRotation()))
+								{
+									EventHandler::postChildTransformationEvent(selectedEntity, oldPosition, oldScale, oldRotation);
+								}
+							}
 						}
 						else
 						{
@@ -240,14 +246,57 @@ namespace TDS
 
 						ImGui::TableNextRow();
 						ImGui::TableNextColumn();
+						ImGui::Text("Script");
 						//ImGui::SetColumnWidth(ImGui::GetContentRegionAvail().x * 0.3f);
 						ImGui::TableNextColumn();
+						ImGui::PushItemWidth(-ImGui::GetContentRegionAvail().x * 0.15f);
+						//ImGui::
+
+						ImGui::PushID(0);
+						ImGui::BeginDisabled();
+
+						char temp[100];
+						strcpy_s(temp, scriptName.c_str());
+						ImGui::InputText("##scriptName", temp, 100, ImGuiInputTextFlags_ReadOnly);
+						ImGui::SameLine();
+						ImGui::Button("O");
+
+						ImGui::EndDisabled();
+						ImGui::PopID();
+
+						ImGui::PopItemWidth();
 						ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
 
-						std::vector<ScriptValues> allValues = sceneManagerInstance->getScriptVariables(selectedEntity, scriptName);
+						std::vector<ScriptValues> allValues = getScriptVariables(selectedEntity, scriptName);
 
 						for (ScriptValues scriptValue : allValues)
 						{
+							if (scriptValue.headerString != "") // NOTE: So cursed can u shorten please ry what is wrong with u HAHA
+							{
+								ImGui::PopItemWidth();
+								ImGui::EndTable();
+
+								//ImGui::TableNextRow();
+								//ImGui::TableNextColumn();
+								ImGui::NewLine();
+								ImGui::Text(scriptValue.headerString.c_str());
+								//ImGui::TableNextColumn();
+								//ImGui::TableNextRow();
+
+								ImGui::BeginTable("components", 2, /*ImGuiTableFlags_Borders |*/ ImGuiTableFlags_NoPadInnerX | ImGuiTableFlags_SizingStretchSame, ImVec2(0.0f, 5.5f));
+
+								ImGui::TableSetupColumn("Component variable name", ImGuiTableColumnFlags_None, ImGui::GetContentRegionAvail().x * 0.4f);
+								ImGui::TableSetupColumn("Component variable value", ImGuiTableColumnFlags_None, ImGui::GetContentRegionAvail().x * 0.6f);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								//ImGui::SetColumnWidth(ImGui::GetContentRegionAvail().x * 0.3f);
+								ImGui::TableNextColumn();
+								ImGui::PushItemWidth(-FLT_MIN); // Right-aligned
+
+								continue;
+							}
+
 							if (scriptValue.type == "System.Boolean")
 							{
 								bool value = scriptValue.value == "False" ? false : true;
@@ -300,6 +349,14 @@ namespace TDS
 								//char value = scriptValue.value[0];
 								//value = ImguiInput(scriptValue.name, value);
 								//sceneManagerInstance->setChar(selectedEntity, scriptName, scriptValue.name, value);
+							}
+							else if (scriptValue.type == "ScriptAPI.Vector3")
+							{
+								Vec3 value (scriptValue.vectorValueX, scriptValue.vectorValueY, scriptValue.vectorValueZ);
+								if (ImguiInput(scriptValue.name, value))
+								{
+									sceneManagerInstance->setVector3(selectedEntity, scriptName, scriptValue.name, value);
+								}
 							}
 							else // scripts & game object
 							{
@@ -360,6 +417,12 @@ namespace TDS
 								{
 									if (scriptValue.type == "ScriptAPI.GameObject")
 									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setGameObject(selectedEntity, scriptName, scriptValue.name, 0);
+											ImGui::CloseCurrentPopup();
+										}
+
 										for (EntityID entityID : ecs.getEntities())
 										{
 											if (entityID == selectedEntity)
@@ -376,6 +439,12 @@ namespace TDS
 									}
 									else // Script
 									{
+										if (ImGui::Selectable("None", false, ImGuiSelectableFlags_SpanAllColumns))
+										{
+											sceneManagerInstance->setScriptReference(selectedEntity, scriptName, scriptValue.name, 0, scriptValue.type);
+											ImGui::CloseCurrentPopup();
+										}
+
 										for (EntityID entityID : ecs.getEntities())
 										{
 											if (entityID == selectedEntity)
@@ -460,6 +529,7 @@ namespace TDS
 	****************************************************************************/
 	void Properties::ImguiComponentDisplay(std::string componentName, IComponent* componentBase)
 	{
+
 		rttr::type type = rttr::type::get_by_name(componentName);
 		rttr::instance componentInstance = componentBase;
 
@@ -508,29 +578,51 @@ namespace TDS
 						std::string str(ws.begin(), ws.end());
 						const std::filesystem::path filesystempath = str;
 
-						if (filesystempath.extension() == ".dds")
+						if (propertyName.get_name() == "TextureName")
 						{
+							if (filesystempath.extension() == ".dds" || filesystempath.extension() == ".jpg" || filesystempath.extension() == ".png")
+							{
 
-							AssetBrowser assetbroswer;
-							assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finaltexture, nullptr);
-							//g.m_TextureName = final;
-							g->SetTextureName(finaltexture);
+								AssetBrowser assetbroswer;
+								assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finaltexture, nullptr);
+								//g.m_TextureName = final;
 
-							std::wcout << " Path of dragged file is: " << path << std::endl;
+								if (filesystempath.extension() != ".dds")
+								{
+									g->SetTextureName(assetbroswer.LoadAsset(finaltexture));
+								}
+								else
+								{
+									g->SetTextureName(finaltexture);
+								}
+								
+
+								std::wcout << " Path of dragged file is: " << path << std::endl;
+							}
+							else
+							{
+
+								TDS_INFO("invalid file type, please drag a .dds for TextureName");
+							}
+
 						}
-						if (filesystempath.extension() == ".bin")
+						if (propertyName.get_name() == "ModelName")
 						{
+							if (filesystempath.extension() == ".bin" || filesystempath.extension() == ".obj" || filesystempath.extension() == ".fbx"
+								|| filesystempath.extension() == ".gltf")
+							{
 
-							AssetBrowser assetbroswer;
-							assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finalmodel, nullptr);
-							//g.m_TextureName = final;
-							g->SetModelName(finalmodel);
-
-							std::wcout << " Path of dragged file is: " << path << std::endl;
-						}
-						else
-						{
-							TDS_INFO("invalid file type, please drag a .dds for TextureName or .bin for ModelName ");
+								AssetBrowser assetbroswer;
+								assetbroswer.getFileNameFromPath(str.c_str(), nullptr, nullptr, &finalmodel, nullptr);
+								//g.m_TextureName = final;
+								g->SetModelName(assetbroswer.LoadAsset(finalmodel));
+								
+								std::wcout << " Path of dragged file is: " << path << std::endl;
+							}
+							else
+							{
+								TDS_INFO("invalid file type, please drag a .bin or .fbx for ModelName ");
+							}
 						}
 					}
 					else
@@ -538,6 +630,62 @@ namespace TDS
 						propertyName.set_value(componentInstance, newValue);
 					}
 					ImGui::EndDragDropTarget();
+				}
+				else if (componentName == "UI Sprite" && ImGui::BeginDragDropTarget())
+				{
+					UISprite* ui = reinterpret_cast<UISprite*>(componentBase);
+					std::string finaltexture = ui->m_TextureName;
+					std::string finalFont = ui->m_FontName;
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						std::shared_ptr<AssetBrowser> Assetbrowser = static_pointer_cast<AssetBrowser>(LevelEditorManager::GetInstance()->panels[PanelTypes::ASSETBROWSER]);
+						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::wstring ws(path);
+						// your new String
+						std::string str(ws.begin(), ws.end());
+						const std::filesystem::path filesystempath = str;
+						if (propertyName.get_name() == "Texture")
+						{
+							if (filesystempath.extension() == ".dds" || filesystempath.extension() == ".jpg" || filesystempath.extension() == ".png")
+							{
+								Assetbrowser->getFileNameFromPath(str.c_str(), nullptr, nullptr, &finaltexture, nullptr);
+
+								if (filesystempath.extension() == ".dds")
+								{
+									ui->m_TextureName = finaltexture;
+								}
+								else
+								{
+									ui->m_TextureName = Assetbrowser->LoadAsset(finaltexture);
+								}
+
+								
+								std::wcout << " Path of dragged file is: " << path << std::endl;
+							}
+							else
+							{
+								TDS_INFO("invalid file type, please drag a .dds for TextureName");
+							}
+						}
+						else if (propertyName.get_name() == "Font Texture")
+						{
+							if (filesystempath.extension() == ".ttf")
+							{
+								Assetbrowser->getFileNameFromPath(str.c_str(), nullptr, nullptr, &finalFont, nullptr);
+								ui->m_FontName = Assetbrowser->LoadAsset(finalFont);
+								std::wcout << " Path of dragged file is: " << path << std::endl;
+							}
+							else if (filesystempath.extension() == ".dds")
+							{
+								ui->m_FontName = finalFont;
+							}
+							else
+							{
+
+								TDS_INFO("invalid file type, please drag a .ttf or a .dds for Font");
+							}
+						}
+					}
 				}
 				else
 				{

@@ -52,10 +52,10 @@ namespace TDS
 
 	struct ShaderInputs
 	{
-		//The shaders u want to use for this pipeline
+		
 		std::map<SHADER_FLAG, std::string>			m_Shaders;
 
-		std::map<std::uint32_t, BufferInfo>			m_InputBuffers; //This is if lets say you have a runtime array data in your uniform buffers or SSBO. You need this to define your size.
+		std::map<std::uint32_t, BufferInfo>			m_InputBuffers; 
 		std::vector<VertexBufferInfo>				m_InputVertex;
 		std::int32_t								m_StageCnt = -1;
 	};
@@ -125,9 +125,9 @@ namespace TDS
 		void									BindIndexBuffer(VMABuffer& IndexBuffer);
 		void									LoadShader(std::string_view shaderPath, SHADER_FLAG shaderFlag);
 
-		VkPipeline&								GetPipeline(VkPrimitiveTopology drawMode);
-		VkPipelineLayout&						GetLayout();
-		VkDescriptorPool&						GetDescriptorPool();
+		VkPipeline& GetPipeline(VkPrimitiveTopology drawMode);
+		VkPipelineLayout& GetLayout();
+		VkDescriptorPool& GetDescriptorPool();
 		bool									IsBlendEnabled();
 		std::uint32_t							GetBufferBinding(std::string_view bufferName);
 		std::uint32_t							GetTextureBinding(std::string_view textureBinding);
@@ -146,7 +146,7 @@ namespace TDS
 		void									UpdateDescriptor(VkDescriptorImageInfo& imageInfo, VkDescriptorType type, std::uint32_t bindingPoint);
 		VkDescriptorSetLayout					GetLayout(std::uint32_t index = 0) const;
 		const std::vector<VkDescriptorSet>& GetDescriptorSets(std::uint32_t index = 0) const;
-		void									SetRenderTarget(VkRenderPass& renderTarget );
+		void									SetRenderTarget(VkRenderPass renderTarget);
 	private:
 		struct
 		{

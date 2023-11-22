@@ -11,15 +11,17 @@ RTTR_REGISTRATION
 		.property("TextureName", &GraphicsComponent::m_TextureName)
 		.method("IsDebugOn", &GraphicsComponent::IsDebugOn)
 		.method("ToggleDebug", &GraphicsComponent::ToggleDebug)
-		.property("Mesh Renderer", & GraphicsComponent::m_ShowMesh)
+		.property("Mesh Renderer", &GraphicsComponent::m_ShowMesh)
 		.property("Debug", &GraphicsComponent::m_Debug)
 		//.method("SetTextureName", &GraphicsComponent::SetTextureName)
 		//.property("TextureName", &GraphicsComponent::m_TextureName, rttr::select_overload<void(std::string)>(&GraphicsComponent::SetTextureName))
 		.property("ModelName", &GraphicsComponent::m_ModelName)
+		.property("MeshName", &GraphicsComponent::m_MeshName)
 		.method("SetColor", rttr::select_overload<void(Vec4)>(&GraphicsComponent::SetColor))
 		.method("SetColor", rttr::select_overload<void(float, float, float, float)>(&GraphicsComponent::SetColor))
 		.method("GetColor", &GraphicsComponent::GetColor)
-		.property("Color", &GraphicsComponent::m_Color);
+		.property("Color", &GraphicsComponent::m_Color)
+		.property("Used In 2D", &GraphicsComponent::m_UsedIn2D);
 		//.property("Color", &GraphicsComponent::GetColor, rttr::select_overload<void(Vec4)>(&GraphicsComponent::SetColor));
 }
 
@@ -31,11 +33,18 @@ namespace TDS
 											m_Color(1.f, 1.f, 1.f, 1.f),
 											m_PointLightID(-1.f),
 											m_Pointlight(false),
-											m_Debug(false)
+											m_Debug(false),
+											m_UsedIn2D(false)
+											
 	{ }
 
-	GraphicsComponent::GraphicsComponent(GraphicsComponent&& toMove) noexcept: m_AssetReference(toMove.m_AssetReference), 
-																			   m_TextureReference(toMove.m_TextureReference), 
-																			   m_ShowMesh(toMove.m_ShowMesh)
+	GraphicsComponent::GraphicsComponent(GraphicsComponent&& toMove) noexcept: m_AssetReference(std::move(toMove.m_AssetReference)), 
+																			   m_TextureReference(std::move(toMove.m_TextureReference)),
+																			   m_ShowMesh(std::move(toMove.m_ShowMesh)),
+																			   m_UsedIn2D(std::move(toMove.m_UsedIn2D)),
+																			   m_TextureName(std::move(toMove.m_TextureName)),
+																			   m_ModelName(std::move(toMove.m_ModelName))
+																			
+																								
 	{ }
 }

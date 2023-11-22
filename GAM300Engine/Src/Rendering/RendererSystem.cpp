@@ -27,10 +27,17 @@ namespace TDS
 	}
 	void RendererSystem::OnUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _TransformComponent, GraphicsComponent* _Graphics)
 	{
+
+		
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
+			if (GraphicsManager::getInstance().IsViewingFrom2D())
+			{
+				if (_Graphics[i].m_UsedIn2D == false)
+					continue;
+			}
 			PushConstantData pushData{};
 			pushData.Id = static_cast<uint32_t>(i + 1);
 			if (_Graphics[i].m_ModelName != _Graphics[i].m_AssetReference.m_AssetName)
@@ -49,7 +56,7 @@ namespace TDS
 
 			}
 			std::string texName = _Graphics[i].m_TextureName;
-			int textureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(_Graphics[i].m_TextureName);
+			int textureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(_Graphics[i].m_TextureName, _Graphics[i].m_TextureReference);
 			
 			if (textureID == -1)
 			{
@@ -60,38 +67,22 @@ namespace TDS
 				pushData.textureIndex = textureID;
 			}
 
-			/*if (_Graphics[i].m_TextureName != _Graphics[i].m_TextureReference.m_AssetName)
-			{
-
-
-				Texture* pTexture = AssetManager::GetInstance()->GetTextureFactory().GetTexture(_Graphics[i].m_TextureName);
-				if (pTexture == nullptr)
-				{
-					TDS_WARN("No such texture called {}", _Graphics[i].m_AssetReference.m_AssetName);
-				}
-				else
-				{
-					_Graphics[i].m_TextureReference.m_AssetName = _Graphics[i].m_ModelName;
-					_Graphics[i].m_TextureReference.m_ResourcePtr = pTexture;
-					
-				}
-				
-			}*/
-
 			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
+			if (GraphicsManager::getInstance().m_PointLightRenderer == nullptr)
+			{
+			}
 			GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 			GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 
 
 			if (Renderer3D::getPipeline()->GetCreateEntry().m_EnableDoubleBuffering)
 			{
-
-
 				if (Vec3 Scale = _TransformComponent[i].GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f) {
 				}
 				else {
 					_TransformComponent[i].GenerateTransfom();
 				}
+
 				Mat4 temp = _TransformComponent[i].GetTransformMatrix();
 				pushData.ModelMat = temp;
 				temp.inverse();
@@ -101,7 +92,7 @@ namespace TDS
 				ubo.m_View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
 				GraphicsManager::getInstance().m_PointLightRenderer->update(ubo, &_Graphics[i], &_TransformComponent[i]);
 				ubo.m_Projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
-					GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 1000.f);
+					GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 1000000.f);
 				ubo.m_Projection.m[1][1] *= -1;
 
 				if (_Graphics[i].IsPointLight())
@@ -113,16 +104,46 @@ namespace TDS
 				else {//if not point light render using model
 					if (_Graphics[i].m_AssetReference.m_ResourcePtr != nullptr)
 					{
-						if (_Graphics[i].m_AssetReference.m_ResourcePtr->BufferIsNull())
-							_Graphics[i].m_AssetReference.m_ResourcePtr->CreateBuffers();
+
+						auto& ModelReference = _Graphics[i].m_AssetReference;
+						
+						//Means we did not split any mesh and the whole model is one mesh
+						if (ModelReference.m_ResourcePtr->m_Meshes.size() == 1)
+						{
+							if (ModelReference.m_ResourcePtr->BufferIsNull())
+								ModelReference.m_ResourcePtr->CreateBuffers();
+
+							
+						}
+						else
+						{
+							MeshData* ptr = nullptr;
+							auto findItr = ModelReference.m_ResourcePtr->m_Meshes.find(_Graphics[i].m_MeshName);
+							if (findItr != ModelReference.m_ResourcePtr->m_Meshes.end())
+							{
+								ptr = &findItr->second;
+								ModelReference.m_ResourcePtr->m_CurrMeshData = ptr;
+								if (ModelReference.m_ResourcePtr->m_CurrMeshData->BufferIsNull())
+									ModelReference.m_ResourcePtr->m_CurrMeshData->CreateBuffers();
+							}
+							else
+							{
+								findItr = ModelReference.m_ResourcePtr->m_Meshes.begin();
+								ptr = &findItr->second;
+								ModelReference.m_ResourcePtr->m_CurrMeshData = ptr;
+								if (ModelReference.m_ResourcePtr->m_CurrMeshData->BufferIsNull())
+									ModelReference.m_ResourcePtr->m_CurrMeshData->CreateBuffers();
+							}
+						}
+
 
 
 						Renderer3D::getPipeline()->BindPipeline();
 	
-						if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray)
+						if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray3D)
 						{
 							Renderer3D::getPipeline()->UpdateTextureArray(4, VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, AssetManager::GetInstance()->GetTextureFactory().GetTextureArray());
-							AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray = false;
+							AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray3D = false;
 						}
 						
 						

@@ -4,10 +4,11 @@
 #include "Tools/TextureCompressor.h"
 #include "Tools/DDSConverter.h"
 #include "vulkanTools/VulkanTexture.h"
-#define FONT_COMPILER_PATH "../../assets/Fonts/FontCompiler/msdf-atlas-gen.exe"
+#include "AssetManagement/AssetManager.h"
+#define FONT_COMPILER_PATH "../assets/Fonts/FontCompiler/msdf-atlas-gen.exe"
 namespace TDS
 {
-	bool FontLoader::RunFontLoader(LoaderDescriptor& desc, FontComponent& font)
+	bool FontLoader::RunFontLoader(LoaderDescriptor& desc, std::string& ddsTexturePath)
 	{
 
 		//Get the absolute path of the input file
@@ -58,10 +59,8 @@ namespace TDS
 			std::string Input = bmpFile;
 			std::string output = desc.OutPath;
 			output += ".dds";
-			DDSConverter::ConvertToDDS(Input, output);;
-			font.m_FontInfo.m_AtlasLayout.DeserializeFontAtlas(forLayout);
-			font.LoadFont(output);
-
+			DDSConverter::ConvertToDDS(Input, output);
+			ddsTexturePath = output;
 
 			return true;
 		}
