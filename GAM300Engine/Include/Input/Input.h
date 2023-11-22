@@ -238,7 +238,7 @@ namespace TDS
 		****************************************************************************/
 		static void storeWindowHandleAndRect(HWND sethandle, RECT setrect);
 
-		static void setCurrentMousePos(float x, float y);
+		static void setCurrentMousePos(float x, float y, Vec2 boundary_x, Vec2 boundary_y);
 
 		static Vec2 CurrentMousePos();
 		

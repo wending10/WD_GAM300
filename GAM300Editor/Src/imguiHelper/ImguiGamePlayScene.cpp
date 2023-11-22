@@ -12,6 +12,7 @@ TDS::GamePlayScene::GamePlayScene()
 	windowPadding = ImVec2(0.f, 0.f);
 
 	exit_cursor = true;
+	show_cursor = 1;
 }
 
 void TDS::GamePlayScene::init()
@@ -38,7 +39,7 @@ void TDS::GamePlayScene::update()
 				window_size = ImGui::GetWindowSize();
 				window_pos = ImGui::GetWindowPos();
 
-				Input::setCurrentMousePos(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+				Input::setCurrentMousePos(ImGui::GetMousePos().x, ImGui::GetMousePos().y, Vec2(window_pos.x, window_pos.x + window_size.x), Vec2(window_pos.y, window_pos.y + window_size.y));
 
 				ImGuiIO& cursor_input = ImGui::GetIO();
 				cursor_input.WantSetMousePos = true;
@@ -46,13 +47,17 @@ void TDS::GamePlayScene::update()
 
 				Input::setCenteredMouse(cursor_input.MousePos.x, cursor_input.MousePos.y);
 
-				ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+				//ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+				show_cursor = 0;
 			}
 			else
 			{
 				ImGuiIO& cursor_input = ImGui::GetIO();
 				cursor_input.WantSetMousePos = false;
+				show_cursor = 1;
 			}
+
+			ShowCursor(show_cursor);
 			
 			if (ImGui::BeginMenu("Game is Running..."))
 			{

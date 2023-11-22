@@ -24,6 +24,7 @@ namespace TDS
 		ImVec2 window_pos;
 
 		bool exit_cursor;
+		BOOL show_cursor;
 	};
 }
 

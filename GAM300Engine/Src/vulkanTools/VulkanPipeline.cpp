@@ -70,20 +70,15 @@ namespace TDS
 
 		VK_ASSERT(vkCreatePipelineLayout(mgr.getVkInstance().getVkLogicalDevice(), &pipelineLayoutCI, nullptr, &m_PipelineLayout), "Failed to create pipeline layout!\n");
 
-	
 		for (auto primitiveMode : m_PipelineEntry.m_PipelineConfig.m_PipelineDrawModes)
+		{
 			GeneratePipeline(primitiveMode);
-
-		
-
-
-
+		}
 		DestroyModules();
 
 		return true;
 
 	}
-
 	void VulkanPipeline::GeneratePipeline(VkPrimitiveTopology drawMode)
 	{
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
@@ -1155,7 +1150,7 @@ namespace TDS
 		auto findItr = m_PipelineDescriptor.m_WriteSetFrames.find(bindingPoint);
 		if (findItr != m_PipelineDescriptor.m_WriteSetFrames.end())
 		{
-			if (m_PipelineEntry.m_EnableDoubleBuffering) //if statement here for now
+			if (m_PipelineEntry.m_EnableDoubleBuffering)
 			{
 				findItr->second.dstSet = m_PipelineDescriptor.m_DescriptorSets[frame];
 			}

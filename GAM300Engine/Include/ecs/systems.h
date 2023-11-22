@@ -32,8 +32,8 @@ namespace TDS
 	ECSSystem<Transform, GraphicsComponent>			_ColliderDebugSystem(2);
 
 	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(3);
-	//ECSSystem<AudioWerks::AudioEngine, SoundInfo>	_AudioSystem(3);
 	ECSSystem<Transform, UISprite>					_UiSystem(3);
+	//ECSSystem<SoundInfo>							_AudioSystem(3);
 }
 
 #endif // SYSTEMS

@@ -13,8 +13,11 @@ namespace TDS
 	
 		m_SkyBoxTexture.LoadTexture("../assets/textures/skybox1.dds");
 
+
+		m_CubeMapModel.m_AssetName = "cube_Bin.bin";
+
 	
-		if (!AssetManager::GetInstance()->GetModelFactory().GetModel("cube_Bin.bin", m_CubeMapModel))
+		if (!AssetManager::GetInstance()->GetModelFactory().GetModel(m_CubeMapModel.m_AssetName,m_CubeMapModel))
 		{
 			TDS_ERROR("FAILED TO LOAD SKYBOX!");
 			return;
@@ -41,7 +44,7 @@ namespace TDS
 		skyboxCE.m_PipelineConfig.m_CullMode = VK_CULL_MODE_FRONT_BIT;
 		skyboxCE.m_ShaderInputs.m_Shaders.insert(std::make_pair(SHADER_FLAG::VERTEX, "../assets/shaders/skybox.spv"));
 		skyboxCE.m_ShaderInputs.m_Shaders.insert(std::make_pair(SHADER_FLAG::FRAGMENT, "../assets/shaders/skyboxfrag.spv"));
-		skyboxCE.m_EnableDoubleBuffering = false; //false for now
+		skyboxCE.m_EnableDoubleBuffering = false;
 		VertexLayout layout{ VertexBufferElement(VAR_TYPE::VEC3, "inPos") };
 		skyboxCE.m_ShaderInputs.m_InputVertex.push_back(VertexBufferInfo(false, layout, sizeof(SkyBoxVertexData)));
 

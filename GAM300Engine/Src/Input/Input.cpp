@@ -321,10 +321,33 @@ namespace TDS
 		rect = setrect;
 	}
 
-	void Input::setCurrentMousePos(float x, float y)
+	void Input::setCurrentMousePos(float x, float y, Vec2 boundary_horiz, Vec2 boundary_verti)
 	{
-		current_mouse_pos.x = x;
-		current_mouse_pos.y = y;
+		if(x < boundary_horiz.x)
+		{
+			current_mouse_pos.x = boundary_horiz.x;
+		}
+		else if (x > boundary_horiz.y)
+		{
+			current_mouse_pos.x = boundary_horiz.y;
+		}
+		else
+		{
+			current_mouse_pos.x = x;
+		}
+
+		if (y < boundary_verti.x)
+		{
+			current_mouse_pos.y = boundary_verti.x;
+		}
+		else if (y > boundary_verti.y)
+		{
+			current_mouse_pos.y = boundary_verti.y;
+		}
+		else
+		{
+			current_mouse_pos.y = y;
+		}		
 	}
 
 	Vec2 Input::CurrentMousePos()

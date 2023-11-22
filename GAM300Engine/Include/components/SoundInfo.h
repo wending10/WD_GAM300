@@ -12,21 +12,29 @@ namespace TDS
 {
     static unsigned int ID_Count{ 0 };
 
-    enum SOUND_STATE : uint16_t
+    /*enum SOUND_STATE : uint16_t
     {
         SOUND_LOADED = 0,
         SOUND_PLAYING,
         SOUND_STOP,
         SOUND_MUTED
+    };*/
+
+    enum SOUND_STATE
+    {
+        SOUND_ERR = 0,
+        SOUND_LOADED,
+        SOUND_PLAYING,
+        SOUND_PAUSE
     };
 
-    struct SoundInfo : public IComponent
+    DLL_API struct SoundInfo : public IComponent
     {
 
         unsigned int uniqueID, MSLength;
         std::string filePath;
-        bool isitLoop, isit3D;
-        uint16_t whatState;
+        bool isitLoop, isit3D, isitmuted;
+        SOUND_STATE whatState;
         Vec3 position;
         float volume, ReverbAmount;
 
@@ -79,23 +87,38 @@ namespace TDS
         {
             return isitLoop;
         }
+        
+        bool isMuted()
+        {
+            return isitmuted;
+        }
 
         bool isPlaying()
+        {
+            return (whatState == SOUND_PLAYING);
+        }
+
+        bool isPaused()
+        {
+            return (whatState == SOUND_PAUSE);
+        }
+
+        /*bool isPlaying()
         {
             return (bool)(whatState & (1 << SOUND_PLAYING));
         }
 
         bool isPaused()
         {
-            return (bool)(whatState & (0 << SOUND_PLAYING));
+            return (bool)(whatState ^ (1 << SOUND_PLAYING));
         }
 
         bool isMuted()
         {
             return (bool)(whatState & (1 << SOUND_MUTED));
-        }
+        }*/
 
-        uint16_t getState()
+        SOUND_STATE getState()
         {
             return whatState;
         }
@@ -160,9 +183,14 @@ namespace TDS
             MSLength = len;
         }
 
-        void setState(SOUND_STATE setting, bool set)
+        /*void setState(SOUND_STATE setting, bool set)
         {
             whatState |= (set << setting);
+        }*/
+
+        void setState(SOUND_STATE setting)
+        {
+            whatState = setting;
         }
 
         void setLoop(bool condition)
@@ -175,8 +203,13 @@ namespace TDS
             isit3D = condition;
         }
 
-        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, uint16_t _theState = 0, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)
-            : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), whatState(_theState), volume(_volume), ReverbAmount(_reverbamount) 
+        void setMute(bool condition)
+        {
+            isitmuted = condition;
+        }
+
+        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, bool _muted = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)
+            : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitmuted(_muted), whatState(_theState), volume(_volume), ReverbAmount(_reverbamount)
         {            
             position.Set(_x, _y, _z);
             MSLength = 0;
@@ -192,6 +225,7 @@ namespace TDS
             filePath = rhs.filePath;
             isitLoop = rhs.isitLoop;
             isit3D = rhs.isit3D;
+            isitmuted = rhs.isitmuted;
             whatState = rhs.whatState;
             position = rhs.position;
             volume = rhs.volume;

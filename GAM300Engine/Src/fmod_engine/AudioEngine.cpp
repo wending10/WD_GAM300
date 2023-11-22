@@ -71,16 +71,6 @@ namespace TDS
             ERRCHECK(studioSystem->update()); // also updates the low level system
         }
 
-        void AudioEngine::fake_init()
-        {
-
-        }
-
-        void AudioEngine::fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test)
-        {
-            //update();
-        }
-
         void AudioEngine::loadSound(SoundInfo & soundInfo)
         {
             if (!soundLoaded(soundInfo)) {
@@ -93,7 +83,7 @@ namespace TDS
                 unsigned int msLength = 0;
                 ERRCHECK(sounds[soundInfo.getUniqueID()]->getLength(&msLength, FMOD_TIMEUNIT_MS));
                 //soundInfo.setMSLength(msLength);
-                soundInfo.setState(SOUND_LOADED, true);
+                soundInfo.setState(SOUND_LOADED);
             }
             else
                 std::cout << "Audio Engine: Sound File was already loaded!\n";
@@ -108,7 +98,7 @@ namespace TDS
                     FMOD::Channel* channel{ nullptr };
                     // start play in 'paused' state
                     ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));
-                    soundInfo.setState(SOUND_PLAYING, true);
+                    soundInfo.setState(SOUND_PLAYING);
 
                     if (soundInfo.is3D())
                         set3dChannelPosition(soundInfo, channel);
@@ -129,19 +119,19 @@ namespace TDS
 
                     // start audio playback
                     ERRCHECK(channel->setPaused(false));
-                    soundInfo.setState(SOUND_PLAYING, true);
+                    soundInfo.setState(SOUND_PLAYING);
                 }
                 else
                 {
                     if (soundInfo.isLoop())
                     {
                         ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->setPaused(false));
-                        soundInfo.setState(SOUND_PLAYING, true);
+                        soundInfo.setState(SOUND_PLAYING);
                     }
                     else
                     {
                         ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setPaused(false));
-                        soundInfo.setState(SOUND_PLAYING, true);
+                        soundInfo.setState(SOUND_PLAYING);
                     }
                 }
             }
@@ -167,7 +157,11 @@ namespace TDS
                     ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setPaused(true));
                 }
 
-                soundInfo.setState(SOUND_PLAYING, false);
+                soundInfo.setState(SOUND_PAUSE);
+            }
+            else
+            {
+                std::cout << "Nothing is playing!" << std::endl;
             }
         }
 
@@ -179,14 +173,13 @@ namespace TDS
                 {
                     ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
                     loopsPlaying.erase(soundInfo.getUniqueID());
-                    soundInfo.setState(SOUND_PLAYING, false); //set the sound back to loaded state
+                    soundInfo.setState(SOUND_LOADED); //set the sound back to loaded state
                 }
                 else
                 {
                     ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->stop());
                     normalPlaying.erase(soundInfo.getUniqueID());
-                    soundInfo.setState(SOUND_PLAYING, false);
-                    soundInfo.setState(SOUND_STOP, true);
+                    soundInfo.setState(SOUND_LOADED);
                 }
             }
             else
@@ -343,7 +336,7 @@ namespace TDS
                     ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setMute(true));
                 }
 
-                soundInfo.setState(SOUND_MUTED, true);
+                soundInfo.setMute(true);
             }
         }
 
@@ -360,7 +353,7 @@ namespace TDS
                     ERRCHECK(normalPlaying[soundInfo.getUniqueID()]->setMute(false));
                 }
 
-                soundInfo.setState(SOUND_MUTED, false);
+                soundInfo.setMute(false);
             }
         }
 
@@ -447,5 +440,17 @@ namespace TDS
                 << (eventDescription->isValid() ? " is " : " isn't ") << " valid."
                 << '\n';
         }
+    } //end of AudioWerks
+
+    AudioWerks::AudioEngine* proxy_audio_system::aud_instance = nullptr;
+
+    void proxy_audio_system::audio_system_init()
+    {
+        aud_instance = AudioWerks::AudioEngine::get_audioengine_instance();
     }
-}
+
+    void proxy_audio_system::audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* useless)
+    {
+        aud_instance->update();
+    }
+} //end of TDS

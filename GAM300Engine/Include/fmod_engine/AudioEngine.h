@@ -40,11 +40,8 @@ namespace TDS
          * Deals with all FMOD calls so that FMOD-specific code does not need to be used outside this class.
          * Only one AudioEngine should be constructed for an application.
          */
-        class AudioEngine : public IComponent
+        class AudioEngine
         {
-        public:
-            //friend ECSSystem; //allow system to access constructor
-
         public:
             /**
              * Remove AudioEngine copy constructor.
@@ -87,16 +84,6 @@ namespace TDS
             * Method which should be called every frame of the game loop
             */
             DLL_API  void update();
-
-            /**
-            * Fake init for ecs.cpp
-            */
-            void fake_init();
-
-            /**
-            * Fake update for ecs.cpp
-            */
-            void fake_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* test);
 
             /**
              * Loads a sound from disk using provided settings
@@ -359,8 +346,18 @@ namespace TDS
              * Map which stores event instances created during loadFMODStudioEvent()
              */
             std::map<std::string, FMOD::Studio::EventInstance*> eventInstances{};
-        };
-    }
-}
+        }; //end of AudioEngine
+    } //end of AudioWerks
+
+    class proxy_audio_system
+    {
+    public:
+        static void audio_system_init();
+        static void audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* useless);
+
+    private:
+        static AudioWerks::AudioEngine* aud_instance;
+    }; //end of proxy_audio_system
+} //end of TDS
 
 #endif
