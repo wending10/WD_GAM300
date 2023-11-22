@@ -1,19 +1,26 @@
 {
     "Archetype Sizes": {
         "110000100000": {
-            "0": 408,
-            "1": 600,
-            "6": 672
+            "0": 272,
+            "1": 400,
+            "6": 528
         },
         "110010100000": {
             "0": 136,
             "1": 200,
             "4": 40,
-            "6": 224
+            "6": 264
         },
         "1100000000000": {
             "0": 136,
             "1": 200
+        },
+        "110001110000": {
+            "0": 136,
+            "1": 200,
+            "5": 40,
+            "6": 264,
+            "7": 64
         }
     },
     "Entity Data": {
@@ -50,6 +57,7 @@
                 "Mesh Renderer": true,
                 "Debug": false,
                 "ModelName": "capsule_Bin.bin",
+                "MeshName": "",
                 "Color": {
                     "x": 1.0,
                     "y": 0.0,
@@ -60,7 +68,7 @@
             }
         },
         "2": {
-            "ArchetypeID": "110000100000",
+            "ArchetypeID": "110001110000",
             "Name Tag": {
                 "Name": "Player",
                 "Tag": "",
@@ -89,19 +97,50 @@
                     "z": 0.0
                 }
             },
+            "Capsule Collider": {
+                "IsTrigger": false,
+                "Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Radius": 0.5,
+                "Height": 2.0
+            },
             "Graphics Component": {
                 "PointLight": false,
                 "TextureName": "pumpkin.dds",
                 "Mesh Renderer": true,
                 "Debug": false,
                 "ModelName": "capsule_Bin.bin",
+                "MeshName": "",
                 "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
                 },
                 "Used In 2D": false
+            },
+            "Rigid Body": {
+                "Mass": 1.0,
+                "Linear Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Angular Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Friction": 0.20000000298023224,
+                "Restitution": 0.0,
+                "GravityFactor": 1.0,
+                "LinearDamping": 0.05000000074505806,
+                "AngularDamping": 0.05000000074505806,
+                "MotionType": "DYNAMIC",
+                "UseGravity": true
             }
         },
         "3": {
@@ -137,11 +176,12 @@
                 "Mesh Renderer": true,
                 "Debug": false,
                 "ModelName": "cube_Bin.bin",
+                "MeshName": "",
                 "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
                 },
                 "Used In 2D": false
             }
@@ -191,6 +231,7 @@
                 "Mesh Renderer": true,
                 "Debug": false,
                 "ModelName": "capsule_Bin.bin",
+                "MeshName": "",
                 "Color": {
                     "x": 0.0,
                     "y": 0.0,
@@ -267,7 +308,7 @@
                     "Component": 4
                 },
                 "fov": {
-                    "Float": 60.0
+                    "Float": 40.0
                 },
                 "invertCamera": {
                     "Bool": false

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
@@ -23,6 +24,8 @@ namespace ScriptAPI
 		void SetSizeZ(float valueZ);
 
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent transform;
 
 	internal:
 		BoxColliderComponent(TDS::EntityID ID);

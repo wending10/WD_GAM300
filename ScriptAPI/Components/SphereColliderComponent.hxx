@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
@@ -20,6 +21,8 @@ namespace ScriptAPI
 		void SetRadius(float value);
 
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent^transform;
 
 	internal:
 		SphereColliderComponent(TDS::EntityID ID);

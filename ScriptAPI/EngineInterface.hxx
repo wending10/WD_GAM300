@@ -27,10 +27,9 @@ namespace ScriptAPI
 		***************************************************************************/
 		static bool AddScriptViaName(TDS::EntityID entityId, std::string scriptName);
 		/*!*************************************************************************
-		* Add GameObject to List
-		* Add this function to new Entities being Created
+		* Remove Scripts via name in managed script library
 		***************************************************************************/
-		//static bool AddGameObjectViaName(TDS::EntityID entityId, System::String^ scriptName);
+		static bool RemoveScriptViaName(TDS::EntityID entityId, std::string scriptName);
 		/*!*************************************************************************
 		* Updates GameObject Name
 		* Call this function if User changes the name of Entities
@@ -128,6 +127,8 @@ namespace ScriptAPI
 		***************************************************************************/
 		static void updateScriptTypeList();
 		static System::Runtime::Loader::AssemblyLoadContext^ loadContext;
+
+		static float fixedUpdateTimer{0.02f};
 
 		//static array<FieldInfo^>^ currentFieldArray;
 		//static Object^ currentObject;

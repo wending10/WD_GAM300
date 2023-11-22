@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
@@ -33,6 +34,8 @@ namespace ScriptAPI
 		void SetDirection(Axis value);
 
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent transform;
 
 	internal:
 		CapsuleColliderComponent(TDS::EntityID ID);

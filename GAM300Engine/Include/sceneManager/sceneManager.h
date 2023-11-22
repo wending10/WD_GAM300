@@ -137,6 +137,7 @@ namespace TDS
 		std::vector<std::string>(*getAllScripts)();
 
 		bool (*addScript)(EntityID entityID, std::string scriptName);
+		bool (*removeScript)(EntityID entityID, std::string scriptName);
 
 		void (*setBool)(EntityID entityID, std::string script, std::string variableName, bool value);
 		void (*setInt)(EntityID entityID, std::string script, std::string variableName, int value, bool isInt);

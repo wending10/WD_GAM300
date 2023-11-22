@@ -43,8 +43,8 @@ namespace ScriptAPI
         static float Sign(float f);
 
         // Clamps a value between a minimum float and maximum float value.
-        //static float Clamp(float value, float min, float max);
-        static float Clamp(int value, int min, int max);
+        static float Clamp(float value, float min, float max);
+        //static float Clamp(int value, int min, int max);
         // Clamps value between 0 and 1 and returns value.
         //static float Clamp01(float value);
 

@@ -1,9 +1,9 @@
 ﻿using ScriptAPI;
 using System;
-
+    
 public class FPS_Controller_Script : Script
 {
-    private RigidBodyComponent rb;
+    public RigidBodyComponent rb;
 
     #region Camera Movement Variables
     [Header("Camera Movement Variables")]
@@ -118,7 +118,7 @@ public class FPS_Controller_Script : Script
 
         // Set internal variables
         playerCamera.SetFieldOfView(fov);
-        originalScale = gameObject.GetComponent<TransformComponent>().GetScale();
+        originalScale = transform.GetScale();
         jointOriginalPos = joint.GetPosition();
 
         if (!unlimitedSprint)
@@ -179,9 +179,9 @@ public class FPS_Controller_Script : Script
         // Control camera movement
         //if (cameraCanMove)
         //{
-        //    if (Input.GetAxis("Mouse X") != 0)
+        //    if (Input.GetAxis("Mouse X") > 0)
         //    {
-        //        yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
+        //        yaw = gameObject.GetComponent<TransformComponent>().GetRotation().Y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
         //        if (!invertCamera)
         //        {
@@ -196,8 +196,8 @@ public class FPS_Controller_Script : Script
         //        // Clamp pitch between lookAngle
         //        pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
-        //        transform.localEulerAngles = new Vector3(0, yaw, 0);
-        //        playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+        //        gameObject.GetComponent<TransformComponent>().SetRotationY(yaw);
+        //        playerCamera.transform.SetRotationX(pitch);
         //    }
         //}
 
@@ -207,36 +207,31 @@ public class FPS_Controller_Script : Script
         {
             // Changes isZoomed when key is pressed
             // Behavior for toogle zoom
-            //if (Input.GetKeyDown(zoomKey))
-            //{
-            //    Console.WriteLine("test");
-            //}
+            if (Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting)
+            {
+                if (!isZoomed)
+                {
+                    isZoomed = true;
+                }
+                else
+                {
+                    isZoomed = false;
+                }
+            }
 
-            //if (Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting)
-            //{
-            //    if (!isZoomed)
-            //    {
-            //        isZoomed = true;
-            //    }
-            //    else
-            //    {
-            //        isZoomed = false;
-            //    }
-            //}
-
-        //    // Changes isZoomed when key is pressed
-        //    // Behavior for hold to zoom
-        //    if (holdToZoom && !isSprinting)
-        //    {
-        //        if (Input.GetKeyDown(zoomKey))
-        //        {
-        //            isZoomed = true;
-        //        }
-        //        else if (Input.GetKeyUp(zoomKey))
-        //        {
-        //            isZoomed = false;
-        //        }
-        //    }
+            // Changes isZoomed when key is pressed
+            // Behavior for hold to zoom
+            if (holdToZoom && !isSprinting)
+            {
+                if (Input.GetKeyDown(zoomKey))
+                {
+                    isZoomed = true;
+                }
+                else if (Input.GetKeyUp(zoomKey))
+                {
+                    isZoomed = false;
+                }
+            }
 
             // Lerps camera.fieldOfView to allow for a smooth transistion
             if (isZoomed)
@@ -315,24 +310,24 @@ public class FPS_Controller_Script : Script
 
         #region Crouch
 
-        if (enableCrouch)
-        {
-            //if (Input.GetKeyDown(crouchKey) && !holdToCrouch)
-            //{
-            //    Crouch();
-            //}
+        //if (enableCrouch)
+        //{
+        //    if (Input.GetKeyDown(crouchKey) && !holdToCrouch)
+        //    {
+        //        Crouch();
+        //    }
 
-            //if (Input.GetKeyDown(crouchKey) && holdToCrouch)
-            //{
-            //    isCrouched = false;
-            //    Crouch();
-            //}
-            //else if (Input.GetKeyUp(crouchKey) && holdToCrouch)
-            //{
-            //    isCrouched = true;
-            //    Crouch();
-            //}
-        }
+        //    if (Input.GetKeyDown(crouchKey) && holdToCrouch)
+        //    {
+        //        isCrouched = false;
+        //        Crouch();
+        //    }
+        //    else if (Input.GetKeyUp(crouchKey) && holdToCrouch)
+        //    {
+        //        isCrouched = true;
+        //        Crouch();
+        //    }
+        //}
 
         #endregion
 
@@ -342,6 +337,7 @@ public class FPS_Controller_Script : Script
         {
             //HeadBob();
         }
+
     }
     public override void FixedUpdate()
     {
@@ -354,25 +350,18 @@ public class FPS_Controller_Script : Script
 
             // Checks if player is walking and isGrounded
             // Will allow head bob
-            //if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
-            //{
-            //    isWalking = true;
-            //}
-            //else
-            //{
-            //    isWalking = false;
-            //}
-
-            if (playerCanMove)
+            if (targetVelocity.X != 0 || targetVelocity.Z != 0 && isGrounded)
             {
-                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-                //{
-                //    isWalking = true;
-                //}
-                //else
-                //{
-                //    isWalking = false;
-                //}
+                isWalking = true;
+            }
+            else
+            {
+                isWalking = false;
+            }
+
+            if (Input.GetKey(Keycode.W) || Input.GetKey(Keycode.S) || Input.GetKey(Keycode.A) || Input.GetKey(Keycode.D))
+            {
+                isWalking = true;
             }
             else
             {
@@ -380,63 +369,156 @@ public class FPS_Controller_Script : Script
             }
 
             // All movement calculations shile sprint is active
-            //if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
-            //{
-            //    if (currentSprintSpeed < 8)
-            //    {
-            //        currentSprintSpeed += 0.02f;
-            //    }
+            if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
+            {
+                if (currentSprintSpeed < 8)
+                {
+                    currentSprintSpeed += 0.02f;
+                }
 
-            //    targetVelocity = transform.TransformDirection(targetVelocity) * currentSprintSpeed;
-            //    // Apply a force that attempts to reach our target velocity
-            //    Vector3 velocity = rb.velocity;
-            //    Vector3 velocityChange = (targetVelocity - velocity);
-            //    velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            //    velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-            //    velocityChange.y = 0;
+                //targetVelocity = transform.TransformDirection(targetVelocity) * currentSprintSpeed;
+                // Apply a force that attempts to reach our target velocity
+                Vector3 velocity = rb.GetLinearVelocity();
+                Vector3 velocityChange = targetVelocity - velocity;
+                velocityChange.X = Mathf.Clamp(velocityChange.X, -maxVelocityChange, maxVelocityChange);
+                velocityChange.Z = Mathf.Clamp(velocityChange.Z, -maxVelocityChange, maxVelocityChange);
+                velocityChange.Y = 0;
 
-            //    // Player is only moving when valocity change != 0
-            //    // Makes sure fov change only happens during movement
-            //    if (velocityChange.x != 0 || velocityChange.z != 0)
-            //    {
-            //        isSprinting = true;
+                // Player is only moving when valocity change != 0
+                // Makes sure fov change only happens during movement
+                if (velocityChange.X != 0 || velocityChange.Z != 0)
+                {
+                    isSprinting = true;
 
-            //        if (isCrouched)
-            //        {
-            //            Crouch();
-            //        }
+                    //if (isCrouched)
+                    //{
+                    //    Crouch();
+                    //}
 
-            //        if (hideBarWhenFull && !unlimitedSprint)
-            //        {
-            //            sprintBarCG.alpha += 5 * Time.deltaTime;
-            //        }
-            //    }
+                    if (hideBarWhenFull && !unlimitedSprint)
+                    {
+                        //sprintBarCG.alpha += 5 * Time.deltaTime;
+                    }
+                }
 
-            //    rb.AddForce(velocityChange, ForceMode.VelocityChange);
-            //}
-            //// All movement calculations while walking
-            //else
-            //{
-            //    isSprinting = false;
-            //    currentSprintSpeed = sprintSpeed;
+                //rb.AddForce(velocityChange, ForceMode.VelocityChange);
+            }
+            // All movement calculations while walking
+            else
+            {
+                isSprinting = false;
+                currentSprintSpeed = sprintSpeed;
 
-            //    if (hideBarWhenFull && sprintRemaining == sprintDuration)
-            //    {
-            //        sprintBarCG.alpha -= 3 * Time.deltaTime;
-            //    }
+                if (hideBarWhenFull && sprintRemaining == sprintDuration)
+                {
+                    //sprintBarCG.alpha -= 3 * Time.deltaTime;
+                }
 
-            //    targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+                //targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
 
-            //    // Apply a force that attempts to reach our target velocity
-            //    Vector3 velocity = rb.velocity;
-            //    Vector3 velocityChange = (targetVelocity - velocity);
-            //    velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            //    velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-            //    velocityChange.y = 0;
+                // Apply a force that attempts to reach our target velocity
+                Vector3 velocity = rb.GetLinearVelocity();
+                Vector3 velocityChange = targetVelocity - velocity;
+                velocityChange.X = Mathf.Clamp(velocityChange.X, -maxVelocityChange, maxVelocityChange);
+                velocityChange.Z = Mathf.Clamp(velocityChange.Z, -maxVelocityChange, maxVelocityChange);
+                velocityChange.Y = 0;
 
-            //    rb.AddForce(velocityChange, ForceMode.VelocityChange);
-            //}
+                //rb.AddForce(velocityChange, ForceMode.VelocityChange);
+            }
         }
         #endregion
     }
+
+    //#region Check Ground Method
+    //private void CheckGround()
+    //{
+    //    Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
+    //    Vector3 direction = transform.TransformDirection(Vector3.down);
+    //    float distance = .75f;
+
+    //    if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+    //    {
+    //        Debug.DrawRay(origin, direction * distance, Color.red);
+    //        isGrounded = true;
+    //    }
+    //    else
+    //    {
+    //        isGrounded = false;
+    //    }
+    //}
+    //#endregion
+
+    //#region Jump Method
+    //private void Jump()
+    //{
+    //    // Adds force to the player rigidbody to jump
+    //    if (isGrounded)
+    //    {
+    //        rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+    //        isGrounded = false;
+    //    }
+
+    //    // When crouched and using toggle system, will uncrouch for a jump
+    //    if (isCrouched && !holdToCrouch)
+    //    {
+    //        Crouch();
+    //    }
+    //}
+    //#endregion
+
+    #region Crouch Method
+    private void Crouch()
+    {
+        // Stands player up to full height
+        // Brings walkSpeed back up to original speed
+        if (isCrouched)
+        {
+            transform.SetScale(new Vector3(originalScale.X, originalScale.Y, originalScale.Z));
+            if (speedReduction != 0) walkSpeed /= speedReduction;
+
+            isCrouched = false;
+        }
+        // Crouches player down to set height
+        // Reduces walkSpeed
+        else
+        {
+            transform.SetScale(new Vector3(originalScale.X, crouchHeight, originalScale.Z));
+            if (speedReduction != 0) walkSpeed *= speedReduction;
+
+            isCrouched = true;
+        }
+    }
+    #endregion
+
+    //#region HeadBob Method
+    //private void HeadBob()
+    //{
+    //    if (isWalking)
+    //    {
+    //        // Calculates HeadBob speed during sprint
+    //        if (isSprinting)
+    //        {
+    //            timer += Time.deltaTime * (bobSpeed + sprintSpeed);
+    //        }
+    //        // Calculates HeadBob speed during crouched movement
+    //        else if (isCrouched)
+    //        {
+    //            timer += Time.deltaTime * (bobSpeed * speedReduction);
+    //        }
+    //        // Calculates HeadBob speed during walking
+    //        else
+    //        {
+    //            timer += Time.deltaTime * bobSpeed;
+    //        }
+    //        // Applies HeadBob movement
+    //        joint.localPosition = new Vector3(jointOriginalPos.x + Mathf.Sin(timer) * bobAmount.x, jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y, jointOriginalPos.z + Mathf.Sin(timer) * bobAmount.z);
+    //    }
+    //    else
+    //    {
+    //        // Resets when play stops moving
+    //        timer = 0;
+    //        joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
+    //    }
+    //}
+    //#endregion
 }

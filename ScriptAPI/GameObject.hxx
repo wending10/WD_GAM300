@@ -25,6 +25,8 @@ namespace ScriptAPI
 
         int GetEntityID();
 
+        TransformComponent transform;
+
     internal:
         void SetEntityID(TDS::EntityID ID);
     private:

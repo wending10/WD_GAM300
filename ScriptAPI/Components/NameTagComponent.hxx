@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
@@ -17,6 +18,8 @@ namespace ScriptAPI
 		void SetIsActive(bool value);
 
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent transform;
 
 	internal:
 		NameTagComponent(TDS::EntityID ID);

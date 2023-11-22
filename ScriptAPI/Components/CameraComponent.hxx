@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
@@ -29,6 +30,8 @@ namespace ScriptAPI
 		void SetMouseSensitivity(float value);
 
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent transform;
 
 	internal:
 		CameraComponent(TDS::EntityID ID);

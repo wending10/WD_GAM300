@@ -320,7 +320,7 @@ namespace ScriptAPI
 	}
 
 	// CONSTRUCTOR ===========================================================================
-	RigidBodyComponent::RigidBodyComponent(TDS::EntityID ID) : entityID (ID)
+	RigidBodyComponent::RigidBodyComponent(TDS::EntityID ID) : entityID (ID), transform(TransformComponent(ID))
 	{ }
 
 	void RigidBodyComponent::SetEntityID(TDS::EntityID ID)

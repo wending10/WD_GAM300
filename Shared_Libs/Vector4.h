@@ -124,6 +124,8 @@ bool operator!=(const Vec4& v1, const Vec4& v2);
 
 std::ostream& operator<<(std::ostream& os, const Vec4& v);
 
+DLL_API Vec4 floatsToVec4(float x, float y, float z, float w);
+
 } 
 
 

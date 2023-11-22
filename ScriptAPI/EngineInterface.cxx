@@ -32,12 +32,8 @@ namespace ScriptAPI
         scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>();
         gameObjectList = gcnew System::Collections::Generic::SortedList<TDS::EntityID, Tuple<System::String^, GameObject^>^>();
 
-        //for (auto i : TDS::ecs.getEntities())
-        //{
-        //    scripts->Add(i, gcnew ScriptList());
-        //}
-
         updateScriptTypeList();
+        Input::InputSetup();
         System::Console::WriteLine("Hello Engine Interface Init!");
     }
 
@@ -89,6 +85,7 @@ namespace ScriptAPI
         Script^ script = safe_cast<Script^>(System::Activator::CreateInstance(scriptType));
         script->SetFlags();
         script->gameObject = gameObjectList[entityId]->Item2;
+        script->transform = TransformComponent(entityId);
 
         // Add script to SortedList
         scripts[entityId]->Add(script->GetType()->FullName, script);
@@ -102,23 +99,36 @@ namespace ScriptAPI
 
             return false;
     }
+
     /*!*************************************************************************
-    * Add GameObject to List
+    * Remove Scripts via name in managed script library
     ***************************************************************************/
-    //bool EngineInterface::AddGameObjectViaName(TDS::EntityID entityId, System::String^ entityName)
-    //{
-    //    SAFE_NATIVE_CALL_BEGIN
-    //        if (entityId == TDS::NULLENTITY)
-    //            return false;
+    bool EngineInterface::RemoveScriptViaName(TDS::EntityID entityId, std::string script)
+    {
+        SAFE_NATIVE_CALL_BEGIN
+            if (entityId == TDS::NULLENTITY)
+                return false;
 
-    //    entityName = entityName->Trim();
+        String^ scriptName = toSystemString(script);
 
-    //    gameObjectList->Add(entityName, entityId);
+        // Remove any whitespaces
+        scriptName = scriptName->Trim();
 
-    //    return true;
-    //        SAFE_NATIVE_CALL_END
-    //        return false;
-    //}
+        // Look for the correct script
+        //for each (Tuple<String^, Script ^>^ script in scripts[entityId])
+        //{
+        //    if (script->Item1 == scriptName)
+        //    {
+        //    }
+        //}
+        scripts[entityId]->Remove(scriptName);
+
+        return true;
+        SAFE_NATIVE_CALL_END
+
+            return false;
+    }
+
     /*!*************************************************************************
     * Updates GameObject Name
     ***************************************************************************/
@@ -250,6 +260,7 @@ namespace ScriptAPI
     void EngineInterface::ExecuteUpdate()
     {
         Time::deltaTime = TDS::GetDeltaTime();
+        fixedUpdateTimer -= TDS::GetDeltaTime();
 
         for each (auto i in TDS::ecs.getEntities())
         {
@@ -261,10 +272,19 @@ namespace ScriptAPI
                         if (script->Value->isScriptEnabled())
                         {
                             script->Value->Update();
+
+                            if (fixedUpdateTimer <= 0)
+                            {
+                                script->Value->FixedUpdate();
+                            }
                         }
                     SAFE_NATIVE_CALL_END
                 }
             }
+        }
+        if (fixedUpdateTimer <= 0)
+        {
+            fixedUpdateTimer = 0.02f;
         }
     }
 
@@ -440,6 +460,11 @@ namespace ScriptAPI
 
             if ((field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 || field->IsPublic) && field->GetCustomAttributes(HideInInspectorAttribute::typeid, true)->Length <= 0)
             {
+                if (field->Name == "transform")
+                {
+                    continue;
+                }
+
                 TDS::ScriptValues newScriptValue;
 
                 newScriptValue.name = toStdString(field->Name);
@@ -558,6 +583,11 @@ namespace ScriptAPI
 
             if (field->GetValue(obj) != nullptr)
             {
+                if (field->Name == "transform")
+                {
+                    continue;
+                }
+
                 if (field->FieldType->ToString() == "ScriptAPI.GameObject")
                 {
                     newScriptValue.referenceEntityID = safe_cast<GameObject^>(field->GetValue(obj))->GetEntityID();

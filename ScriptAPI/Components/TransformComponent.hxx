@@ -1,9 +1,6 @@
 #pragma once
 
 #include "ComponentBase.hxx"
-
-#include "../GAM300Engine/Include/eventManager/eventHandler.h"
-
 #include "../GAM300Engine/Include/eventManager/eventHandler.h"
 
 namespace ScriptAPI
@@ -28,6 +25,8 @@ namespace ScriptAPI
 		void SetRotationX(float valueX);
 		void SetRotationY(float valueY);
 		void SetRotationZ(float valueZ);
+
+		Vector3 TransformDirection(Vector3 velocity);
 
 		virtual void SetEntityID(TDS::EntityID ID);
 

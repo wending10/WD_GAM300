@@ -50,6 +50,8 @@ namespace ScriptAPI
         [HideInInspector]
         GameObject^ gameObject;
 
+        TransformComponent transform;
+
     internal:
         void SetFlags();
         bool isScriptEnabled();

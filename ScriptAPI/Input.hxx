@@ -152,18 +152,18 @@ namespace ScriptAPI
         static uint32_t SCROLL = TDS_MOUSE_SCROLL + MAX_KEYS;
 	};
 
-	public ref class Input
-	{
-	public:
-		Input();
-		static float GetAxisRaw(System::String^ code);
-		static float GetAxis(System::String^ code);
-		static bool GetKey(uint32_t keycode);
-		static bool GetKeyDown(uint32_t keycode);
-		static bool GetKeyUp(uint32_t keycode);
-		static bool GetMouseButton(uint32_t button);
-		static bool GetMouseButtonUp(uint32_t button);
-		static bool GetMouseButtonDown(uint32_t button);
+    public ref class Input
+    {
+    public:
+        static void InputSetup();
+        static float GetAxisRaw(System::String^ code);
+        static float GetAxis(System::String^ code);
+        static bool GetKey(uint32_t keycode);
+        static bool GetKeyDown(uint32_t keycode);
+        static bool GetKeyUp(uint32_t keycode);
+        static bool GetMouseButton(uint32_t button);
+        static bool GetMouseButtonUp(uint32_t button);
+        static bool GetMouseButtonDown(uint32_t button);
 
 	private:
 		static System::Collections::Generic::Dictionary<System::String^, System::Tuple<uint32_t, uint32_t>^>^ AxisDictionary;

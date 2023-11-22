@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI
 {
@@ -50,6 +51,8 @@ namespace ScriptAPI
 		float GetGravityFactor();
 
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		TransformComponent transform;
 
 	internal:
 		RigidBodyComponent(TDS::EntityID ID);

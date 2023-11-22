@@ -1,4 +1,5 @@
 #include "Mathf.hxx"
+#include <algorithm>
 
 namespace ScriptAPI
 {
@@ -131,14 +132,14 @@ namespace ScriptAPI
     }
 
     // Clamps a value between a minimum float and maximum float value.
-    //float Mathf::Clamp(float value, float min, float max)
-    //{
-    //    return TDS::Mathf::Clamp(value, min, max);
-    //}
-    float Mathf::Clamp(int value, int min, int max)
+    float Mathf::Clamp(float value, float min, float max)
     {
-        return TDS::Mathf::Clamp(value, min, max);
+        return TDS::Mathf::ClampScriptAPI(value, min, max);
     }
+    //float Mathf::Clamp(int value, int min, int max)
+    //{
+    //    return std::clamp(value, min, max);
+    //}
     // Clamps value between 0 and 1 and returns value.
     //float Mathf::Clamp01(float value)
     //{

@@ -228,7 +228,7 @@ namespace ScriptAPI
 	}
 
 	// CONSTRUCTOR ===========================================================================
-	CameraComponent::CameraComponent(TDS::EntityID ID) : entityID (ID)
+	CameraComponent::CameraComponent(TDS::EntityID ID) : entityID (ID), transform(TransformComponent(ID))
 	{ }
 
 	void CameraComponent::SetEntityID(TDS::EntityID ID)

@@ -167,12 +167,13 @@ namespace TDS
 							NameTag* nameTagComponent = GetNameTag(selectedEntity);
 							if (nameTagComponent->GetHierarchyParent() > 0)
 							{
-								Transform* parentTransformComponent = GetTransform(nameTagComponent->GetHierarchyParent());
+								EntityID parent = nameTagComponent->GetHierarchyParent();
+								Transform* parentTransformComponent = GetTransform(parent);
 
-								Vec3 parentPosition = parentTransformComponent->GetPosition();
-								Vec3 reflectedPosition = oldPosition - parentPosition;
-								ImguiInput("Position", reflectedPosition);
-								transformComponent->SetPosition(reflectedPosition + parentPosition);
+								Vec4 localPosition = transformComponent->getLocalPosition(parent);
+								Vec3 localPositionVec3 = localPosition;
+								ImguiInput("Position", localPositionVec3);
+								transformComponent->setLocalPosition(parent, Vec4(localPositionVec3, localPosition.w));
 
 								Vec3 parentScale = parentTransformComponent->GetScale();
 								Vec3 reflectedScale = oldScale - parentScale;
@@ -222,8 +223,34 @@ namespace TDS
 					continue;
 				}
 
+				bool removedScript = false;
 				if (ImGui::TreeNodeEx(("##" + scriptName).c_str(), nodeFlags))
 				{
+					ImGui::PushID(i);
+					if (ImGui::BeginPopupContextItem("scriptEditPopup"))
+					{
+						if (ImGui::Selectable("Remove Component"))
+						{
+							sceneManagerInstance->removeScript(selectedEntity, scriptName);
+							TDS_INFO("Removed Component");
+							removedScript = true;
+						}
+
+						ImGui::EndPopup();
+					}
+
+					if (rightClick && ImGui::IsItemHovered())
+					{
+						ImGui::OpenPopup("scriptEditPopup");
+					}
+					ImGui::PopID();
+
+					if (removedScript)
+					{
+						ImGui::TreePop();
+						continue;
+					}
+
 					bool componentEnabled = sceneManagerInstance->isScriptEnabled(selectedEntity, scriptName);
 
 					ImGui::SameLine();
@@ -490,11 +517,11 @@ namespace TDS
 									ImVec4* colors = ImGui::GetStyle().Colors;
 									colors[ImGuiCol_ModalWindowDimBg] = ImVec4(1.00f, 0.00f, 0.00f, 0.00f);
 
-									ImGui::OpenPopup(("selectGameObject: " + scriptValue.name).c_str());
+									ImGui::OpenPopup(("Select Game Object: " + scriptValue.name).c_str());
 								}
 
 								bool unused_open = true;
-								if (ImGui::BeginPopupModal(("selectGameObject: " + scriptValue.name).c_str(), &unused_open, ImGuiWindowFlags_AlwaysVerticalScrollbar))
+								if (ImGui::BeginPopupModal(("Select Game Object: " + scriptValue.name).c_str(), &unused_open, ImGuiWindowFlags_AlwaysVerticalScrollbar))
 								{
 									if (scriptValue.type == "ScriptAPI.GameObject")
 									{

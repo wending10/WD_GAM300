@@ -186,8 +186,9 @@ namespace TDS
         static constexpr float Epsilon = std::numeric_limits<float>::epsilon();
         
         // Clamps a value between a minimum float and maximum float value.
-        /*DLL_API*/ static float Clamp(float value, float min, float max);
-        DLL_API static float Clamp(int value, int min, int max);
+        static float Clamp(float value, float min, float max);
+        DLL_API static float ClampScriptAPI(float value, float min, float max);
+        //DLL_API static float Clamp(int value, int min, int max);
         // Clamps value between 0 and 1 and returns value.
         /*DLL_API*/ static float Clamp01(float value);
 
