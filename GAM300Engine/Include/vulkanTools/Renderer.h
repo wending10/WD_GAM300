@@ -44,6 +44,11 @@ namespace TDS {
 			return m_currentFrameIndex;
 		}
 
+		int							GetCurrentImage() const
+		{
+			return m_currentImageIndex;
+		}
+
 		//these functions tell tell when to begin and end the frame and renderpass
 		VkCommandBuffer BeginFrame();
 		void EndFrame();

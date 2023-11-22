@@ -32,10 +32,11 @@ namespace TDS
 	void Renderer2D::Init()
 	{
 		std::vector<Renderer2DVertex> m_VertexData;
-		m_VertexData.push_back(Renderer2DVertex(Vec3(-0.5f, -0.5f, 0.f), Vec2(0.f, 1.f)));
-		m_VertexData.push_back(Renderer2DVertex(Vec3(0.5f, -0.5f, 0.f), Vec2(1.f, 1.f)));
+		m_VertexData.push_back(Renderer2DVertex(Vec3(-0.5f, -0.5f, 0.f), Vec2(0.f, 1.f))); 
+		m_VertexData.push_back(Renderer2DVertex(Vec3(0.5f, -0.5f, 0.f), Vec2(1.f, 1.f))); 
 		m_VertexData.push_back(Renderer2DVertex(Vec3(0.5f, 0.5f, 0.f), Vec2(1.f, 0.f)));
-		m_VertexData.push_back(Renderer2DVertex(Vec3(-0.5f, 0.5f, 0.f), Vec2(0.f, 0.f)));
+		m_VertexData.push_back(Renderer2DVertex(Vec3(-0.5f, 0.5f, 0.f), Vec2(0.f, 0.f))); 
+
 
 		std::vector<std::uint32_t> indexBuffer =
 		{
@@ -261,7 +262,7 @@ namespace TDS
 			componentSprite->m_IsDirty = false;
 		}
 
-		int TextureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(componentSprite->m_TextureName);
+		int TextureID = AssetManager::GetInstance()->GetTextureFactory().GetTextureIndex(componentSprite->m_TextureName, componentSprite->GetReference());
 	
 		if (TextureID == -1)
 		{
