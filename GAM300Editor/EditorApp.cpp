@@ -263,7 +263,6 @@ namespace TDS
             GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
 
            GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));
-           std::cout << GraphicsManager::getInstance().getObjectPicker().getActiveObject() << std::endl;
             GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
 
             imguiHelper::Draw(commandBuffer);
