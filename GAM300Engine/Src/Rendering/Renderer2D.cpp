@@ -81,14 +81,29 @@ namespace TDS
 				VK_SAMPLE_COUNT_1_BIT
 		};
 
+		RenderTargetCI rendertargetCI3{
+			VK_FORMAT_R32_UINT,
+			VK_IMAGE_ASPECT_COLOR_BIT,
+			VK_IMAGE_VIEW_TYPE_2D,
+			size,
+			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
+			VK_IMAGE_LAYOUT_GENERAL,
+			RenderTargetType::COLOR,
+			false
+		};
+
+
 		std::shared_ptr<VulkanInstance> instance = GraphicsManager::getInstance().getVkInstancePtr();
 		m_FrameBuffer.m_RenderingAttachment = new RenderTarget(instance, rendertargetCI);
+		m_FrameBuffer.m_PickingAttachment = new RenderTarget(instance, rendertargetCI3);
 		m_FrameBuffer.m_RenderingDepthAttachment = new RenderTarget(instance, rendertargetCI2);
 		attachmentInfos.push_back({ m_FrameBuffer.m_RenderingAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
 		attachmentInfos.back().clear.color = { m_FrameBuffer.ClearColor.x,  m_FrameBuffer.ClearColor.y, m_FrameBuffer.ClearColor.z, m_FrameBuffer.ClearColor.w};
 		attachmentInfos.push_back({ m_FrameBuffer.m_RenderingDepthAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
+		attachmentInfos.push_back({ m_FrameBuffer.m_PickingAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
 		attachments.push_back(m_FrameBuffer.m_RenderingAttachment);
 		attachments.push_back(m_FrameBuffer.m_RenderingDepthAttachment);
+		attachments.push_back(m_FrameBuffer.m_PickingAttachment);
 
 		m_FrameBuffer.m_Renderpass = new RenderPass(instance->getVkLogicalDevice(), attachmentInfos);
 		m_FrameBuffer.m_Framebuffer = new FrameBuffer(instance->getVkLogicalDevice(), m_FrameBuffer.m_Renderpass->getRenderPass(), attachments);
@@ -236,7 +251,7 @@ namespace TDS
 		return m_Instance;
 	}
 
-	void SpriteBatch::AddToBatch(void* component, Transform* transform)
+	void SpriteBatch::AddToBatch(void* component, Transform* transform, std::uint32_t entity)
 	{
 		UISprite* componentSprite = reinterpret_cast<UISprite*>(component);
 		if (componentSprite->m_LayerID == -1)
@@ -248,6 +263,7 @@ namespace TDS
 		m_InstanceInfo[m_InstanceCnt].m_Rotate = transform->GetRotation();
 		m_InstanceInfo[m_InstanceCnt].m_Scale = transform->GetScale();
 		m_InstanceInfo[m_InstanceCnt].m_Transform = transform->GetTransformMatrix();
+		m_InstanceInfo[m_InstanceCnt].m_ID = entity;
 		if (Vec3 Scale = transform->GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f) 
 		{
 		}
@@ -296,6 +312,7 @@ namespace TDS
 					++m_LayerInfos[layer].m_Instance;
 					m_Instances[i].m_Color = *instanceinfo.m_Color;
 					m_Instances[i].m_texID.x = float(instanceinfo.m_TextureIndex);
+					m_Instances[i].ID= instanceinfo.m_ID;
 					
 					//Vec3 rotationRadians = Vec3(instanceinfo.m_Rotate->x * static_cast<float>(3.14159265359f / 180.0f),
 					//	instanceinfo.m_Rotate->y * static_cast<float>(3.14159265359f / 180.0f),

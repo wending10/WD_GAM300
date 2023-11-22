@@ -26,7 +26,7 @@ namespace TDS
 			return true;
 		}
 
-		virtual void AddToBatch(void* componentSprite, Transform* transform) = 0;
+		virtual void AddToBatch(void* componentSprite, Transform* transform, std::uint32_t entity) = 0;
 		virtual void PrepareBatch() = 0;
 
 		//template <typename COMPONENT>
