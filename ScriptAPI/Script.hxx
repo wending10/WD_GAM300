@@ -62,7 +62,7 @@ namespace ScriptAPI
         void setStartFlag();
         bool getStartFlag();
 
-    private:
+    public:
         bool is_Enabled;
         bool is_Awake;
         bool is_Start;

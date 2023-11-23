@@ -26,7 +26,7 @@ namespace ScriptAPI
 		void SetRotationY(float valueY);
 		void SetRotationZ(float valueZ);
 
-		Vector3 TransformDirection(Vector3 velocity);
+		Vector3 TransformDirection(Vector3 direction);
 
 		virtual void SetEntityID(TDS::EntityID ID);
 

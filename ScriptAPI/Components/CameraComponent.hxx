@@ -29,7 +29,12 @@ namespace ScriptAPI
 		float GetMouseSensitivity();
 		void SetMouseSensitivity(float value);
 
+		bool GetIsEnabled();
+		void SetIsEnabled(bool value);
+
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		Vector3 getForwardVector();
 
 		TransformComponent transform;
 
@@ -67,6 +72,11 @@ namespace ScriptAPI
 		{
 			float get();
 			void set(float value);
+		}
+		property bool IsEnabled
+		{
+			bool get();
+			void set(bool value);
 		}
 
 		TDS::EntityID entityID;

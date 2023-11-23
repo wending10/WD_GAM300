@@ -19,23 +19,42 @@ namespace TDS
 
 	void CameraSystem::CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, CameraComponent* _cameracomponent)
 	{
+		int entityIndex = 0;
+		for (; !ecs.getEntityIsEnabled(entities[entityIndex]) && !ecs.getComponentIsEnabled<CameraComponent>(entities[entityIndex]) && entityIndex < entities.size(); ++entityIndex);
+		if (entityIndex == entities.size())
+		{
+			return;
+		}
+
 		if (!GetIsPlaying())
 		{
 			m_GameCamera = &GraphicsManager::getInstance().GetCamera();
-			SetGameCamera(_cameracomponent);
+			SetGameCamera(_cameracomponent[entityIndex]);
 			SetIsPlaying(true);
 		}
+
+		static float pitch = _transform[entityIndex].GetRotation().x;
+		static float yaw = _transform[entityIndex].GetRotation().y;
+
+		m_GameCamera->setPitch(_transform[entityIndex].GetRotation().x);
+		m_GameCamera->setYaw(_transform[entityIndex].GetRotation().y);
+		m_GameCamera->setPosition(_transform[entityIndex].GetPosition());
 		m_GameCamera->GetUpdateViewMatrix();
+
+		_cameracomponent[entityIndex].setForwardVector(m_GameCamera->getForwardVector());
+
+		pitch = _transform[entityIndex].GetRotation().x;
+		yaw = _transform[entityIndex].GetRotation().y;
 	}
 
-	void CameraSystem::SetGameCamera(CameraComponent* _camera)
+	void CameraSystem::SetGameCamera(CameraComponent& _camera)
 	{
-		m_GameCamera->setYaw(_camera->getYaw());
-		m_GameCamera->setPitch(_camera->getPitch());
-		m_GameCamera->setPosition(_camera->getPosition());
-		m_GameCamera->setSpeed(_camera->getSpeed());
-		m_GameCamera->setFov(_camera->getFOV());
-		m_GameCamera->setMouseSensitivity(_camera->getMouseSensitivity());
+		m_GameCamera->setYaw(_camera.getYaw());
+		m_GameCamera->setPitch(_camera.getPitch());
+		m_GameCamera->setPosition(_camera.getPosition());
+		m_GameCamera->setSpeed(_camera.getSpeed());
+		m_GameCamera->setFov(_camera.getFOV());
+		m_GameCamera->setMouseSensitivity(_camera.getMouseSensitivity());
 	}
 
 	/*void CameraSystem::UpdateViewMatrixSystem(CameraComponent* _cameracomponent)

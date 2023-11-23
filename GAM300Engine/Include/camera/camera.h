@@ -29,12 +29,14 @@ namespace TDS
 		DLL_API void setPitch(float pitch) { m_Pitch = pitch; }
 		DLL_API void setSpeed(float speed) { m_Speed = speed; }
 		DLL_API void setMouseSensitivity(float sensitivity) { m_mouseSensitivity = sensitivity; }
+		DLL_API void setForwardVector(Vec3 fwdvector) { m_Front = fwdvector; }
 		DLL_API void setFov(float fov) { m_Fov = fov; }
 		DLL_API void GetUpdateViewMatrix() { updateViewMatrix(); } // calling updateViewMatrix() for CameraSystem
 		DLL_API void setEditorCamera(bool editorCamera) { m_EditorCamera = editorCamera; }
 		DLL_API bool getEditorCamera() const { return m_EditorCamera; }
 		DLL_API bool getScrollWheel() const { return m_ScrollWheel; }
 		DLL_API void setScrollWheel(bool scrollWheel) { m_ScrollWheel = scrollWheel; }
+		DLL_API Vec3 getForwardVector() { return m_Front; }
 		float m_Fov{45.f};
 	private:
 		

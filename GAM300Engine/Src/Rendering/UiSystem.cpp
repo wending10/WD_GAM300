@@ -26,6 +26,11 @@ namespace TDS
 		SpriteBatch& Spritebatch = Renderer2D::GetInstance()->GetBatchList();
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
+			if (!ecs.getEntityIsEnabled(entities[i]) || !ecs.getComponentIsEnabled<UISprite>(entities[i]))
+			{
+				continue;
+			}
+
 			if (_Sprite[i].m_IsFont)
 				Fontbatch.AddToBatch(&_Sprite[i], &transform[i], entities[i]);
 			

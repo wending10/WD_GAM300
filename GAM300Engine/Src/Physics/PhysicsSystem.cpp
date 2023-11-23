@@ -140,6 +140,11 @@ namespace TDS
 		{
 			for (int i = 0; i < entities.size(); ++i)
 			{
+				if (!ecs.getEntityIsEnabled(entities[i]) || !ecs.getComponentIsEnabled<RigidBody>(entities[i]))
+				{
+					continue;
+				}
+
 				if (_rigidbody[i].GetBodyID().IsInvalid())
 				{
 
@@ -154,11 +159,15 @@ namespace TDS
 		
 			for (int j = 0; j < entities.size(); ++j)
 			{
-				
-				JPH_SystemUpdate(&_transform[j], &_rigidbody[j]);
+				if (!ecs.getEntityIsEnabled(entities[j]) || !ecs.getComponentIsEnabled<RigidBody>(entities[j]))
+				{
+					continue;
+				}
+
 				Vec3 pos = _transform[j].GetPosition();
 				Vec3 scale = _transform[j].GetScale();
 				Vec3 rot = _transform[j].GetRotation();
+				JPH_SystemUpdate(&_transform[j], &_rigidbody[j]);
 				EventHandler::postChildTransformationEvent(entities[j], pos, scale, rot);
 
 			}

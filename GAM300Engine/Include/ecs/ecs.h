@@ -322,6 +322,8 @@ namespace TDS
 
         ArchetypeID                  getActiveArchetype(const EntityID& entityID);
 
+        void                         setActiveArchetype(const EntityID& entityID, const ArchetypeID& newType);
+
         template<typename C>
         void                         setComponentIsEnabled(const EntityID& entityId, bool _isEnabled);
 
