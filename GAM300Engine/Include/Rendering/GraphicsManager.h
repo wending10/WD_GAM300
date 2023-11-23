@@ -38,6 +38,8 @@ namespace TDS
 		RenderTarget*							m_PickAttachment{ nullptr };
 		RenderPass*								m_Renderpass{ nullptr };
 		FrameBuffer*							m_Framebuffer{ nullptr };
+		int										m_LayerID = 0;
+		bool									m_RenderAllLayer = true;
 		bool									m_ViewingFrom2D = false;
 		bool									m_FrameHasBegin = false;
 
@@ -65,6 +67,11 @@ namespace TDS
 
 		WindowsWin*							GetWindow();
 		
+		void								SetLayerToRender(int ID);
+		bool								RenderAllLayer();
+		std::uint32_t						PickedObject();
+		void								ToggleRenderAllLayer(bool condition);
+		int									LayerToRender();
 		
 
 		TDSCamera& GetCamera();

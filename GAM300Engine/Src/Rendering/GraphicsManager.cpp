@@ -172,6 +172,26 @@ namespace TDS
 	{
 		return m_pWindow;
 	}
+	std::uint32_t GraphicsManager::PickedObject()
+	{
+		return m_ObjectPicking->getActiveObject();
+	}
+	void GraphicsManager::SetLayerToRender(int ID)
+	{
+		m_LayerID = ID;
+	}
+	bool GraphicsManager::RenderAllLayer()
+	{
+		return m_RenderAllLayer;
+	}
+	void GraphicsManager::ToggleRenderAllLayer(bool condition)
+	{
+		m_RenderAllLayer = condition;
+	}
+	int GraphicsManager::LayerToRender()
+	{
+		return m_LayerID;
+	}
 	TDSCamera& GraphicsManager::GetCamera()
 	{
 		return *m_Camera;

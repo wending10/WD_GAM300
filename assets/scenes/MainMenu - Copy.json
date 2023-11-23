@@ -424,14 +424,14 @@
         }
     },
     "Scripts": {
-        "1": {},
-        "2": {
+        "1": {
             "PlayButton": {
                 "gameObject": {
-                    "GameObject": 2
+                    "GameObject": 1
                 }
             }
         },
+        "2": {},
         "3": {},
         "4": {},
         "5": {},
