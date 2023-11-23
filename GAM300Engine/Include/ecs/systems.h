@@ -30,10 +30,10 @@ namespace TDS
 
 	ECSSystem<Transform>							_EventHandler_ChildTransform(2);
 	ECSSystem<Transform, GraphicsComponent>			_ColliderDebugSystem(2);
+	ECSSystem<SoundInfo>							_AudioSystem(2);
 
 	ECSSystem<Transform, GraphicsComponent>			_RenderSystem(3);
 	ECSSystem<Transform, UISprite>					_UiSystem(3);
-	//ECSSystem<SoundInfo>							_AudioSystem(0);
 }
 
 #endif // SYSTEMS

@@ -35,6 +35,6 @@ namespace TDS
 		_UiSystem.action(UiSystem::Init, UiSystem::Update);
 		_ColliderDebugSystem.action(CollisionSystem::CollisionSystemInit, CollisionSystem::CollisionSystemUpdate);
 		_RenderSystem.action(RendererSystem::OnInit, RendererSystem::OnUpdate);
-		//_AudioSystem.action(proxy_audio_system::audio_system_init, proxy_audio_system::audio_system_update);
+		_AudioSystem.action(proxy_audio_system::audio_system_init, proxy_audio_system::audio_system_update);
 	}
 }

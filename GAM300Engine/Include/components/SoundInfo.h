@@ -118,6 +118,11 @@ namespace TDS
             return (bool)(whatState & (1 << SOUND_MUTED));
         }*/
 
+        Vec3 getPosition()
+        {
+            return position;
+        }
+
         SOUND_STATE getState()
         {
             return whatState;
@@ -211,6 +216,11 @@ namespace TDS
         void setMute(bool condition)
         {
             isitmuted = condition;
+        }
+
+        void setReverbAmount(float reverb)
+        {
+            ReverbAmount = reverb;
         }
 
         SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, bool _muted = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)

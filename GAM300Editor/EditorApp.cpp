@@ -213,7 +213,7 @@ namespace TDS
                 GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
             }
 
-            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime, isPlaying);
+            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime/*, isPlaying*/);
 
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
