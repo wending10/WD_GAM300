@@ -10,8 +10,7 @@
 
 #include "camera/Camerasystem/CameraSystem.h"
 #include "Rendering/GraphicsManager.h"
-
-namespace TDS
+namespace TDS 
 {
 	TDSCamera* CameraSystem::m_GameCamera = nullptr;
 	void CameraSystem::CameraSystemInit()

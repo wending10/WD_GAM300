@@ -105,7 +105,7 @@ namespace TDS
 	}
 	void GraphicsManager::StartFrame()
 	{
-		m_FrameHasBegin = false;
+		m_FrameHasBegin = true;
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->StartFrame();
@@ -132,7 +132,7 @@ namespace TDS
 			renderLayer->Render();
 		}
 		m_SwapchainRenderer->EndFrame();
-
+		m_FrameHasBegin = false;
 
 	}
 	void GraphicsManager::ShutDown()
@@ -171,6 +171,26 @@ namespace TDS
 	WindowsWin* GraphicsManager::GetWindow()
 	{
 		return m_pWindow;
+	}
+	std::uint32_t GraphicsManager::PickedObject()
+	{
+		return m_ObjectPicking->getActiveObject();
+	}
+	void GraphicsManager::SetLayerToRender(int ID)
+	{
+		m_LayerID = ID;
+	}
+	bool GraphicsManager::RenderAllLayer()
+	{
+		return m_RenderAllLayer;
+	}
+	void GraphicsManager::ToggleRenderAllLayer(bool condition)
+	{
+		m_RenderAllLayer = condition;
+	}
+	int GraphicsManager::LayerToRender()
+	{
+		return m_LayerID;
 	}
 	TDSCamera& GraphicsManager::GetCamera()
 	{
