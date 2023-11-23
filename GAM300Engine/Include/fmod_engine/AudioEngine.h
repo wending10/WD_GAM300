@@ -353,10 +353,12 @@ namespace TDS
     {
     public:
         static void audio_system_init();
-        static void audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* useless);
+        static void audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo);
 
     private:
         static AudioWerks::AudioEngine* aud_instance;
+
+        static int totalNumClips;
     }; //end of proxy_audio_system
 } //end of TDS
 

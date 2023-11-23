@@ -19,6 +19,8 @@ namespace TDS
 	{
 		if (componentName == "AI")
 			return ecs.addComponent<AI>(entityID);
+		else if (componentName == "Audio")
+			return ecs.addComponent<SoundInfo>(entityID);
 		else if (componentName == "Box Collider")
 			return ecs.addComponent<BoxCollider>(entityID);
 		else if (componentName == "Camera Component")
@@ -56,6 +58,8 @@ namespace TDS
 	{
 		if (componentName == rttr::type::get<AI>())
 			return *(ecs.addComponent<AI>(entityID));
+		else if (componentName == rttr::type::get<SoundInfo>())
+			return *(ecs.addComponent <SoundInfo>(entityID));
 		else if (componentName == rttr::type::get<BoxCollider>())
 			return *(ecs.addComponent<BoxCollider>(entityID));
 		else if (componentName == rttr::type::get<CameraComponent>())
@@ -88,6 +92,8 @@ namespace TDS
 	{
 		if (componentName == "AI")
 			return ecs.getComponent<AI>(entityID);
+		else if (componentName == "Audio")
+			return ecs.getComponent<SoundInfo>(entityID);
 		else if (componentName == "Box Collider")
 			return ecs.getComponent<BoxCollider>(entityID);
 		else if (componentName == "Camera Component")
@@ -124,6 +130,8 @@ namespace TDS
 	{
 		if (componentName == rttr::type::get<AI>())
 			return *(ecs.getComponent<AI>(entityID));
+		else if (componentName == rttr::type::get<SoundInfo>())
+			return *(ecs.getComponent<SoundInfo>(entityID));
 		else if (componentName == rttr::type::get<BoxCollider>())
 			return *(ecs.getComponent<BoxCollider>(entityID));
 		else if (componentName == rttr::type::get<CameraComponent>())
@@ -156,6 +164,8 @@ namespace TDS
 	{
 		if (componentName == "AI")
 			ecs.removeComponent<AI>(entityID);
+		else if (componentName == "Audio")
+			ecs.removeComponent<SoundInfo>(entityID);
 		else if (componentName == "Box Collider")
 			ecs.removeComponent<BoxCollider>(entityID);
 		else if (componentName == "Camera Component")
@@ -189,6 +199,8 @@ namespace TDS
 	{
 		if (componentName == "AI")
 			ecs.setComponentIsEnabled<AI>(entityID, isEnabled);
+		else if (componentName == "Audio")
+			ecs.setComponentIsEnabled<SoundInfo>(entityID, isEnabled);
 		else if (componentName == "Box Collider")
 			ecs.setComponentIsEnabled<BoxCollider>(entityID, isEnabled);
 		else if (componentName == "Camera Component")
@@ -222,6 +234,8 @@ namespace TDS
 	{
 		if (componentName == "AI")
 			return ecs.getComponentIsEnabled<AI>(entityID);
+		else if (componentName == "Audio")
+			return ecs.getComponentIsEnabled<SoundInfo>(entityID);
 		else if (componentName == "Box Collider")
 			return ecs.getComponentIsEnabled<BoxCollider>(entityID);
 		else if (componentName == "Camera Component")

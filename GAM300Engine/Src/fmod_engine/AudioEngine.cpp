@@ -443,14 +443,25 @@ namespace TDS
     } //end of AudioWerks
 
     AudioWerks::AudioEngine* proxy_audio_system::aud_instance = nullptr;
+    int proxy_audio_system::totalNumClips{ 0 };
 
     void proxy_audio_system::audio_system_init()
     {
         aud_instance = AudioWerks::AudioEngine::get_audioengine_instance();
     }
 
-    void proxy_audio_system::audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* useless)
+    void proxy_audio_system::audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo)
     {
+        if (totalNumClips != entities.size())
+        {
+            for (int i{ 0 }; i < entities.size(); ++i)
+            {
+                aud_instance->loadSound(soundInfo[i]);
+            }
+
+            totalNumClips = entities.size();
+        }
+        
         aud_instance->update();
     }
 } //end of TDS

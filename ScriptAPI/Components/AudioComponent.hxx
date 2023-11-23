@@ -21,6 +21,7 @@
 //
 //		snd getState();
 //		unsigned int getUniqueID();
+//		unsigned int getMSLength();
 //		std::string getFilePath();
 //		const char* getFilePath_inChar();
 //
@@ -45,13 +46,52 @@
 //		property unsigned int uniqueID
 //		{
 //			unsigned int get();
-//			void set(unsigned int value);
 //		}
-//
 //		property unsigned int MSLength
 //		{
 //			unsigned int get();
 //			void set(unsigned int value);
 //		}
+//		property std::string filePath
+//		{
+//			std::string get();
+//		}
+//		property bool isitLoop
+//		{
+//			bool get();
+//			void set(bool value);
+//		}
+//		property bool isit3D
+//		{
+//			bool get();
+//			void set(bool value);
+//		}
+//		property bool isitMuted
+//		{
+//			bool get();
+//			void set(bool value);
+//		}
+//		property snd whatState
+//		{
+//			snd get();
+//			void set(snd value);
+//		}
+//		property Vector3 position
+//		{
+//			Vector3 get();
+//			void set(Vector3 value);
+//		}
+//		property float volume
+//		{
+//			float get();
+//			void set(float value);
+//		}
+//		property float ReverbAmount
+//		{
+//			float get();
+//			void set(float value);
+//		}
+//
+//		TDS::EntityID entityID;
 //	};
 //}

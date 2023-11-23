@@ -7,9 +7,10 @@
 
 #include "components/iComponent.h"
 #include "Vector3.h"
+#include "ecs/ecs.h"
 
 namespace TDS
-{
+{    
     static unsigned int ID_Count{ 0 };
 
     /*enum SOUND_STATE : uint16_t
@@ -30,7 +31,6 @@ namespace TDS
 
     DLL_API struct SoundInfo : public IComponent
     {
-
         unsigned int uniqueID, MSLength;
         std::string filePath;
         bool isitLoop, isit3D, isitmuted;
@@ -75,7 +75,7 @@ namespace TDS
 
         bool isLoaded()
         {
-            return (whatState & (1 << SOUND_LOADED));
+            return (whatState == SOUND_LOADED);
         }
 
         bool is3D()
@@ -126,6 +126,11 @@ namespace TDS
         unsigned int getUniqueID()
         {
             return uniqueID;
+        }
+
+        unsigned int getMSLength()
+        {
+            return MSLength;
         }
 
         std::string getFilePath()
@@ -232,7 +237,13 @@ namespace TDS
             ReverbAmount = rhs.ReverbAmount;
         }
 
+        RTTR_ENABLE(IComponent);
+        RTTR_REGISTRATION_FRIEND
+
     }; //end of SoundInfo struct
+
+    DLL_API  SoundInfo* GetSoundInfo(EntityID);
+
 } //end of namespace TDS
 
 #endif

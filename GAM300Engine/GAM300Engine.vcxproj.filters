@@ -65,7 +65,6 @@
     <ClCompile Include="Src\vulkanTools\VertexTypes.cpp" />
     <ClCompile Include="Src\vulkanTools\GlobalBufferPool.cpp" />
     <ClCompile Include="Src\vulkanTools\CommandManager.cpp" />
-    <ClCompile Include="Src\Renderer\GraphicsManager.cpp" />
     <ClCompile Include="Src\vulkanTools\FrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\DirectFrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\VMATypes\VMABuffer.cpp" />
@@ -100,6 +99,8 @@
     <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Src\Physics\Interface\PhysicsInterface.cpp" />
     <ClCompile Include="Src\Rendering\FontSystem.cpp" />
+    <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
+    <ClCompile Include="Src\components\SoundInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
