@@ -122,7 +122,7 @@ namespace TDS
 		for (auto& blendAttState : blendAttachmentState)
 		{
 			blendAttState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-			blendAttState.blendEnable = /*m_BlendingEnabled ? VK_TRUE :*/ VK_FALSE;
+			blendAttState.blendEnable = /*m_BlendingEnabled ? VK_TRUE : */VK_FALSE;
 			blendAttState.srcColorBlendFactor = m_PipelineEntry.m_PipelineConfig.m_SrcClrBlend;
 			blendAttState.dstColorBlendFactor = m_PipelineEntry.m_PipelineConfig.m_DstClrBlend;
 			blendAttState.colorBlendOp = m_PipelineEntry.m_PipelineConfig.m_ColorBlend;
@@ -251,73 +251,19 @@ namespace TDS
 		(clearColor);
 
 	}
-	void VulkanPipeline::StartRenderPass()
-	{
-		/*const VkFramebuffer framebuffer = m_CurrentFBAttachmentIndex == 0 ? m_PipelineEntry.m_FBTarget[m_CurrentFBIndex]->GetCurrentFrameBuffer() : m_PipelineEntry.m_FBTarget[m_CurrentFBIndex]->GetFrameBuffer(m_CurrentFBAttachmentIndex);
 
-		VkExtent2D extent = m_PipelineEntry.m_FBTarget[m_CurrentFBIndex]->getFBEntryInfo().m_AreaDimension;
-		VkRenderPassBeginInfo renderPassBegin = { VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO };
-		renderPassBegin.renderPass = m_PipelineEntry.m_FBTarget[m_CurrentFBIndex]->GetRenderPass();
-		renderPassBegin.framebuffer = framebuffer;
-		renderPassBegin.renderArea.offset.x = 0;
-		renderPassBegin.renderArea.offset.y = 0;
-		renderPassBegin.renderArea.extent = extent;
-		renderPassBegin.clearValueCount = static_cast<uint32_t>(m_PipelineEntry.m_FBTarget[m_CurrentFBIndex]->GetClearValues().size());
-		renderPassBegin.pClearValues = m_PipelineEntry.m_FBTarget[m_CurrentFBIndex]->GetClearValues().data();
-
-		vkCmdBeginRenderPass(m_CommandBuffer, &renderPassBegin, VK_SUBPASS_CONTENTS_INLINE);
-		VkViewport viewport = {};
-		if (m_FlipViewport)
-		{
-			viewport.height = (float)extent.height;
-			viewport.width = (float)extent.width;
-			viewport.minDepth = (float)0.0f;
-			viewport.maxDepth = (float)1.0f;
-		}
-		else
-		{
-			viewport.x = 0;
-			viewport.y = (float)extent.height;
-			viewport.height = -(float)extent.height;
-			viewport.width = (float)extent.width;
-			viewport.minDepth = (float)0.0f;
-			viewport.maxDepth = (float)1.0f;
-		}
-		vkCmdSetViewport(m_CommandBuffer, 0, 1, &viewport);
-		VkRect2D scissor = {};
-		scissor.extent.width = extent.height;
-		scissor.extent.height = extent.height;
-		scissor.offset.x = 0;
-		scissor.offset.y = 0;
-		vkCmdSetScissor(m_CommandBuffer, 0, 1, &scissor);*/
-
-
-	}
-	void VulkanPipeline::EndRenderPass()
-	{
-
-		VkCommandBuffer pBuffer = m_CommandBuffer;
-		if (pBuffer == nullptr)
-			pBuffer = m_CommandBufferInfo.m_CommandBuffer.m_CmdBuffer;
-
-		vkCmdEndRenderPass(pBuffer);
-
-
-	}
 
 
 	void VulkanPipeline::ShutDown()
 	{
 		VkDevice device = GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice();
 		for (auto& cache : m_Caches)
-		{
 			vkDestroyPipelineCache(device, cache.second, 0);
-		}
+		
 		m_Caches.clear();
 		for (auto& pipeline : m_Pipelines)
-		{
 			vkDestroyPipeline(device, pipeline.second, 0);
-		}
+		
 		m_Pipelines.clear();
 		if (m_PipelineLayout)
 		{
@@ -743,10 +689,7 @@ namespace TDS
 	{
 		return m_BlendingEnabled;
 	}
-	std::uint32_t VulkanPipeline::GetTextureBinding(std::string_view textureBinding)
-	{
-		return m_PipelineDescriptor.m_LocalBufferNames[textureBinding.data()];
-	}
+
 	VulkanPipelineDescriptor& VulkanPipeline::GetPipelineDescriptor()
 	{
 		return m_PipelineDescriptor;
@@ -758,14 +701,7 @@ namespace TDS
 	VkCommandBuffer& VulkanPipeline::GetCommandBuffer() {
 		return m_CommandBuffer;
 	}
-	void VulkanPipeline::SetFlipViewport(bool condition)
-	{
-		m_FlipViewport = condition;
-	}
-	bool VulkanPipeline::IsFlipViewport() const
-	{
-		return m_FlipViewport;
-	}
+
 	std::uint32_t VulkanPipeline::GetBufferBinding(std::string_view bufferName)
 	{
 		if (GlobalBufferPool::GetInstance()->BindingExist(bufferName))
@@ -1207,11 +1143,11 @@ namespace TDS
 				, 1, &findItr->second, 0, 0);
 		}
 	}
-	VkDescriptorSetLayout VulkanPipeline::GetLayout(std::uint32_t index) const
+	VkDescriptorSetLayout VulkanPipeline::GetLayout() const
 	{
 		return m_PipelineDescriptor.m_DescSetLayout;
 	}
-	const std::vector<VkDescriptorSet>& VulkanPipeline::GetDescriptorSets(std::uint32_t index) const
+	const std::vector<VkDescriptorSet>& VulkanPipeline::GetDescriptorSets() const
 	{
 		return m_PipelineDescriptor.m_DescriptorSets;
 	}
