@@ -8,6 +8,7 @@ struct UIInstance
     mat4 model;
     vec4 color;
     vec4 texID;
+    uint ID;
 };
 
 layout(std140, binding = 10) readonly buffer ShaderDataBuffer
@@ -37,14 +38,15 @@ layout(location = 0) out vec4 outColor;
 layout(location = 1) out vec3 outPosition;
 layout(location = 2) out vec2 outTextureCoord;
 layout(location = 3) out uint outTextureIndex;
-
+layout(location = 4) out flat uint outID;
 
 void main()
 {
 	uint index = dataOffset + gl_InstanceIndex;
 	mat4 model = instances[index].model;
     uint texID = uint(instances[index].texID.x);
-    
+
+    outID = instances[index].ID;
     outColor = instances[index].color;
     outTextureIndex = texID;
     outPosition = (model * vec4(vPosition, 1.0)).xyz;

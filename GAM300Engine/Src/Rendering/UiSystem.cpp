@@ -32,10 +32,10 @@ namespace TDS
 			}
 
 			if (_Sprite[i].m_IsFont)
-				Fontbatch.AddToBatch(&_Sprite[i], &transform[i]);
+				Fontbatch.AddToBatch(&_Sprite[i], &transform[i], entities[i]);
 			
 			else
-				Spritebatch.AddToBatch(&_Sprite[i], &transform[i]);
+				Spritebatch.AddToBatch(&_Sprite[i], &transform[i], entities[i]);
 			
 		}
 		Spritebatch.PrepareBatch();

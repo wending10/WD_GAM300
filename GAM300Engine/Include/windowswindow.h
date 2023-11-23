@@ -41,6 +41,7 @@ namespace TDS
 		DLL_API bool		wasWindowResized() { return m_FrameBufferResize; }
 		DLL_API void		resetResizeFlag() { m_FrameBufferResize = false; }
 		DLL_API void		WindowIsResizing(bool resize) { m_FrameBufferResize = resize; }
+		DLL_API bool		GetWindowPos(int& xPos, int& yPos) const;
 
 	public:		//variables
 

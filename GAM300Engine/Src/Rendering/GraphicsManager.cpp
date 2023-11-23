@@ -45,7 +45,7 @@ namespace TDS
 			VK_IMAGE_ASPECT_COLOR_BIT,
 			VK_IMAGE_VIEW_TYPE_2D,
 			size,
-			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
+			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT,
 			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
 			RenderTargetType::COLOR,
 			false,
@@ -56,18 +56,33 @@ namespace TDS
 			VK_IMAGE_ASPECT_DEPTH_BIT,
 			VK_IMAGE_VIEW_TYPE_2D,
 			size,
-			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
 			VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
 			RenderTargetType::DEPTH,
 			false,
 			VK_SAMPLE_COUNT_1_BIT
 		};
+
+		RenderTargetCI rendertargetCI3{
+				VK_FORMAT_R32_UINT,
+				VK_IMAGE_ASPECT_COLOR_BIT,
+				VK_IMAGE_VIEW_TYPE_2D,
+				size,
+				VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
+				VK_IMAGE_LAYOUT_GENERAL,
+				RenderTargetType::COLOR,
+				false
+		};
+
 		m_RenderingAttachment = new RenderTarget(m_MainVkContext, rendertargetCI);
 		m_RenderingDepthAttachment = new RenderTarget(m_MainVkContext, rendertargetCI2);
+		m_PickAttachment = new RenderTarget(m_MainVkContext, rendertargetCI3);
 		attachmentInfos.push_back({ m_RenderingAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
 		attachmentInfos.push_back({ m_RenderingDepthAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
+		attachmentInfos.push_back({ m_PickAttachment, VK_ATTACHMENT_LOAD_OP_CLEAR, VK_ATTACHMENT_STORE_OP_STORE });
 		attachments.push_back(m_RenderingAttachment);
 		attachments.push_back(m_RenderingDepthAttachment);
+		attachments.push_back(m_PickAttachment);
 		
 		m_Renderpass = new RenderPass(m_MainVkContext->getVkLogicalDevice(), attachmentInfos);
 		m_Framebuffer = new FrameBuffer(m_MainVkContext->getVkLogicalDevice(), m_Renderpass->getRenderPass(), attachments);
@@ -77,13 +92,12 @@ namespace TDS
 		FontRenderer::GetInstance()->Init();
 		m_PointLightRenderer = std::make_unique<PointLightSystem>(*m_MainVkContext);
 		m_DebugRenderer = std::make_unique<DebugRenderer>(*m_MainVkContext);
+		m_ObjectPicking = std::make_shared<ObjectPick>(m_MainVkContext, size);
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->Setup(m_pWindow);
 			renderLayer->Init();
 		}
-
-
 	}
 	void GraphicsManager::ToggleViewFrom2D(bool condition)
 	{
@@ -91,7 +105,7 @@ namespace TDS
 	}
 	void GraphicsManager::StartFrame()
 	{
-		m_FrameHasBegin = false;
+		m_FrameHasBegin = true;
 		for (auto& renderLayer : m_RenderLayer)
 		{
 			renderLayer->StartFrame();
@@ -118,7 +132,7 @@ namespace TDS
 			renderLayer->Render();
 		}
 		m_SwapchainRenderer->EndFrame();
-
+		m_FrameHasBegin = false;
 
 	}
 	void GraphicsManager::ShutDown()
@@ -134,6 +148,7 @@ namespace TDS
 		Renderer2D::GetInstance()->ShutDown();
 		m_DebugRenderer->GetPipeline().ShutDown();
 		FontRenderer::GetInstance()->ShutDown();
+		m_ObjectPicking->Shutdown();
 		GlobalBufferPool::GetInstance()->Destroy();
 		m_RenderingAttachment->~RenderTarget();
 		m_RenderingDepthAttachment->~RenderTarget();
@@ -157,6 +172,26 @@ namespace TDS
 	WindowsWin* GraphicsManager::GetWindow()
 	{
 		return m_pWindow;
+	}
+	std::uint32_t GraphicsManager::PickedObject()
+	{
+		return m_ObjectPicking->getActiveObject();
+	}
+	void GraphicsManager::SetLayerToRender(int ID)
+	{
+		m_LayerID = ID;
+	}
+	bool GraphicsManager::RenderAllLayer()
+	{
+		return m_RenderAllLayer;
+	}
+	void GraphicsManager::ToggleRenderAllLayer(bool condition)
+	{
+		m_RenderAllLayer = condition;
+	}
+	int GraphicsManager::LayerToRender()
+	{
+		return m_LayerID;
 	}
 	TDSCamera& GraphicsManager::GetCamera()
 	{
@@ -193,5 +228,9 @@ namespace TDS
 			m_Instance = std::make_shared<GraphicsManager>();
 		}
 		return *m_Instance;
+	}
+	ObjectPick& GraphicsManager::getObjectPicker()
+	{
+		return *this->m_ObjectPicking;
 	}
 }

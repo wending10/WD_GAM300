@@ -32,7 +32,7 @@
 #include "imguiHelper/ImguiScene.h"
 #include "imguiHelper/ImguiGamePlayScene.h"
 #include "Physics/PhysicsSystem.h"
-
+#include "Rendering/ObjectPicking.h"
 
 bool isPlaying = false;
 bool startPlaying = false;
@@ -42,7 +42,7 @@ namespace TDS
     Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
     {
-        m_window.createWindow(wndproc, 1280, 800);
+        m_window.createWindow(wndproc, 1280,720);
 
         //m_pVKInst = std::make_shared<VulkanInstance>(m_window);
         //m_Renderer = std::make_shared<Renderer>(m_window, *m_pVKInst.get());
@@ -217,7 +217,7 @@ namespace TDS
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
 
-            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight(), 1.f)};
+            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
             if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x >0 && m_windowdimension.y > 0)
             {
                 GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
@@ -226,12 +226,12 @@ namespace TDS
 
                 std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
                 pGamePlatScene->Resize();
-
             }
             GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
             std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+
+            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
             if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
                 skyboxrender.RenderSkyBox(commandBuffer, frame);
            
@@ -260,9 +260,9 @@ namespace TDS
             imguiHelper::Update();
 
             // event handling systems 
-
-
             GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
+
+           GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));
             GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
 
             imguiHelper::Draw(commandBuffer);

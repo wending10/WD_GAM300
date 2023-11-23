@@ -70,14 +70,26 @@ namespace TDS
 
 		VK_ASSERT(vkCreatePipelineLayout(mgr.getVkInstance().getVkLogicalDevice(), &pipelineLayoutCI, nullptr, &m_PipelineLayout), "Failed to create pipeline layout!\n");
 
-	
-		for (auto primitiveMode : m_PipelineEntry.m_PipelineConfig.m_PipelineDrawModes)
-			GeneratePipeline(primitiveMode);
 
-		
+		if (bool isComputeShader = (SHADER_FLAG::COMPUTE_SHADER & createEntry.m_ShaderInputs.m_Shaders.begin()->first) != 0)
+		{
+			VkComputePipelineCreateInfo computePipelineCreateInfo{ VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO };
+			computePipelineCreateInfo.layout = m_PipelineLayout;
+			computePipelineCreateInfo.flags = 0;
+			computePipelineCreateInfo.stage = m_ShaderLoadedData.m_VkPipelineShaderStages[0];
 
+			VkPipelineCacheCreateInfo pipelineCacheCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO };
 
+			VK_ASSERT(vkCreatePipelineCache(mgr.getVkInstance().getVkLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_ComputePipeline.m_Cache), "Failed to create compute Pipeline!\n");
+			VK_ASSERT(vkCreateComputePipelines(mgr.getVkInstance().getVkLogicalDevice(), m_ComputePipeline.m_Cache, 1, &computePipelineCreateInfo, nullptr, &m_ComputePipeline.m_Pipeline), "Failed to create compute Pipeline cache!\n");
 
+		}
+		else
+		{
+			for (auto primitiveMode : m_PipelineEntry.m_PipelineConfig.m_PipelineDrawModes)
+				GeneratePipeline(primitiveMode);
+
+		}
 		DestroyModules();
 
 		return true;
@@ -103,9 +115,9 @@ namespace TDS
 		rasterizationState.lineWidth = 1.0f;
 
 		std::uint32_t count = 0;
-
-		count = 1;
-
+	
+		count = 2;
+	
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentState(count);
 		for (auto& blendAttState : blendAttachmentState)
 		{
@@ -321,10 +333,19 @@ namespace TDS
 		m_RenderTarget = nullptr;
 
 	}
+	void VulkanPipeline::BindComputePipeline()
+	{
+		vkCmdBindPipeline(m_CommandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_ComputePipeline.m_Pipeline);
+	}
 	bool VulkanPipeline::LoadCachedPieline(std::string_view fileName, VkPrimitiveTopology drawMode)
 	{
 		return false;
 	}
+	void VulkanPipeline::DispatchCompute(std::uint32_t groupCountX, std::uint32_t groupCountY, std::uint32_t groupCountz)
+	{
+		vkCmdDispatch(m_CommandBuffer, groupCountX, groupCountY, groupCountz);
+	}
+
 	bool VulkanPipeline::SavePipelineCache(std::string_view fileName, VkPrimitiveTopology drawMode)
 	{
 		VkDevice device = GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice();
@@ -349,6 +370,7 @@ namespace TDS
 		TDS_ERROR("Invalid Directory... Failed to save pipeline cache!");
 		return false;
 	}
+
 	void VulkanPipeline::CreateDescriptors(ShaderInputs& shaderInputs, std::uint32_t numDescriptorSets)
 	{
 		std::vector<VkDescriptorPoolSize> poolSizes;
@@ -480,21 +502,27 @@ namespace TDS
 		VkShaderStageFlags stage = GetShaderFlag(flags);
 		vkCmdPushConstants(m_CommandBuffer, m_PipelineLayout, stage, 0, std::uint32_t(size), data);
 	}
-	void VulkanPipeline::UpdateUBO(void* data, size_t size, std::uint32_t binding, std::uint32_t frameIndex, std::uint32_t offset)
+	void VulkanPipeline::UpdateUBO(void* data, size_t size, std::uint32_t binding, std::uint32_t frameIndex, std::uint32_t offset, bool readOnly)
 	{
 		if (GlobalBufferPool::GetInstance()->BindingExist(binding))
 		{
 			std::vector<std::shared_ptr<UBO>>* pUBOs = GlobalBufferPool::GetInstance()->GetBufferContainer(binding);
 			if (pUBOs)
 			{
-				pUBOs->at(frameIndex)->m_Buffer->MapData(data, size, offset);
+				if (readOnly == false)
+					pUBOs->at(frameIndex)->m_Buffer->MapData(data, size, offset);
+				else
+					pUBOs->at(frameIndex)->m_Buffer->ReadData(data, size, offset);
 				return;
 			}
 		}
 		auto findItr = m_PipelineDescriptor.m_UpdateBufferFrames.find(binding);
 		if (findItr != m_PipelineDescriptor.m_UpdateBufferFrames.end())
 		{
-			findItr->second.at(frameIndex)->m_Buffer->MapData(data, size, offset);
+			if (readOnly == false)
+				findItr->second.at(frameIndex)->m_Buffer->MapData(data, size, offset);
+			else
+				findItr->second.at(frameIndex)->m_Buffer->ReadData(data, size, offset);
 			return;
 		}
 		TDS_WARN("Buffer binding: %d , doesnt exist!", binding);
@@ -634,9 +662,10 @@ namespace TDS
 	{
 		vkCmdBindPipeline(m_CommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_Pipelines[drawMode]);
 	}
-	void VulkanPipeline::BindDescriptor(std::int32_t frame, std::uint32_t numOfSet, std::uint32_t firstSet)
+	void VulkanPipeline::BindDescriptor(std::int32_t frame, std::uint32_t numOfSet, std::uint32_t firstSet, bool Compute)
 	{
-		vkCmdBindDescriptorSets(m_CommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_PipelineLayout, firstSet, numOfSet, &m_PipelineDescriptor.m_DescriptorSets[frame], 0, nullptr);
+		VkPipelineBindPoint bindingPoint = Compute ? VK_PIPELINE_BIND_POINT_COMPUTE : VK_PIPELINE_BIND_POINT_GRAPHICS;
+		vkCmdBindDescriptorSets(m_CommandBuffer, bindingPoint, m_PipelineLayout, firstSet, numOfSet, &m_PipelineDescriptor.m_DescriptorSets[frame], 0, nullptr);
 	}
 	void VulkanPipeline::BindAllDescriptors(std::int32_t frame)
 	{
@@ -944,6 +973,7 @@ namespace TDS
 									buffers->m_BufferInfo.buffer = buffers->m_Buffer->GetBuffer();
 									buffers->m_BufferInfo.offset = 0;
 									buffers->m_BufferInfo.range = buffers->m_Buffer->GetBufferSize();
+	
 								}
 							}
 							else
@@ -961,6 +991,8 @@ namespace TDS
 									buffers->m_BufferInfo.buffer = buffers->m_Buffer->GetBuffer();
 									buffers->m_BufferInfo.offset = 0;
 									buffers->m_BufferInfo.range = buffers->m_Buffer->GetBufferSize();
+
+
 								}
 							}
 
@@ -1107,6 +1139,15 @@ namespace TDS
 
 
 						}
+						else
+						{
+							writeSet.dstSet = desc;
+							writeSet.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+							writeSet.dstBinding = samplers.second.m_BindingPoint;
+							writeSet.dstArrayElement = 0;
+							writeSet.descriptorCount = 1;
+							writeSet.pImageInfo = &descriptor.m_ImageInfo;
+						}
 						vkUpdateDescriptorSets(instance.getVkLogicalDevice(), 1, &writeSet, 0, nullptr);
 					}
 					descriptor.m_WriteSetFrames[samplers.second.m_BindingPoint] = writeSet;
@@ -1231,6 +1272,10 @@ namespace TDS
 		if ((flags & (int)SHADER_FLAG::FRAGMENT))
 		{
 			flag |= ShaderFlagsToVkStage(SHADER_FLAG::FRAGMENT);
+		}
+		if ((flags & (int)SHADER_FLAG::COMPUTE_SHADER))
+		{
+			flag |= ShaderFlagsToVkStage(SHADER_FLAG::COMPUTE_SHADER);
 		}
 		return flag;
 	}

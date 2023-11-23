@@ -42,8 +42,8 @@ namespace TDS
 
 	void TDSCamera::UpdateCamera(float deltaTime, bool gameIsPlaying)
 	{
-		if (!gameIsPlaying)
-		{
+		//if (!gameIsPlaying)
+		//{
 			static Input::mousePosition mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 			if (getEditorCamera() && getScrollWheel())
 			{
