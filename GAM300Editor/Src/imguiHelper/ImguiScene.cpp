@@ -24,7 +24,7 @@ namespace TDS
 		//selectedFolder = -1;
 		//renameCheck = false;
 
-		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
+		flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse| ImGuiDockNodeFlags_AutoHideTabBar;
 		panelTitle = "Scene";
 		windowPadding = ImVec2(0.f, 0.f);
 	}
@@ -87,10 +87,16 @@ namespace TDS
 		//	}
 		//	ImGui::EndDragDropTarget();
 		//}
-		//data.LoadTexture(tempPath);
-		//vkTexture.CreateBasicTexture(data.m_TextureInfo);
-		ImVec2 vSize = ImGui::GetContentRegionAvail();
+
+		isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
 		static bool view2D = false;
+		
+		ImVec2 vSize = ImGui::GetContentRegionAvail();
+
+		GraphicsManager::getInstance().getViewportScreen().x = ImGui::GetWindowPos().x;
+		GraphicsManager::getInstance().getViewportScreen().y = ImGui::GetWindowPos().y;
+		GraphicsManager::getInstance().getViewportScreen().z = ImGui::GetContentRegionAvail().x;
+		GraphicsManager::getInstance().getViewportScreen().w = ImGui::GetContentRegionAvail().y;
 	
 		ImGui::Image((ImTextureID)m_DescSet, vSize);
 		//drag drop code MUST be directly under imgui::image code
@@ -125,7 +131,24 @@ namespace TDS
 		}
 
 		std::shared_ptr<Hierarchy> hierarchyPanel = static_pointer_cast<Hierarchy>(LevelEditorManager::GetInstance()->panels[PanelTypes::HIERARCHY]);
-		if (EntityID selectedEntity = hierarchyPanel->getSelectedEntity())
+
+
+		static EntityID selectedEntity{};
+
+		selectedEntity = hierarchyPanel->getSelectedEntity();
+
+		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT) && !ImGuizmo::IsUsing())
+		{
+			if (GraphicsManager::getInstance().getObjectPicker().getActiveObject() != 0 && GraphicsManager::getInstance().getObjectPicker().getActiveObject() < 10000)
+			{
+				selectedEntity = GraphicsManager::getInstance().getObjectPicker().getActiveObject();
+
+				hierarchyPanel->setSelectedEntity(selectedEntity);
+			}
+		}
+
+
+		if (selectedEntity)
 		{
 			if (GraphicsManager::getInstance().IsViewingFrom2D())
 			{
@@ -218,12 +241,12 @@ namespace TDS
 				delete[] _rotat;
 				delete[] _scal;
 			}
-
 			delete[] _proj;
 			delete[] _view;
 			delete[] _trans;
 			delete[] _snap;
 		}
+		
 	}
 	void EditorScene::Resize()
 	{

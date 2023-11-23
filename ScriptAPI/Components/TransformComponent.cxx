@@ -1,4 +1,6 @@
 #include "TransformComponent.hxx"
+#include "../Shared_Libs/Vector4.h"
+#include "../Shared_Libs/Matrix4.h"
 
 namespace ScriptAPI
 {
@@ -162,7 +164,26 @@ namespace ScriptAPI
 		Rotation = Vector3(oldRotation.X, oldRotation.Y, valueZ);
 	}
 
+	Vector3 TransformComponent::TransformDirection(Vector3 direction)
+	{
+		TDS::Mat4 matrix = TDS::GetTransform(entityID)->GenerateTransfom();
+		TDS::Vec4 directionVec4 = TDS::floatsToVec4(direction.X, direction.Y, direction.Z, 1.0f);
+		TDS::Vec4 returnDirectionVec4 = TDS::mat4Vec4(matrix, directionVec4);
+
+		return Vector3(directionVec4.x, directionVec4.y, directionVec4.z);
+	}
+
 	// CONSTRUCTOR ===========================================================================
 	TransformComponent::TransformComponent(TDS::EntityID ID) : entityID (ID)
 	{ }
+
+	void TransformComponent::SetEntityID(TDS::EntityID ID)
+	{
+		entityID = ID;
+	}
+
+	TDS::EntityID TransformComponent::GetEntityID()
+	{
+		return entityID;
+	}
 }

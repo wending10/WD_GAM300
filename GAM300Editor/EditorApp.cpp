@@ -32,16 +32,17 @@
 #include "imguiHelper/ImguiScene.h"
 #include "imguiHelper/ImguiGamePlayScene.h"
 #include "Physics/PhysicsSystem.h"
-
+#include "Rendering/ObjectPicking.h"
 
 bool isPlaying = false;
+bool startPlaying = false;
 
 namespace TDS
 {
     Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
     {
-        m_window.createWindow(wndproc, 1280, 800);
+        m_window.createWindow(wndproc, 1280,720);
 
         //m_pVKInst = std::make_shared<VulkanInstance>(m_window);
         //m_Renderer = std::make_shared<Renderer>(m_window, *m_pVKInst.get());
@@ -143,8 +144,15 @@ namespace TDS
 
     void Application::Update()
     {
-        
         DDSConverter::Init();
+
+        auto awake = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteAwake"
+            );
+
         auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
@@ -184,7 +192,6 @@ namespace TDS
 
         while (m_window.processInputEvent())
         {
-
             TimeStep::CalculateDeltaTime();
             float DeltaTime = TimeStep::GetDeltaTime();
             std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
@@ -205,11 +212,13 @@ namespace TDS
             {
                 GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
             }
-            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime);
+
+            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime, isPlaying);
+
             lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
             RendererSystem::lightPosX = lightx;
 
-            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight(), 1.f)};
+            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
             if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x >0 && m_windowdimension.y > 0)
             {
                 GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
@@ -218,22 +227,28 @@ namespace TDS
 
                 std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
                 pGamePlatScene->Resize();
-
             }
             GraphicsManager::getInstance().StartFrame();
             VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
             std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+
+            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
             if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
                 skyboxrender.RenderSkyBox(commandBuffer, frame);
            
             if (isPlaying)
             {
+                if (startPlaying)
+                {
+                    awake();
+                    startPlaying = false;
+                }
                 ecs.runSystems(1, DeltaTime); // Other systems
                 executeUpdate();
             }
             else
             {
+                startPlaying = true;
                 if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
                 {
                     PhysicsSystem::SetIsPlaying(false);
@@ -246,9 +261,9 @@ namespace TDS
             imguiHelper::Update();
 
             // event handling systems 
-
-
             GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
+
+           GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));
             GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
 
             imguiHelper::Draw(commandBuffer);
@@ -306,19 +321,17 @@ namespace TDS
                 "Reload"
             );
 
-
         SceneManager::GetInstance()->addScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "AddScriptViaName"
             );
-
-        auto awake = GetFunctionPtr<void(*)(void)>
+        SceneManager::GetInstance()->removeScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
-                "ExecuteAwake"
+                "RemoveScriptViaName"
             );
 
         // Step 2: Initialize
@@ -374,7 +387,7 @@ namespace TDS
                 "SetValueBool"
             );
 
-        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int)>
+        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int, bool)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
@@ -423,6 +436,13 @@ namespace TDS
                 "SetGameObject"
             );
 
+        SceneManager::GetInstance()->setComponent = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetComponent"
+            );
+
         SceneManager::GetInstance()->setScriptReference = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID, std::string)>
             (
                 "ScriptAPI",
@@ -448,8 +468,6 @@ namespace TDS
         ecs.initializeSystems(1);
         ecs.initializeSystems(2);
         ecs.initializeSystems(3);
-
-        awake();
     }
 
     Application::~Application()

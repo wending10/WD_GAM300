@@ -137,15 +137,17 @@ namespace TDS
 		std::vector<std::string>(*getAllScripts)();
 
 		bool (*addScript)(EntityID entityID, std::string scriptName);
+		bool (*removeScript)(EntityID entityID, std::string scriptName);
 
 		void (*setBool)(EntityID entityID, std::string script, std::string variableName, bool value);
-		void (*setInt)(EntityID entityID, std::string script, std::string variableName, int value);
+		void (*setInt)(EntityID entityID, std::string script, std::string variableName, int value, bool isInt);
 		void (*setDouble)(EntityID entityID, std::string script, std::string variableName, double value);
 		void (*setFloat)(EntityID entityID, std::string script, std::string variableName, float value);
 		void (*setString)(EntityID entityID, std::string script, std::string variableName, std::string value);
 		//void (*setChar)(EntityID entityID, std::string script, std::string variableName, char value);
 		void (*setVector3)(EntityID entityID, std::string script, std::string variableName, Vec3 value);
 		void (*setGameObject)(EntityID entityID, std::string script, std::string variableName, EntityID gameObjectEntityID);
+		void (*setComponent)(EntityID entityID, std::string script, std::string variableName, EntityID gameObjectEntityID);
 		void (*setScriptReference)(EntityID entityID, std::string script, std::string variableName, EntityID gameObjectEntityID, std::string scriptReference);
 
 

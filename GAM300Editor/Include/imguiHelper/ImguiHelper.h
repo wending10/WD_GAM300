@@ -51,7 +51,8 @@ namespace TDS
 		ImGuiWindowFlags flags{};
 		ImVec2 windowPadding;
 
-		bool rightClick{};
+		bool rightClick{ false };
+		bool makeFocus{ false };
 	private:
 	};
 

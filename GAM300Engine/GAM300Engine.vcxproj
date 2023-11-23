@@ -250,6 +250,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\Rendering\FontSystem.cpp" />
     <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Src\Rendering\GridRenderer.cpp" />
+    <ClCompile Include="Src\Rendering\ObjectPicking.cpp" />
     <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
     <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
@@ -277,6 +278,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\vulkanTools\Renderer.cpp" />
     <ClCompile Include="Src\vulkanTools\RendererManager.cpp" />
     <ClCompile Include="Src\vulkanTools\ShadowMap.cpp" />
+    <ClCompile Include="Src\vulkanTools\Synchronization.cpp" />
     <ClCompile Include="Src\vulkanTools\VertexTypes.cpp" />
     <ClCompile Include="Src\vulkanTools\VMATypes\VMABuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\vulkanDebugger.cpp" />
@@ -368,6 +370,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\GridRenderer.h" />
     <ClInclude Include="Include\Rendering\Material.h" />
     <ClInclude Include="Include\Rendering\ModelElement.h" />
+    <ClInclude Include="Include\Rendering\ObjectPicking.h" />
     <ClInclude Include="Include\Rendering\RenderDataManager.h" />
     <ClInclude Include="Include\Rendering\Renderer2D.h" />
     <ClInclude Include="Include\Rendering\Renderer3D.h" />
@@ -405,6 +408,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\vulkanTools\Renderer.h" />
     <ClInclude Include="Include\vulkanTools\RendererManager.h" />
     <ClInclude Include="Include\vulkanTools\ShadowMap.h" />
+    <ClInclude Include="Include\vulkanTools\Synchronization.h" />
     <ClInclude Include="Include\vulkanTools\VertexTypes.h" />
     <ClInclude Include="Include\vulkanTools\VMATypes\VMABuffer.h" />
     <ClInclude Include="Include\vulkanTools\vulkanDebugger.h" />

@@ -190,8 +190,16 @@ namespace TDS
 		// Panels
 		for (auto currentPanel : LevelEditorManager::GetInstance()->panels)
 		{
+			if (currentPanel.second->makeFocus)
+			{
+				ImGui::SetNextWindowFocus();
+				currentPanel.second->makeFocus = false;
+			}
 			//ImGui::GetStyle().WindowPadding = currentPanel.second->windowPadding;
-
+			if (currentPanel.first == PanelTypes::SCENE)
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0.f,0.f });
+			}
 			if (ImGui::Begin(currentPanel.second->panelTitle.c_str(), (bool*)0, currentPanel.second->flags))
 			{
 				if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
@@ -206,6 +214,11 @@ namespace TDS
 				currentPanel.second->update();
 			}
 			ImGui::End();
+			if (currentPanel.first == PanelTypes::SCENE)
+			{
+				ImGui::PopStyleVar();
+			}
+
 		}
 	}
 

@@ -15,6 +15,7 @@ namespace TDS
 		Vec4*			m_Color = nullptr;
 		std::uint32_t	m_LayerID;
 		std::uint32_t	m_TextureIndex = 499;
+		uint32_t		m_ID{};
 	};
 
 	struct alignas(16) SceneUBO
@@ -30,6 +31,7 @@ namespace TDS
 		Mat4 m_Model;
 		Vec4 m_Color;
 		Vec4 m_texID = { 499.f, 0.f, 0.f, 0.f };
+		uint32_t ID{};
 	};
 
 	class Transform;
@@ -39,7 +41,7 @@ namespace TDS
 	{
 		std::array<Instance2D, 12000>		m_Instances;
 		std::array<InstanceInfo2D, 12000>	m_InstanceInfo;
-		virtual void DLL_API				AddToBatch(void* componentSprite, Transform* transform);
+		virtual void DLL_API				AddToBatch(void* componentSprite, Transform* transform, std::uint32_t entity);
 		virtual void DLL_API				PrepareBatch();
 	};
 
@@ -52,6 +54,7 @@ namespace TDS
 	struct OffScreenFrameBuffer
 	{
 		RenderTarget* m_RenderingAttachment{ nullptr };
+		RenderTarget* m_PickingAttachment{ nullptr };
 		RenderTarget* m_RenderingDepthAttachment{ nullptr };
 		RenderPass* m_Renderpass{ nullptr };
 		FrameBuffer* m_Framebuffer{ nullptr };

@@ -75,6 +75,12 @@
     <ClInclude Include="Components\AudioComponent.hxx">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ComponentBase.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mathf.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineInterface.cxx">
@@ -123,6 +129,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\AudioComponent.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathf.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.hxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

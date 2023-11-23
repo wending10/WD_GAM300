@@ -117,4 +117,15 @@ namespace TDS
 		}
 		return true;
 	}
+	DLL_API bool WindowsWin::GetWindowPos(int& xPos, int& yPos) const
+	{
+		RECT windowRect;
+		if (GetWindowRect(m_handleWindows, &windowRect)) {
+			xPos = windowRect.left;
+			yPos = windowRect.top;
+			return true;
+		}
+
+		return false;
+	}
 }//namespace TDS
