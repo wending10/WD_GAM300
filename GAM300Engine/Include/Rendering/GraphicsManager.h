@@ -43,6 +43,7 @@ namespace TDS
 		bool									m_ViewingFrom2D = false;
 		bool									m_FrameHasBegin = false;
 
+		Vec4									m_CurrClearColor;
 		float									m_TabOffset{};
 		Vec4									m_ViewportScreen{};
 	public:
@@ -50,6 +51,7 @@ namespace TDS
 		GraphicsManager();
 		~GraphicsManager();
 
+		void								SetClearColor(Vec4 clearColor);
 		void								ToggleViewFrom2D(bool condition);
 		bool								IsViewingFrom2D();
 		inline bool							IfFrameHasBegin()
@@ -62,6 +64,7 @@ namespace TDS
 		void								EndFrame();
 		void								ShutDown();
 		void								ResizeFrameBuffer(std::uint32_t width, std::uint32_t height);
+		void								UpdateClearColor();
 		void								setCamera(TDSCamera& camera);
 		std::shared_ptr<VulkanInstance>		getVkInstancePtr();
 

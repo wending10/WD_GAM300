@@ -525,6 +525,7 @@ namespace TDS
 		if (opened)
 		{
 			auto& children = ecs.getComponent<NameTag>(entityID)->GetHierarchyChildren();
+			
 			std::uint32_t originalSize = children.size();
 			for (auto childEntity : children)
 			{

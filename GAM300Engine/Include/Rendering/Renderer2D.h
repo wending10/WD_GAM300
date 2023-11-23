@@ -74,7 +74,7 @@ namespace TDS
 			DLL_API Renderer2D();
 			DLL_API ~Renderer2D();
 			void DLL_API Init();
-			void DLL_API Draw(VkCommandBuffer commandBuffer, int Frame, Vec4 ClearColor = {0.f, 0.f, 0.f, 1.f});
+			void DLL_API Draw(VkCommandBuffer commandBuffer, int Frame);
 			void DLL_API Update(VkCommandBuffer commandBuffer, int Frame);
 			inline SpriteBatch& GetBatchList()
 			{
@@ -95,6 +95,7 @@ namespace TDS
 			VMABuffer* m_VertexBuffer = nullptr;
 			VMABuffer* m_IndexBuffer = nullptr;
 			SceneUBO m_SceneUBO{}; //Probably not in used.
+			Vec4	m_ClearColor;
 			
 
 	};

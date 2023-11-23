@@ -1,6 +1,6 @@
 #pragma once
 #include "Rendering/GraphicsManagerWrapperCalls.h"
-
+#include "Vector4.hxx"
 
 namespace ScriptAPI 
 {
@@ -15,5 +15,6 @@ namespace ScriptAPI
 		static void SetLayerToRender(int ID);
 		static int CurrentRenderedLayer();
 		static unsigned int GetPickedObject();
+		static void SetClearColor(Vector4 clearColorVector);
     };
 }

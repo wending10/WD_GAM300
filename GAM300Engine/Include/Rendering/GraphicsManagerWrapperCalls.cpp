@@ -25,3 +25,8 @@ unsigned int TDS::GraphicsManagerWrapperCalls::GetPickedObject()
 {
     return TDS::GraphicsManager::getInstance().PickedObject();
 }
+
+void TDS::GraphicsManagerWrapperCalls::SetClearColor(float x, float y, float z, float w)
+{
+    TDS::GraphicsManager::getInstance().SetClearColor(Vec4(x,y,z,w));
+}

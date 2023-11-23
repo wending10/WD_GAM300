@@ -141,10 +141,8 @@ namespace TDS
 		
 	}
 
-	void Renderer2D::Draw(VkCommandBuffer commandBuffer, int Frame, Vec4 ClearColor)
+	void Renderer2D::Draw(VkCommandBuffer commandBuffer, int Frame)
 	{
-		(ClearColor);
-
 		if (m_BatchList.m_InstanceCnt > 0)
 		{
 			for (std::uint32_t i = 0; i < 12; ++i)
@@ -177,6 +175,7 @@ namespace TDS
 	}
 	void Renderer2D::Update(VkCommandBuffer commandBuffer, int Frame)
 	{
+
 		//if (m_AssetModel.m_ResourcePtr == nullptr)
 		//{
 		//	std::string PlanePath = "Quad2_Bin.bin";
@@ -234,6 +233,7 @@ namespace TDS
 			AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray2D = false;
 		}
 	}
+
 	void Renderer2D::ShutDown()
 	{
 		m_Pipeline->ShutDown();

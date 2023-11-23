@@ -99,6 +99,10 @@ namespace TDS
 			renderLayer->Init();
 		}
 	}
+	void GraphicsManager::SetClearColor(Vec4 clearColor)
+	{
+		m_CurrClearColor = clearColor;
+	}
 	void GraphicsManager::ToggleViewFrom2D(bool condition)
 	{
 		m_ViewingFrom2D = condition;
@@ -164,6 +168,27 @@ namespace TDS
 	}
 	void GraphicsManager::ResizeFrameBuffer(std::uint32_t width, std::uint32_t height)
 	{
+	}
+
+	void GraphicsManager::UpdateClearColor()
+	{
+		std::vector<VkClearAttachment> clearAttachments(2);
+
+		clearAttachments[0].clearValue = {{m_CurrClearColor.x,  m_CurrClearColor.y,  m_CurrClearColor.z,  m_CurrClearColor.w}};
+		clearAttachments[0].aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		clearAttachments[0].colorAttachment = 0;
+		
+		clearAttachments[1].clearValue = { {m_CurrClearColor.x,  m_CurrClearColor.y,  m_CurrClearColor.z,  m_CurrClearColor.w} };
+		clearAttachments[1].aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		clearAttachments[1].colorAttachment = 3;
+
+		VkClearRect clearRect{};
+		clearRect.layerCount = 1;
+		clearRect.baseArrayLayer = 0;
+		clearRect.rect.offset = { 0, 0 };
+		clearRect.rect.extent = { static_cast<std::uint32_t>(m_Framebuffer->getDimensions().x), static_cast<std::uint32_t>(m_Framebuffer->getDimensions().y)};
+		vkCmdClearAttachments(this->currentCommand, static_cast<uint32_t>(clearAttachments.size()), clearAttachments.data(), 1, &clearRect);
+
 	}
 	void GraphicsManager::setCamera(TDSCamera& camera)
 	{
