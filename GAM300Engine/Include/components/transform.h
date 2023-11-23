@@ -80,6 +80,10 @@ namespace TDS
 
 			return mTransformMatrix;
 		}
+		DLL_API Mat4 GenerateTransfomInverse() {
+			GenerateTransfom();
+			return mTransformMatrix.inverse();
+		}
 
 		DLL_API Vec4 getLocalPosition(EntityID parent);
 		DLL_API void setLocalPosition(EntityID parent, Vec4 localPosition);

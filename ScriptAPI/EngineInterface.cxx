@@ -286,6 +286,7 @@ namespace ScriptAPI
         {
             fixedUpdateTimer = 0.02f;
         }
+        Input::InputUpdate();
     }
 
     /*!*************************************************************************

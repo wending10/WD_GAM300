@@ -19,6 +19,11 @@ namespace TDS
 	{
 		for (int i = 0; i < entities.size(); ++i)
 		{
+			if (!ecs.getEntityIsEnabled(entities[i]) || !ecs.getComponentIsEnabled<GraphicsComponent>(entities[i]))
+			{
+				continue;
+			}
+
 			if (GetSphereCollider(entities[i]))
 			{
 				SphereCollider* vSphere = GetSphereCollider(entities[i]);

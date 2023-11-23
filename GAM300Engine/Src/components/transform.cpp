@@ -46,14 +46,19 @@ namespace TDS
 
 	Vec4 Transform::getLocalPosition(EntityID parent)
 	{
-		Mat4 parentTransformationMatrix = GetTransform(parent)->GetTransformMatrix().inverse();
-		Vec4 localPosition = parentTransformationMatrix * Vec4(mPosition, 1.f);
+		if (parent)
+		{
+			Mat4 parentTransformationMatrix = GetTransform(parent)->GenerateTransfom().inverse();
+			Vec4 localPosition = parentTransformationMatrix * Vec4(mPosition, 1.f);
 
-		localPosition.x /= localPosition.w;
-		localPosition.y /= localPosition.w;
-		localPosition.z /= localPosition.w;
+			localPosition.x /= localPosition.w;
+			localPosition.y /= localPosition.w;
+			localPosition.z /= localPosition.w;
 
-		return localPosition;
+			return localPosition;
+		}
+
+		return mPosition;
 	}
 	void Transform::setLocalPosition(EntityID parent, Vec4 localPosition)
 	{
@@ -61,12 +66,12 @@ namespace TDS
 		localPosition.y *= localPosition.w;
 		localPosition.z *= localPosition.w;
 
-		mPosition = GetTransform(parent)->GetTransformMatrix() * localPosition;
+		mPosition = GetTransform(parent)->GenerateTransfom() * localPosition;
 	}
 
 	Vec4 Transform::getLocalScale(EntityID parent)
 	{
-		Mat4 parentTransformationMatrix = GetTransform(parent)->GetTransformMatrix().inverse();
+		Mat4 parentTransformationMatrix = GetTransform(parent)->GenerateTransfom().inverse();
 		Vec4 localScale = parentTransformationMatrix * Vec4(mScale, 1.f);
 
 		localScale.x /= localScale.w;
@@ -81,12 +86,12 @@ namespace TDS
 		localScale.y *= localScale.w;
 		localScale.z *= localScale.w;
 
-		mPosition = GetTransform(parent)->GetTransformMatrix() * localScale;
+		mPosition = GetTransform(parent)->GenerateTransfom() * localScale;
 	}
 
 	Vec4 Transform::getLocalRotation(EntityID parent)
 	{
-		Mat4 parentTransformationMatrix = GetTransform(parent)->GetTransformMatrix().inverse();
+		Mat4 parentTransformationMatrix = GetTransform(parent)->GenerateTransfom().inverse();
 		Vec4 localRotation = parentTransformationMatrix * Vec4(mRotation, 1.f);
 
 		localRotation.x /= localRotation.w;
@@ -101,7 +106,7 @@ namespace TDS
 		localRotation.y *= localRotation.w;
 		localRotation.z *= localRotation.w;
 
-		mPosition = GetTransform(parent)->GetTransformMatrix() * localRotation;
+		mPosition = GetTransform(parent)->GenerateTransfom() * localRotation;
 	}
 
 	Transform* GetTransform(EntityID entityID)

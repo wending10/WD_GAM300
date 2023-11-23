@@ -165,7 +165,14 @@ namespace ScriptAPI
         static bool GetMouseButtonUp(uint32_t button);
         static bool GetMouseButtonDown(uint32_t button);
 
+		static float GetMousePositionDifferenceX();
+		static float GetMousePositionDifferenceY();
+
+		static void InputUpdate();
+
 	private:
 		static System::Collections::Generic::Dictionary<System::String^, System::Tuple<uint32_t, uint32_t>^>^ AxisDictionary;
+		static float mousePositionX;
+		static float mousePositionY;
 	};
 }

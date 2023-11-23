@@ -1,9 +1,5 @@
 ﻿using ScriptAPI;
 using System;
-using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 public class Testing : Script
 {
@@ -36,7 +32,7 @@ public class Test : Script
 
     public override void Awake() 
     {
-        //otherEntity = GameObjectScriptFind("entity3");
+        //GameObjectScriptFind("entity3");
         //Console.WriteLine(otherEntity);
         //otherEntity.GetComponent<TransformComponent>().SetPositionX(20);
         //Console.WriteLine(script.gameObject);

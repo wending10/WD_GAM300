@@ -33,6 +33,11 @@ namespace TDS
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
+			if (!ecs.getEntityIsEnabled(entities[i]) || !ecs.getComponentIsEnabled<GraphicsComponent>(entities[i]))
+			{
+				continue;
+			}
+
 			if (GraphicsManager::getInstance().IsViewingFrom2D())
 			{
 				if (_Graphics[i].m_UsedIn2D == false)

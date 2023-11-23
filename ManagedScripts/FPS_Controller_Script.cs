@@ -177,29 +177,30 @@ public class FPS_Controller_Script : Script
     {
         #region Camera
         // Control camera movement
-        //if (cameraCanMove)
-        //{
-        //    if (Input.GetAxis("Mouse X") > 0)
-        //    {
-        //        yaw = gameObject.GetComponent<TransformComponent>().GetRotation().Y + Input.GetAxis("Mouse X") * mouseSensitivity;
+        if (cameraCanMove)
+        {
+            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            {
+                yaw = transform.GetRotation().Y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
-        //        if (!invertCamera)
-        //        {
-        //            pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
-        //        }
-        //        else
-        //        {
-        //            // Inverted Y
-        //            pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
-        //        }
+                if (!invertCamera)
+                {
+                    pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
+                }
+                else
+                {
+                    // Inverted Y
+                    pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
+                }
 
-        //        // Clamp pitch between lookAngle
-        //        pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+                // Clamp pitch between lookAngle
+                pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
-        //        gameObject.GetComponent<TransformComponent>().SetRotationY(yaw);
-        //        playerCamera.transform.SetRotationX(pitch);
-        //    }
-        //}
+                transform.SetRotationY(yaw);
+                playerCamera.transform.SetRotationX(pitch);
+                //playerCamera.SetIsEnabled(false);
+            }
+        }
 
         #region Camera Zoom
 
@@ -376,7 +377,7 @@ public class FPS_Controller_Script : Script
                     currentSprintSpeed += 0.02f;
                 }
 
-                //targetVelocity = transform.TransformDirection(targetVelocity) * currentSprintSpeed;
+                targetVelocity = transform.TransformDirection(targetVelocity) * currentSprintSpeed;
                 // Apply a force that attempts to reach our target velocity
                 Vector3 velocity = rb.GetLinearVelocity();
                 Vector3 velocityChange = targetVelocity - velocity;
@@ -401,7 +402,7 @@ public class FPS_Controller_Script : Script
                     }
                 }
 
-                //rb.AddForce(velocityChange, ForceMode.VelocityChange);
+                ////rb.AddForce(velocityChange/*, ForceMode.VelocityChange*/);
             }
             // All movement calculations while walking
             else
@@ -414,17 +415,24 @@ public class FPS_Controller_Script : Script
                     //sprintBarCG.alpha -= 3 * Time.deltaTime;
                 }
 
-                //targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+                //targetVelocity = transform.TransformDirection(targetVelocity).normalise() * walkSpeed;
+                //Console.WriteLine(targetVelocity.X + "\t" + targetVelocity.Y + "\t" + targetVelocity.Z);
+
 
                 // Apply a force that attempts to reach our target velocity
-                Vector3 velocity = rb.GetLinearVelocity();
-                Vector3 velocityChange = targetVelocity - velocity;
-                velocityChange.X = Mathf.Clamp(velocityChange.X, -maxVelocityChange, maxVelocityChange);
-                velocityChange.Z = Mathf.Clamp(velocityChange.Z, -maxVelocityChange, maxVelocityChange);
-                velocityChange.Y = 0;
+                //Vector3 velocity = rb.GetLinearVelocity();
+                //Vector3 velocityChange = targetVelocity - velocity;
+                //velocityChange.X = Mathf.Clamp(velocityChange.X, -maxVelocityChange, maxVelocityChange);
+                //velocityChange.Z = Mathf.Clamp(velocityChange.Z, -maxVelocityChange, maxVelocityChange);
+                //velocityChange.Y = 0;
 
-                //rb.AddForce(velocityChange, ForceMode.VelocityChange);
+                //rb.AddForce(velocityChange/*, ForceMode.VelocityChange*/);
+
             }
+
+            Vector3 transformPosition = transform.GetPosition();
+            transform.SetPositionX(transformPosition.X + targetVelocity.Z * walkSpeed);
+            transform.SetPositionZ(transformPosition.Z + targetVelocity.X * walkSpeed);
         }
         #endregion
     }

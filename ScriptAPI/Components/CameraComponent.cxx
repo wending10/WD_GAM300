@@ -227,6 +227,43 @@ namespace ScriptAPI
 		MouseSensitivity = value;
 	}
 
+	// ISENABLED =============================================================================
+	// Private
+	bool CameraComponent::IsEnabled::get()
+	{
+		TDS::EntityID id = entityID;
+		return TDS::getComponentIsEnable("Camera Component", id);
+	}
+	void CameraComponent::IsEnabled::set(bool value)
+	{
+		TDS::EntityID id = entityID;
+		TDS::setComponentIsEnable("Camera Component", id, value);
+	}
+
+	// Public
+	bool CameraComponent::GetIsEnabled()
+	{
+		return IsEnabled;
+	}
+	void CameraComponent::SetIsEnabled(bool value)
+	{
+		IsEnabled = value;
+	}
+
+	// FORWARDVECTOR =========================================================================
+	// 
+	Vector3 CameraComponent::getForwardVector()
+	{
+		// May wanna change to a function
+		if (!TDS::GetCameraComponent(entityID))
+		{
+			// throw error instead (not sure how)
+			return Vector3(0.f, 0.f, 0.f);
+		}
+
+		return Vector3(TDS::GetCameraComponent(entityID)->getForwardVector());
+	}
+
 	// CONSTRUCTOR ===========================================================================
 	CameraComponent::CameraComponent(TDS::EntityID ID) : entityID (ID), transform(TransformComponent(ID))
 	{ }
