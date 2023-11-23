@@ -6,7 +6,7 @@ public class PlayButton : Script
     
     public override void Awake()
     {
-        // Initialization code if any
+         GraphicsManagerWrapper.ToggleViewFrom2D(true);
     }
 
     public override void Update()
@@ -15,6 +15,7 @@ public class PlayButton : Script
         var entityID = gameObject.GetEntityID();
         if (Input.GetMouseButtonDown(Keycode.M1) && entityID == GraphicsManagerWrapper.GetPickedObject())
         {
+            GraphicsManagerWrapper.ToggleViewFrom2D(false);
             SceneLoader.LoadMainGame();
         }
     }

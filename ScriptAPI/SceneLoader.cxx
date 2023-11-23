@@ -1,13 +1,14 @@
 #include "SceneLoader.hxx"
-
+#include "TypeConversion.hxx"
 namespace ScriptAPI
 {
 	void SceneLoader::LoadMainMenu()
 	{
-		TDS::SceneManager::GetInstance()->loadScene("../assets/scenes/Development Main Menu.json");
+		
+		TDS::SceneManager::GetInstance()->loadScene("Development Main Menu");
 	}
 	void SceneLoader::LoadMainGame()
 	{
-		TDS::SceneManager::GetInstance()->loadScene("../assets/scenes/Development Game (2).json");
+		TDS::SceneManager::GetInstance()->loadScene("DevelopmentGame");
 	}
 }
