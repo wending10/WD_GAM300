@@ -125,6 +125,7 @@ namespace TDS
 			ecs.commitArchetype(archetypeID);
 		}
 
+		EntityID currentEntity = 0;
 		EntityID lastEntity = 0;
 		int i = 0;
 		for (rapidjson::Value::ConstMemberIterator itr = obj["Entity Data"].MemberBegin(); itr != obj["Entity Data"].MemberEnd(); ++itr, ++i)
@@ -135,8 +136,8 @@ namespace TDS
 			}
 
 			//EntityID newEntity = ecs.getNewID();
-			lastEntity = static_cast<EntityID>(std::stoi(itr->name.GetString()));
-			ecs.registerEntity(lastEntity);
+			currentEntity = static_cast<EntityID>(std::stoi(itr->name.GetString()));
+			ecs.registerEntity(currentEntity);
 
 			for (auto& m : itr->value.GetObject())	
 			{
@@ -144,7 +145,7 @@ namespace TDS
 				if (componentName == "ArchetypeID") // First "componentName" to immediately find the archetype of entity
 				{
 					// Add all components at once
-					ecs.addComponentsByArchetype(lastEntity, m.value.GetString());
+					ecs.addComponentsByArchetype(currentEntity, m.value.GetString());
 
 					continue;
 				}
@@ -154,11 +155,15 @@ namespace TDS
 
 				rttr::type component = rttr::type::get_by_name(componentName);
 
-				rttr::instance addedComponent = getComponentByName(component, lastEntity);
+				rttr::instance addedComponent = getComponentByName(component, currentEntity);
 				fromJsonRecur(addedComponent, componentData);
 			}
-			updateName(lastEntity, ecs.getComponent<NameTag>(lastEntity)->GetName());
+			updateName(currentEntity, ecs.getComponent<NameTag>(currentEntity)->GetName());
 
+			if (currentEntity > lastEntity)
+			{
+				lastEntity = currentEntity;
+			}
 		}
 
 		ecs.setIDCounter(lastEntity + 1);
@@ -252,7 +257,19 @@ namespace TDS
 
 		for (auto reference : scriptReferences)
 		{
+			// add in a parameter for isEnabled
 			setScriptReference(reference.entityHoldingScript, reference.scriptName, reference.variableName, reference.entityScriptReference, reference.scriptReference);
+		}
+
+		if (obj.FindMember("Active Archetype") != obj.MemberEnd())
+		{
+			for (rapidjson::Value::ConstMemberIterator itr = obj["Active Archetype"].MemberBegin(); itr != obj["Active Archetype"].MemberEnd(); ++itr)
+			{
+				EntityID currentEntity = static_cast<EntityID>(std::stoi(itr->name.GetString()));
+				auto activeArchetype = itr->value.GetString();
+
+				ecs.setActiveArchetype(currentEntity, activeArchetype);
+			}
 		}
 
 		return true;
@@ -437,6 +454,20 @@ namespace TDS
 		}
 
 		// End of scripts
+		writer->EndObject();
+
+		// =======================================================
+		// Serialize active archetypes
+		writer->String("Active Archetype", static_cast<rapidjson::SizeType>(std::string("Active Archetype").length()), false);
+		writer->StartObject();
+
+		for (int i = 0; i < entityList.size(); ++i)
+		{
+			writer->String(std::to_string(entityList[i]).c_str(), static_cast<rapidjson::SizeType>(std::to_string(entityList[i]).length()), false);
+			writer->String(ecs.getActiveArchetype(entityList[i]).c_str(), static_cast<rapidjson::SizeType>(ecs.getActiveArchetype(entityList[i]).length()), false);
+		}
+
+		// End of active archetypes
 		writer->EndObject();
 
 		// End of file

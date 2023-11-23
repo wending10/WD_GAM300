@@ -166,11 +166,13 @@ namespace ScriptAPI
 
 	Vector3 TransformComponent::TransformDirection(Vector3 direction)
 	{
-		TDS::Mat4 matrix = TDS::GetTransform(entityID)->GenerateTransfom();
-		TDS::Vec4 directionVec4 = TDS::floatsToVec4(direction.X, direction.Y, direction.Z, 1.0f);
-		TDS::Vec4 returnDirectionVec4 = TDS::mat4Vec4(matrix, directionVec4);
+		// May wanna change to a function
+		if (!TDS::GetTransform(entityID))
+		{
+			// throw error instead (not sure how)
+			return Vector3(0.f, 0.f, 0.f);
+		}
 
-		return Vector3(directionVec4.x, directionVec4.y, directionVec4.z);
 	}
 
 	// CONSTRUCTOR ===========================================================================

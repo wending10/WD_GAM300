@@ -951,6 +951,11 @@ namespace TDS
         return mEntityArchetypeMap[entityID].activeArchetype->type;
     }
 
+    inline void ECS::setActiveArchetype(const EntityID& entityID, const ArchetypeID& newType)
+    {
+        mEntityArchetypeMap[entityID].activeArchetype = getArchetype(newType);
+    }
+
     template<typename C>
     inline void ECS::setComponentIsEnabled(const EntityID& entityID, bool _isEnabled)
     {

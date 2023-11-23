@@ -38,7 +38,7 @@ namespace TDS
 			/*!*************************************************************************
 			Gets mouse position
 			****************************************************************************/
-			static void SetGameCamera(CameraComponent* _camera);
+			static void SetGameCamera(CameraComponent& _camera);
 
 			/*!*************************************************************************
 			Calculates the vectors 

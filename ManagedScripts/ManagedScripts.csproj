@@ -19,7 +19,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ScriptAPI">
-      <HintPath>..\scriptDLL\tmp\ScriptAPI.dll</HintPath>
 		<HintPath Condition="Exists('..\Debug-x64\')">..\Debug-x64\ScriptAPI.dll</HintPath>
 		<HintPath Condition="Exists('..\Release-x64\')">..\Release-x64\ScriptAPI.dll</HintPath>
     </Reference>

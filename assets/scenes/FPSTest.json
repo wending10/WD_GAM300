@@ -1,5 +1,644 @@
 {
-    "Archetype Sizes": {},
-    "Entity Data": {},
-    "Scripts": {}
+    "Archetype Sizes": {
+        "1100001000000": {
+            "0": 544,
+            "1": 800,
+            "6": 1056
+        },
+        "1101001100000": {
+            "0": 136,
+            "1": 200,
+            "3": 40,
+            "6": 264,
+            "7": 64
+        },
+        "1100010100000": {
+            "0": 136,
+            "1": 200,
+            "5": 40,
+            "7": 64
+        },
+        "1100100000000": {
+            "0": 272,
+            "1": 400,
+            "4": 112
+        }
+    },
+    "Entity Data": {
+        "17": {
+            "ArchetypeID": "1101001100000",
+            "Name Tag": {
+                "Name": "Main_F",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 15,
+                "HierarchyIndex": 1,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": -20.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Box Collider": {
+                "IsTrigger": false,
+                "Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Size": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "Main Floor.dds",
+                "Mesh Renderer": true,
+                "Debug": false,
+                "ModelName": "Floors_Bin.bin",
+                "MeshName": "Main_F",
+                "Color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Used In 2D": false
+            },
+            "Rigid Body": {
+                "Mass": 1.0,
+                "Linear Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Angular Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Friction": 0.20000000298023224,
+                "Restitution": 0.0,
+                "GravityFactor": 1.0,
+                "LinearDamping": 0.05000000074505806,
+                "AngularDamping": 0.05000000074505806,
+                "MotionType": "STATIC",
+                "UseGravity": false
+            }
+        },
+        "1": {
+            "ArchetypeID": "1100010100000",
+            "Name Tag": {
+                "Name": "Player",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 0,
+                "HierarchyIndex": 0,
+                "HierarchyChildren": [
+                    20,
+                    21
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 50.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                }
+            },
+            "Capsule Collider": {
+                "IsTrigger": false,
+                "Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Radius": 0.5,
+                "Height": 2.0
+            },
+            "Rigid Body": {
+                "Mass": 1.0,
+                "Linear Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Angular Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Friction": 0.20000000298023224,
+                "Restitution": 0.0,
+                "GravityFactor": 1.0,
+                "LinearDamping": 0.05000000074505806,
+                "AngularDamping": 0.05000000074505806,
+                "MotionType": "STATIC",
+                "UseGravity": false
+            }
+        },
+        "18": {
+            "ArchetypeID": "1100001000000",
+            "Name Tag": {
+                "Name": "Kitchen_F",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 15,
+                "HierarchyIndex": 2,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": -20.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Mesh Renderer": true,
+                "Debug": false,
+                "ModelName": "Floors_Bin.bin",
+                "MeshName": "Kitchen_F",
+                "Color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Used In 2D": false
+            }
+        },
+        "19": {
+            "ArchetypeID": "1100001000000",
+            "Name Tag": {
+                "Name": "Gallery_F",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 15,
+                "HierarchyIndex": 3,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 8.978363037109375,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Mesh Renderer": true,
+                "Debug": false,
+                "ModelName": "Floors_Bin.bin",
+                "MeshName": "",
+                "Color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Used In 2D": false
+            }
+        },
+        "15": {
+            "ArchetypeID": "1100001000000",
+            "Name Tag": {
+                "Name": "Floor",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 0,
+                "HierarchyIndex": 1,
+                "HierarchyChildren": [
+                    16,
+                    17,
+                    18,
+                    19
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": -20.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Mesh Renderer": true,
+                "Debug": false,
+                "ModelName": "Floors_Bin.bin",
+                "MeshName": "",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false
+            }
+        },
+        "16": {
+            "ArchetypeID": "1100001000000",
+            "Name Tag": {
+                "Name": "Toilet_F",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 15,
+                "HierarchyIndex": 0,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": -20.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "Toilet Floor.dds",
+                "Mesh Renderer": true,
+                "Debug": false,
+                "ModelName": "Floors_Bin.bin",
+                "MeshName": "",
+                "Color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Used In 2D": false
+            }
+        },
+        "20": {
+            "ArchetypeID": "1100100000000",
+            "Name Tag": {
+                "Name": "Camera",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1,
+                "HierarchyIndex": 0,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Camera Component": {
+                "Yaw": -90.0,
+                "Pitch": 0.0,
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Speed": 1.0,
+                "FOV": 45.0,
+                "MouseSensitivity": 0.10000000149011612
+            }
+        },
+        "21": {
+            "ArchetypeID": "1100100000000",
+            "Name Tag": {
+                "Name": "Camera 2",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1,
+                "HierarchyIndex": 1,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 25.0,
+                    "y": 25.0,
+                    "z": 25.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Camera Component": {
+                "Yaw": -90.0,
+                "Pitch": 0.0,
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Speed": 1.0,
+                "FOV": 45.0,
+                "MouseSensitivity": 0.10000000149011612
+            }
+        }
+    },
+    "Scripts": {
+        "17": {},
+        "1": {
+            "FPS_Controller_Script": {
+                "rb": {
+                    "Component": 1
+                },
+                "playerCamera": {
+                    "Component": 0
+                },
+                "fov": {
+                    "Float": 60.0
+                },
+                "invertCamera": {
+                    "Bool": false
+                },
+                "cameraCanMove": {
+                    "Bool": true
+                },
+                "mouseSensitivity": {
+                    "Float": 35.0
+                },
+                "maxLookAngle": {
+                    "Float": 50.0
+                },
+                "lockCursor": {
+                    "Bool": true
+                },
+                "crosshair": {
+                    "Bool": true
+                },
+                "yaw": {
+                    "Float": 0.0
+                },
+                "pitch": {
+                    "Float": -4.0
+                },
+                "enableZoom": {
+                    "Bool": true
+                },
+                "holdToZoom": {
+                    "Bool": false
+                },
+                "zoomKey": {
+                    "UInt": 56
+                },
+                "zoomFOV": {
+                    "Float": 30.0
+                },
+                "zoomStepTime": {
+                    "Float": 5.0
+                },
+                "isZoomed": {
+                    "Bool": true
+                },
+                "playerCanMove": {
+                    "Bool": true
+                },
+                "walkSpeed": {
+                    "Float": 1.0
+                },
+                "maxVelocityChange": {
+                    "Float": 10.0
+                },
+                "isWalking": {
+                    "Bool": false
+                },
+                "enableSprint": {
+                    "Bool": true
+                },
+                "unlimitedSprint": {
+                    "Bool": false
+                },
+                "sprintKey": {
+                    "UInt": 42
+                },
+                "sprintSpeed": {
+                    "Float": 3.0
+                },
+                "currentSprintSpeed": {
+                    "Float": 3.0
+                },
+                "sprintDuration": {
+                    "Float": 5.0
+                },
+                "sprintCooldown": {
+                    "Float": 0.5
+                },
+                "sprintFOV": {
+                    "Float": 80.0
+                },
+                "sprintFOVStepTime": {
+                    "Float": 10.0
+                },
+                "useSprintBar": {
+                    "Bool": true
+                },
+                "hideBarWhenFull": {
+                    "Bool": true
+                },
+                "sprintBarWidthPercent": {
+                    "Float": 0.3
+                },
+                "sprintBarHeightPercent": {
+                    "Float": 0.015
+                },
+                "isSprinting": {
+                    "Bool": false
+                },
+                "sprintRemaining": {
+                    "Float": 5.0
+                },
+                "sprintBarWidth": {
+                    "Float": 0.0
+                },
+                "sprintBarHeight": {
+                    "Float": 0.0
+                },
+                "isSprintCooldown": {
+                    "Bool": false
+                },
+                "sprintCooldownReset": {
+                    "Float": 0.5
+                },
+                "enableJump": {
+                    "Bool": true
+                },
+                "jumpKey": {
+                    "UInt": 45
+                },
+                "jumpPower": {
+                    "Float": 5.0
+                },
+                "isGrounded": {
+                    "Bool": false
+                },
+                "enableCrouch": {
+                    "Bool": true
+                },
+                "holdToCrouch": {
+                    "Bool": true
+                },
+                "crouchKey": {
+                    "UInt": 43
+                },
+                "crouchHeight": {
+                    "Float": 0.75
+                },
+                "speedReduction": {
+                    "Float": 0.5
+                },
+                "isCrouched": {
+                    "Bool": false
+                },
+                "originalScale": {
+                    "Vector3": {
+                        "X": 1.0,
+                        "Y": 1.0,
+                        "Z": 1.0
+                    }
+                },
+                "playerHealth": {
+                    "Int": 100
+                },
+                "enableHeadBob": {
+                    "Bool": true
+                },
+                "joint": {
+                    "Component": 0
+                },
+                "bobSpeed": {
+                    "Float": 10.0
+                },
+                "bobAmount": {
+                    "Vector3": {
+                        "X": 0.15000000596046448,
+                        "Y": 0.05000000074505806,
+                        "Z": 0.0
+                    }
+                },
+                "jointOriginalPos": {
+                    "Vector3": {
+                        "X": 0.0,
+                        "Y": 0.0,
+                        "Z": 0.0
+                    }
+                },
+                "timer": {
+                    "Float": 0.0
+                },
+                "gameObject": {
+                    "GameObject": 1
+                },
+                "is_Enabled": {
+                    "Bool": true
+                },
+                "is_Awake": {
+                    "Bool": false
+                },
+                "is_Start": {
+                    "Bool": false
+                }
+            }
+        },
+        "18": {},
+        "19": {},
+        "15": {},
+        "16": {},
+        "20": {},
+        "21": {}
+    },
+    "Active Archetype": {
+        "17": "1101001100000",
+        "1": "1100010100000",
+        "18": "1100001000000",
+        "19": "1100001000000",
+        "15": "1100001000000",
+        "16": "1100001000000",
+        "20": "1100000000000",
+        "21": "1100100000000"
+    }
 }

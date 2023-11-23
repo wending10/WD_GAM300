@@ -140,6 +140,7 @@
     <ClInclude Include="Components\RigidBodyComponent.hxx" />
     <ClInclude Include="Components\SphereColliderComponent.hxx" />
     <ClInclude Include="Components\TransformComponent.hxx" />
+    <ClInclude Include="Cursor.hxx" />
     <ClInclude Include="CustomAttributeHeaders.hxx" />
     <ClInclude Include="Debug.hxx" />
     <ClInclude Include="EngineInterface.hxx" />
@@ -148,6 +149,7 @@
     <ClInclude Include="IncludeFromEngine.hxx" />
     <ClInclude Include="Input.hxx" />
     <ClInclude Include="Mathf.hxx" />
+    <ClInclude Include="Quaternion.hxx" />
     <ClInclude Include="Script.hxx" />
     <ClInclude Include="TypeConversion.hxx" />
     <ClInclude Include="Vector3.hxx" />
@@ -161,10 +163,12 @@
     <ClCompile Include="Components\RigidBodyComponent.cxx" />
     <ClCompile Include="Components\SphereColliderComponent.cxx" />
     <ClCompile Include="Components\TransformComponent.cxx" />
+    <ClCompile Include="Cursor.cxx" />
     <ClCompile Include="EngineInterface.cxx" />
     <ClCompile Include="GameObject.cxx" />
     <ClCompile Include="Input.cxx" />
     <ClCompile Include="Mathf.cxx" />
+    <ClCompile Include="Quaternion.cxx" />
     <ClCompile Include="Script.cxx" />
     <ClCompile Include="Time.hxx" />
     <ClCompile Include="TypeConversion.cxx" />

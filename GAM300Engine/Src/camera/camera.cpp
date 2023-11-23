@@ -130,9 +130,9 @@ namespace TDS
 					mouse = Input::getMousePosition();
 				}
 			}
+
+			updateViewMatrix();
 		}
-		
-		updateViewMatrix();
 	}
 
 
