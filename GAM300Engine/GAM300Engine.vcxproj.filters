@@ -101,6 +101,7 @@
     <ClCompile Include="Src\Rendering\ObjectPicking.cpp" />
     <ClCompile Include="Src\vulkanTools\Synchronization.cpp" />
     <ClCompile Include="Src\Rendering\FontSystem.cpp" />
+    <ClCompile Include="Include\Rendering\GraphicsManagerWrapperCalls.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="Include\AssetManagement\FontFactory.h" />
     <ClInclude Include="Include\Rendering\Batch2D.h" />
     <ClInclude Include="Include\Rendering\FontSystem.h" />
+    <ClInclude Include="Include\Rendering\GraphicsManagerWrapperCalls.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />

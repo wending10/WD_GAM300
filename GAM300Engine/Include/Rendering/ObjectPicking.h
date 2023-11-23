@@ -46,7 +46,7 @@ namespace TDS {
 
 		uint32_t getActiveObject()
 		{
-			uint32_t selectedObjs = pickStr.objectID;//reinterpret_cast<PickStruct*>(m_PickBuffer->Map())->objectID.x/*pickStr.*/;
+			uint32_t selectedObjs = pickStr.objectID;
 			return selectedObjs;
 		}
 
