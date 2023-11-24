@@ -27,6 +27,7 @@ namespace TDS
 	ECSSystem<Transform, RigidBody>					_PhysicsSystem(1);
 	ECSSystem<AI>									_AISystem(1);
 	ECSSystem<Transform, CameraComponent>			_CameraSystem(1);
+	ECSSystem<SoundInfo>							_AudioSystem(1);
 
 	ECSSystem<Transform>							_EventHandler_ChildTransform(2);
 	ECSSystem<Transform, GraphicsComponent>			_ColliderDebugSystem(2);
