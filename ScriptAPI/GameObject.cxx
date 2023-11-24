@@ -32,6 +32,11 @@ namespace ScriptAPI
 		return TransformComponent(entityID);
 	}
 
+	UISpriteComponent GameObject::GetUISpriteComponent()
+	{
+		return UISpriteComponent(entityID);
+	}
+
 	int GameObject::GetEntityID()
 	{
 		return entityID;
@@ -69,6 +74,10 @@ namespace ScriptAPI
 		else if (type == TransformComponent::typeid)
 		{
 			return safe_cast<T>(GetTransformComponent());
+		}
+		else if (type == UISpriteComponent::typeid)
+		{
+			return safe_cast<T>(GetUISpriteComponent());
 		}
 
 		return T();

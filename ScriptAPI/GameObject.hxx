@@ -6,7 +6,7 @@
 #include "Components/RigidBodyComponent.hxx"
 #include "Components/SphereColliderComponent.hxx"
 #include "Components/TransformComponent.hxx"
-
+#include "Components/UISpriteComponent.hxx"
 namespace ScriptAPI
 {
     public ref class GameObject
@@ -22,7 +22,7 @@ namespace ScriptAPI
         RigidBodyComponent GetRigidBodyComponent();
         SphereColliderComponent GetSphereColliderComponent();
         TransformComponent GetTransformComponent();
-
+        UISpriteComponent GetUISpriteComponent();
         int GetEntityID();
 
         TransformComponent transform;

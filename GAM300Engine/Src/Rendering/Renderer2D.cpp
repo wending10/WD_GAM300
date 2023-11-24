@@ -147,6 +147,11 @@ namespace TDS
 		{
 			for (std::uint32_t i = 0; i < 12; ++i)
 			{
+				if (GraphicsManager::getInstance().RenderAllLayer() == false)
+				{
+					if (GraphicsManager::getInstance().LayerToRender() != i)
+						continue;
+				}
 				auto& layer = m_BatchList.m_LayerInfos[i];
 				if (layer.m_Instance > 0)
 				{
@@ -188,7 +193,7 @@ namespace TDS
 		//}
 		m_Pipeline->SetCommandBuffer(commandBuffer);
 		m_Pipeline->BindPipeline();
-		m_SceneUBO.ViewingFrom2D = GraphicsManager::getInstance().IsViewingFrom2D() ? 1 : 0;
+		m_SceneUBO.ViewingFrom2D = 1;
 
 		if (m_SceneUBO.ViewingFrom2D == false)
 		{
@@ -225,6 +230,7 @@ namespace TDS
 
 		}
 		m_SceneUBO.View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
+		
 		m_Pipeline->UpdateUBO(&m_SceneUBO, sizeof(SceneUBO), 25, Frame);
 		m_Pipeline->UpdateUBO(m_BatchList.m_Instances.data(), sizeof(Instance2D) * m_BatchList.m_InstanceCnt, 10, Frame);
 		if (AssetManager::GetInstance()->GetTextureFactory().m_UpdateTextureArray2D)
