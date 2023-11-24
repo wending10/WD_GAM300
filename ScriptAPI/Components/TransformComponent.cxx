@@ -173,6 +173,27 @@ namespace ScriptAPI
 			return Vector3(0.f, 0.f, 0.f);
 		}
 
+		// A -> x + 1
+		// D -> x - 1
+		// W -> z + 1
+		// S -> z - 1
+
+		Vector3 toReturn = Vector3(0, 0, 0);
+		if (direction.X != 0)
+		{
+			TDS::Vec3 rightVector = TDS::GetTransform(entityID)->getRightVector();
+			toReturn = Vector3(rightVector) * Vector3(-direction.X, 0, 0);
+		}
+		if (direction.Z != 0)
+		{
+			TDS::Vec3 forwardVector = TDS::GetTransform(entityID)->getForwardVector();
+			//System::Console::WriteLine(forwardVector.x + "\t" + forwardVector.y + "\t" + forwardVector.z);
+			toReturn = toReturn + Vector3(forwardVector) * Vector3(0, 0, direction.Z);
+		}
+
+		return toReturn;
+		//return Vector3(forwardVector);
+		//return Vector3(0.f, 0.f, 0.f);
 	}
 
 	// CONSTRUCTOR ===========================================================================
@@ -187,5 +208,5 @@ namespace ScriptAPI
 	TDS::EntityID TransformComponent::GetEntityID()
 	{
 		return entityID;
-	}
+	}	
 }

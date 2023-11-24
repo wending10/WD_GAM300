@@ -152,6 +152,10 @@ namespace TDS
 					JPH_CreateBodyID(entities[i], &_transform[i], &_rigidbody[i]);
 
 				}
+				using namespace JoltToTDS;
+				EActivation mode = EActivation::Activate;
+				pBodies->SetPosition(ToBodyID(_rigidbody[i]), ToVec3(_transform->GetPosition()), mode);
+				pBodies->SetRotation(ToBodyID(_rigidbody[i]), ToQuat(_transform->GetRotation()), mode);
 			}
 			// JPH physics simulation
 			m_pSystem->Update(TimeStep::GetFixedDeltaTime(), 1, m_pTempAllocator.get(), m_pJobSystem.get());
@@ -181,7 +185,7 @@ namespace TDS
 		JPH::BodyID JPHBodyID = JoltToTDS::ToBodyID(*_rigidbody);
 		JPH::BodyInterface* pBodies = &m_pSystem->GetBodyInterface();
 		_transform->SetPosition(JoltToTDS::ToVec3(pBodies->GetPosition(JPHBodyID)));
-		_transform->SetRotation(JoltToTDS::ToVec3(pBodies->GetRotation(JPHBodyID).GetXYZ()));
+		_transform->SetRotation(JoltToTDS::ToVec3(pBodies->GetRotation(JPHBodyID).GetEulerAngles()));
 		_rigidbody->SetLinearVel(JoltToTDS::ToVec3(pBodies->GetLinearVelocity(JPHBodyID)));
 		_rigidbody->SetAngularVel(JoltToTDS::ToVec3(pBodies->GetAngularVelocity(JPHBodyID)));
 	}

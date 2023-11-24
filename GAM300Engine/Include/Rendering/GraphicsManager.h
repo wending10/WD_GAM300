@@ -95,5 +95,6 @@ namespace TDS
 		Vec4& getViewportScreen() { return m_ViewportScreen; }
 	};
 
-
+	DLL_API float getScreenWidth();
+	DLL_API float getScreenHeight();
 }

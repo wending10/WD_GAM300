@@ -233,4 +233,13 @@ namespace TDS
 	{
 		return *this->m_ObjectPicking;
 	}
+
+	float getScreenWidth()
+	{
+		return GraphicsManager::getInstance().GetWindow()->getWidth();
+	}
+	float getScreenHeight()
+	{
+		return GraphicsManager::getInstance().GetWindow()->getHeight();
+	}
 }
