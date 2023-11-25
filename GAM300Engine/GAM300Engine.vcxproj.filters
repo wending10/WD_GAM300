@@ -103,6 +103,7 @@
     <ClCompile Include="Include\Rendering\GraphicsManagerWrapperCalls.cpp" />
     <ClCompile Include="src\fmod_engine\AudioEngine.cpp" />
     <ClCompile Include="src\components\SoundInfo.cpp" />
+    <ClCompile Include="Src\Rendering\UISpriteWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -238,6 +239,7 @@
     <ClInclude Include="Include\Rendering\FontSystem.h" />
     <ClInclude Include="Include\Rendering\GraphicsManagerWrapperCalls.h" />
     <ClInclude Include="Include\components\SoundInfo.h" />
+    <ClInclude Include="Include\Rendering\UISpriteWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />

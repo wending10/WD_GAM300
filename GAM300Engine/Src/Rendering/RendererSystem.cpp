@@ -31,6 +31,8 @@ namespace TDS
 		
 		std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 		VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
+		GraphicsManager::getInstance().m_PointLightRenderer->newupdate(ubo,entities, _TransformComponent, _Graphics);
+		//std::cout << ubo.m_activelights << std::endl;
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
 			if (!ecs.getEntityIsEnabled(entities[i]) || !ecs.getComponentIsEnabled<GraphicsComponent>(entities[i]))
@@ -74,9 +76,6 @@ namespace TDS
 			}
 
 			Renderer3D::getPipeline()->SetCommandBuffer(commandBuffer);
-			if (GraphicsManager::getInstance().m_PointLightRenderer == nullptr)
-			{
-			}
 			GraphicsManager::getInstance().m_PointLightRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 			GraphicsManager::getInstance().m_DebugRenderer->GetPipeline().SetCommandBuffer(commandBuffer);
 
@@ -86,7 +85,7 @@ namespace TDS
 				if (Vec3 Scale = _TransformComponent[i].GetScale(); Scale.x <= 0.f || Scale.y <= 0.f || Scale.z <= 0.f) {
 				}
 				else {
-					_TransformComponent[i].GenerateTransfom();
+					_TransformComponent[i].GenerateTransform();
 				}
 
 				Mat4 temp = _TransformComponent[i].GetTransformMatrix();
@@ -96,7 +95,7 @@ namespace TDS
 				pushData.NormalMat = temp;
 
 				ubo.m_View = GraphicsManager::getInstance().GetCamera().GetViewMatrix();
-				GraphicsManager::getInstance().m_PointLightRenderer->update(ubo, &_Graphics[i], &_TransformComponent[i]);
+				//GraphicsManager::getInstance().m_PointLightRenderer->update(ubo, &_Graphics[i], &_TransformComponent[i]);
 				ubo.m_Projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
 					GraphicsManager::getInstance().GetSwapchainRenderer().getAspectRatio(), 0.1f, 1000000.f);
 				ubo.m_Projection.m[1][1] *= -1;

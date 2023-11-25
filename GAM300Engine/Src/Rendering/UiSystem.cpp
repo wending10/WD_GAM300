@@ -8,17 +8,26 @@
 #define _BATCH
 namespace TDS
 {
+	std::unordered_map<int, bool> UiSystem::m_Layers;
 	void UiSystem::Init()
 	{
+		GraphicsManager::getInstance().ToggleRenderAllLayer(false);
+		for (std::uint32_t i = 0; i < 12; ++i)
+		{
+			m_Layers[i] = true;
+		}
+	}
+
+	void UiSystem::ToggleEnableLayer(int layerID, bool condition)
+	{
+		m_Layers[layerID] = condition;
 	}
 	void UiSystem::Update(const float dt, const std::vector<EntityID>& entities, Transform* transform, UISprite* _Sprite)
 	{
-
-		//if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
-		//	return;
-
+	
 		if (_Sprite == nullptr)
 			return;
+		
 		
 		auto frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 		auto cmdBuffer = GraphicsManager::getInstance().getCommandBuffer();
@@ -26,6 +35,18 @@ namespace TDS
 		SpriteBatch& Spritebatch = Renderer2D::GetInstance()->GetBatchList();
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
+			if (_Sprite[i].m_LayerID == -1)
+				continue;
+
+			if (GraphicsManager::getInstance().RenderAllLayer() == false)
+			{
+				if (m_Layers[_Sprite[i].m_LayerID] == false)
+					continue;
+			}
+
+			if (_Sprite[i].m_EnableSprite == false)
+				continue;
+
 			if (!ecs.getEntityIsEnabled(entities[i]) || !ecs.getComponentIsEnabled<UISprite>(entities[i]))
 			{
 				continue;
@@ -110,6 +131,27 @@ namespace TDS
 		// Update the sprite's AABB
 		_Sprite->m_BoundingBoxMin = Vec2(newMin.x, newMin.y);
 		_Sprite->m_BoundingBoxMax = Vec2(newMax.x, newMax.y);
+	}
+
+	void UiSystem::UpdatePropertiesFromParent(EntityID current, UISprite* _CurrentSprite)
+	{
+		auto tag = ecs.getComponent<NameTag>(current);
+		if (tag == nullptr)
+			return;
+
+		if (tag->GetHierarchyParent() == 0)
+			return;
+		else
+		{
+			EntityID parent = tag->GetHierarchyParent();
+			auto UiSprite = ecs.getComponent<UISprite>(parent);
+			if (UiSprite == nullptr)
+				return;
+			else
+			{
+				_CurrentSprite->m_EnableSprite = UiSprite->m_EnableSprite;
+			}
+		}
 	}
 
 }

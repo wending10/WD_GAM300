@@ -140,7 +140,7 @@ namespace TDS
 
 		selectedEntity = hierarchyPanel->getSelectedEntity();
 
-		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT) && !ImGuizmo::IsUsing())
+		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT) && !ImGuizmo::IsUsing() && !ImGuizmo::IsOver())
 		{
 			if (GraphicsManager::getInstance().getObjectPicker().getActiveObject() != 0 && GraphicsManager::getInstance().getObjectPicker().getActiveObject() < 10000)
 			{
@@ -148,6 +148,7 @@ namespace TDS
 
 				hierarchyPanel->setSelectedEntity(selectedEntity);
 			}
+			Input::releaseTheMouse(TDS_MOUSE_LEFT);
 		}
 
 
@@ -156,7 +157,6 @@ namespace TDS
 			if (GraphicsManager::getInstance().IsViewingFrom2D())
 			{
 				GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(getComponentByName("Graphics Component", selectedEntity));
-
 				if (graphComp != nullptr && graphComp->m_UsedIn2D)
 				{
 					view2D = false;
@@ -171,7 +171,19 @@ namespace TDS
 			}
 			else
 			{
-				ImGuizmo::SetOrthographic(false);
+				UISprite* sprite = reinterpret_cast<UISprite*>(getComponentByName("UI Sprite", selectedEntity));
+
+				if (sprite != nullptr)
+				{
+					view2D = true;
+					ImGuizmo::SetOrthographic(true);
+				}
+				else
+				{
+					view2D = false;
+					ImGuizmo::SetOrthographic(false);
+				}
+				
 			}
 			ImGuizmo::SetDrawlist();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
