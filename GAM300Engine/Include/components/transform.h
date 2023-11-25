@@ -96,7 +96,8 @@ namespace TDS
 
 		DLL_API Vec3 getForwardVector()
 		{
-			Quat quaternionRotation = Quat(mRotation);
+			Vec3 rotationRad = mRotation * Mathf::Deg2Rad;
+			Quat quaternionRotation = Quat(rotationRad);
 			return (quaternionRotation * Vec3(0, 0, 1));
 		}
 		DLL_API Vec3 getRightVector()
