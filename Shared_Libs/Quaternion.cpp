@@ -34,9 +34,9 @@ namespace TDS
     }
 	Quat::Quat(Vec3 const& euler)
 	{
-		float radianX = euler.x /** Mathf::Deg2Rad*/;
-		float radianY = euler.y /** Mathf::Deg2Rad*/;
-		float radianZ = euler.z /** Mathf::Deg2Rad*/;
+		float radianX = euler.x;
+		float radianY = euler.y;
+		float radianZ = euler.z;
 
 		Vec3 c = Vec3(Mathf::Cos(radianX * 0.5f), Mathf::Cos(radianY * 0.5f), Mathf::Cos(radianZ * 0.5f));
 		Vec3 s = Vec3(Mathf::Sin(radianX * 0.5f), Mathf::Sin(radianY * 0.5f), Mathf::Sin(radianZ * 0.5f));
