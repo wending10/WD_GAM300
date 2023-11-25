@@ -59,15 +59,15 @@ namespace TDS
         return Mathf::Acos(q.w) * 2.0f;
     
 	}
-	Quat Quat::angleAxis(float const& angle, float const& newX, float const& newY, float const& newZ)
+	Quat Quat::angleAxis(float const& angle/*degree*/, float const& newX, float const& newY, float const& newZ)
 	{
-		float const a = angle;
+		float const a = angle * Mathf::Deg2Rad;
         float const s = Mathf::Sin(a * 0.5f);
         return Quat( newX * s, newY * s, newZ * s, Mathf::Cos(a * 0.5f));
 	}
-	Quat Quat::angleAxis(float const& angle, Vec3 const& axis)
+	Quat Quat::angleAxis(float const& angle/*degree*/, Vec3 const& axis)
 	{
-		float const a = angle;
+		float const a = angle * Mathf::Deg2Rad;
         float const s = Mathf::Sin(a * 0.5f);
         return Quat(axis.x * s, axis.y * s, axis.z * s, Mathf::Cos(a * 0.5f));
 	}
