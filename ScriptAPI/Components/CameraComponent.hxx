@@ -37,8 +37,6 @@ namespace ScriptAPI
 
 		virtual void SetEntityID(TDS::EntityID ID);
 
-		Vector3 getForwardVector();
-
 		TransformComponent transform;
 
 	internal:
