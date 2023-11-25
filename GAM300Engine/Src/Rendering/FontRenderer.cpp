@@ -359,6 +359,7 @@ namespace TDS
 
 	void DLL_API FontBatch::PrepareBatch()
 	{
+
 		for (std::uint32_t i = 0; i < m_InstanceCnt; ++i)
 		{
 			for (std::uint32_t layer = 0; layer < 12; ++layer)
