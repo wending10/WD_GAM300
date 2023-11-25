@@ -28,9 +28,10 @@ namespace TDS
 
 	struct alignas(16) Instance2D
 	{
-		Mat4 m_Model;
+		Mat4 m_Model = Mat4::identity();
 		Vec4 m_Color;
 		Vec4 m_texID = { 499.f, 0.f, 0.f, 0.f };
+		Vec4 m_LayerID = {0.f, 0.f, 0.f, 0.f};
 		uint32_t ID{};
 	};
 
@@ -39,8 +40,9 @@ namespace TDS
 
 	struct SpriteBatch : Batch2D
 	{
-		std::array<Instance2D, 12000>		m_Instances;
-		std::array<InstanceInfo2D, 12000>	m_InstanceInfo;
+		std::vector<Instance2D>				m_InstanceVector;
+		//std::array<Instance2D, 12000>		m_Instances;
+		std::array<InstanceInfo2D, 5000>	m_InstanceInfo;
 		virtual void DLL_API				AddToBatch(void* componentSprite, Transform* transform, std::uint32_t entity);
 		virtual void DLL_API				PrepareBatch();
 	};
@@ -74,7 +76,7 @@ namespace TDS
 			DLL_API Renderer2D();
 			DLL_API ~Renderer2D();
 			void DLL_API Init();
-			void DLL_API Draw(VkCommandBuffer commandBuffer, int Frame, Vec4 ClearColor = {0.f, 0.f, 0.f, 1.f});
+			void DLL_API Draw(VkCommandBuffer commandBuffer, int Frame);
 			void DLL_API Update(VkCommandBuffer commandBuffer, int Frame);
 			inline SpriteBatch& GetBatchList()
 			{
@@ -95,6 +97,7 @@ namespace TDS
 			VMABuffer* m_VertexBuffer = nullptr;
 			VMABuffer* m_IndexBuffer = nullptr;
 			SceneUBO m_SceneUBO{}; //Probably not in used.
+			Vec4	m_ClearColor;
 			
 
 	};

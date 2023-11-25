@@ -24,4 +24,8 @@ namespace ScriptAPI
 	 {
 		 return TDS::GraphicsManagerWrapperCalls::GetPickedObject();
 	 }
+	 void GraphicsManagerWrapper::SetClearColor(Vector4 clearColorVector)
+	 {
+		 TDS::GraphicsManagerWrapperCalls::SetClearColor(clearColorVector.X, clearColorVector.Y, clearColorVector.Z, clearColorVector.W);
+	 }
 }

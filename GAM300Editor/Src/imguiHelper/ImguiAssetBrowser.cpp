@@ -65,10 +65,6 @@ namespace TDS
 		Entity newEntity;
 		EntityID newEntityID = newEntity.getID();
 
-		//newEntity.add<NameTag>();
-		//newEntity.add<Transform>();
-		//newEntity.add<GraphicsComponent>();
-
 		addComponentByName("Name Tag", newEntityID);
 		addComponentByName("Graphics Component", newEntityID);
 		addComponentByName("Transform", newEntityID);
@@ -83,13 +79,13 @@ namespace TDS
 		graphComp->m_AssetReference = model;
 		NameTag* NameTagComp = reinterpret_cast<NameTag*>(nameTag);
 		Transform* transformComp = reinterpret_cast<Transform*>(TransformComp);
-		NameTagComp->SetHierarchyParent(0);
+
+		NameTagComp->SetHierarchyParent(ParentEntity);
 		NameTagComp->SetHierarchyIndex(panel->hierarchyList.size());
 		NameTagComp->SetName(MeshName.data());
-		aiVector3D scale{};
-		
-		aiVector3D Translate{};
 
+		aiVector3D scale{};
+		aiVector3D Translate{};
 		ExtractScale(aiTransform, scale);
 		aiVector3D EulerRotate = ExtractEulerAngles(aiTransform);
 		ExtractTranslation(aiTransform, Translate);
@@ -100,9 +96,14 @@ namespace TDS
 		transformComp->SetRotation(Rotatation);
 		transformComp->SetScale(Scaling);
 
-		panel->hierarchyList.emplace_back(newEntityID);
+		if (ParentEntity != 0) 
+		{
+			NameTag* parentNameTag = ecs.getComponent<NameTag>(ParentEntity);
+			if (parentNameTag) 
+				parentNameTag->GetHierarchyChildren().push_back(newEntityID);
+			
+		}
 
-		panel->makingChildHierarchy(newEntityID, ParentEntity);
 	}
 	void DivideSubmesh(EntityID entity, TypeReference<AssetModel>& model)
 	{

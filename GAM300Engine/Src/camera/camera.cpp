@@ -1,6 +1,6 @@
 #include "camera/camera.h"
 #include "camera/Camerasystem/CameraSystem.h"
-
+#include "Rendering/GraphicsManager.h"
 #include<iostream>
 namespace TDS
 {
@@ -92,7 +92,8 @@ namespace TDS
 					mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 				}
 			}
-			else // TODO: refactor so that we dont copy and paste similar function
+
+			/*else // TODO: refactor so that we dont copy and paste similar function
 			{
 				if (CameraSystem::GetIsPlaying())
 				{
@@ -129,9 +130,21 @@ namespace TDS
 
 					mouse = Input::getMousePosition();
 				}
-			}
+			}*/
 
 			updateViewMatrix();
+		}
+		else // gameIsPlaying
+		{
+			// for exe to get its local coordinate if imgui is not running 
+			/*RECT win;
+			GetClientRect(GraphicsManager::getInstance().GetWindow()->getWindowHandler(), &win);
+			float hlfWidth = (win.right - win.left) * 0.5f;
+			float hlfHeight = (win.bottom - win.top) * 0.5f;
+			Input::mousePosition mosPos = Input::getMousePosition();
+			Vec2 mousePos = { float(mosPos.x - hlfWidth) / float(win.right - win.left), float(mosPos.y - hlfHeight) / (win.bottom - win.top)};
+			Input::setLocalMousePos(mousePos);*/
+
 		}
 	}
 

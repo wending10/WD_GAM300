@@ -381,7 +381,7 @@ public class FPS_Controller_Script : Script
                     currentSprintSpeed += 0.02f;
                 }
 
-                //targetVelocity = transform.TransformDirection(targetVelocity) * currentSprintSpeed;
+                targetVelocity = transform.TransformDirection(targetVelocity) * currentSprintSpeed;
                 // Apply a force that attempts to reach our target velocity
                 Vector3 velocity = rb.GetLinearVelocity();
                 Vector3 velocityChange = targetVelocity - velocity;
