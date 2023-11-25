@@ -358,8 +358,10 @@ public class FPS_Controller_Script : Script
             {
                 isWalking = false;
             }
+
             //Vector3 targetVelocityNew = transform.TransformDirection(new Vector3(0, 0, 1));
             //Console.WriteLine(targetVelocityNew.X + "\t" + targetVelocityNew.Y + "\t" + targetVelocityNew.Z);
+
 
             if (Input.GetKey(Keycode.W) || Input.GetKey(Keycode.S) || Input.GetKey(Keycode.A) || Input.GetKey(Keycode.D))
             {
