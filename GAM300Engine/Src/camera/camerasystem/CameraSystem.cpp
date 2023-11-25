@@ -40,7 +40,7 @@ namespace TDS
 		m_GameCamera->setYaw(_transform[entityIndex].GetRotation().y + 90);
 		m_GameCamera->setPosition(_transform[entityIndex].GetPosition());
 		m_GameCamera->GetUpdateViewMatrix();
-		_cameracomponent[entityIndex].setForwardVector(m_GameCamera->getForwardVector());
+		//_cameracomponent[entityIndex].setForwardVector(m_GameCamera->getForwardVector());
 
 		//pitch = _transform[entityIndex].GetRotation().x;
 		//yaw = _transform[entityIndex].GetRotation().y;

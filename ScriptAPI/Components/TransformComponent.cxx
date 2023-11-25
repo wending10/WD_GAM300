@@ -182,14 +182,22 @@ namespace ScriptAPI
 		if (direction.X != 0)
 		{
 			TDS::Vec3 rightVector = TDS::GetTransform(entityID)->getRightVector();
-			toReturn = Vector3(rightVector) * Vector3(-direction.X, 0, 0);
+			rightVector.x = -rightVector.x;
+			toReturn = Vector3(rightVector) * direction.X;
 		}
 		if (direction.Z != 0)
 		{
 			TDS::Vec3 forwardVector = TDS::GetTransform(entityID)->getForwardVector();
+			forwardVector.x = -forwardVector.x;
 			//System::Console::WriteLine(forwardVector.x + "\t" + forwardVector.y + "\t" + forwardVector.z);
-			toReturn = toReturn + Vector3(forwardVector) * Vector3(0, 0, direction.Z);
+			toReturn = toReturn + Vector3(forwardVector) * direction.Z;
 		}
+
+		//TDS::Vec3 forwardVector = TDS::GetTransform(entityID)->getForwardVector();
+		//TDS::Vec3 rightVector = TDS::GetTransform(entityID)->getRightVector();
+		////System::Console::WriteLine(forwardVector.x + "\t" + forwardVector.y + "\t" + forwardVector.z);
+		//Vector3 toReturn = Vector3(rightVector) * direction + Vector3(forwardVector) * direction;
+
 
 		return toReturn;
 		//return Vector3(forwardVector);

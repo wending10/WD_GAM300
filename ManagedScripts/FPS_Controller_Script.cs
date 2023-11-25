@@ -198,6 +198,7 @@ public class FPS_Controller_Script : Script
 
                 transform.SetRotationY(yaw);
                 playerCamera.transform.SetRotationX(pitch);
+                playerCamera.transform.SetRotationY(transform.GetRotation().Y);
             }
         }
 
@@ -356,17 +357,15 @@ public class FPS_Controller_Script : Script
             {
                 isWalking = false;
             }
+            Vector3 targetVelocityNew = transform.TransformDirection(new Vector3(0, 0, 1));
+            Console.WriteLine(targetVelocityNew.X + "\t" + targetVelocityNew.Y + "\t" + targetVelocityNew.Z);
 
             if (Input.GetKey(Keycode.W) || Input.GetKey(Keycode.S) || Input.GetKey(Keycode.A) || Input.GetKey(Keycode.D))
             {
                 isWalking = true;
 
                 Vector3 transformPosition = transform.GetPosition();
-
-                //Console.WriteLine("OldValue:\t" + targetVelocity.X + "\t" + targetVelocity.Y + "\t" + targetVelocity.Z);
                 targetVelocity = transform.TransformDirection(targetVelocity);
-                //Console.WriteLine("NewValue:\t" + targetVelocity.X + "\t" + targetVelocity.Y + "\t" + targetVelocity.Z);
-
                 transform.SetPosition(new Vector3(transformPosition.X + (targetVelocity.X * walkSpeed), transformPosition.Y, transformPosition.Z + (targetVelocity.Z * walkSpeed)));
             }
             else
