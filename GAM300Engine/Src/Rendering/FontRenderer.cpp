@@ -229,7 +229,7 @@ namespace TDS
 	{
 		m_Pipeline->SetCommandBuffer(commandBuffer);
 		m_Pipeline->BindPipeline();
-		m_FontBatch.m_SceneUpdate.ViewingFrom2D = GraphicsManager::getInstance().IsViewingFrom2D() ? 1 : 0;
+		m_FontBatch.m_SceneUpdate.ViewingFrom2D = 1;
 		if (m_FontBatch.m_SceneUpdate.ViewingFrom2D == false)
 		{
 			m_FontBatch.m_SceneUpdate.Projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
@@ -363,6 +363,11 @@ namespace TDS
 		{
 			for (std::uint32_t layer = 0; layer < 12; ++layer)
 			{
+				if (GraphicsManager::getInstance().RenderAllLayer() == false)
+				{
+					if (GraphicsManager::getInstance().LayerToRender() != i)
+						continue;
+				}
 				auto& instanceinfo = m_InstanceInfo[i];
 				if (layer == instanceinfo.m_LayerID)
 				{
