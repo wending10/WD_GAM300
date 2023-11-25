@@ -30,7 +30,7 @@ namespace TDS
     };
 
     DLL_API struct SoundInfo : public IComponent
-    {
+    {        
         unsigned int uniqueID, MSLength;
         std::string filePath;
         bool isitLoop, isit3D, isitmuted;
@@ -78,6 +78,11 @@ namespace TDS
         void set3DCoords(Vec3 set_this)
         {
             position = set_this;
+        }
+
+        void setFilePath(std::string _path)
+        {
+            filePath = _path;
         }
 
         bool isLoaded()
@@ -255,7 +260,6 @@ namespace TDS
             volume = rhs.volume;
             ReverbAmount = rhs.ReverbAmount;
         }
-
         RTTR_ENABLE(IComponent);
         RTTR_REGISTRATION_FRIEND
 

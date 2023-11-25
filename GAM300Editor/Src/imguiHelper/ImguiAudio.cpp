@@ -16,7 +16,7 @@ namespace TDS
 {
 	AudioImgui::AudioImgui()
 	{
-		flags = NULL;
+		//flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 		panelTitle = "Audio Files";
 		windowPadding = ImVec2(0.f, 0.f);
 

@@ -459,6 +459,7 @@ namespace TDS
     void proxy_audio_system::audio_system_init()
     {
         aud_instance = AudioWerks::AudioEngine::get_audioengine_instance();
+        totalNumClips = aud_instance->getSoundContainer().size();
     }
 
     void proxy_audio_system::audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo)
