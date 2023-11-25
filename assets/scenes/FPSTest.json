@@ -384,7 +384,7 @@
         "1": {
             "FPS_Controller_Script": {
                 "rb": {
-                    "Component": 1
+                    "Component": 0
                 },
                 "playerCamera": {
                     "Component": 20

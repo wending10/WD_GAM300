@@ -154,8 +154,8 @@ namespace TDS
 				}
 				using namespace JoltToTDS;
 				EActivation mode = EActivation::Activate;
-				pBodies->SetPosition(ToBodyID(_rigidbody[i]), ToVec3(_transform->GetPosition()), mode);
-				pBodies->SetRotation(ToBodyID(_rigidbody[i]), ToQuat(_transform->GetRotation()), mode);
+				pBodies->SetPosition(ToBodyID(_rigidbody[i]), ToVec3(_transform[i].GetPosition()), mode);
+				pBodies->SetRotation(ToBodyID(_rigidbody[i]), ToQuat(_transform[i].GetRotation()), mode);
 			}
 			// JPH physics simulation
 			m_pSystem->Update(TimeStep::GetFixedDeltaTime(), 1, m_pTempAllocator.get(), m_pJobSystem.get());

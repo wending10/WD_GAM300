@@ -86,7 +86,7 @@ namespace ScriptAPI
         Script^ script = safe_cast<Script^>(System::Activator::CreateInstance(scriptType));
         script->SetFlags();
         script->gameObject = gameObjectList[entityId]->Item2;
-        script->transform = TransformComponent(entityId);
+        script->transform = TransformComponent(entityId, script->gameObject);
 
         // Add script to SortedList
         scripts[entityId]->Add(script->GetType()->FullName, script);
@@ -164,11 +164,11 @@ namespace ScriptAPI
                 for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        if (!script->Value->getAwakeFlag())
-                        {
+                        //if (!script->Value->getAwakeFlag())
+                        //{
                             script->Value->Awake();
                             script->Value->setAwakeFlag();
-                        }
+                        //}
                     SAFE_NATIVE_CALL_END
                 }
             }

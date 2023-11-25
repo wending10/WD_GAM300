@@ -1,6 +1,7 @@
 #include "TransformComponent.hxx"
 #include "../Shared_Libs/Vector4.h"
 #include "../Shared_Libs/Matrix4.h"
+#include "../GameObject.hxx"
 
 namespace ScriptAPI
 {
@@ -206,6 +207,9 @@ namespace ScriptAPI
 
 	// CONSTRUCTOR ===========================================================================
 	TransformComponent::TransformComponent(TDS::EntityID ID) : entityID (ID)
+	{ }
+
+	TransformComponent::TransformComponent(TDS::EntityID ID, GameObject^ _gameObject) : entityID(ID), gameObject(_gameObject)
 	{ }
 
 	void TransformComponent::SetEntityID(TDS::EntityID ID)
