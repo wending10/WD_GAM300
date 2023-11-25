@@ -25,6 +25,7 @@ namespace ScriptAPI
         SphereColliderComponent GetSphereColliderComponent();
         TransformComponent GetTransformComponent();
         UISpriteComponent GetUISpriteComponent();
+
         bool activeInHierarchy(TDS::EntityID entityID);
         void SetActive(TDS::EntityID entityID, bool status);
 
