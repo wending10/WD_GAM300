@@ -292,6 +292,28 @@ namespace ScriptAPI
     }
 
     /*!*************************************************************************
+    * Calls all script FixedUpdate function
+    ***************************************************************************/
+    void EngineInterface::ExecuteFixedUpdate()
+    {
+        for each (auto i in TDS::ecs.getEntities())
+        {
+            if (scripts->ContainsKey(i) && TDS::ecs.getEntityIsEnabled(i))
+            {
+                for each (NameScriptPair ^ script in scripts[i])
+                {
+                    SAFE_NATIVE_CALL_BEGIN
+                        if (script->Value->isScriptEnabled())
+                        {
+                            script->Value->FixedUpdate();
+                        }
+                    SAFE_NATIVE_CALL_END
+                }
+            }
+        }
+    }
+
+    /*!*************************************************************************
     * Calls the late update function for scripts
     ***************************************************************************/
     void EngineInterface::ExecuteLateUpdate()
