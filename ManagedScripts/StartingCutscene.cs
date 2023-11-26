@@ -54,7 +54,6 @@ public class StartingCutscene : Script
         else if (counter > 15)
             Sprite.SetTextureName(Textures[8]);
 
-
         //change subtitle
 
     }

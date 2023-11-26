@@ -263,24 +263,17 @@ namespace ScriptAPI
         Time::deltaTime = TDS::GetDeltaTime();
         fixedUpdateTimer -= TDS::GetDeltaTime();
 
-        Console::WriteLine("HI WHERE YOU");
-        Console::WriteLine(TDS::ecs.getEntities().size());
         for each (auto i in TDS::ecs.getEntities())
         {
             if (scripts->ContainsKey(i) && TDS::ecs.getEntityIsEnabled(i))
             {
-
                 for each (NameScriptPair ^ script in scripts[i])
                 {
-                Console::WriteLine(script->Value);
+                    Console::WriteLine(script->Value->GetType());
                     SAFE_NATIVE_CALL_BEGIN
                         if (script->Value->isScriptEnabled())
                         {
-
-                            Console::WriteLine(script->Value);
                             script->Value->Update();
-
-                            Console::WriteLine(script->Value);
 
                             if (fixedUpdateTimer <= 0)
                             {
