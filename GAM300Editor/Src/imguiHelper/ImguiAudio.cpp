@@ -50,35 +50,35 @@ namespace TDS
 		else
 		{
 			flags = ImGuiWindowFlags_None;
-			
-			if(playing)
+
+			if (playing)
 			{
 				for (SoundInfo& sort : music)
 				{
-					if(sort.isPlaying())
+					if (sort.isPlaying())
 					{
-						audeng->stopSound(sort);
+						sort.stop();
 					}
 				}
 				for (SoundInfo& sort : SFX)
 				{
 					if (sort.isPlaying())
 					{
-						audeng->stopSound(sort);
+						sort.stop();
 					}
 				}
 				for (SoundInfo& sort : background)
 				{
 					if (sort.isPlaying())
 					{
-						audeng->stopSound(sort);
+						sort.stop();
 					}
 				}
 				for (SoundInfo& sort : VO)
 				{
 					if (sort.isPlaying())
 					{
-						audeng->stopSound(sort);
+						sort.stop();
 					}
 				}
 
@@ -93,7 +93,7 @@ namespace TDS
 	{
 		/*std::filesystem::path Music_path{ folder_path / "Music" }, Background_path{ folder_path / "Songs" },
 			SFX_path{ folder_path / "Sound Effects" }, Voice_path{ folder_path / "Voice Overs" };*/
-		
+
 		std::filesystem::path full_path = folder_path; //pathing / append;
 		std::vector<std::filesystem::path> all_files; //store all file path
 
@@ -159,8 +159,8 @@ namespace TDS
 	void AudioImgui::play(std::string file)
 	{
 		SoundInfo incase{};
-		SoundInfo* this_one{&incase};
-		
+		SoundInfo* this_one{ &incase };
+
 		for (SoundInfo& temp : music)
 		{
 			if (temp.getFilePath().find(file) != std::string::npos && temp.getFilePath().find(".meta") == std::string::npos)
@@ -194,7 +194,7 @@ namespace TDS
 			}
 		}
 
-		FOUND:
+	FOUND:
 
 		audeng->loadSound(*this_one);
 		audeng->playSound(*this_one);
@@ -209,13 +209,13 @@ namespace TDS
 			ImGui::Text("Controls: ");
 			ImGui::SameLine();
 
-			if(ImGui::Selectable("Play Song"))
+			if (ImGui::Selectable("Play Song"))
 			{
 				if (ImGui::ArrowButton("Play", ImGuiDir_Right))
 				{
 					/*SoundInfo selected{};
 					selected = ImGui::IsItemClicked();
-					
+
 					audeng->playSound();*/
 				}
 			}
