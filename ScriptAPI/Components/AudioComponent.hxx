@@ -6,11 +6,12 @@
 namespace ScriptAPI
 {
 	using snd = TDS::SOUND_STATE;
-	
+
 	public value class AudioComponent : ComponentBase
 	{
 	public:
 		void set3DCoords(float x, float y, float z);
+		void set3DCoords(Vector3 in_pos);
 
 		bool isLoaded();
 		bool is3D();
@@ -26,6 +27,8 @@ namespace ScriptAPI
 		std::string getFilePath();
 		const char* getFilePath_inChar();
 
+		void setFilePath(std::string str_path);
+
 		float getX();
 		float getY();
 		float getZ();
@@ -38,6 +41,10 @@ namespace ScriptAPI
 		void setLoop(bool condition);
 		void set3D(bool condition);
 		void setMute(bool condition);
+
+		void play();
+		void pause();
+		void stop();
 
 		virtual void SetEntityID(TDS::EntityID ID);
 
@@ -60,6 +67,7 @@ namespace ScriptAPI
 		property std::string filePath
 		{
 			std::string get();
+			void set(std::string value);
 		}
 		property bool isitLoop
 		{

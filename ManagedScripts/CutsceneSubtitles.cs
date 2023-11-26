@@ -26,7 +26,7 @@ public class CutsceneSubtitle : Script
         Subtitles[8] = "Father: Believe me, I have tried to take what we were owed when her father died";
         Subtitles[9] = "Father: But I am not of their blood. I was always an outsider";
 
-        Subtitles[10] = "Father: But you have thir blood running within you";
+        Subtitles[10] = "Father: But you have their blood running within you";
         Subtitles[11] = "Father: And you deserve what was kept from you. Your rightful inheritance";
 
         Subtitles[12] = "Father: So my final gift to you, is simply what should have been given to you before";
@@ -69,22 +69,24 @@ public class CutsceneSubtitle : Script
         else
         {
             UISpriteComponent Sprite = gameObject.GetComponent<UISpriteComponent>();
-            //AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+            AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+      
 
+            
             Sprite.ColorAlphafade(0.5f);
             if (Sprite.getColourAlpha() < 0)
             {
                 counter++;
-                //if (counter > 16)//cutscene over
-                //{
-                //    GraphicsManagerWrapper.ToggleViewFrom2D(false);
-                //    SceneLoader.LoadMainGame();
-                //}
-                //else
-                //{
+                if (counter > 16)//cutscene over
+                {
+                    GraphicsManagerWrapper.ToggleViewFrom2D(false);
+                    SceneLoader.LoadMainGame();
+                }
+                else
+                {
                     Sprite.setColourAlpha(1);
                     Sprite.SetFontMessage(Subtitles[counter]);
-                //}
+                }
             }
         }
     }
