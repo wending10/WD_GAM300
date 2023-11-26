@@ -482,10 +482,10 @@
                     "Bool": true
                 },
                 "is_Awake": {
-                    "Bool": false
+                    "Bool": true
                 },
                 "is_Start": {
-                    "Bool": false
+                    "Bool": true
                 }
             }
         },

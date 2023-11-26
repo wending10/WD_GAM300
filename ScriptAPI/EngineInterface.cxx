@@ -272,6 +272,7 @@ namespace ScriptAPI
             {
                 for each (NameScriptPair ^ script in scripts[i])
                 {
+                    Console::WriteLine(script->Value->GetType());
                     SAFE_NATIVE_CALL_BEGIN
                         if (script->Value->isScriptEnabled())
                         {
@@ -291,6 +292,28 @@ namespace ScriptAPI
             fixedUpdateTimer = TDS::TimeStep::GetFixedDeltaTime();
         }
         Input::InputUpdate();
+    }
+
+    /*!*************************************************************************
+    * Calls all script FixedUpdate function
+    ***************************************************************************/
+    void EngineInterface::ExecuteFixedUpdate()
+    {
+        for each (auto i in TDS::ecs.getEntities())
+        {
+            if (scripts->ContainsKey(i) && TDS::ecs.getEntityIsEnabled(i))
+            {
+                for each (NameScriptPair ^ script in scripts[i])
+                {
+                    SAFE_NATIVE_CALL_BEGIN
+                        if (script->Value->isScriptEnabled())
+                        {
+                            script->Value->FixedUpdate();
+                        }
+                    SAFE_NATIVE_CALL_END
+                }
+            }
+        }
     }
 
     /*!*************************************************************************
