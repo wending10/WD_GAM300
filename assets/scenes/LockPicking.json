@@ -148,8 +148,8 @@
             },
             "Transform": {
                 "Position": {
-                    "x": -0.16337727010250092,
-                    "y": 3.330054759979248,
+                    "x": 0.0,
+                    "y": 3.0,
                     "z": -15.0
                 },
                 "Scale": {
@@ -159,7 +159,7 @@
                 },
                 "Rotation": {
                     "x": 0.0,
-                    "y": -0.0,
+                    "y": 0.0,
                     "z": 0.0
                 }
             },
@@ -232,7 +232,7 @@
                     "Int": 0
                 },
                 "_TutorialCompleted": {
-                    "Bool": false
+                    "Bool": true
                 },
                 "myGameDataManager": {
                     "GameDataManager": 0
@@ -247,7 +247,7 @@
                     "Component": 0
                 },
                 "innerLock": {
-                    "Component": 0
+                    "Component": 2
                 },
                 "pickPosition": {
                     "Component": 0
@@ -283,10 +283,10 @@
                     "Int": 0
                 },
                 "percentage": {
-                    "Float": 0.0
+                    "Float": 98.0
                 },
                 "eulerAngle": {
-                    "Float": 0.0
+                    "Float": 2.2706892
                 },
                 "unlockAngle": {
                     "Float": 0.0
@@ -302,7 +302,7 @@
                     "Float": 0.0
                 },
                 "movePick": {
-                    "Bool": false
+                    "Bool": true
                 },
                 "deduct": {
                     "Bool": true
@@ -320,7 +320,7 @@
                     "Bool": true
                 },
                 "is_Awake": {
-                    "Bool": true
+                    "Bool": false
                 },
                 "is_Start": {
                     "Bool": true

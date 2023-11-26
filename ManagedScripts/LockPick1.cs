@@ -78,31 +78,38 @@ public class LockPick1 : Script
         }
         else if (_TutorialCompleted)
         {
-            _NumOfTries.SetActive(_NumOfTries.GetEntityID(),true);
+            //_NumOfTries.SetActive(_NumOfTries.GetEntityID(),true);
 
             #region Move Pick
             if (movePick)
             {
-                Vector3 dir = Input.GetMousePosition() - transform.GetPosition();
+                Console.WriteLine(Input.GetMousePosition().X + "\t" + Input.GetMousePosition().Y);
+                Vector3 dir = Input.GetMousePosition() - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+                //Vector3 dir = Input.GetMousePosition() - new Vector3(609, 278, 0);
+                //Vector3 dir = Input.GetMousePosition() - new Vector3(Input.GetLocalMousePosX(), Input.GetLocalMousePoxY(), 0);
                 //Vector3 dir = Input.mousePosition - cam.WorldToScreenPoint(transform.position);
 
                 eulerAngle = Vector3.Angle(dir, new Vector3(0, 1, 0));
 
                 Vector3 cross = Vector3.Cross(new Vector3(0, 1, 0), dir);
                 if (cross.Z < 0) { eulerAngle = -eulerAngle; }
-
                 eulerAngle = Mathf.Clamp(eulerAngle, -maxAngle, maxAngle);
 
-                Quaternion rotateTo = Quaternion.AngleAxis(eulerAngle, new Vector3(0, 0, 1));
-                transform.SetRotation(new Vector3(rotateTo.X, rotateTo.Y, rotateTo.Z));
+                //Quaternion rotateTo = Quaternion.AngleAxis(eulerAngle, new Vector3(0, 0, 1));
+                //transform.SetRotation(new Vector3(rotateTo.X, rotateTo.Y, rotateTo.Z));
+
+                eulerAngle = 3.1415926535897931f - eulerAngle;
+                transform.SetRotation(new Vector3(0, 0, eulerAngle));
+                Vector2 addedPosition = new Vector2(-Mathf.Sin(eulerAngle) * 2.5f, Mathf.Cos(eulerAngle) * 2.5f);
+                transform.SetPosition(new Vector3(addedPosition.X, 1 + addedPosition.Y, -15));
             }
 
             if (Input.GetKeyDown(Keycode.E))
             {
                 movePick = false;
                 keyPressTime = 1;
-               /* GetComponent<AudioSource>().clip = lockSoundEffects[0];
-                GetComponent<AudioSource>().Play();*/
+                /* GetComponent<AudioSource>().clip = lockSoundEffects[0];
+                 GetComponent<AudioSource>().Play();*/
             }
             if (Input.GetKeyUp(Keycode.E))
             {
@@ -144,9 +151,9 @@ public class LockPick1 : Script
                 }
                 else
                 {
-                    //float randomRotation = Random.insideUnitCircle.x;
-                    Vector3 rotation = transform.GetRotation();
-                    //transform.SetRotation(rotation + new Vector3(0, 0, Random.Range((-randomRotation - 1), (randomRotation + 1))));
+                    //float randomRotation = ScriptAPI.Random.Range(0, 3.1415926535897931f);
+                    //Vector3 rotation = transform.GetRotation();
+                    //transform.SetRotation(rotation + new Vector3(0, 0, ScriptAPI.Random.Range((-randomRotation - 1), (randomRotation + 1))));
 
                     if (Input.GetKeyDown(Keycode.E) || Input.GetKey(Keycode.E))
                     {
@@ -203,6 +210,7 @@ public class LockPick1 : Script
 
     public void newLock()
     {
+        innerLock = GameObjectScriptFind("InnerLock").GetTransformComponent();
         //Cursor.visible = false;
         //GetComponent<AudioSource>().volume = 1f;
 

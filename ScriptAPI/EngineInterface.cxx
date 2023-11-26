@@ -4,6 +4,7 @@
 #include "HelperFunctions.hxx"
 #include "Time.hxx"
 #include "SceneLoader.hxx"
+#include "Screen.hxx"
 #include "../GAM300Engine/Include/Timestep/Timestep.h"
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -34,6 +35,7 @@ namespace ScriptAPI
         scripts = gcnew System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>();
         gameObjectList = gcnew System::Collections::Generic::SortedList<TDS::EntityID, Tuple<System::String^, GameObject^>^>();
 
+        Screen();
         updateScriptTypeList();
         Input::InputSetup();
         SceneLoader::dataPath = toSystemString(TDS::GetAssetFolder());
@@ -245,7 +247,6 @@ namespace ScriptAPI
             {
                 for each (NameScriptPair ^ script in scripts[i])
                 {
-                    Console::WriteLine(script->Key);
                     SAFE_NATIVE_CALL_BEGIN
                         if (!script->Value->getStartFlag() && script->Value->isScriptEnabled())
                         {
@@ -272,7 +273,6 @@ namespace ScriptAPI
             {
                 for each (NameScriptPair ^ script in scripts[i])
                 {
-                    Console::WriteLine(script->Value->GetType());
                     SAFE_NATIVE_CALL_BEGIN
                         if (script->Value->isScriptEnabled())
                         {
