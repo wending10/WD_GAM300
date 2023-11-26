@@ -145,8 +145,10 @@ namespace ScriptAPI
 
 	void AudioComponent::play(System::String^ pathing)
 	{
-		msclr::interop::marshal_context context;
-		std::string str = context.marshal_as<std::string>(pathing);
+		/*msclr::interop::marshal_context context;
+		std::string str = context.marshal_as<std::string>(pathing);*/
+
+		std::string str = toStdString(pathing);
 		
 		TDS::proxy_audio_system::ScriptPlay(str);
 	}
