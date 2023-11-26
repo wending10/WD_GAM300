@@ -21,22 +21,24 @@ public class PlayButton : Script
 
         var entityID = gameObject.GetEntityID();
         Vector3 ObjectPos = gameObject.GetComponent<TransformComponent>().GetPosition();//objectpos in ndc
-        Vector3 ObjectScale = gameObject.GetComponent<TransformComponent>().GetScale();
+        Vector3 ObjectScale = gameObject.GetComponent<TransformComponent>().GetScale();//obj scale in ndc
         float mouseX = Input.GetLocalMousePosX();
         float mouseY = Input.GetLocalMousePoxY();
-        float minX = ObjectPos.X - ObjectScale.X;
-        float maxX = ObjectPos.X + ObjectScale.X;
-        float miny = ObjectPos.Y - ObjectScale.Y;
-        float maxy = ObjectPos.Y + ObjectScale.Y;
+        float minX = ObjectPos.X - ObjectScale.X / 2;
+        float maxX = ObjectPos.X + ObjectScale.X / 2;
+        float maxy = -ObjectPos.Y + ObjectScale.Y / 2;
+        float miny = -ObjectPos.Y - ObjectScale.Y / 2;
         //Console.WriteLine(ObjectPos.X + "\t" + ObjectPos.Y + "\t" + ObjectPos.Z + "\n");
-        Console.WriteLine("MinX: " + minX + "\t" + "MaxX: " + maxX + "\t" + "MouseX: " + mouseX + "\t");
+        //Console.WriteLine(mouseX + "\t" + mouseY);
+        //Console.WriteLine("MinX: " + minX + "\t" + "MaxX: " + maxX + "\t" + "MouseX: " + mouseX + "\t");
+        //Console.WriteLine(ObjectScale.Y);
+        //Console.WriteLine("MinY: " + miny + "\t" + "MaxY: " + maxy + "\t" + "MouseY: " + mouseY + "\t");
 
         if (withinArea(mouseX, minX, maxX) && withinArea(mouseY, miny, maxy))
             mouseonbutton = true;
         else
             mouseonbutton = false;
-
-        Console.WriteLine(mouseonbutton);
+        if (mouseonbutton) { Console.WriteLine("IN IT"); }
         if (Input.GetMouseButtonDown(Keycode.M1) && mouseonbutton)
         {
             //GraphicsManagerWrapper.ToggleViewFrom2D(false);
