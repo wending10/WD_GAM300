@@ -1,5 +1,5 @@
 #include "AudioComponent.hxx"
-#include <msclr\marshal_cppstd.h>
+#include "../TypeConversion.hxx"
 
 namespace ScriptAPI
 {
@@ -83,9 +83,9 @@ namespace ScriptAPI
 		return filePath.c_str();
 	}
 
-	void AudioComponent::setFilePath(std::string str_path)
+	void AudioComponent::setFilePath(System::String^ str_path)
 	{
-		filePath = str_path;
+		filePath = toStdString(str_path);
 	}
 
 	float AudioComponent::getX()
@@ -145,26 +145,17 @@ namespace ScriptAPI
 
 	void AudioComponent::play(System::String^ pathing)
 	{
-		msclr::interop::marshal_context context;
-		std::string str = context.marshal_as<std::string>(pathing);
-		
-		TDS::proxy_audio_system::ScriptPlay(str);
+		TDS::proxy_audio_system::ScriptPlay(toStdString(pathing));
 	}
 
 	void AudioComponent::pause(System::String^ pathing)
 	{
-		msclr::interop::marshal_context context;
-		std::string str = context.marshal_as<std::string>(pathing);
-
-		TDS::proxy_audio_system::ScriptPause(str);
+		TDS::proxy_audio_system::ScriptPause(toStdString(pathing));
 	}
 
 	void AudioComponent::stop(System::String^ pathing)
 	{
-		msclr::interop::marshal_context context;
-		std::string str = context.marshal_as<std::string>(pathing);
-		
-		TDS::proxy_audio_system::ScriptStop(str);
+		TDS::proxy_audio_system::ScriptStop(toStdString(pathing));
 	}
 
 	void AudioComponent::SetEntityID(TDS::EntityID id)

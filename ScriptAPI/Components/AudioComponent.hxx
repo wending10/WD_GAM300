@@ -27,7 +27,7 @@ namespace ScriptAPI
 		std::string getFilePath();
 		const char* getFilePath_inChar();
 
-		void setFilePath(std::string str_path);
+		void setFilePath(System::String^ str_path);
 
 		float getX();
 		float getY();

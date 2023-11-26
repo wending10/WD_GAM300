@@ -28,6 +28,8 @@ namespace TDS
         AudioEngine::~AudioEngine()
         {
             deactivate();
+            delete audioE_instance;
+            std::cout << "AudioEngine Destructor" << '\n';
         }
 
         void AudioEngine::init()
@@ -55,8 +57,7 @@ namespace TDS
         }
 
         AudioEngine* AudioEngine::get_audioengine_instance()
-        {
-            if (audioE_instance == NULL)
+        {            if (audioE_instance == NULL)
             {
                 audioE_instance = new AudioEngine();
                 audioE_instance->init();
@@ -469,21 +470,17 @@ namespace TDS
         aud_instance = AudioWerks::AudioEngine::get_audioengine_instance();
         totalNumClips = aud_instance->getSoundContainer().size();
 
+        music.clear();
+        SFX.clear();
+        background.clear();
+        VO.clear();
+        all_sounds.clear();
+
         load_all_audio_files();
     }
 
     void proxy_audio_system::audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo)
     {
-        /*if (totalNumClips != entities.size())
-        {
-            for (int i{ 0 }; i < entities.size(); ++i)
-            {
-                aud_instance->loadSound(soundInfo[i]);
-            }
-
-            totalNumClips = entities.size();
-        }*/
-        
         aud_instance->update();
     }
 
@@ -509,34 +506,42 @@ namespace TDS
 
         for (auto& str : all_files)
         {
-            if (str.string().find("/Music\\") != std::string::npos)
+            if (str.string().find("/Music\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
             {
                 SoundInfo temp(str.string());
-                std::string sound_name = str.string().substr(str.string().find_last_of('\\'), str.string().find_last_of('.'));
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
 
                 background[sound_name] = (temp);
                 aud_instance->loadSound(temp);
             }
-            else if (str.string().find("/Songs\\") != std::string::npos)
+            else if (str.string().find("/Songs\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
             {
                 SoundInfo temp(str.string());
-                std::string sound_name = str.string().substr(str.string().find_last_of('\\'), str.string().find_last_of('.'));
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
 
                 music[sound_name] = (temp);
                 aud_instance->loadSound(temp);
             }
-            else if (str.string().find("/Sound Effects\\") != std::string::npos)
+            else if (str.string().find("/Sound Effects\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
             {
                 SoundInfo temp(str.string());
-                std::string sound_name = str.string().substr(str.string().find_last_of('\\'), str.string().find_last_of('.'));
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
 
                 SFX[sound_name] = (temp);
                 aud_instance->loadSound(temp);
             }
-            else if (str.string().find("/Voice Overs\\") != std::string::npos)
+            else if (str.string().find("/Voice Overs\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
             {
                 SoundInfo temp(str.string());
-                std::string sound_name = str.string().substr(str.string().find_last_of('\\'), str.string().find_last_of('.'));
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
 
                 VO[sound_name] = (temp);
                 aud_instance->loadSound(temp);
