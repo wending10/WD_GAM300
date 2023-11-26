@@ -28,6 +28,8 @@ namespace TDS
         AudioEngine::~AudioEngine()
         {
             deactivate();
+            delete audioE_instance;
+            std::cout << "AudioEngine Destructor" << '\n';
         }
 
         void AudioEngine::init()
@@ -55,8 +57,7 @@ namespace TDS
         }
 
         AudioEngine* AudioEngine::get_audioengine_instance()
-        {
-            if (audioE_instance == NULL)
+        {            if (audioE_instance == NULL)
             {
                 audioE_instance = new AudioEngine();
                 audioE_instance->init();
@@ -456,24 +457,239 @@ namespace TDS
     AudioWerks::AudioEngine* proxy_audio_system::aud_instance = nullptr;
     int proxy_audio_system::totalNumClips{ 0 };
 
+    std::map<std::string, SoundInfo> proxy_audio_system::music;
+    std::map<std::string, SoundInfo> proxy_audio_system::SFX;
+    std::map<std::string, SoundInfo> proxy_audio_system::background;
+    std::map<std::string, SoundInfo> proxy_audio_system::VO;
+
+    std::map<std::string, SoundInfo*> proxy_audio_system::all_sounds;
+    //std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events{};
+
     void proxy_audio_system::audio_system_init()
     {
         aud_instance = AudioWerks::AudioEngine::get_audioengine_instance();
         totalNumClips = aud_instance->getSoundContainer().size();
+
+        music.clear();
+        SFX.clear();
+        background.clear();
+        VO.clear();
+        all_sounds.clear();
+
+        load_all_audio_files();
     }
 
     void proxy_audio_system::audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo)
     {
-        /*if (totalNumClips != entities.size())
-        {
-            for (int i{ 0 }; i < entities.size(); ++i)
-            {
-                aud_instance->loadSound(soundInfo[i]);
-            }
-
-            totalNumClips = entities.size();
-        }*/
-        
         aud_instance->update();
     }
+
+    void proxy_audio_system::audio_event_init(SoundInfo* container)
+    {
+        //sound_events[container->getUniqueID()] = container->getEvents();
+    }
+
+    void proxy_audio_system::audio_event_update()
+    {
+
+    }
+
+    void proxy_audio_system::load_all_audio_files()
+    {
+        std::filesystem::path full_path = "../assets/audioFiles/"; //pathing / append
+        std::vector<std::filesystem::path> all_files; //store all file path
+
+        if (std::filesystem::is_directory(full_path))
+        {
+            all_files = go_deeper(full_path);
+        }
+
+        for (auto& str : all_files)
+        {
+            if (str.string().find("/Music\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
+            {
+                SoundInfo temp(str.string());
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
+
+                background[sound_name] = (temp);
+                aud_instance->loadSound(temp);
+            }
+            else if (str.string().find("/Songs\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
+            {
+                SoundInfo temp(str.string());
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
+
+                music[sound_name] = (temp);
+                aud_instance->loadSound(temp);
+            }
+            else if (str.string().find("/Sound Effects\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
+            {
+                SoundInfo temp(str.string());
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
+
+                SFX[sound_name] = (temp);
+                aud_instance->loadSound(temp);
+            }
+            else if (str.string().find("/Voice Overs\\") != std::string::npos && str.string().find(".meta") == std::string::npos)
+            {
+                SoundInfo temp(str.string());
+                size_t first = str.string().find_last_of('\\') + 1,
+                    last = str.string().find_last_of('.') - first;
+                std::string sound_name = str.string().substr(first, last);
+
+                VO[sound_name] = (temp);
+                aud_instance->loadSound(temp);
+            }
+        }
+    }
+
+    std::vector<std::filesystem::path> proxy_audio_system::go_deeper(std::filesystem::path f_path)
+    {
+        std::vector<std::filesystem::path> folders;
+        std::vector<std::filesystem::path> files;
+
+        for (auto& temp : std::filesystem::directory_iterator(f_path))
+        {
+            if (temp.is_directory())
+            {
+                folders = go_deeper(temp);
+
+                for (auto& temp2 : folders)
+                {
+                    files.push_back(temp2);
+                }
+            }
+            else
+            {
+                files.push_back(temp);
+            }
+        }
+
+        return files;
+    }
+
+    void proxy_audio_system::ScriptPlay(std::string pathing)
+    {
+        for (auto& temp : background)
+        {
+            if(strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->playSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : music)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->playSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : SFX)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->playSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : VO)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->playSound(temp.second);
+                goto DoNe;
+            }
+        }
+
+    DoNe:;
+    }
+
+    void proxy_audio_system::ScriptPause(std::string pathing)
+    {
+        for (auto& temp : background)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->pauseSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : music)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->pauseSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : SFX)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->pauseSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : VO)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->pauseSound(temp.second);
+                goto DoNe;
+            }
+        }
+
+    DoNe:;
+    }
+
+    void proxy_audio_system::ScriptStop(std::string pathing)
+    {
+        for (auto& temp : background)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : music)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : SFX)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : VO)
+        {
+            if (strstr(temp.first.c_str(), pathing.c_str()))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+
+    DoNe:;
+    }
+    
+    /*void proxy_audio_system::audio_event_play(SoundInfo& soundInfo)
+    {
+        aud_instance->playSound(soundInfo);
+    }*/
 } //end of TDS

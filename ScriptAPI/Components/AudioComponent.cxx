@@ -1,4 +1,5 @@
 #include "AudioComponent.hxx"
+#include "../TypeConversion.hxx"
 
 namespace ScriptAPI
 {
@@ -82,9 +83,9 @@ namespace ScriptAPI
 		return filePath.c_str();
 	}
 
-	void AudioComponent::setFilePath(std::string str_path)
+	void AudioComponent::setFilePath(System::String^ str_path)
 	{
-		filePath = str_path;
+		filePath = toStdString(str_path);
 	}
 
 	float AudioComponent::getX()
@@ -142,22 +143,19 @@ namespace ScriptAPI
 		isitMuted = condition;
 	}
 
-	void AudioComponent::play()
+	void AudioComponent::play(System::String^ pathing)
 	{
-		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
-		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->playSound(temp);
+		TDS::proxy_audio_system::ScriptPlay(toStdString(pathing));
 	}
 
-	void AudioComponent::pause()
+	void AudioComponent::pause(System::String^ pathing)
 	{
-		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
-		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->pauseSound(temp);
+		TDS::proxy_audio_system::ScriptPause(toStdString(pathing));
 	}
 
-	void AudioComponent::stop()
+	void AudioComponent::stop(System::String^ pathing)
 	{
-		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
-		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->stopSound(temp);
+		TDS::proxy_audio_system::ScriptStop(toStdString(pathing));
 	}
 
 	void AudioComponent::SetEntityID(TDS::EntityID id)

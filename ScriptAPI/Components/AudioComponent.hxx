@@ -2,6 +2,7 @@
 
 #include "ComponentBase.hxx"
 #include "TransformComponent.hxx"
+#include "../TypeConversion.hxx"
 
 namespace ScriptAPI
 {
@@ -27,7 +28,7 @@ namespace ScriptAPI
 		std::string getFilePath();
 		const char* getFilePath_inChar();
 
-		void setFilePath(std::string str_path);
+		void setFilePath(System::String^ str_path);
 
 		float getX();
 		float getY();
@@ -42,9 +43,9 @@ namespace ScriptAPI
 		void set3D(bool condition);
 		void setMute(bool condition);
 
-		void play();
-		void pause();
-		void stop();
+		void play(System::String^ pathing);
+		void pause(System::String^ pathing);
+		void stop(System::String^ pathing);
 
 		virtual void SetEntityID(TDS::EntityID ID);
 
