@@ -1,4 +1,5 @@
 #include "AudioComponent.hxx"
+#include <msclr\marshal_cppstd.h>
 
 namespace ScriptAPI
 {
@@ -142,22 +143,28 @@ namespace ScriptAPI
 		isitMuted = condition;
 	}
 
-	void AudioComponent::play()
+	void AudioComponent::play(System::String^ pathing)
 	{
-		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
-		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->playSound(temp);
+		msclr::interop::marshal_context context;
+		std::string str = context.marshal_as<std::string>(pathing);
+		
+		TDS::proxy_audio_system::ScriptPlay(str);
 	}
 
-	void AudioComponent::pause()
+	void AudioComponent::pause(System::String^ pathing)
 	{
-		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
-		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->pauseSound(temp);
+		msclr::interop::marshal_context context;
+		std::string str = context.marshal_as<std::string>(pathing);
+
+		TDS::proxy_audio_system::ScriptPause(str);
 	}
 
-	void AudioComponent::stop()
+	void AudioComponent::stop(System::String^ pathing)
 	{
-		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
-		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->stopSound(temp);
+		msclr::interop::marshal_context context;
+		std::string str = context.marshal_as<std::string>(pathing);
+		
+		TDS::proxy_audio_system::ScriptStop(str);
 	}
 
 	void AudioComponent::SetEntityID(TDS::EntityID id)

@@ -87,7 +87,6 @@ public class GhostMovement : Script
     {
         isChasingPlayer = !isPatrol;//can only be one or another
 
-
         List<Vector3> waypointVector = new List<Vector3>();
         //Console.WriteLine( GameObjectScriptFind("Waypoint"));
         //Console.WriteLine($"Ghost sees target : ({GameObjectScriptFind("Waypoint").GetComponent<TransformComponent>().GetPosition().X}, {GameObjectScriptFind("Waypoint").GetComponent<TransformComponent>().GetPosition().Z})");

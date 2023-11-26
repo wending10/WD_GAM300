@@ -42,9 +42,9 @@ namespace ScriptAPI
 		void set3D(bool condition);
 		void setMute(bool condition);
 
-		void play();
-		void pause();
-		void stop();
+		void play(System::String^ pathing);
+		void pause(System::String^ pathing);
+		void stop(System::String^ pathing);
 
 		virtual void SetEntityID(TDS::EntityID ID);
 

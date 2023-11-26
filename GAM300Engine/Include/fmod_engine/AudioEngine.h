@@ -19,6 +19,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <filesystem>
 #include "components/SoundInfo.h"
 #include "dotnet/ImportExport.h"
 
@@ -349,16 +350,35 @@ namespace TDS
         }; //end of AudioEngine
     } //end of AudioWerks
 
-    class proxy_audio_system
+    class DLL_API proxy_audio_system
     {
     public:
         static void audio_system_init();
         static void audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo);
 
+        //static void audio_event_play(SoundInfo& soundInfo);
+        static void audio_event_init(SoundInfo* container);
+        static void audio_event_update();
+
+        static void load_all_audio_files();
+        static std::vector<std::filesystem::path> go_deeper(std::filesystem::path f_path);
+
+        static void ScriptPlay(std::string pathing);
+        static void ScriptPause(std::string pathing);
+        static void ScriptStop(std::string pathing);
+
     private:
         static AudioWerks::AudioEngine* aud_instance;
 
         static int totalNumClips;
+
+        static std::map<std::string, SoundInfo> music;
+        static std::map<std::string, SoundInfo> SFX;
+        static std::map<std::string, SoundInfo> background;
+        static std::map<std::string, SoundInfo> VO;
+
+        static std::map<std::string, SoundInfo*> all_sounds;
+        //static std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events;
     }; //end of proxy_audio_system
 } //end of TDS
 
