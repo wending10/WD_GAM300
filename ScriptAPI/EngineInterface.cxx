@@ -269,6 +269,7 @@ namespace ScriptAPI
             {
                 for each (NameScriptPair ^ script in scripts[i])
                 {
+                    Console::WriteLine(script->Value->GetType());
                     SAFE_NATIVE_CALL_BEGIN
                         if (script->Value->isScriptEnabled())
                         {
@@ -1046,4 +1047,19 @@ namespace ScriptAPI
 
         return nullptr;
     }
+
+    // List<GameObject^>^ FindGameObjectsViaName(System::String^ name)
+    // {
+        // List<GameObject^>^ list = gcnew List<GameObject^>(2048);
+        // //System::Console::WriteLine("called in engine interfacee");
+        // for each (auto entityNameID in EngineInterface::GetGameObjectList())
+        // {
+            // if (entityNameID.Value->Item1 == name)
+            // {
+                // list->Add(entityNameID.Value->Item2);
+            // }
+        // }
+
+        // return list;
+    // }
 }

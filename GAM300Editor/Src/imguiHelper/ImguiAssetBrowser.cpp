@@ -118,7 +118,7 @@ namespace TDS
 	}
 
 
-	//AudioImgui audimg; //This causes COM library error, not sure why
+	AudioImgui audimg; //This causes COM library error, not sure why
 
 	AssetBrowser::AssetBrowser()
 	{

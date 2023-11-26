@@ -619,6 +619,8 @@ namespace TDS
 		DeserializeFromFile(filePath + scene + ".json");
 		currentScene = scene;
 		currentSceneSaved = true;
+		start();
+		awake();
 	}
 
 	/*!*************************************************************************
