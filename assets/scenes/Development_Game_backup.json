@@ -1,14 +1,9 @@
 {
     "Archetype Sizes": {
         "1100001000000": {
-            "0": 39168,
-            "1": 57600,
-            "6": 76032
-        },
-        "1100000000001": {
-            "0": 4760,
-            "1": 7000,
-            "12": 12600
+            "0": 32816,
+            "1": 58600,
+            "6": 65632
         }
     },
     "Entity Data": {
@@ -5843,68 +5838,6 @@
                 "Used In 2D": false
             }
         },
-        "314": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item2",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 291,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6390001773834229,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.7390002012252808,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.5390001535415649,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
         "130": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -6120,70 +6053,6 @@
                 "Used In 2D": false
             }
         },
-        "318": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box6",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 5,
-                "HierarchyChildren": [
-                    296
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6390001773834229,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.7390002012252808,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.5390001535415649,
-                    "y": 0.07375000417232513
-                }
-            }
-        },
         "134": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -6225,68 +6094,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "312": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Close Text",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 307,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.23853281140327454,
-                    "y": -0.9546043276786804,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.07177895307540894,
-                    "y": 0.07177895307540894,
-                    "z": 0.07177901268005371
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": true,
-                "message": "Close",
-                "Font Texture": "Roboto-Medium.dds",
-                "ForeGroundColour": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.5000004768371582,
-                    "y": -0.5
-                },
-                "BoundingBoxMax": {
-                    "x": 0.4999995529651642,
-                    "y": 0.5
-                }
             }
         },
         "135": {
@@ -8057,70 +7864,6 @@
                 "Used In 2D": false
             }
         },
-        "292": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box3",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 2,
-                "HierarchyChildren": [
-                    315
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.4015001058578491,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.501500129699707,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.3015001118183136,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
         "164": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -8336,70 +8079,6 @@
                 "Used In 2D": false
             }
         },
-        "290": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box1",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": [
-                    313
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8765000104904175,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9765000343322754,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7764999866485596,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
         "169": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -8527,70 +8206,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "300": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box10",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 9,
-                "HierarchyChildren": [
-                    322
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6390001773834229,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.7390002012252808,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.5390001535415649,
-                    "y": -0.33125001192092896
-                }
             }
         },
         "172": {
@@ -8851,70 +8466,6 @@
                 "Used In 2D": false
             }
         },
-        "298": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box8",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 7,
-                "HierarchyChildren": [
-                    320
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.1734999716281891,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.2734999656677246,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.07349997758865356,
-                    "y": 0.07375000417232513
-                }
-            }
-        },
         "177": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -8999,68 +8550,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "308": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item Text",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 303,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8929663896560669,
-                    "y": 0.6822309494018555,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.06534156203269958,
-                    "y": 0.11000004410743713,
-                    "z": 0.8600000143051147
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": true,
-                "message": "Items",
-                "Font Texture": "Roboto-Medium.dds",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 255.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9256371855735779,
-                    "y": 0.6272309422492981
-                },
-                "BoundingBoxMax": {
-                    "x": -0.8602955937385559,
-                    "y": 0.7372309565544128
-                }
             }
         },
         "179": {
@@ -9192,70 +8681,6 @@
                 "Used In 2D": false
             }
         },
-        "302": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box12",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 11,
-                "HierarchyChildren": [
-                    324
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.1734999716281891,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.2734999656677246,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.07349997758865356,
-                    "y": -0.33125001192092896
-                }
-            }
-        },
         "182": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -9297,68 +8722,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "296": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item6",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 318,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6390001773834229,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.7390002012252808,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.5390001535415649,
-                    "y": 0.07375000417232513
-                }
             }
         },
         "183": {
@@ -9490,70 +8853,6 @@
                 "Used In 2D": false
             }
         },
-        "306": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "MouseClick",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 15,
-                "HierarchyChildren": [
-                    311
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.9249500036239624,
-                    "y": -0.9180000424385071,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.11100000143051147,
-                    "y": 0.1099998950958252,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Mouse Left Click UI.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9804500341415405,
-                    "y": -0.9729999899864197
-                },
-                "BoundingBoxMax": {
-                    "x": -0.8694499731063843,
-                    "y": -0.8630000948905945
-                }
-            }
-        },
         "186": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -9640,68 +8939,6 @@
                 "Used In 2D": false
             }
         },
-        "316": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item4",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 293,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.1734999716281891,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.2734999656677246,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.07349997758865356,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
         "188": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -9743,70 +8980,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "310": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Paintings Text",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 14,
-                "HierarchyChildren": [
-                    305
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.360856294631958,
-                    "y": 0.6744487881660461,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.05811506509780884,
-                    "y": 0.1100001335144043,
-                    "z": 0.10000002384185791
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": true,
-                "message": "Paintings",
-                "Font Texture": "Roboto-Medium.dds",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.5,
-                    "y": -0.5
-                },
-                "BoundingBoxMax": {
-                    "x": 0.5,
-                    "y": 0.5
-                }
             }
         },
         "189": {
@@ -9936,70 +9109,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "304": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "NotesTab",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 13,
-                "HierarchyChildren": [
-                    309
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.5341743230819702,
-                    "y": 0.7424999475479126,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.20000004768371582,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.6341743469238281,
-                    "y": 0.6424999237060547
-                },
-                "BoundingBoxMax": {
-                    "x": -0.4341743290424347,
-                    "y": 0.8424999713897705
-                }
             }
         },
         "192": {
@@ -10172,68 +9281,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "324": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item12",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 302,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.1734999716281891,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.2734999656677246,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.07349997758865356,
-                    "y": -0.33125001192092896
-                }
             }
         },
         "196": {
@@ -10494,68 +9541,6 @@
                 "Used In 2D": false
             }
         },
-        "322": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item10",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 300,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6390001773834229,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.7390002012252808,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.5390001535415649,
-                    "y": -0.33125001192092896
-                }
-            }
-        },
         "202": {
             "ArchetypeID": "1100001000000",
             "Name Tag": {
@@ -10812,68 +9797,6 @@
                     "w": 0.0
                 },
                 "Used In 2D": false
-            }
-        },
-        "320": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item8",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 298,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.1734999716281891,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.2734999656677246,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.07349997758865356,
-                    "y": 0.07375000417232513
-                }
             }
         },
         "208": {
@@ -11803,7 +10726,7 @@
                 "Rotation": {
                     "x": 0.0,
                     "y": 0.0,
-                    "z": 3.1415913105010986
+                    "z": 3.141592502593994
                 }
             },
             "Graphics Component": {
@@ -13756,1156 +12679,6 @@
                 },
                 "Used In 2D": false
             }
-        },
-        "289": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Inventory",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 0,
-                "HierarchyIndex": 2,
-                "HierarchyChildren": [
-                    290,
-                    291,
-                    292,
-                    293,
-                    295,
-                    318,
-                    297,
-                    298,
-                    299,
-                    300,
-                    301,
-                    302,
-                    303,
-                    304,
-                    310,
-                    306,
-                    307
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.5249999761581421,
-                    "y": -0.04500000178813934,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.949999988079071,
-                    "y": 2.25,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -1.0,
-                    "y": -1.1699999570846558
-                },
-                "BoundingBoxMax": {
-                    "x": -0.04999998211860657,
-                    "y": 1.0800000429153442
-                }
-            }
-        },
-        "291": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box2",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 1,
-                "HierarchyChildren": [
-                    314
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6390001773834229,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.7390002012252808,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.5390001535415649,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
-        "293": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box4",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 3,
-                "HierarchyChildren": [
-                    316
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.1734999716281891,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.2734999656677246,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.07349997758865356,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
-        "295": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box5",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 4,
-                "HierarchyChildren": [
-                    317
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8765000104904175,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9765000343322754,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7764999866485596,
-                    "y": 0.07375000417232513
-                }
-            }
-        },
-        "297": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box7",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 6,
-                "HierarchyChildren": [
-                    319
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.4015001058578491,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.501500129699707,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.3015001118183136,
-                    "y": 0.07375000417232513
-                }
-            }
-        },
-        "299": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box9",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 8,
-                "HierarchyChildren": [
-                    321
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8765000104904175,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9765000343322754,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7764999866485596,
-                    "y": -0.33125001192092896
-                }
-            }
-        },
-        "301": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Box11",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 10,
-                "HierarchyChildren": [
-                    323
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.4015001058578491,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Inventory Box Img.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 0.6078431606292725
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.501500129699707,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.3015001118183136,
-                    "y": -0.33125001192092896
-                }
-            }
-        },
-        "303": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "ItemTab",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 12,
-                "HierarchyChildren": [
-                    308
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.809999942779541,
-                    "y": 0.7424999475479126,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.20000004768371582,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10196078568696976,
-                    "y": 0.10196078568696976,
-                    "z": 0.10196078568696976,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9099999666213989,
-                    "y": 0.6424999237060547
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7099999189376831,
-                    "y": 0.8424999713897705
-                }
-            }
-        },
-        "305": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "PaintingsTab",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 310,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.23999999463558197,
-                    "y": 0.7424999475479126,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.2605213522911072,
-                    "y": 0.20000004768371582,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.37026065587997437,
-                    "y": 0.6424999237060547
-                },
-                "BoundingBoxMax": {
-                    "x": -0.10973931849002838,
-                    "y": 0.8424999713897705
-                }
-            }
-        },
-        "307": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "I Key",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 289,
-                "HierarchyIndex": 16,
-                "HierarchyChildren": [
-                    312
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.31314998865127563,
-                    "y": -0.9135000109672546,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.12299996614456177,
-                    "y": 0.11700010299682617,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "I Key.dds",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.3746499717235565,
-                    "y": -0.9720000624656677
-                },
-                "BoundingBoxMax": {
-                    "x": -0.25165000557899475,
-                    "y": -0.8549999594688416
-                }
-            }
-        },
-        "309": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Notes Text",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 304,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.6207951903343201,
-                    "y": 0.6848249435424805,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.06499998271465302,
-                    "y": 0.11000004410743713,
-                    "z": 0.1609230637550354
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": true,
-                "message": "Notes",
-                "Font Texture": "Roboto-Medium.dds",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9143731594085693,
-                    "y": -0.2535667419433594
-                },
-                "BoundingBoxMax": {
-                    "x": 0.08562681078910828,
-                    "y": 0.7464332580566406
-                }
-            }
-        },
-        "311": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Use Text",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 306,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8654435276985168,
-                    "y": -0.9729214310646057,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.08153744786977768,
-                    "y": 0.13084004819393158,
-                    "z": 0.5
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 0,
-                "is Font": true,
-                "message": "Use",
-                "Font Texture": "Roboto-Medium.dds",
-                "ForeGroundColour": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.5,
-                    "y": -0.5
-                },
-                "BoundingBoxMax": {
-                    "x": 0.5,
-                    "y": 0.5
-                }
-            }
-        },
-        "313": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item1",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 290,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8765000104904175,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "Invnt Battery Img.dds",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9765000343322754,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7764999866485596,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
-        "315": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item3",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 292,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.4015001058578491,
-                    "y": 0.3149999976158142,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.501500129699707,
-                    "y": 0.13999998569488525
-                },
-                "BoundingBoxMax": {
-                    "x": -0.3015001118183136,
-                    "y": 0.49000000953674316
-                }
-            }
-        },
-        "317": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item5",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 295,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8765000104904175,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9765000343322754,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7764999866485596,
-                    "y": 0.07375000417232513
-                }
-            }
-        },
-        "319": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item7",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 297,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.4015001058578491,
-                    "y": -0.10125000774860382,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.501500129699707,
-                    "y": -0.2762500047683716
-                },
-                "BoundingBoxMax": {
-                    "x": -0.3015001118183136,
-                    "y": 0.07375000417232513
-                }
-            }
-        },
-        "321": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item9",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 299,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.8765000104904175,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.9765000343322754,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.7764999866485596,
-                    "y": -0.33125001192092896
-                }
-            }
-        },
-        "323": {
-            "ArchetypeID": "1100000000001",
-            "Name Tag": {
-                "Name": "Item11",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 301,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -0.4015001058578491,
-                    "y": -0.5062500238418579,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 0.19999998807907104,
-                    "y": 0.3500000238418579,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "UI Sprite": {
-                "Texture": "",
-                "EnableSprite": true,
-                "LayerID": 1,
-                "is Font": false,
-                "message": "",
-                "Font Texture": "",
-                "ForeGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 0.0
-                },
-                "Sprite Color": {
-                    "x": 0.10000000149011612,
-                    "y": 0.10000000149011612,
-                    "z": 0.10000000149011612,
-                    "w": 1.0
-                },
-                "BackGroundColour": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "BoundingBoxMin": {
-                    "x": -0.501500129699707,
-                    "y": -0.6812500357627869
-                },
-                "BoundingBoxMax": {
-                    "x": -0.3015001118183136,
-                    "y": -0.33125001192092896
-                }
-            }
         }
     },
     "Scripts": {
@@ -15038,15 +12811,12 @@
         "127": {},
         "128": {},
         "129": {},
-        "314": {},
         "130": {},
         "260": {},
         "131": {},
         "132": {},
         "133": {},
-        "318": {},
         "134": {},
-        "312": {},
         "135": {},
         "136": {},
         "258": {},
@@ -15088,65 +12858,51 @@
         "161": {},
         "162": {},
         "163": {},
-        "292": {},
         "164": {},
         "165": {},
         "166": {},
         "167": {},
         "168": {},
-        "290": {},
         "169": {},
         "170": {},
         "171": {},
-        "300": {},
         "172": {},
         "173": {},
         "174": {},
         "288": {},
         "175": {},
         "176": {},
-        "298": {},
         "177": {},
         "178": {},
-        "308": {},
         "179": {},
         "180": {},
         "181": {},
-        "302": {},
         "182": {},
-        "296": {},
         "183": {},
         "184": {},
         "185": {},
-        "306": {},
         "186": {},
         "187": {},
-        "316": {},
         "188": {},
-        "310": {},
         "189": {},
         "190": {},
         "191": {},
-        "304": {},
         "192": {},
         "193": {},
         "194": {},
         "195": {},
-        "324": {},
         "196": {},
         "197": {},
         "198": {},
         "199": {},
         "200": {},
         "201": {},
-        "322": {},
         "202": {},
         "203": {},
         "204": {},
         "205": {},
         "206": {},
         "207": {},
-        "320": {},
         "208": {},
         "209": {},
         "210": {},
@@ -15213,25 +12969,7 @@
         "281": {},
         "283": {},
         "285": {},
-        "287": {},
-        "289": {},
-        "291": {},
-        "293": {},
-        "295": {},
-        "297": {},
-        "299": {},
-        "301": {},
-        "303": {},
-        "305": {},
-        "307": {},
-        "309": {},
-        "311": {},
-        "313": {},
-        "315": {},
-        "317": {},
-        "319": {},
-        "321": {},
-        "323": {}
+        "287": {}
     },
     "Active Archetype": {
         "1": "1100001000000",
@@ -15363,15 +13101,12 @@
         "127": "1100001000000",
         "128": "1100001000000",
         "129": "1100001000000",
-        "314": "1100000000000",
         "130": "1100001000000",
         "260": "1100001000000",
         "131": "1100001000000",
         "132": "1100001000000",
         "133": "1100001000000",
-        "318": "1100000000001",
         "134": "1100001000000",
-        "312": "1100000000001",
         "135": "1100001000000",
         "136": "1100001000000",
         "258": "1100001000000",
@@ -15413,65 +13148,51 @@
         "161": "1100001000000",
         "162": "1100001000000",
         "163": "1100001000000",
-        "292": "1100000000001",
         "164": "1100001000000",
         "165": "1100001000000",
         "166": "1100001000000",
         "167": "1100001000000",
         "168": "1100001000000",
-        "290": "1100000000001",
         "169": "1100001000000",
         "170": "1100001000000",
         "171": "1100001000000",
-        "300": "1100000000001",
         "172": "1100001000000",
         "173": "1100001000000",
         "174": "1100001000000",
         "288": "1100001000000",
         "175": "1100001000000",
         "176": "1100001000000",
-        "298": "1100000000001",
         "177": "1100001000000",
         "178": "1100001000000",
-        "308": "1100000000001",
         "179": "1100001000000",
         "180": "1100001000000",
         "181": "1100001000000",
-        "302": "1100000000001",
         "182": "1100001000000",
-        "296": "1100000000000",
         "183": "1100001000000",
         "184": "1100001000000",
         "185": "1100001000000",
-        "306": "1100000000001",
         "186": "1100001000000",
         "187": "1100001000000",
-        "316": "1100000000000",
         "188": "1100001000000",
-        "310": "1100000000001",
         "189": "1100001000000",
         "190": "1100001000000",
         "191": "1100001000000",
-        "304": "1100000000001",
         "192": "1100001000000",
         "193": "1100001000000",
         "194": "1100001000000",
         "195": "1100001000000",
-        "324": "1100000000000",
         "196": "1100001000000",
         "197": "1100001000000",
         "198": "1100001000000",
         "199": "1100001000000",
         "200": "1100001000000",
         "201": "1100001000000",
-        "322": "1100000000000",
         "202": "1100001000000",
         "203": "1100001000000",
         "204": "1100001000000",
         "205": "1100001000000",
         "206": "1100001000000",
         "207": "1100001000000",
-        "320": "1100000000000",
         "208": "1100001000000",
         "209": "1100001000000",
         "210": "1100001000000",
@@ -15538,24 +13259,6 @@
         "281": "1100001000000",
         "283": "1100001000000",
         "285": "1100001000000",
-        "287": "1100001000000",
-        "289": "1100000000001",
-        "291": "1100000000001",
-        "293": "1100000000001",
-        "295": "1100000000001",
-        "297": "1100000000001",
-        "299": "1100000000001",
-        "301": "1100000000001",
-        "303": "1100000000001",
-        "305": "1100000000001",
-        "307": "1100000000001",
-        "309": "1100000000001",
-        "311": "1100000000001",
-        "313": "1100000000000",
-        "315": "1100000000000",
-        "317": "1100000000000",
-        "319": "1100000000000",
-        "321": "1100000000000",
-        "323": "1100000000000"
+        "287": "1100001000000"
     }
 }
