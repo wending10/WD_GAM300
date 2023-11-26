@@ -11,10 +11,15 @@ namespace ScriptAPI
 	{
 		return entityID;
 	}
-	
+
 	void AudioComponent::set3DCoords(float x, float y, float z)
 	{
 		pos = Vector3(x, y, z);
+	}
+
+	void AudioComponent::set3DCoords(Vector3 in_pos)
+	{
+		pos = in_pos;
 	}
 
 	bool AudioComponent::isLoaded()
@@ -77,6 +82,11 @@ namespace ScriptAPI
 		return filePath.c_str();
 	}
 
+	void AudioComponent::setFilePath(std::string str_path)
+	{
+		filePath = str_path;
+	}
+
 	float AudioComponent::getX()
 	{
 		return pos.X;
@@ -132,6 +142,24 @@ namespace ScriptAPI
 		isitMuted = condition;
 	}
 
+	void AudioComponent::play()
+	{
+		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
+		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->playSound(temp);
+	}
+
+	void AudioComponent::pause()
+	{
+		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
+		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->pauseSound(temp);
+	}
+
+	void AudioComponent::stop()
+	{
+		TDS::SoundInfo temp(TDS::GetSoundInfo(entityID)->getFilePath());
+		TDS::AudioWerks::AudioEngine::get_audioengine_instance()->stopSound(temp);
+	}
+
 	void AudioComponent::SetEntityID(TDS::EntityID id)
 	{
 		entityID = id;
@@ -157,6 +185,10 @@ namespace ScriptAPI
 	std::string AudioComponent::filePath::get()
 	{
 		return TDS::GetSoundInfo(entityID)->getFilePath();
+	}
+	void AudioComponent::filePath::set(std::string value)
+	{
+		TDS::GetSoundInfo(entityID)->setFilePath(value);
 	}
 
 	//loop
@@ -228,4 +260,6 @@ namespace ScriptAPI
 	{
 		TDS::GetSoundInfo(entityID)->setReverbAmount(value);
 	}
+
+	
 }

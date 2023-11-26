@@ -33,14 +33,14 @@ namespace TDS
 
 		/**
 		 * @brief Show or hide audio controls. Also can be used to see if active or not
-		 * @param state 
-		 * @return 
+		 * @param state
+		 * @return
 		*/
 		bool ToggleControls(bool state = false);
 
 		/**
 		 * @brief Add sound into vector container
-		 * @param folder_path 
+		 * @param folder_path
 		*/
 		void add_audio_files(std::filesystem::path folder_path);
 

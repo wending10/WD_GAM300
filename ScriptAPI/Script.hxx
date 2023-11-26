@@ -84,7 +84,7 @@ namespace ScriptAPI
             {
                 Thread::Sleep(1);
             }
-
+            
             return func();
         }
 
