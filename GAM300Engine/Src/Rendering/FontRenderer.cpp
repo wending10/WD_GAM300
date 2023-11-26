@@ -339,6 +339,10 @@ namespace TDS
 			{
 				finalOffset.y = float(CurrOffset.y + (charHeight * 0.25));
 			}
+			else if (eachchar == '\"' || eachchar == '\'')
+			{
+				finalOffset.y = float(CurrOffset.y + (charHeight + (charHeight * 0.75)));
+			}
 			else
 			{
 				finalOffset.y = float(CurrOffset.y + (charHeight * 0.5));

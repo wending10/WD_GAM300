@@ -7,7 +7,7 @@
         }
     },
     "Entity Data": {
-        "3": {
+        "1": {
             "ArchetypeID": "11000000000010",
             "Name Tag": {
                 "Name": "Images",
@@ -15,7 +15,7 @@
                 "IsActive": true,
                 "HierarchyParent": 0,
                 "HierarchyIndex": 0,
-                "HierarchyChildren": []
+              "HierarchyChildren": {}
             },
             "Transform": {
                 "Position": {
@@ -26,7 +26,7 @@
                 "Scale": {
                     "x": 2.0,
                     "y": 2.0,
-                    "z": 2.0
+                    "z": 1.0
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -35,7 +35,7 @@
                 }
             },
             "UI Sprite": {
-                "Texture": "Scene01.dds",
+                "Texture": "Draft Journal Image.dds",
                 "EnableSprite": true,
                 "LayerID": 0,
                 "is Font": false,
@@ -69,7 +69,7 @@
                 }
             }
         },
-        "4": {
+        "2": {
             "ArchetypeID": "11000000000010",
             "Name Tag": {
                 "Name": "Narration",
@@ -77,18 +77,18 @@
                 "IsActive": true,
                 "HierarchyParent": 0,
                 "HierarchyIndex": 1,
-                "HierarchyChildren": []
+              "HierarchyChildren": {}
             },
             "Transform": {
                 "Position": {
-                    "x": -0.7629969120025635,
-                    "y": -0.9067357778549194,
+                    "x": -0.9694189429283142,
+                    "y": -0.9430052042007446,
                     "z": 0.0
                 },
                 "Scale": {
-                    "x": 0.06316056847572327,
-                    "y": 0.06316056847572327,
-                    "z": 0.06316056847572327
+                    "x": 0.046609774231910706,
+                    "y": 0.07349999248981476,
+                    "z": 0.07349999248981476
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -101,7 +101,7 @@
                 "EnableSprite": true,
                 "LayerID": 1,
                 "is Font": true,
-                "message": "Father: \"My son, if you're reading this, then I'm dead,\"",
+                "message": "Father: My Son, if you are reading this, then I am dead,",
                 "Font Texture": "Roboto-Medium.dds",
                 "ForeGroundColour": {
                     "x": 0.0,
@@ -133,11 +133,56 @@
         }
     },
     "Scripts": {
-        "3": {},
-        "4": {}
+        "1": {
+            "StartingCutscene": {
+                "Textures": {
+                    "System.String[]": 0
+                },
+                "counter": {
+                    "Int": 0
+                },
+                "NarrationEntity": {
+                    "GameObject": 0
+                },
+                "gameObject": {
+                    "GameObject": 1
+                },
+                "is_Enabled": {
+                    "Bool": true
+                },
+                "is_Awake": {
+                    "Bool": false
+                },
+                "is_Start": {
+                    "Bool": false
+                }
+            }
+        },
+        "2": {
+            "CutsceneSubtitle": {
+                "Audiofiles": {
+                    "System.String[]": 0
+                },
+                "Subtitles": {
+                    "System.String[]": 0
+                },
+                "gameObject": {
+                    "GameObject": 2
+                },
+                "is_Enabled": {
+                    "Bool": true
+                },
+                "is_Awake": {
+                    "Bool": false
+                },
+                "is_Start": {
+                    "Bool": false
+                }
+            }
+        }
     },
     "Active Archetype": {
-        "3": "11000000000010",
-        "4": "11000000000010"
+        "1": "11000000000010",
+        "2": "11000000000010"
     }
 }
