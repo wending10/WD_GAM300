@@ -269,6 +269,7 @@ namespace ScriptAPI
             {
                 for each (NameScriptPair ^ script in scripts[i])
                 {
+                    Console::WriteLine(script->Value->GetType());
                     SAFE_NATIVE_CALL_BEGIN
                         if (script->Value->isScriptEnabled())
                         {
