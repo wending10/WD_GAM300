@@ -105,6 +105,7 @@
     <ClCompile Include="src\components\SoundInfo.cpp" />
     <ClCompile Include="Src\Rendering\UISpriteWrapper.cpp" />
     <ClCompile Include="Src\components\AudioSource.cpp" />
+    <ClCompile Include="Src\AI\UIPopupManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -241,6 +242,7 @@
     <ClInclude Include="Include\Rendering\GraphicsManagerWrapperCalls.h" />
     <ClInclude Include="Include\components\SoundInfo.h" />
     <ClInclude Include="Include\Rendering\UISpriteWrapper.h" />
+    <ClInclude Include="Include\AI\UIPopupManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />
