@@ -70,6 +70,7 @@ public class CutsceneSubtitle : Script
         {
             UISpriteComponent Sprite = gameObject.GetComponent<UISpriteComponent>();
             AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+            audio.play(Audiofiles[0]);
 
             audio.play(Audiofiles[0]);
 

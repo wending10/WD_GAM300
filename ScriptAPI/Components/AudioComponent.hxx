@@ -2,6 +2,7 @@
 
 #include "ComponentBase.hxx"
 #include "TransformComponent.hxx"
+#include "../TypeConversion.hxx"
 
 namespace ScriptAPI
 {
