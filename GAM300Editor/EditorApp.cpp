@@ -136,8 +136,6 @@ namespace TDS
         ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
         GraphicsManager::getInstance().Init(&m_window);
         AssetManager::GetInstance()->PreloadAssets();
- 
-
         skyboxrender.Init();
     }
 
@@ -157,6 +155,13 @@ namespace TDS
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "ExecuteLateUpdate"
+            );
+
+        auto executeFixedUpdate = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteFixedUpdate"
             );
 
         auto reloadScripts = GetFunctionPtr<void(*)(void)>
@@ -235,8 +240,10 @@ namespace TDS
                     SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
                     startPlaying = false;
                 }
+                executeFixedUpdate();
                 ecs.runSystems(1, DeltaTime); // Other systems
                 executeUpdate();
+                executeLateUpdate();
             }
             else
             {
