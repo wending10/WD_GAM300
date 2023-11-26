@@ -30,7 +30,9 @@
 // Helper functions for components
 namespace TDS
 {
+	// May want to put in another file next time
 	DLL_API float GetDeltaTime();
+	DLL_API std::string GetAssetFolder();
 
 	DLL_API struct ScriptValues
 	{

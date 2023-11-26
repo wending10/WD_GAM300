@@ -3,6 +3,7 @@
 #include "TypeConversion.hxx"
 #include "HelperFunctions.hxx"
 #include "Time.hxx"
+#include "SceneLoader.hxx"
 #include "../GAM300Engine/Include/Timestep/Timestep.h"
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -35,6 +36,7 @@ namespace ScriptAPI
 
         updateScriptTypeList();
         Input::InputSetup();
+        SceneLoader::dataPath = toSystemString(TDS::GetAssetFolder());
         System::Console::WriteLine("Hello Engine Interface Init!");
     }
 
@@ -243,6 +245,7 @@ namespace ScriptAPI
             {
                 for each (NameScriptPair ^ script in scripts[i])
                 {
+                    Console::WriteLine(script->Key);
                     SAFE_NATIVE_CALL_BEGIN
                         if (!script->Value->getStartFlag() && script->Value->isScriptEnabled())
                         {
@@ -538,7 +541,7 @@ namespace ScriptAPI
                         newScriptValue.referenceEntityID = safe_cast<TransformComponent^>(field->GetValue(obj))->GetEntityID();
                     }
                     // Script =========================================================================================
-                    else 
+                    else if (field->FieldType->ToString()->Contains("ScriptAPI"))
                     {
                         newScriptValue.referenceEntityID = safe_cast<Script^>(field->GetValue(obj))->gameObject->GetEntityID();
                     }
@@ -653,7 +656,7 @@ namespace ScriptAPI
                     newScriptValue.type = "Component";
                     newScriptValue.referenceEntityID = safe_cast<TransformComponent^>(field->GetValue(obj))->GetEntityID();
                 }
-                else // Script
+                else if (field->FieldType->ToString()->Contains("ScriptAPI")) // Script
                 {
                     newScriptValue.referenceEntityID = safe_cast<Script^>(field->GetValue(obj))->gameObject->GetEntityID();
                 }

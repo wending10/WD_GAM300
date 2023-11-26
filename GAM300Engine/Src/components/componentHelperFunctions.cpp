@@ -10,12 +10,18 @@
 
 #include "components/components.h"
 #include "Timestep/Timestep.h"
+#include "SceneManager/SceneManager.h"
 
 namespace TDS
 {
 	float GetDeltaTime()
 	{
 		return TimeStep::GetDeltaTime();
+	}
+
+	std::string GetAssetFolder()
+	{
+		return SceneManager::GetInstance()->getAssetPath();
 	}
 
 	/*!*************************************************************************
