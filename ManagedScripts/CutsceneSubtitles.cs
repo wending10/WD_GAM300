@@ -72,8 +72,6 @@ public class CutsceneSubtitle : Script
             AudioComponent audio = gameObject.GetComponent<AudioComponent>();
             audio.play(Audiofiles[0]);
 
-            audio.play(Audiofiles[0]);
-
             Sprite.ColorAlphafade(0.5f);
             if (Sprite.getColourAlpha() < 0)
             {
