@@ -17,7 +17,7 @@ public class BlinkingLights : Script
     {
         //GameObjectScriptFind() use this to find the name of the sensor to turn of the light
         
-        Console.WriteLine(gameObject.GetComponent<GraphicComponent>().getColourAlpha().ToString());
+        Console.WriteLine((float)gameObject.GetComponent<GraphicComponent>().getColourAlpha());
         //Console.WriteLine(gameObject.GetEntityID());
         
         counter += Time.deltaTime;

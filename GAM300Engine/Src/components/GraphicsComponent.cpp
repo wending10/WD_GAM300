@@ -53,7 +53,8 @@ namespace TDS
 																								
 	{ }
 
-	GraphicsComponent* GetGraphicsComponent(EntityID entityID) {
+	GraphicsComponent* GetGraphicsComponent(EntityID entityID) 
+	{
 		return ecs.getComponent<GraphicsComponent>(entityID);
 	}
 }
