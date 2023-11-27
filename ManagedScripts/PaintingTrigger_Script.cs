@@ -18,7 +18,7 @@ public class PaintingTrigger_Script : Script
     bool playedAudio;
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         if (Input.GetKeyDown(Keycode.E) && collided == true)
         {
