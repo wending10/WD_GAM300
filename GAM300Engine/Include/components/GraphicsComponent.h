@@ -40,9 +40,9 @@ namespace TDS
 		RTTR_ENABLE(IComponent);
 		RTTR_REGISTRATION_FRIEND
 
+		Vec4							m_Color;
 	private:
 		bool							m_ShowMesh = true;
-		Vec4							m_Color;
 		int								m_PointLightID{ -1 };
 		bool							m_Pointlight{ false };
 		bool							m_Debug{ false };
@@ -56,4 +56,5 @@ namespace TDS
 
 
 	};
+	DLL_API GraphicsComponent* GetGraphicsComponent(EntityID entityID);
 }
