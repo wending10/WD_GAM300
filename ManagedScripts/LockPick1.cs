@@ -5,12 +5,12 @@ using ScriptAPI;
 public class LockPick1 : Script
 {
     [Header("Tutorial UI Variables")]
-/*    public Image _TutorialImage;
+/*  public Image _TutorialImage;
     public Sprite[] _TutorialImgSprites;
     public Text _Press2Continue;*/
     [SerializeField] int _TutorialStep;
 
-/*    public Text mySubtitles;
+/*  public Text mySubtitles;
     public Image mySubtitlesBG;
     public AudioSource myVOSource;*/
     public bool _TutorialCompleted;
