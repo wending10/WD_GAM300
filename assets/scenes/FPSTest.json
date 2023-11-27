@@ -502,6 +502,12 @@
                 "pitch": {
                     "Float": -44.444435
                 },
+                "testRB": {
+                    "Component": 0
+                },
+                "gameDataManager": {
+                    "GameDataManager": 0
+                },
                 "enableZoom": {
                     "Bool": true
                 },
