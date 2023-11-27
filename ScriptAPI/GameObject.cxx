@@ -37,6 +37,11 @@ namespace ScriptAPI
 		return UISpriteComponent(entityID);
 	}
 
+	GraphicComponent GameObject::GetGraphicComponent()
+	{
+		return GraphicComponent(entityID);
+	}
+
 	bool GameObject::activeInHierarchy(TDS::EntityID entityID)
 	{
 		return TDS::ecs.getEntityIsEnabled(entityID);
@@ -89,6 +94,10 @@ namespace ScriptAPI
 		else if (type == UISpriteComponent::typeid)
 		{
 			return safe_cast<T>(GetUISpriteComponent());
+		}
+		else if (type == GraphicComponent::typeid)
+		{
+			return safe_cast<T>(GetGraphicComponent());
 		}
 
 		return T();
