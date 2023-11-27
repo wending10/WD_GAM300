@@ -7,6 +7,7 @@
 #include "Components/SphereColliderComponent.hxx"
 #include "Components/TransformComponent.hxx"
 #include "Components/UISpriteComponent.hxx"
+#include "Components/GraphicComponent.hxx"
 #include "Components/AudioComponent.hxx"
 #include "ecs/ecs.h"
 
@@ -26,6 +27,7 @@ namespace ScriptAPI
         SphereColliderComponent GetSphereColliderComponent();
         TransformComponent GetTransformComponent();
         UISpriteComponent GetUISpriteComponent();
+        GraphicComponent GetGraphicComponent();
         AudioComponent GetAudioComponent();
 
         bool activeInHierarchy(TDS::EntityID entityID);
