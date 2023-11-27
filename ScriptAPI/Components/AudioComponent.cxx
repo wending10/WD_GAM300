@@ -53,6 +53,11 @@ namespace ScriptAPI
 		return (whatState == TDS::SOUND_PAUSE);
 	}
 
+	bool AudioComponent::finished(System::String^ str_path)
+	{
+		return TDS::proxy_audio_system::checkifdone(toStdString(str_path));
+	}
+
 	Vector3 AudioComponent::get3DCoords()
 	{
 		return pos;
@@ -148,6 +153,11 @@ namespace ScriptAPI
 		TDS::proxy_audio_system::ScriptPlay(toStdString(pathing));
 	}
 
+	void AudioComponent::playQueue()
+	{
+		TDS::proxy_audio_system::Play_queue();
+	}
+
 	void AudioComponent::pause(System::String^ pathing)
 	{
 		TDS::proxy_audio_system::ScriptPause(toStdString(pathing));
@@ -156,6 +166,16 @@ namespace ScriptAPI
 	void AudioComponent::stop(System::String^ pathing)
 	{
 		TDS::proxy_audio_system::ScriptStop(toStdString(pathing));
+	}
+
+	void AudioComponent::Queue(System::String^ str)
+	{
+		TDS::proxy_audio_system::Add_to_Queue(toStdString(str));
+	}
+
+	void AudioComponent::clearQueue()
+	{
+		TDS::proxy_audio_system::Clear_queue();
 	}
 
 	void AudioComponent::SetEntityID(TDS::EntityID id)

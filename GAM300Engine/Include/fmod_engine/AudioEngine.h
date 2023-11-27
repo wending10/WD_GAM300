@@ -133,10 +133,14 @@ namespace TDS
             DLL_API  void update3DSoundPosition(SoundInfo soundInfo);
 
             /**
-             * Checks if a looping sound is playing.
+             * Checks if a sound is playing.
              */
             DLL_API  bool soundIsPlaying(SoundInfo soundInfo);
 
+            /**
+             * Checks if a sound has finished playing.
+             */
+            DLL_API  void soundFinished(SoundInfo& soudnInfo);
 
             /**
              * Sets the position of the listener in the 3D scene.
@@ -367,6 +371,14 @@ namespace TDS
         static void ScriptPause(std::string pathing);
         static void ScriptStop(std::string pathing);
 
+        static SoundInfo* find_sound_info(std::string str);
+        static void Add_to_Queue(std::string str = "");
+        static void Remove_from_Queue(std::string str);
+        static void Play_queue();
+        static void Clear_queue();
+
+        static bool checkifdone(std::string str);
+
     private:
         static AudioWerks::AudioEngine* aud_instance;
 
@@ -376,6 +388,7 @@ namespace TDS
         static std::map<std::string, SoundInfo> SFX;
         static std::map<std::string, SoundInfo> background;
         static std::map<std::string, SoundInfo> VO;
+        static std::map<std::string, std::pair<bool, SoundInfo*>> Queue;
 
         static std::map<std::string, SoundInfo*> all_sounds;
         //static std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events;

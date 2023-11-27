@@ -20,6 +20,7 @@ namespace ScriptAPI
 		bool isMuted();
 		bool isPlaying();
 		bool isPaused();
+		bool finished(System::String^ str_path);
 
 		Vector3 get3DCoords();
 		snd getState();
@@ -44,8 +45,11 @@ namespace ScriptAPI
 		void setMute(bool condition);
 
 		void play(System::String^ pathing);
+		void playQueue();
+		void clearQueue();
 		void pause(System::String^ pathing);
 		void stop(System::String^ pathing);
+		void Queue(System::String^ str);
 
 		virtual void SetEntityID(TDS::EntityID ID);
 

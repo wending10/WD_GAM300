@@ -251,6 +251,29 @@ namespace TDS
             //return (soundInfo.isLoop() || soundInfo.isPlaying()) && soundInfo.isLoaded() && loopsPlaying.count(soundInfo.getUniqueID());
         }
 
+        void AudioEngine::soundFinished(SoundInfo& soundInfo)
+        {
+            bool check{ false };
+
+            if (soundInfo.isLoop())
+            {
+                loopsPlaying[soundInfo.getUniqueID()]->isPlaying(&check);
+            }
+            else
+            {
+                normalPlaying[soundInfo.getUniqueID()]->isPlaying(&check);
+            }
+
+            if (check)
+            {
+                //do nothing;
+            }
+            else
+            {
+                soundInfo.setState(SOUND_LOADED);
+            }
+        }
+
         void AudioEngine::set3DListenerPosition(float posX, float posY, float posZ, float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ)
         {
             listenerpos = { posX,     posY,     posZ };
@@ -461,6 +484,7 @@ namespace TDS
     std::map<std::string, SoundInfo> proxy_audio_system::SFX;
     std::map<std::string, SoundInfo> proxy_audio_system::background;
     std::map<std::string, SoundInfo> proxy_audio_system::VO;
+    std::map<std::string, std::pair<bool, SoundInfo*>> proxy_audio_system::Queue;
 
     std::map<std::string, SoundInfo*> proxy_audio_system::all_sounds;
     //std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events{};
@@ -475,6 +499,7 @@ namespace TDS
         background.clear();
         VO.clear();
         all_sounds.clear();
+        Queue.clear();
 
         load_all_audio_files();
     }
@@ -686,6 +711,127 @@ namespace TDS
         }
 
     DoNe:;
+    }
+
+    SoundInfo* proxy_audio_system::find_sound_info(std::string str)
+    {
+        for (auto& temp : music)
+        {
+            if (temp.first == str)
+            {
+                return &temp.second;
+            }
+        }
+        for (auto& temp : background)
+        {
+            if (temp.first == str)
+            {
+                return &temp.second;
+            }
+        }
+        for (auto& temp : SFX)
+        {
+            if (temp.first == str)
+            {
+                return &temp.second;
+            }
+        }
+        for (auto& temp : VO)
+        {
+            if (temp.first == str)
+            {
+                return &temp.second;
+            }
+        }
+
+        return nullptr;
+    }
+
+    void proxy_audio_system::Add_to_Queue(std::string str)
+    {
+        Queue[str] = std::make_pair(false, find_sound_info(str));
+    }
+
+    void proxy_audio_system::Remove_from_Queue(std::string str)
+    {
+        Queue.erase(str);
+    }
+
+    void proxy_audio_system::Play_queue()
+    {
+        for (std::map<std::string, std::pair<bool, SoundInfo*>>::iterator it = Queue.begin(); it != Queue.end();)
+        {
+            if (it->second.second->getState() == SOUND_PLAYING)
+            {
+                aud_instance->soundFinished(*it->second.second);
+            }
+            else if (it->second.first)
+            {
+                Remove_from_Queue(it++->first);
+                if (Queue.size() == 0)
+                {
+                    break;
+                }
+                goto PLAY_THIS;
+            }
+            else
+            {
+                PLAY_THIS:
+                aud_instance->playSound(*it->second.second);
+                it->second.first = true;
+            }
+        }
+    }
+
+    void proxy_audio_system::Clear_queue()
+    {
+        Queue.clear();
+    }
+
+    bool proxy_audio_system::checkifdone(std::string str)
+    {
+        bool check{ false };
+
+        for (auto& temp : background)
+        {
+            if (strstr(temp.first.c_str(), str.c_str()))
+            {
+                aud_instance->soundFinished(temp.second);
+                check = (temp.second.getState() == SOUND_LOADED) ? true : false;
+                goto DoNe;
+            }
+        }
+        for (auto& temp : music)
+        {
+            if (strstr(temp.first.c_str(), str.c_str()))
+            {
+                aud_instance->soundFinished(temp.second);
+                check = (temp.second.getState() == SOUND_LOADED) ? true : false;
+                goto DoNe;
+            }
+        }
+        for (auto& temp : SFX)
+        {
+            if (strstr(temp.first.c_str(), str.c_str()))
+            {
+                aud_instance->soundFinished(temp.second);
+                check = (temp.second.getState() == SOUND_LOADED) ? true : false;
+                goto DoNe;
+            }
+        }
+        for (auto& temp : VO)
+        {
+            if (strstr(temp.first.c_str(), str.c_str()))
+            {
+                aud_instance->soundFinished(temp.second);
+                check = (temp.second.getState() == SOUND_LOADED) ? true : false;
+                goto DoNe;
+            }
+        }
+    
+        DoNe:
+
+        return check;
     }
     
     /*void proxy_audio_system::audio_event_play(SoundInfo& soundInfo)
