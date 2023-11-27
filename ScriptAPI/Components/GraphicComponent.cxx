@@ -20,7 +20,7 @@ namespace ScriptAPI {
 		float r = Color.X;
 		float g = Color.Y;
 		float b = Color.Z;
-		Color = Vector4(r, g, b, 255);
+		Color = Vector4(r, g, b, value);
 	}
 
 	TDS::EntityID GraphicComponent::GetEntityID() 

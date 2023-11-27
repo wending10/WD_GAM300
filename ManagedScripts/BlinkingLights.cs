@@ -4,34 +4,45 @@ using System;
 
 public class BlinkingLights : Script
 {
+    float OriginalIntensity;
     [SerializeField]
     public bool IsOn;
-    float counter;
+    [SerializeField]
+    float timingcounter;
+    [SerializeField]
+    int flickercount;
     public override void Awake()
     {
         IsOn = true;
-        counter = 0;
+        timingcounter = 0;
+        OriginalIntensity = (float)gameObject.GetComponent<GraphicComponent>().getColourAlpha();
+        flickercount = 0;
     }
 
     public override void Update()
     {
         //GameObjectScriptFind() use this to find the name of the sensor to turn of the light
-        
-        Console.WriteLine((float)gameObject.GetComponent<GraphicComponent>().getColourAlpha());
-        //Console.WriteLine(gameObject.GetEntityID());
-        
-        counter += Time.deltaTime;
-        if (counter > 5) {
+        //Console.WriteLine(OriginalIntensity);
+        //Console.WriteLine((float)gameObject.GetComponent<GraphicComponent>().getColourAlpha());
+        timingcounter += Time.deltaTime;
+        if (timingcounter > 1.0f)
+        {
             IsOn = !IsOn;
-            counter = 0;
+            timingcounter = 0.0f;
+            flickercount++;
         }
-        //if (!IsOn)
-        //{
-        //    gameObject.GetComponent<GraphicComponent>().SetColourAlpha(0);
-        //}
-        //if (IsOn) 
-        //{
-        //    gameObject.GetComponent<GraphicComponent>().SetColourAlpha(OriginalIntensity);
-        //}
+
+        if (flickercount > 5) 
+            IsOn = false;
+
+        if (!IsOn)
+        {
+            gameObject.GetComponent<GraphicComponent>().SetColourAlpha(0.0f);
+        }
+        else
+        {
+            gameObject.GetComponent<GraphicComponent>().SetColourAlpha(OriginalIntensity);
+
+        }
     }
 }
