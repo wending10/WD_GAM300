@@ -108,7 +108,6 @@ public class GhostMovement : Script
         //List<GameObject> test = MultipleGameObjectScriptFind("Waypoint");
         //MultipleGameObjectScriptFind("Waypoint");
         Vector3 pos = gameObject.GetComponent<TransformComponent>().GetPosition();
-
         //Console.WriteLine(playerPos.X + " " + playerPos.Y + " " + playerPos.Z);
         //Vector3 playerPos = player.GetComponent<TransformComponent>().GetPosition();
         deltaTime += 0.01f; //i need help syncing with game time
@@ -160,7 +159,6 @@ public class GhostMovement : Script
             //pos.X = updatePos.X;
             //pos.Z = updatePos.Z;
         }
-
 
         // pos.X = startingX + patrolRadius * (float)Math.Cos(angle);
         // pos.Z = startingZ + patrolRadius * (float)Math.Sin(angle);
