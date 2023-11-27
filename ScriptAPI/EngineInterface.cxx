@@ -974,6 +974,7 @@ namespace ScriptAPI
 
         if (currentFieldArray == nullptr)
         {
+            Console::WriteLine("right...");
             return;
         }
 
