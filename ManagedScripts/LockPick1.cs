@@ -148,7 +148,7 @@ public class LockPick1 : Script
             float lockLerp = Mathf.LerpAngle(toDegree(innerLock.GetRotation().Z), lockRotation, Time.deltaTime * lockSpeed);
             innerLock.SetRotation(new Vector3(0, 0, toRadians(lockLerp)));
 
-            if (lockLerp >= maxRotation - 1)
+            if (!movePick && toDegree(lockLerp) >= maxRotation - 1) // at 99 (100 means correct spot)
             {
                 if (toDegree(eulerAngle) < Mathf.Abs(unlockRange.Y) && toDegree(eulerAngle) > Mathf.Abs(unlockRange.X)) // Means unlocked?
                 {
@@ -197,6 +197,7 @@ public class LockPick1 : Script
                     if (deduct == true)
                     {
                         numOfTries -= 1;
+                        movePick = true;
                         deduct = false;
                     }
 

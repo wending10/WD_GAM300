@@ -118,4 +118,11 @@ namespace ScriptAPI
 
 		TDS::EntityID entityID;
 	};
+
+	public ref class Audio
+	{
+	public:
+		//Pass in the audio file name without the extensions
+		static void play(System::String^ pathing);
+	};
 }
