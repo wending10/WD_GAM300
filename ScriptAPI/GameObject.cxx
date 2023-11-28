@@ -109,7 +109,6 @@ namespace ScriptAPI
 		{
 			return safe_cast<T>(GetGraphicComponent());
 		}
-
 		Object^ toReturn = EngineInterface::GetScriptByEntityID(entityID, type->FullName);
 		return (T)toReturn;
 	}
