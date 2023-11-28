@@ -42,7 +42,7 @@ namespace ScriptAPI
 	{
 		return AudioComponent(entityID);
 	}
-
+	
 	GraphicComponent GameObject::GetGraphicComponent()
 	{
 		return GraphicComponent(entityID);
@@ -104,7 +104,6 @@ namespace ScriptAPI
 		else if (type == AudioComponent::typeid)
 		{
 			return safe_cast<T>(GetAudioComponent());
-
 		}
 		else if (type == GraphicComponent::typeid)
 		{
