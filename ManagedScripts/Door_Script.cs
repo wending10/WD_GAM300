@@ -6,7 +6,6 @@ public class Door_Script : Script
     //public GameObject _InteractUI;
     //public Animator doorAnimator;
     public GameObject playerCamera;
-    public FPS_Controller_Script playerController;
     public GameObject lockpickGroup;
     //public LockPick1 lockpickScript;
     //public bool doorState = false; //false is closed, true is open
@@ -43,12 +42,11 @@ public class Door_Script : Script
                 }
                 else // locked
                 {
-                    // Turn off player camera
+                    // Turn off player
                     playerCamera.SetActive(playerCamera.GetEntityID(), false);
-                    // Turn off FPS script
-                    playerController.is_Enabled = false;
                     // Turn on lockpick group
                     lockpickGroup.SetActive(lockpickGroup.GetEntityID(), true);
+                    GraphicsManagerWrapper.ToggleViewFrom2D(true);
                 }
                 //else if (chainedShut)
                 //{

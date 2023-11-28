@@ -124,5 +124,6 @@ namespace ScriptAPI
 	public:
 		//Pass in the audio file name without the extensions
 		static void play(System::String^ pathing);
+		static void stop(System::String^ pathing);
 	};
 }
