@@ -83,5 +83,16 @@ public class MilestoneScript : Script
                 }
             }
         }
+
+        if (scriptEventtimer > 15.0f)
+        {
+            monster.SetActive(monster.GetEntityID(), true);
+            voClip.play(soundEffectstring[1]);
+        }
+
+        if (scriptEventtimer > 16.0f)
+        {
+            monster.SetActive(monster.GetEntityID(), false);
+        }
     }
 }

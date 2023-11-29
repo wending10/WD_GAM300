@@ -1,10 +1,10 @@
 {
     "Archetype Sizes": {
         "11000010000010": {
-            "0": 816,
+            "0": 672,
             "1": 1200,
-            "6": 1584,
-            "12": 2160
+            "6": 1344,
+            "12": 1920
         }
     },
     "Entity Data": {
@@ -494,7 +494,7 @@
                     "Bool": true
                 },
                 "is_Awake": {
-                    "Bool": false
+                    "Bool": true
                 },
                 "is_Start": {
                     "Bool": true
