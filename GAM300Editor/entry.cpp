@@ -7,11 +7,12 @@
 //#include "application.h"
 //#include "ecs/ecs.h"
 
-//TDS::ECS TDS::ecs;
 
 #if _DEBUG
 #pragma comment( linker, "/subsystem:console" )
-int main(int argc, const char** argv) {
+int main(int argc, const char** argv) 
+{
+
     (void)argc, (void)argv;
     return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), 0);
 }
@@ -37,6 +38,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     g_Application = new TDS::Application(hInstance, nCmdShow, classname, WndProc);
     g_Application->Initialize();
+    g_Application->Run();
     g_Application->Update();
     g_Application->~Application();
 

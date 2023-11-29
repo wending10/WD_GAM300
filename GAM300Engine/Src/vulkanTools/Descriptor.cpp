@@ -169,6 +169,6 @@ namespace TDS {
 	void DescriptorWriter::OverWrite(VkDescriptorSet& set) {
 		for (auto& write : m_vWrites)
 			write.dstSet = set;
-		vkUpdateDescriptorSets(m_Pool.m_Instance.getVkLogicalDevice(), m_vWrites.size(), m_vWrites.data(), 0, nullptr);
+		vkUpdateDescriptorSets(m_Pool.m_Instance.getVkLogicalDevice(), static_cast<uint32_t>(m_vWrites.size()), m_vWrites.data(), 0, nullptr);
 	}
 }

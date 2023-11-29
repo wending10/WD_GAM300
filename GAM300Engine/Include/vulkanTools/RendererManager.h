@@ -22,22 +22,30 @@
 #include "FrameInfo.h"
 namespace TDS {
 
-	class DLL_API RendererManager {
+	class RendererManager {
 	public:
 		struct SimplePushConstantData {
 			Mat4 ModelMat{ 1.f };
 			Mat4 NormalMat{ 1.f };
 		};
 		//Constructor and Destructor
-		RendererManager(VulkanInstance& m_Instance, VkRenderPass RenderPass, VkDescriptorSetLayout globalSetlayout);
-		~RendererManager();
+		DLL_API RendererManager(VulkanInstance& m_Instance, VkRenderPass RenderPass, VkDescriptorSetLayout globalSetlayout);
+		DLL_API ~RendererManager();
 
 		//No copy constructor
 		RendererManager(const RendererManager&) = delete;
 		RendererManager& operator=(const RendererManager&) = delete;
 
 		//draws the current frame
-		void draw(FrameInfo& frameinfo);
+		DLL_API void draw(FrameInfo& frameinfo);
+		inline Pipeline& getPipeline()
+		{
+			return *m_Pipeline;
+		}
+		inline VkPipelineLayout& getpipelinelayout()
+		{
+			return m_PipelineLayout;
+		}
 	private:
 		//helper function
 		void createPipelineLayout(VkDescriptorSetLayout globalsetlayout);

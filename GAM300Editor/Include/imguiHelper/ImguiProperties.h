@@ -25,6 +25,11 @@ namespace TDS
 		Properties();
 
 		/*!*************************************************************************
+		This function is the init function for Properties panel
+		****************************************************************************/
+		void init() {}
+
+		/*!*************************************************************************
 		This function is the update function for Properties panel
 		****************************************************************************/
 		void update();
@@ -34,7 +39,10 @@ namespace TDS
 		****************************************************************************/
 		void ImguiComponentDisplay(std::string componentName, IComponent* componentBase);
 
+		std::vector<TDS::ScriptValues>(*getScriptVariables)(EntityID entityID, std::string scriptName);
+
 	private:
+		ImVec2 popupPosition;
 	};
 }
 

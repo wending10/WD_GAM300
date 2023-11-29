@@ -9,7 +9,8 @@
 ****************************************************************************
 ***/
 
-#pragma once
+#ifndef AUDIOENGINE_H_
+#define AUDIOENGINE_H_
 
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod.hpp>
@@ -18,8 +19,11 @@
 #include <vector>
 #include <list>
 #include <map>
-#include "SoundInfo.h"
+#include <filesystem>
+#include "components/SoundInfo.h"
 #include "dotnet/ImportExport.h"
+
+#include "ecs/ecs.h"
 
 namespace TDS
 {
@@ -37,29 +41,50 @@ namespace TDS
          * Deals with all FMOD calls so that FMOD-specific code does not need to be used outside this class.
          * Only one AudioEngine should be constructed for an application.
          */
-        class DLL_API AudioEngine
+        class AudioEngine
         {
         public:
             /**
-             * Default AudioEngine constructor.
-             * AudioEngine::init() must be called before using the Audio Engine
+             * Remove AudioEngine copy constructor.
+             * It is the ensure singleton
              */
-            AudioEngine();
+            DLL_API  AudioEngine(const AudioEngine& rhs) = delete;
+
+            /**
+            * Destructor for Audio Engine
+            */
+            DLL_API  ~AudioEngine();
+
+            /**
+             * Remove AudioEngine operator= copy constructor.
+             * It is the ensure singleton
+             */
+            DLL_API  void operator=(const AudioEngine& rhs) = delete;
 
             /**
              * Initializes Audio Engine Studio and Core systems to default values.
              */
-            void init();
+            DLL_API void init();
 
             /**
              * Method that is called to deactivate the audio engine after use.
              */
-            void deactivate();
+            DLL_API  void deactivate();
+
+            /**
+             * Returns a pointer to an instance of AudioEngine.
+             */
+            DLL_API  static AudioEngine* get_audioengine_instance();
+
+            /**
+            * Creates a unique ptr for anyone who wants to use audio engine
+            */
+            //DLL_API  std::unique_ptr<AudioEngine> get_audioengine_unique(std::unique_ptr<AudioEngine> ptr);
 
             /**
             * Method which should be called every frame of the game loop
             */
-            void update();
+            DLL_API  void update();
 
             /**
              * Loads a sound from disk using provided settings
@@ -67,7 +92,7 @@ namespace TDS
              * Only reads the audio file and loads into the audio engine
              * if the sound file has already been added to the cache
              */
-            void loadSound(SoundInfo& soundInfo);
+            DLL_API  void loadSound(SoundInfo& soundInfo);
 
             /**
             * Plays a sound file using FMOD's low level audio system. If the sound file has not been
@@ -76,12 +101,20 @@ namespace TDS
             * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
             *                 or any other FMOD-supported audio format)
             */
-            int playSound(SoundInfo& soundInfo);
+            DLL_API  int playSound(SoundInfo& soundInfo);
+
+            /**
+            * Pause a sound file using FMOD's low level audio system.
+            *
+            * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
+            *                 or any other FMOD-supported audio format)
+            */
+            DLL_API void pauseSound(SoundInfo& soundInfo);
 
             /**
              * Stops a looping sound if it's currently playing.
              */
-            void stopSound(SoundInfo& soundInfo);
+            DLL_API  void stopSound(SoundInfo& soundInfo);
 
             /**
              * Method that updates the volume of a soundloop that is playing. This can be used to create audio 'fades'
@@ -89,7 +122,7 @@ namespace TDS
              * @param fadeSampleLength the length in samples of the intended volume sample. If less than 64 samples, the default
              *                         FMOD fade out is used
              */
-            void updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, unsigned int fadeSampleLength = 0);
+            DLL_API  void updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, unsigned int fadeSampleLength = 0);
 
 
             /**
@@ -97,13 +130,17 @@ namespace TDS
             * The SoundInfo object's position coordinates will be used for the new sound position, so
             * SoundInfo::set3DCoords(x,y,z) should be called before this method to set the new desired location.
             */
-            void update3DSoundPosition(SoundInfo soundInfo);
+            DLL_API  void update3DSoundPosition(SoundInfo soundInfo);
 
             /**
-             * Checks if a looping sound is playing.
+             * Checks if a sound is playing.
              */
-            bool soundIsPlaying(SoundInfo soundInfo);
+            DLL_API  bool soundIsPlaying(SoundInfo soundInfo);
 
+            /**
+             * Checks if a sound has finished playing.
+             */
+            DLL_API  void soundFinished(SoundInfo& soudnInfo);
 
             /**
              * Sets the position of the listener in the 3D scene.
@@ -111,7 +148,7 @@ namespace TDS
              * @param forwardX, forwardY, forwardZ - forward angle character is looking in
              * @param upX, upY, upZ - up which must be perpendicular to forward vector
              */
-            void set3DListenerPosition(float posX, float posY, float posZ,
+            DLL_API  void set3DListenerPosition(float posX, float posY, float posZ,
                 float forwardX, float forwardY, float forwardZ,
                 float upX, float upY, float upZ);
 
@@ -119,88 +156,107 @@ namespace TDS
             * Utility method that returns the length of a SoundInfo's audio file in milliseconds
             * If the sound hasn't been loaded, returns 0
             */
-            unsigned int getSoundLengthInMS(SoundInfo soundInfo);
+            DLL_API  unsigned int getSoundLengthInMS(SoundInfo soundInfo);
 
             /**
              * Loads an FMOD Studio soundbank
              * TODO Fix
              */
-            void loadFMODStudioBank(const char* filePath);
+            DLL_API   void loadFMODStudioBank(const char* filePath);
 
             /**
              * Loads an FMOD Studio Event. The Soundbank that this event is in must have been loaded before
              * calling this method.
              * TODO Fix
              */
-            void loadFMODStudioEvent(const char* eventName, std::vector<std::pair<const char*, float>> paramsValues = { });
+            DLL_API   void loadFMODStudioEvent(const char* eventName, std::vector<std::pair<const char*, float>> paramsValues = { });
 
             /**
              * Sets the parameter of an FMOD Soundbank Event Instance.
              */
-            void setFMODEventParamValue(const char* eventName, const char* parameterName, float value);
+            DLL_API  void setFMODEventParamValue(const char* eventName, const char* parameterName, float value);
 
             /**
              * Plays the specified instance of an event
              * TODO support playback of multiple event instances
              * TODO Fix playback
              */
-            void playEvent(const char* eventName, int instanceIndex = 0);
+            DLL_API  void playEvent(const char* eventName, int instanceIndex = 0);
 
             /**
              * Stops the specified instance of an event, if it is playing.
              */
-            void stopEvent(const char* eventName, int instanceIndex = 0);
+            DLL_API   void stopEvent(const char* eventName, int instanceIndex = 0);
 
             /**
              * Sets the volume of an event.
              * @param volume0to1 - volume of the event, from 0 (min vol) to 1 (max vol)
              */
-            void setEventVolume(const char* eventName, float volume0to1 = .75f);
+            DLL_API  void setEventVolume(const char* eventName, float volume0to1 = .75f);
 
             /**
              * Checks if an event is playing.
              */
-            bool eventIsPlaying(const char* eventName, int instance = 0);
+            DLL_API  bool eventIsPlaying(const char* eventName, int instance = 0);
+
+            /**
+            * Mute a sound
+            */
+            DLL_API void mute(SoundInfo& soundInfo);
+
+            /**
+            * Unmute a sound
+            */
+            DLL_API void unmute(SoundInfo& soundInfo);
 
             /**
              * Mutes all sounds for the audio engine
              */
-            void muteAllSounds();
+            DLL_API  void muteAllSounds();
 
             /**
              * Unmutes all sounds for the audio engine
              */
-            void unmuteAllSound();
+            DLL_API   void unmuteAllSound();
 
             /**
              * Returns true if the audio engine is muted, false if not
              */
-            bool isMuted();
+            DLL_API  bool isMuted();
 
             /**
              * Get container of sounds that's loaded
              */
-            std::map<unsigned int, FMOD::Sound*> getSoundContainer();
+            DLL_API std::map<unsigned int, FMOD::Sound*> getSoundContainer();
 
             /**
              * Get container of banks that's loaded
              */
-            std::map<std::string, FMOD::Studio::Bank*> getBankContainer();
+            DLL_API  std::map<std::string, FMOD::Studio::Bank*> getBankContainer();
 
             /**
              * Get container of event description that's loaded
              */
-            std::map<std::string, FMOD::Studio::EventDescription*> getEventDescriptionContainer();
+            DLL_API  std::map<std::string, FMOD::Studio::EventDescription*> getEventDescriptionContainer();
 
             /**
              * Get container of event instances that's loaded
              */
-            std::map<std::string, FMOD::Studio::EventInstance*> getEventInstanceContainer();
+            DLL_API   std::map<std::string, FMOD::Studio::EventInstance*> getEventInstanceContainer();
 
             // The audio sampling rate of the audio engine
-            static const int AUDIO_SAMPLE_RATE = 44100;
+            DLL_API  static const int AUDIO_SAMPLE_RATE = 44100;
 
         private:
+            /**
+             * Default AudioEngine constructor.
+             * AudioEngine::init() must be called before using the Audio Engine
+             */
+            DLL_API  AudioEngine();
+
+            //Instance of AudioEngine
+            static AudioEngine* audioE_instance;
+
             /**
              * Checks if a sound file is in the soundCache
              */
@@ -275,6 +331,13 @@ namespace TDS
             std::map<unsigned int, FMOD::Channel*> loopsPlaying{};
 
             /*
+             * Map which stores the current playback channels of any playing sound
+             * Key is the SoundInfo's uniqueKey field.
+             * Value is the FMOD::Channel* the FMOD::Sound* is playing back on.
+             */
+            std::map<unsigned int, FMOD::Channel*> normalPlaying{};
+
+            /*
              * Map which stores the soundbanks loaded with loadFMODStudioBank()
              */
             std::map<std::string, FMOD::Studio::Bank*> soundBanks{};
@@ -288,6 +351,48 @@ namespace TDS
              * Map which stores event instances created during loadFMODStudioEvent()
              */
             std::map<std::string, FMOD::Studio::EventInstance*> eventInstances{};
-        };
-    }
-}
+        }; //end of AudioEngine
+    } //end of AudioWerks
+
+    class DLL_API proxy_audio_system
+    {
+    public:
+        static void audio_system_init();
+        static void audio_system_update(const float dt, const std::vector<EntityID>& entities, SoundInfo* soundInfo);
+
+        //static void audio_event_play(SoundInfo& soundInfo);
+        static void audio_event_init(SoundInfo* container);
+        static void audio_event_update();
+
+        static void load_all_audio_files();
+        static std::vector<std::filesystem::path> go_deeper(std::filesystem::path f_path);
+
+        static void ScriptPlay(std::string pathing);
+        static void ScriptPause(std::string pathing);
+        static void ScriptStop(std::string pathing);
+
+        static SoundInfo* find_sound_info(std::string str);
+        static void Add_to_Queue(std::string str = "");
+        static void Remove_from_Queue(std::string str);
+        static void Play_queue();
+        static void Clear_queue();
+
+        static bool checkifdone(std::string str);
+
+    private:
+        static AudioWerks::AudioEngine* aud_instance;
+
+        static int totalNumClips;
+
+        static std::map<std::string, SoundInfo> music;
+        static std::map<std::string, SoundInfo> SFX;
+        static std::map<std::string, SoundInfo> background;
+        static std::map<std::string, SoundInfo> VO;
+        static std::map<std::string, std::pair<bool, SoundInfo*>> Queue;
+
+        static std::map<std::string, SoundInfo*> all_sounds;
+        //static std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events;
+    }; //end of proxy_audio_system
+} //end of TDS
+
+#endif

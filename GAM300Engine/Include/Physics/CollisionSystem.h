@@ -11,9 +11,11 @@
 #define COLLISIONSYSTEM_H
 
 #include "ecs/ecs.h"
-#include "components/collider.h"
+#include "components/sphereCollider.h"
+#include "components/boxCollider.h"
+#include "components/capsuleCollider.h"
 #include "components/transform.h"
-#include "components/rigidBody.h"
+#include "components/GraphicsComponent.h"
 #include "dotnet/ImportExport.h"
 
 namespace TDS
@@ -25,18 +27,10 @@ namespace TDS
 		 * Collision System Init and Update (Will be used by the ECS)
 		 ***************************************************************************/
 		static void CollisionSystemInit();
-		static void CollisionSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, RigidBody* _rigidbody, Collider* _collider);
+		// Main purpose is to get the offset value from each collider and pass to graphics for render
+		static void CollisionSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, GraphicsComponent* _graphics);
 		
 	private:
-		/*!*************************************************************************
-		 * Sphere to Sphere Collision Check
-		 ***************************************************************************/
-		static bool SphereSphereCollision(Transform& trans1, RigidBody& body1, Collider& collider1, Transform& trans2, RigidBody& body2, Collider& collider2);
-		/*!*************************************************************************
-		 * Sphere to Sphere Collision Response
-		 ***************************************************************************/
-		static void SphereSphereResolution(Transform& trans1, RigidBody& body1, Transform& trans2, RigidBody& body2);
-
 	};
 }
 

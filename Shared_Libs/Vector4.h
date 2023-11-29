@@ -19,7 +19,7 @@ public:
     Vec4(const Vec2& v, float newZ, float newW); // Constructor with Vec2 and two values
     Vec4(const Vec3& v, float newW); // Constructor with Vec4 and one value
     Vec4(const float* newX, const float* newY, const float* newZ, const float* newW); // Constructor with four pointers
-    ~Vec4();
+    //~Vec4();
 
     // Static Properties
     static Vec4 one();
@@ -86,18 +86,18 @@ public:
     float z;
     float w;
 	
-    struct Color
-    {
-		float r;
-		float g;
-		float b;
-		float a;
-		Color() : r(0), g(0), b(0), a(1) {}
+ //   struct Color
+ //   {
+	//	float r;
+	//	float g;
+	//	float b;
+	//	float a;
+	//	Color() : r(0), g(0), b(0), a(1) {}
 
-        Color(float _r, float _g, float _b, float _a)
-                : r(_r), g(_g), b(_b), a(_a) {}
-    };
-	Color GetColor() { return Color(x, y, z, w); }
+ //       Color(float _r, float _g, float _b, float _a)
+ //               : r(_r), g(_g), b(_b), a(_a) {}
+ //   };
+	//Color GetColor() { return Color(x, y, z, w); }
 
     static constexpr float kEpsilon = 0.00001f;
     static constexpr float kEpsilonNormalSqrt = 1e-15f;
@@ -123,6 +123,8 @@ bool operator==(const Vec4& v1, const Vec4& v2);
 bool operator!=(const Vec4& v1, const Vec4& v2);
 
 std::ostream& operator<<(std::ostream& os, const Vec4& v);
+
+DLL_API Vec4 floatsToVec4(float x, float y, float z, float w);
 
 } 
 

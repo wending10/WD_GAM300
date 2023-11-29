@@ -4,6 +4,7 @@
 #include "imguiHelper/ImguiHierarchy.h"
 #include "imguiHelper/ImguiProperties.h"
 #include "imguiHelper/ImguiAssetBrowser.h"
+#include "imguiHelper/ImguiScriptBrowser.h"
 #include "imguiHelper/ImguiAudio.h"
 #include "imguiHelper/ImguiBehaviourTree.h"
 
@@ -11,6 +12,8 @@
 #include "imguiHelper/ImguiToolbar.h"
 #include "imguiHelper/ImguiProfiler.h"
 #include "ImguiHelper/ImguiFunctionHelper.h"
+#include "imguiHelper/ImguiScene.h"
+#include "imguiHelper/ImguiGamePlayScene.h"
 
 namespace TDS
 {
@@ -28,10 +31,13 @@ namespace TDS
 			m_instance->panels[PanelTypes::ASSETBROWSER] = std::make_shared<AssetBrowser>();
 			m_instance->panels[PanelTypes::AUDIOLER] = std::make_shared<AudioImgui>();
 			m_instance->panels[PanelTypes::SCENEBROWSER] = std::make_shared<SceneBrowser>();
+			m_instance->panels[PanelTypes::SCRIPTBROWSER] = std::make_shared<ScriptBrowser>();
 			m_instance->panels[PanelTypes::CONSOLE] = std::make_shared<EditorConsole>();
 			m_instance->panels[PanelTypes::TOOLBAR] = std::make_shared<Toolbar>();
 			m_instance->panels[PanelTypes::PROFILER] = std::make_shared<Profiler>();
 			m_instance->panels[PanelTypes::BEHAVIOURTREEEDITOR] = std::make_shared<BehaviourTreePanel>();
+			m_instance->panels[PanelTypes::SCENE] = std::make_shared<EditorScene>();
+			m_instance->panels[PanelTypes::GAMEPLAYSCENE] = std::make_shared<GamePlayScene>();
 		}
 		return m_instance;
 	}
@@ -51,6 +57,14 @@ namespace TDS
 
 		ImGui_ImplVulkan_Init(&initinfo, RenderPass);
 		ImGui_ImplWin32_Init(inHwnd);
+		Profiler::getVulkanInfo(initinfo);
+
+		auto& levelEditorManagerInstance = LevelEditorManager::GetInstance();
+
+		for (auto panel : levelEditorManagerInstance->panels)
+		{
+			panel.second->init();
+		}
 	}
 
 	void imguiHelper::CustomDarkTheme()
@@ -175,8 +189,16 @@ namespace TDS
 		// Panels
 		for (auto currentPanel : LevelEditorManager::GetInstance()->panels)
 		{
+			if (currentPanel.second->makeFocus)
+			{
+				ImGui::SetNextWindowFocus();
+				currentPanel.second->makeFocus = false;
+			}
 			//ImGui::GetStyle().WindowPadding = currentPanel.second->windowPadding;
-
+			if (currentPanel.first == PanelTypes::SCENE)
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0.f,0.f });
+			}
 			if (ImGui::Begin(currentPanel.second->panelTitle.c_str(), (bool*)0, currentPanel.second->flags))
 			{
 				if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
@@ -187,10 +209,15 @@ namespace TDS
 				{
 					currentPanel.second->rightClick = false;
 				}
-
+			
 				currentPanel.second->update();
 			}
 			ImGui::End();
+			if (currentPanel.first == PanelTypes::SCENE)
+			{
+				ImGui::PopStyleVar();
+			}
+
 		}
 	}
 
@@ -203,6 +230,8 @@ namespace TDS
 			io.DisplaySize = pViewPort->Size;
 		}
 		ImGui::Render();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
 		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), FCB);
 	}
 
@@ -211,111 +240,6 @@ namespace TDS
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
-	}
-
-	/*!*************************************************************************
-	This function is a helper function for draw TEXT variables
-	****************************************************************************/
-	std::string ImguiTextInput(std::string variableName, std::string textVariable)
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text(variableName.c_str());
-
-		ImGui::TableNextColumn();
-		char temp[100];
-		strcpy_s(temp, textVariable.c_str());
-		ImGui::InputText(("##" + variableName).c_str(), temp, 100);
-
-		return std::string(temp);
-	}
-
-	/*!*************************************************************************
-	This function is a helper function for draw BOOl variables
-	****************************************************************************/
-	bool ImguiBoolInput(std::string variableName, bool boolVariable)
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text(variableName.c_str());
-
-		ImGui::TableNextColumn();
-		ImGui::Checkbox(("##" + variableName).c_str(), &boolVariable);
-
-		return boolVariable;
-	}
-
-	/*!*************************************************************************
-	This function is a helper function for draw INT variables
-	****************************************************************************/
-	int ImguiIntInput(std::string variableName, int intVariable, float speed, int min, int max)
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text(variableName.c_str());
-
-		ImGui::TableNextColumn();
-		if (max > 0)
-		{
-			ImGui::DragInt(("##" + variableName).c_str(), &intVariable, speed, min);
-		}
-		else
-		{
-			ImGui::DragInt(("##" + variableName).c_str(), &intVariable, speed, min, max);
-		}
-
-		return intVariable;
-	}
-
-	/*!*************************************************************************
-	This function is a helper function for draw FLOAT variables
-	****************************************************************************/
-	float ImguiFloatInput(std::string variableName, float floatVariable, float speed, float min, float max)
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text(variableName.c_str());
-
-		ImGui::TableNextColumn();
-		ImGui::DragFloat(("##" + variableName).c_str(), &floatVariable, speed, min, max);
-
-		return floatVariable;
-	}
-
-	/*!*************************************************************************
-	This function is a helper function for draw VEC2 variables
-	****************************************************************************/
-	Vec2 ImguiVec2Input(std::string variableName, Vec2 Vec2Variable)
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text(variableName.c_str());
-
-		ImGui::TableNextColumn();
-		float temp[2]{ Vec2Variable.x, Vec2Variable.y };
-		ImGui::DragFloat2(("##" + variableName).c_str(), temp, 1.0f);
-		Vec2Variable.x = temp[0];
-		Vec2Variable.y = temp[1];
-
-		return Vec2Variable;
-	}
-
-	/*!*************************************************************************
-	This function is a helper function for draw VEC3 variables
-	****************************************************************************/
-	Vec3 ImguiVec3Input(std::string variableName, Vec3 Vec3Variable)
-	{
-		ImGui::TableNextRow();
-		ImGui::TableNextColumn();
-		ImGui::Text(variableName.c_str());
-
-		ImGui::TableNextColumn();
-		float temp[3]{ Vec3Variable.x, Vec3Variable.y, Vec3Variable.z };
-		ImGui::DragFloat3(("##" + variableName).c_str(), temp, 1.0f);
-		Vec3Variable.x = temp[0];
-		Vec3Variable.y = temp[1];
-		Vec3Variable.z = temp[2];
-
-		return Vec3Variable;
+		AssetBrowser::destroyIcons(); //temp to prevent mem leak
 	}
 }

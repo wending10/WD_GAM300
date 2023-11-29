@@ -42,7 +42,7 @@ class Mat4
        float m30, float m31, float m32, float m33); // constructor with sixteen values
   Mat4(Vec4 v1, Vec4 v2, Vec4 v3, Vec4 v4); // constructor with four vectors
   Mat4(Mat3 m); // constructor with a 3x3 matrix
-  ~Mat4();
+  //~Mat4();
 
   // Static Properties
   static Mat4 identity();
@@ -94,6 +94,12 @@ class Mat4
   static Quat toQuat(Mat4 const& m);
 
   static Mat4 Rotate(const Vec3& axis, float angleDegress);
+
+  static float* Mat4Value_ptr(const Mat4& mat);
+
+
+
+
   // unary arithmetic operators
   Mat4& operator=(const Mat4& var);
   Mat4& operator+=(float value);
@@ -122,6 +128,7 @@ Mat4 operator-(Mat4 const& var1, Mat4 const& var2);
 Mat4 operator*(Mat4 const& var, float const& value);
 Mat4 operator*(float const& value, Mat4 const& var);
 Mat4 operator*(Mat4 const& var1, Mat4 const& var2);
+Vec4 operator*(Mat4 const& mat, Vec4 const& vec);
 Mat4 operator/(Mat4 const& var, float const& value);
 Mat4 operator/(float const& value, Mat4 const& var);
 
@@ -131,6 +138,7 @@ bool operator!=(Mat4 const& var1, Mat4 const& var2);
 
 std::ostream& operator<<(std::ostream& os, const Mat4& m);
 
+DLL_API Vec4 mat4Vec4(Mat4& mat, Vec4& vec);
 }
 
 

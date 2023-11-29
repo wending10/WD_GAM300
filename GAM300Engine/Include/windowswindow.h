@@ -19,32 +19,33 @@
 
 namespace TDS
 {
-	class DLL_API WindowsWin
+	class WindowsWin
 	{
 	public:		//functions
-		WindowsWin(HINSTANCE hInstance, int nCmdShow, const wchar_t* className);
-		~WindowsWin();
+		DLL_API WindowsWin(HINSTANCE hInstance, int nCmdShow, const wchar_t* className);
+		DLL_API ~WindowsWin();
 
-		uint32_t	getWidth()  const noexcept;
-		uint32_t	getHeight() const noexcept;
+		DLL_API uint32_t	getWidth()  const noexcept;
+		DLL_API uint32_t	getHeight() const noexcept;
 
-		void		setWidth(const uint32_t& _value) { m_Width = _value; }
-		void		setHeight(const uint32_t& _value) { m_Height = _value; }
+		DLL_API void		setWidth(const uint32_t& _value) { m_Width = _value; }
+		DLL_API void		setHeight(const uint32_t& _value) { m_Height = _value; }
 
 
-		bool		createWindow(const WNDPROC& wndproc, int _width, int _height);
-		bool		processInputEvent();
+		DLL_API bool		createWindow(const WNDPROC& wndproc, int _width, int _height);
+		DLL_API bool		processInputEvent();
 
-		HWND		getWindowHandler() const { return m_handleWindows; }
-		HINSTANCE	getHInstance()	   const { return m_hInstance; }
+		DLL_API HWND		getWindowHandler() const { return m_handleWindows; }
+		DLL_API HINSTANCE	getHInstance()	   const { return m_hInstance; }
 
-		bool		wasWindowResized() { return m_FrameBufferResize; }
-		void		resetResizeFlag() { m_FrameBufferResize = false; }
-		void		WindowIsResizing(bool resize) { m_FrameBufferResize = resize; }
+		DLL_API bool		wasWindowResized() { return m_FrameBufferResize; }
+		DLL_API void		resetResizeFlag() { m_FrameBufferResize = false; }
+		DLL_API void		WindowIsResizing(bool resize) { m_FrameBufferResize = resize; }
+		DLL_API bool		GetWindowPos(int& xPos, int& yPos) const;
 
 	public:		//variables
 
-		struct Settings //will set to private in the future for now no optimization
+		struct DLL_API Settings //will set to private in the future for now no optimization
 		{
 			bool validation{ true };
 			bool fullscreen{ false };

@@ -10,37 +10,46 @@
 
 #include "components/nameTag.h"
 
+RTTR_REGISTRATION
+{
+	using namespace TDS;
+
+	rttr::registration::class_<NameTag>("Name Tag")
+		.property("Name", &NameTag::GetName, &NameTag::SetName)
+		.property("Tag", &NameTag::GetTag, &NameTag::SetTag)
+		.property("IsActive", &NameTag::GetIsActive, &NameTag::SetIsActive)
+		.property("HierarchyParent", &NameTag::GetHierarchyParent, &NameTag::SetHierarchyParent)
+		.property("HierarchyIndex", &NameTag::GetHierarchyIndex, &NameTag::SetHierarchyIndex)
+		.property("HierarchyChildren", &NameTag::mHierarchyChildren);
+}
+
 namespace TDS
 {
 	/*!*************************************************************************
 	Initializes the NameTag component when created
 	****************************************************************************/
-	NameTag::NameTag() : mName("New Entity") 
+	NameTag::NameTag() : mName				("New Entity"),
+						 mTag				(""),
+						 mIsActive			(true),
+						 mHierarchyParent	(0),
+						 mHierarchyIndex	(0),
+						 mHierarchyChildren	({})
 	{ }
 
 	/*!*************************************************************************
 	Initializes the NameTag component when created, given another NameTag
 	component to move (for ECS)
 	****************************************************************************/
-	NameTag::NameTag(NameTag&& toMove) noexcept : mName(toMove.mName)
+	NameTag::NameTag(NameTag&& toMove) noexcept : mName					(toMove.mName),
+												  mTag					(toMove.mTag),
+												  mIsActive				(toMove.mIsActive),
+												  mHierarchyParent		(toMove.mHierarchyParent),
+												  mHierarchyIndex		(toMove.mHierarchyIndex),
+												  mHierarchyChildren	(toMove.mHierarchyChildren)
 	{ }
 
-	/*!*************************************************************************
-	Deserializes the NameTag component
-	****************************************************************************/
-	bool NameTag::Deserialize(const rapidjson::Value& obj)
+	NameTag* GetNameTag(EntityID entityID)
 	{
-		mName = obj["name"].GetString();
-		return true;
-	}
-
-	/*!*************************************************************************
-	Serializes the NameTag component
-	****************************************************************************/
-	bool NameTag::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
-	{
-		writer->Key("name");
-		writer->String(mName.c_str());
-		return true;
+		return ecs.getComponent<NameTag>(entityID);
 	}
 }

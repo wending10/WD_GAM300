@@ -1,6 +1,7 @@
 #include "imguiHelper/ImguiConsole.h"
 #include "imguiHelper/ImguiAssetBrowser.h"
 #include "Logger/Logger.h"
+#include <windows.h>
 
 namespace TDS
 {
@@ -10,7 +11,7 @@ namespace TDS
 		//selectedFolder = -1;
 		//renameCheck = false;
 
-		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
+		flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiDockNodeFlags_AutoHideTabBar;
 		panelTitle = "Console";
 		windowPadding = ImVec2(0.f, 0.f);
 		AddLog("-------------- ImGui Console Start --------------");
@@ -61,8 +62,9 @@ namespace TDS
 		for (int i = 0; i < Items.Size; i++)
 		{
 			const char* item = Items[i];
+
 			//if (!Filter.PassFilter(item))
-			continue;
+			//continue;
 
 			// Normally you would store more information in your item (e.g. make Items[] an array of structure, store color/type etc.)
 			bool pop_color = false;
@@ -79,35 +81,35 @@ namespace TDS
 		ImGui::SetScrollHereY(1.0f);
 		//ScrollToBottom = false;
 
-		for (int i = 0; i < Items.Size; i++) {
-			const char* item = Items[i];
+		//for (int i = 0; i < Items.Size; i++) {
+		//	const char* item = Items[i];
 
-			ImVec4 color;
-			bool   has_color = false;
-			if (strstr(item, "[info]")) {
-				color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-				has_color = true;
-			}
-			else if (strstr(item, "[warning]")) {
-				color = ImVec4(1.0f, 0.8f, 0.0f, 1.0f);
-				has_color = true;
-			}
-			else if (strstr(item, "[error]")) {
-				color = ImVec4(0.8f, 0.2f, 0.0f, 1.0f);
-				has_color = true;
-			}
-			else {
-				color = ImVec4(1.0f, 0.8f, 0.6f, 1.0f);
-				has_color = true;
-			}
-			if (has_color)
-				ImGui::PushStyleColor(ImGuiCol_Text, color);
-			ImGui::TextUnformatted(item);
-			if (has_color)
-				ImGui::PopStyleColor();
-		}
+		//	ImVec4 color;
+		//	bool   has_color = false;
+		//	if (strstr(item, "[info]")) {
+		//		color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		//		has_color = true;
+		//	}
+		//	else if (strstr(item, "[warning]")) {
+		//		color = ImVec4(1.0f, 0.8f, 0.0f, 1.0f);
+		//		has_color = true;
+		//	}
+		//	else if (strstr(item, "[error]")) {
+		//		color = ImVec4(0.8f, 0.2f, 0.0f, 1.0f);
+		//		has_color = true;
+		//	}
+		//	else {
+		//		color = ImVec4(1.0f, 0.8f, 0.6f, 1.0f);
+		//		has_color = true;
+		//	}
+		//	if (has_color)
+		//		ImGui::PushStyleColor(ImGuiCol_Text, color);
+		//	ImGui::TextUnformatted(item);
+		//	if (has_color)
+		//		ImGui::PopStyleColor();
+		//}
 
-		ImGui::SetScrollHereY(1.0f);
+		//ImGui::SetScrollHereY(1.0f);
 
 		//ImGui::SetCursorPos({ pos.x + size.x - 66, pos.x + size.y - 36 });
 
@@ -139,56 +141,59 @@ namespace TDS
 		//		//std::cout << AssetBrowser::m_curr_path << std::endl;
 		//	}
 		//}
-		if (ImGui::IsKeyPressed(ImGuiKey_UpArrow))
+
+		if (!isPlaying)
 		{
-			TDS_INFO("Up key pressed");
-			AddLog(Log::GetImguiLog().c_str());
+			if (ImGui::IsKeyPressed(ImGuiKey_UpArrow))
+			{
+				TDS_INFO("Up key pressed");
+				AddLog(Log::GetImguiLog().c_str());
 
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_DownArrow))
+			{
+				TDS_INFO("Down key pressed");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow))
+			{
+				TDS_INFO("Left key pressed");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_RightArrow))
+			{
+				TDS_INFO("Right key pressed");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_W))
+			{
+				TDS_INFO("Camera movement forward");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_S))
+			{
+				TDS_INFO("Camera movement backward");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_A))
+			{
+				TDS_INFO("Camera movement left");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
+			if (ImGui::IsKeyPressed(ImGuiKey_D))
+			{
+				TDS_INFO("Camera movement right");
+				AddLog(Log::GetImguiLog().c_str());
+
+			}
 		}
-		if (ImGui::IsKeyPressed(ImGuiKey_DownArrow))
-		{
-			TDS_INFO("Down key pressed");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-		if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow))
-		{
-			TDS_INFO("Left key pressed");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-		if (ImGui::IsKeyPressed(ImGuiKey_RightArrow))
-		{
-			TDS_INFO("Right key pressed");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-		if (ImGui::IsKeyPressed(ImGuiKey_W))
-		{
-			TDS_INFO("Camera movement forward");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-		if (ImGui::IsKeyPressed(ImGuiKey_S))
-		{
-			TDS_INFO("Camera movement backward");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-		if (ImGui::IsKeyPressed(ImGuiKey_A))
-		{
-			TDS_INFO("Camera movement left");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-		if (ImGui::IsKeyPressed(ImGuiKey_D))
-		{
-			TDS_INFO("Camera movement right");
-			AddLog(Log::GetImguiLog().c_str());
-
-		}
-
-
+		
 
 		ImGui::PopStyleVar();
 		ImGui::EndChild();

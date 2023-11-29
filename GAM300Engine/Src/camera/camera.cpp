@@ -1,18 +1,22 @@
 #include "camera/camera.h"
+#include "camera/Camerasystem/CameraSystem.h"
+#include "Rendering/GraphicsManager.h"
 #include<iostream>
 namespace TDS
 {
-	TDSCamera::TDSCamera(float Yaw, float pitch, Vec3 position, Vec3 up)
+	TDSCamera::TDSCamera(float Yaw, float pitch, /*float aspectRatio,*/ float zNear, float zFar, Vec3 position, Vec3 up)
 	{
 
 		m_Position = position;
 		m_WorldUp = up;
 		m_Yaw = Yaw;
 		m_Pitch = pitch;
+		//m_ProjMatrix = Mat4::Perspective(m_Fov
+
 		updateViewMatrix();
 	}
 
-	
+
 	Mat4 TDSCamera::GetViewMatrix() const
 	{
 		return Mat4::LookAt(m_Position, m_Position + m_Front, m_Up);
@@ -36,57 +40,115 @@ namespace TDS
 		Input::wheelDelta = 0;
 	}
 
-	void TDSCamera::UpdateCamera(float deltaTime)
+	void TDSCamera::UpdateCamera(float deltaTime, bool gameIsPlaying)
 	{
-	
-		if (moving())
+		if (!gameIsPlaying)
 		{
-			float CameraSpeed = m_Speed * deltaTime;
-			if (keys.up)
+			static Input::mousePosition mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+			if (getEditorCamera() && getScrollWheel())
 			{
-				m_Position += m_Front * CameraSpeed;
+				translate(static_cast<float>(Input::wheelDelta * 0.05f));
+				if (moving())
+				{
+					float CameraSpeed = m_Speed;
+					if (keys.up)
+					{
+						m_Position += m_Front * CameraSpeed;
+					}
+					if (keys.down)
+						m_Position -= m_Front * CameraSpeed;
+					if (keys.left)
+						m_Position -= m_Right * CameraSpeed;
+					if (keys.right)
+						m_Position += m_Right * CameraSpeed;
+				}
+
+				if (Input::isMouseButtonPressed(TDS_MOUSE_RIGHT))
+				{
+					if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+					{
+						mouse = Input::getMousePosition();
+					}
+
+					if (!Input::isMouseButtonReleased(TDS_MOUSE_RIGHT))
+					{
+						float GetMousex = static_cast<float>(mouse.x);
+						float GetMousey = static_cast<float>(mouse.y);
+
+						float getNewMousex = static_cast<float>(Input::getMousePosition().x);
+						float getNewMousey = static_cast<float>(Input::getMousePosition().y);
+
+						float offsetx = getNewMousex - GetMousex;
+						float offsety = GetMousey - getNewMousey;
+
+						ProcessMouseMovement(offsetx, offsety);
+
+						mouse = Input::getMousePosition();
+					}
+
+				}
+				else
+				{
+					mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+				}
 			}
-			if(keys.down)
-				m_Position -= m_Front * CameraSpeed;
-			if(keys.left)
-				m_Position -= m_Right * CameraSpeed;
-			if(keys.right)
-				m_Position += m_Right * CameraSpeed;
+
+			/*else // TODO: refactor so that we dont copy and paste similar function
+			{
+				if (CameraSystem::GetIsPlaying())
+				{
+					if (moving())
+					{
+						float CameraSpeed = m_Speed;
+						if (keys.up)
+						{
+							m_Position += m_Front * CameraSpeed;
+						}
+						if (keys.down)
+							m_Position -= m_Front * CameraSpeed;
+						if (keys.left)
+							m_Position -= m_Right * CameraSpeed;
+						if (keys.right)
+							m_Position += m_Right * CameraSpeed;
+					}
+
+					if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
+					{
+						mouse = Input::getMousePosition();
+					}
+
+					float GetMousex = static_cast<float>(mouse.x);
+					float GetMousey = static_cast<float>(mouse.y);
+
+					float getNewMousex = static_cast<float>(Input::getMousePosition().x);
+					float getNewMousey = static_cast<float>(Input::getMousePosition().y);
+
+					float offsetx = getNewMousex - GetMousex;
+					float offsety = GetMousey - getNewMousey;
+
+					ProcessMouseMovement(offsetx, offsety);
+
+					mouse = Input::getMousePosition();
+				}
+			}*/
+
+			updateViewMatrix();
 		}
-
-		translate(static_cast<float>(Input::wheelDelta * 0.005f));
-
-		static Input::mousePosition mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
-		
-		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT))
+		else // gameIsPlaying
 		{
-			if (mouse.x == std::numeric_limits<int>::max() && mouse.y == std::numeric_limits<int>::max())
-			{
-				mouse = Input::getMousePosition();
-			}
+			// for exe to get its local coordinate if imgui is not running 
+			RECT win;
+			GetClientRect(GraphicsManager::getInstance().GetWindow()->getWindowHandler(), &win);
+			float Width = (win.right - win.left);
+			float Height = (win.bottom - win.top);
+			Input::mousePosition globalMousePos = Input::getMousePosition();
+			
+			float normalizedLocalMouseX = (globalMousePos.x / Width) * 2 - 1;
+			float normalizedLocalMouseY = (globalMousePos.y / Height) * 2 - 1;
+			Vec2 localMousePos = { normalizedLocalMouseX, normalizedLocalMouseY };
 
-			if (!Input::isMouseButtonReleased(TDS_MOUSE_LEFT))
-			{
-				float GetMousex = mouse.x;
-				float GetMousey = mouse.y;
-
-				float getNewMousex = Input::getMousePosition().x;
-				float getNewMousey = Input::getMousePosition().y;
-
-				float offsetx = getNewMousex - GetMousex;
-				float offsety = GetMousey - getNewMousey;
-
-				ProcessMouseMovement(offsetx, offsety);
-
-				mouse = Input::getMousePosition();
-			}
-
+			Input::setLocalMousePos(localMousePos);
 		}
-		else
-		{
-			mouse = Input::mousePosition(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
-		}
-		updateViewMatrix();
 	}
 
 
@@ -96,31 +158,31 @@ namespace TDS
 		{
 			switch (Input::keyCode)
 			{
-				case TDS_W:
-					return keys.up = true;
-					break;
+			case TDS_W:
+				return keys.up = true;
+				break;
 
-				case TDS_A:
-					return keys.left = true;
-					break;
+			case TDS_A:
+				return keys.left = true;
+				break;
 
-				case TDS_S:
-					return keys.down = true;
-					break;
+			case TDS_S:
+				return keys.down = true;
+				break;
 
-				case TDS_D:
-					return keys.right = true;
+			case TDS_D:
+				return keys.right = true;
 
-				default:
-					return false;
+			default:
+				return false;
 			}
 		}
 		else
 		{
-			keys.up		= false;		  
-			keys.left	= false;				  
-			keys.down	= false;			  
-			keys.right	= false;
+			keys.up = false;
+			keys.left = false;
+			keys.down = false;
+			keys.right = false;
 		}
 		return false;
 	}

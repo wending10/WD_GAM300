@@ -2,7 +2,7 @@
 #define VECTOR3_H
 
 #include "MathCommon.h"
-
+#include "dotnet/ImportExport.h"
 namespace TDS
 {
 class Vec2;
@@ -12,13 +12,13 @@ class Vec3
 public:
     // Constructors and destructors
     Vec3();
-    Vec3(const Vec3& v); // Copy constructor
+    //Vec3(const Vec3& v); // Copy constructor
     Vec3(float value); // Constructor with one value
     Vec3(float data[]); // Constructor with array of values
     Vec3(float newX, float newY, float newZ); // Constructor with three values
     Vec3(const Vec2& v, float newZ); // Constructor with Vec2 and one value
     Vec3(const float* newX, const float* newY, const float* newZ); // Constructor with three pointers
-    ~Vec3();
+    //~Vec3();
 
     // Static Properties
     static Vec3 back();
@@ -90,7 +90,8 @@ public:
     static Vec3 Slerp(Vec3 a, Vec3 b, float t);
     // Spherically interpolates between two vectors.
     static Vec3 SlerpUnclamped(Vec3 a, Vec3 b, float t);
-    
+    static float* Vec3Value_ptr(const Vec3& vec);
+   
     // Operators
 
     Vec3& operator=(const Vec3& v);
@@ -139,6 +140,7 @@ bool operator==(const Vec3& v1, const Vec3& v2);
 bool operator!=(const Vec3& v1, const Vec3& v2);
 std::ostream& operator<<(std::ostream& os, const Vec3& v);
 
+DLL_API Vec3 floatsToVec3(float x, float y, float z);
 
 } 
 

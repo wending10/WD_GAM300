@@ -208,7 +208,7 @@ namespace TDS
 
 			// Display node contents first
 			drawList->ChannelsSetCurrent(1); // Foreground
-			bool old_any_active = ImGui::IsAnyItemActive();
+			//bool old_any_active = ImGui::IsAnyItemActive();
 			ImGui::SetCursorScreenPos(convertToImVec2(node_rect_min + NODE_WINDOW_PADDING));
 			ImGui::BeginGroup(); // Lock horizontal position
 
@@ -412,7 +412,7 @@ namespace TDS
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
 		if (ImGui::BeginPopup("contextMenu"))
 		{
-			BTENode* node = nodeSelected != -1 ? &nodes[nodeSelected] : nullptr;
+			//BTENode* node = nodeSelected != -1 ? &nodes[nodeSelected] : nullptr;
 
 			//if (node)
 			//{

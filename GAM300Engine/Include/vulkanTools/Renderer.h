@@ -27,6 +27,7 @@ namespace TDS {
 		Renderer(const Renderer&) = delete;
 		Renderer& operator=(const Renderer&) = delete;
 
+		void						ShutDown();
 		//Getters
 		VkRenderPass				getSwapChainRenderPass() const { return m_SwapChain->getRenderPass(); }
 		float						getAspectRatio() const { return m_SwapChain->extentAspectRatio(); }
@@ -43,12 +44,17 @@ namespace TDS {
 			return m_currentFrameIndex;
 		}
 
+		int							GetCurrentImage() const
+		{
+			return m_currentImageIndex;
+		}
+
 		//these functions tell tell when to begin and end the frame and renderpass
 		VkCommandBuffer BeginFrame();
 		void EndFrame();
 		void BeginSwapChainRenderPass(VkCommandBuffer commandbuffer);
 		void EndSwapChainRenderPass(VkCommandBuffer commandbuffer);
-
+		VulkanSwapChain& getSwapchain();
 	private:
 		//helper functions
 		void createCommandBuffers();

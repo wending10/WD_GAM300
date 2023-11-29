@@ -26,7 +26,7 @@ class Quat
     Quat(float angle, Vec3 const& axis); // Constructor with angle and axis
     Quat(Vec3 const& u, Vec3 const& v); // Constructor with two vectors
     Quat(Vec3 const& euler); // Constructor with euler angles in radians
-    ~Quat();
+    //~Quat();
 
     // Functions
 
@@ -47,7 +47,7 @@ class Quat
     static Vec3 cross(Vec3 const& v, Quat const& q);
     // Returns the dot product of q1 and q2
     static float dot(Quat const& q1, Quat const& q2);
-    // Return euler angle, yitch as x, yaw as y, roll as z
+    // Return euler angle, pitch as x, yaw as y, roll as z
     static Vec3 eulerAngle(Quat const& q);
     // Returns a exp of a quaternion
     static Quat exp(Quat const& q);
@@ -90,6 +90,8 @@ class Quat
     // Return yaw value of euler angles
     static float yaw(Quat const& q);
     
+    static Quat euler(Vec3 const& v);
+    
     // Component Access
     float& operator[](int index);
     float const& operator[](int index) const;
@@ -127,6 +129,8 @@ Quat operator/(Quat const& q, float const& f);
 // boolean operator
 bool operator==(Quat const& q1, Quat const& q2);
 bool operator!=(Quat const& q1, Quat const& q2);
+
+DLL_API Quat floatsToQuat(float x, float y, float z, float w);
 
 } // namespace WD
 

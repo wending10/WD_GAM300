@@ -70,7 +70,7 @@ namespace TDS
 
         // vector of pointers to the start of the data of each component
         // (data is stored by component, then entity ID, not by entityID first)
-        std::vector<ComponentData>          componentData;
+        //std::vector<ComponentData>          componentData;
 
         // vector of sizes of each component total data used
         std::vector<std::uint32_t>          componentDataSize;
@@ -96,20 +96,20 @@ namespace TDS
 
     // SYSTEM CLASS =======================================================================================
     template<class... Cs>
-    class System : public SystemBase
+    class ECSSystem : public SystemBase
     {
     public:
         // Making a new system
-        System(const int layer);
+        ECSSystem(const int layer);
 
         // Getting the archetype ID based on the components given
         virtual ArchetypeID                 getKey() override;
 
         // TYPEDEF
         typedef std::function<void(const float, const std::vector<EntityID>&, Cs*...)>
-                                            RunFunc;
+            RunFunc;
         typedef std::function<void(void)>
-                                            InitFunc;
+            InitFunc;
 
         // Setting the update function in the mFunc function pointer 
         void                                action(InitFunc initFunc, RunFunc runFunc);
@@ -178,7 +178,7 @@ namespace TDS
         virtual void                        moveData(unsigned char* source, unsigned char* destination) const override;
 
         // Returns the size of the whole component
-        virtual std::uint32_t                 getSize() const override;
+        virtual std::uint32_t               getSize() const override;
 
         // Returns the unique ID of the component
         static ComponentTypeID              getTypeID();
@@ -199,7 +199,10 @@ namespace TDS
         struct Record
         {
             Archetype* archetype;
+            Archetype* activeArchetype; // used in systems
             std::uint32_t                   index;
+            bool                            isEnabled;
+            bool                            previouslyEnabled;
         };
 
         // TYPEDEFS
@@ -250,7 +253,7 @@ namespace TDS
         void                         runSystems(const int layer, const float elapsedMilliseconds);
 
         // Gets the archetype class pointer of the given archetype ID
-        Archetype*                   getArchetype(const ArchetypeID& id);
+        Archetype* getArchetype(const ArchetypeID& id);
 
         // Gets all archetypes
         ArchetypesArray              getAllArchetypes();
@@ -286,10 +289,6 @@ namespace TDS
         template<typename C>
         C*                           getComponent(const EntityID& entityId);
 
-        // Get a component data from the entity
-        template<class C>
-        C*                           getComponent(const EntityID& entityId, Record& record);
-
         // Get entities with a certain component in the angle bracket
         template<typename C>
         std::vector<EntityID>        getEntitiesWith();
@@ -317,6 +316,27 @@ namespace TDS
 
         // Getting all registered entities
         std::vector<EntityID>        getEntities();
+
+        bool                         getEntityIsEnabled(const EntityID& entityId);
+
+        bool                         getEntityPreviouslyEnabled(const EntityID& entityId);
+
+        void                         setEntityIsEnabled(const EntityID& entityId, bool _isEnabled);
+
+        void                         setEntityPreviouslyEnabled(const EntityID& entityId);
+
+        ArchetypeID                  getActiveArchetype(const EntityID& entityID);
+
+        void                         setActiveArchetype(const EntityID& entityID, const ArchetypeID& newType);
+
+        template<typename C>
+        void                         setComponentIsEnabled(const EntityID& entityId, bool _isEnabled);
+
+        template<typename C>
+        bool                         getComponentIsEnabled(const EntityID& entityId);
+
+        void (*addScriptList)(EntityID);
+        void (*removeScriptList)(EntityID);
 
     private:
         // Unique pointer to ECS
@@ -351,11 +371,11 @@ namespace TDS
 
         // Adding a new component, with component values
         template<typename C>
-        C*                                  add();
+        C* add();
 
         // Adding a new component overload, move component data
         template<typename C>
-        C*                                  add(C&& c);
+        C* add(C&& c);
 
         // Get ID of the entity
         EntityID                            getID() const;

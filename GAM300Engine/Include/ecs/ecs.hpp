@@ -121,7 +121,7 @@ namespace TDS
     // Setting the update function in the mFunc function pointer 
     // func - update function as function pointer 
     template<class... Cs>
-    void System<Cs...>::action(InitFunc initFunc, RunFunc runFunc)
+    void ECSSystem<Cs...>::action(InitFunc initFunc, RunFunc runFunc)
     {
         mInitFunc = initFunc;
         mRunFunc = runFunc;
@@ -133,7 +133,7 @@ namespace TDS
     // ecs - THE ecs
     // layer - layer to put the system under
     template<class... Cs>
-    System<Cs...>::System(const int layer) : mFuncSet(false)
+    ECSSystem<Cs...>::ECSSystem(const int layer) : mFuncSet(false)
     {
         ecs.registerSystem(layer, this);
         key = "";
@@ -143,11 +143,11 @@ namespace TDS
     // Getting the archetype ID based on the components given
     // Return - archetype ID
     template<class... Cs>
-    ArchetypeID System<Cs...>::getKey()
+    ArchetypeID ECSSystem<Cs...>::getKey()
     {
         if (key == "")
         {
-            auto components = {Component<Cs>::getTypeID()...};
+            auto components = { Component<Cs>::getTypeID()... };
 
             for (std::uint32_t i = 0; i < ecs.getNumberOfComponents(); ++i)
             {
@@ -168,13 +168,18 @@ namespace TDS
     // elapsedMilliseconds - dt
     // archetype - archetype to be selected out for the function pointer to run
     template<class... Cs>
-    void System<Cs...>::doAction(const float elapsedMilliseconds, Archetype* archetype)
+    void ECSSystem<Cs...>::doAction(const float elapsedMilliseconds, Archetype* archetype)
     {
+        //if (mFuncSet)
+        //    doAction<0>(elapsedMilliseconds,
+        //        archetype->type,
+        //        archetype->entityIds,
+        //        MemoryManager::GetInstance()->getComponents(archetype->type));
         if (mFuncSet)
             doAction<0>(elapsedMilliseconds,
                 archetype->type,
                 archetype->entityIds,
-                archetype->componentData);
+                MemoryManager::GetInstance()->getComponents(archetype->type));
     }
 
     // --doAction--
@@ -186,7 +191,7 @@ namespace TDS
     template<class... Cs>
     template<std::uint32_t Index, typename T, typename... Ts>
     std::enable_if_t<Index != sizeof...(Cs)>
-        System<Cs...>::doAction(const float elapsedMilliseconds,
+        ECSSystem<Cs...>::doAction(const float elapsedMilliseconds,
             const ArchetypeID& archeTypeIds,
             const std::vector<EntityID>& entityIDs,
             T& t,
@@ -196,7 +201,7 @@ namespace TDS
 
         ComponentTypeID thisTypeCS = Component<IthT>::getTypeID();
 
-        if (!archeTypeIds[thisTypeCS])
+        if (archeTypeIds[thisTypeCS] == '0')
         {
             throw std::runtime_error
             ("System was executed against an incorrect Archetype");
@@ -219,7 +224,7 @@ namespace TDS
     template<class... Cs>
     template<std::uint32_t Index, typename T, typename... Ts>
     std::enable_if_t<Index == sizeof...(Cs)>
-        System<Cs...>::doAction(const float elapsedMilliseconds,
+        ECSSystem<Cs...>::doAction(const float elapsedMilliseconds,
             const ArchetypeID& archeTypeIds,
             const std::vector<EntityID>& entityIDs,
             T& t,
@@ -231,7 +236,7 @@ namespace TDS
     }
 
     template<class... Cs>
-    void System<Cs...>::initialiseAction()
+    void ECSSystem<Cs...>::initialiseAction()
     {
         if (mFuncSet)
             mInitFunc();
@@ -307,8 +312,16 @@ namespace TDS
     {
         Record dummyRecord;
         dummyRecord.archetype = nullptr;
+        dummyRecord.activeArchetype = nullptr;
         dummyRecord.index = 0;
+        dummyRecord.isEnabled = true;
         mEntityArchetypeMap[entityId] = dummyRecord;
+
+        //ScriptAPI
+        if (addScriptList)
+        {
+            addScriptList(entityId);
+        }
     }
 
     // --addComponent--
@@ -428,15 +441,34 @@ namespace TDS
             newArchetype = getArchetype(newArchetypeId);
         }
 
+        if (record.activeArchetype)
+        {
+            ArchetypeID newActiveArchetypeId = record.activeArchetype->type;
+            newActiveArchetypeId[componentID] = '1';
+            record.activeArchetype = getArchetype(newActiveArchetypeId);
+        }
+        else // not in existing active archetype
+        {
+            ArchetypeID newActiveArchetypeId(componentCount, '0');
+            newActiveArchetypeId[componentID] = '1';
+            record.activeArchetype = newArchetype;
+        }
+
         // Add entity ID to new archetype
         newArchetype->entityIds.emplace_back(entityID);
         // Change index
-        record.index = newArchetype->entityIds.size() - 1;
+        record.index = static_cast<uint32_t>(newArchetype->entityIds.size() - 1);
         // Change archetype pointer
         record.archetype = newArchetype;
 
         record.archetype->componentDataSize[componentID] += componentSize;
-        
+
+        if (oldArchetype && oldArchetype->entityIds.size() == 0) // no more entities
+        {
+            MemoryManager::GetInstance()->freeBook(oldArchetype->type);
+            mArchetypes.erase(std::find(mArchetypes.begin(), mArchetypes.end(), oldArchetype));
+        }
+
         return new(MemoryManager::GetInstance()->addComponentData(newArchetypeId, componentID, componentSize, record.index)) C();
     }
 
@@ -454,6 +486,8 @@ namespace TDS
         record.archetype = getArchetype(archetype);
         record.archetype->entityIds.emplace_back(entityID);
         record.index = static_cast<std::uint32_t>(record.archetype->entityIds.size() - 1);
+
+        record.activeArchetype = record.archetype;
 
         for (std::uint32_t componentID = 0; componentID < archetype.size(); ++componentID)
         {
@@ -489,7 +523,7 @@ namespace TDS
     template<class C>
     inline void ECS::removeComponent(const EntityID& entityID)
     {
-        ComponentTypeID compTypeId = Component<C>::getTypeID();
+        ComponentTypeID componentID = Component<C>::getTypeID();
 
         if (!mEntityArchetypeMap.contains(entityID))
             return; // entity doesn't exist
@@ -502,7 +536,7 @@ namespace TDS
         if (!oldArchetype)
             return; // there's no components anyway
 
-        if (oldArchetypeId[compTypeId] == '0')
+        if (oldArchetypeId[componentID] == '0')
         {
             // this entity doesn't have this component
             return;
@@ -510,7 +544,7 @@ namespace TDS
 
         // find the new archetypeId by removing the old ComponentTypeId
         ArchetypeID newArchetypeId = oldArchetype->type;
-        newArchetypeId[compTypeId] = '0';
+        newArchetypeId[componentID] = '0';
 
         Archetype* newArchetype = getArchetype(newArchetypeId);
 
@@ -578,12 +612,26 @@ namespace TDS
             willBeRemoved = std::find(oldArchetype->entityIds.begin(), oldArchetype->entityIds.end(), entityID);
         }
 
+        // FOR ACTIVE ARCHETYPE
+        if (record.activeArchetype->type[componentID] == '1')
+        {
+            ArchetypeID newActiveArchetypeID = record.activeArchetype->type;
+            newActiveArchetypeID[componentID] = '0';
+            record.activeArchetype = getArchetype(newActiveArchetypeID);
+        }
+
         // Remove entity ID from old archetype
         oldArchetype->entityIds.erase(willBeRemoved);
 
         newArchetype->entityIds.emplace_back(entityID);
-        record.index = newArchetype->entityIds.size() - 1;
+        record.index = static_cast<uint32_t>(newArchetype->entityIds.size() - 1);
         record.archetype = newArchetype;
+
+        if (oldArchetype->entityIds.size() == 0) // no more entities
+        {
+            MemoryManager::GetInstance()->freeBook(oldArchetypeId);
+            mArchetypes.erase(std::find(mArchetypes.begin(), mArchetypes.end(), oldArchetype));
+        }
     }
 
     // --getComponent--
@@ -600,8 +648,6 @@ namespace TDS
 
         Record& record = mEntityArchetypeMap[entityId];
 
-        mArchetypes;
-
         if (!record.archetype)
             return nullptr; // there's no components anyway
 
@@ -617,8 +663,8 @@ namespace TDS
     // entityId - entityID of the entity
     inline void ECS::removeEntity(const EntityID& entityID)
     {
-        if (!mEntityArchetypeMap.contains(entityID))
-            return; // it doesn't exist
+        //if (!mEntityArchetypeMap.contains(entityID))
+        //    return; // it doesn't exist
 
         Record& record = mEntityArchetypeMap[entityID];
 
@@ -679,7 +725,14 @@ namespace TDS
 
         oldArchetype->entityIds.erase(willBeRemoved);
 
+        if (oldArchetype->entityIds.size() == 0) // no more entities
+        {
+            mArchetypes.erase(std::find(mArchetypes.begin(), mArchetypes.end(), oldArchetype));
+        }
+
         mEntityArchetypeMap.erase(entityID);
+
+        removeScriptList(entityID);
     }
 
     // --removeAllEntities--
@@ -803,17 +856,18 @@ namespace TDS
         {
             if (id[i] == '1')
             {
-                newArchetype->componentData.emplace_back(MemoryManager::GetInstance()->newPage(id, i));
+                MemoryManager::GetInstance()->newPage(id, i);
+                //newArchetype->componentData.emplace_back(MemoryManager::GetInstance()->newPage(id, i));
 
                 if (commit)
                 {
                     MemoryManager::GetInstance()->reserveComponentSpace(id, i, mComponentMap[i]->getSize());
                 }
             }
-            else
-            {
-                newArchetype->componentData.emplace_back(nullptr);
-            }
+            //else
+            //{
+            //    newArchetype->componentData.emplace_back(nullptr);
+            //}
             newArchetype->componentDataSize.emplace_back(0);
         }
         if (commit)
@@ -880,10 +934,65 @@ namespace TDS
         return entityIDs;
     }
 
-    //inline std::unique_ptr<ECS>& getECS()
-    //{
-    //    return ECS::GetInstance();
-    //}
+    inline bool ECS::getEntityIsEnabled(const EntityID& entityId)
+    {
+        return mEntityArchetypeMap[entityId].isEnabled;
+    }
+
+    inline bool ECS::getEntityPreviouslyEnabled(const EntityID& entityId)
+    {
+        return mEntityArchetypeMap[entityId].previouslyEnabled;
+    }
+
+    inline void ECS::setEntityIsEnabled(const EntityID& entityId, bool _isEnabled)
+    {
+        Record& record = mEntityArchetypeMap[entityId];
+        record.isEnabled = _isEnabled;
+    }
+
+    inline void ECS::setEntityPreviouslyEnabled(const EntityID& entityId)
+    {
+        Record& record = mEntityArchetypeMap[entityId];
+        record.previouslyEnabled = record.isEnabled;
+    }
+
+    // solely for debugging
+    inline ArchetypeID ECS::getActiveArchetype(const EntityID& entityID)
+    {
+        return mEntityArchetypeMap[entityID].activeArchetype->type;
+    }
+
+    inline void ECS::setActiveArchetype(const EntityID& entityID, const ArchetypeID& newType)
+    {
+        mEntityArchetypeMap[entityID].activeArchetype = getArchetype(newType);
+    }
+
+    template<typename C>
+    inline void ECS::setComponentIsEnabled(const EntityID& entityID, bool _isEnabled)
+    {
+        Record& record = mEntityArchetypeMap[entityID];
+        ComponentTypeID componentID = Component<C>::getTypeID();
+
+        if (record.activeArchetype->type[componentID] == '1' && !_isEnabled) // disabling an active component
+        {
+            ArchetypeID newActiveArchetypeId = record.activeArchetype->type;
+            newActiveArchetypeId[componentID] = '0';
+            record.activeArchetype = getArchetype(newActiveArchetypeId);
+        }
+        else if (record.activeArchetype->type[componentID] == '0' && _isEnabled) // enabling an active component
+        {
+            ArchetypeID newActiveArchetypeId = record.activeArchetype->type;
+            newActiveArchetypeId[componentID] = '1';
+            record.activeArchetype = getArchetype(newActiveArchetypeId);
+        }
+    }
+
+    template<typename C>
+    inline bool ECS::getComponentIsEnabled(const EntityID& entityID)
+    {
+        ComponentTypeID componentID = Component<C>::getTypeID();
+        return mEntityArchetypeMap[entityID].activeArchetype->type[componentID] == '1' ? true : false;
+    }
 
     // --getEntityComponents--
     // Get components of a certain entity
@@ -900,7 +1009,7 @@ namespace TDS
 
         for (int i = 0; i < record.archetype->type.size(); ++i)
         {
-            if (!(record.archetype->type[i]))
+            if (record.archetype->type[i] == '0')
             {
                 continue;
             }

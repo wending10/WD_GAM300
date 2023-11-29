@@ -22,6 +22,7 @@
 //#define	VK_USE_PLATFORM_WIN32_KHR
 #include "vulkanInstance.h"
 #include "dotnet/ImportExport.h"
+#include "../GraphicsResource/GraphicsResourceDefines.h"
 
 namespace TDS
 {
@@ -43,28 +44,31 @@ namespace TDS
 		VulkanSwapChain& operator=(const VulkanSwapChain&) = delete;
 
 		//getters
-		VkFramebuffer				getFrameBuffer(int Index)		{ return m_vSwapChainFramebuffers[Index]; }
-		VkRenderPass				getRenderPass()					{ return m_RenderPass; }
-		VkImageView					getImageView(int Index)			{ return m_vSwapChainImageViews[Index]; }
-		size_t						getImageCount()					{ return m_vSwapChainImages.size(); }
-		VkFormat					getSwapChainImageFormat()		{ return m_SwapChainImageFormat; }
-		VkExtent2D					getSwapChainExtent()			{ return m_SwapChainExtent; }
-		uint32_t					width()							{ return m_SwapChainExtent.width; }
-		uint32_t					height()						{ return m_SwapChainExtent.height; }
-		std::vector	<VkImageView>	getImageViewContainer()const	{ return m_vSwapChainImageViews; }
+		VkFramebuffer				getFrameBuffer(int Index) { return m_vSwapChainFramebuffers[Index]; }
+		VkRenderPass				getRenderPass() { return m_RenderPass; }
+		VkFence						GetImageFlightFence(int index) { return m_vImagesinFlight[index]; }
+		VkFence						GetInFlightFences(int index) { return m_vInFlightFences[index]; }
+		VkImageView					getImageView(int Index) { return m_vSwapChainImageViews[Index]; }
+		size_t						getImageCount() { return m_vSwapChainImages.size(); }
+		VkFormat					getSwapChainImageFormat() { return m_SwapChainImageFormat; }
+		VkExtent2D					getSwapChainExtent() { return m_SwapChainExtent; }
+		uint32_t					width() { return m_SwapChainExtent.width; }
+		uint32_t					height() { return m_SwapChainExtent.height; }
+		const std::vector <VkImageView>& getImageViewContainer()const { return m_vSwapChainImageViews; }
 		float						extentAspectRatio() {
 			return static_cast<float>(m_SwapChainExtent.width) / static_cast<float>(m_SwapChainExtent.height);
 		}
 
 		VkFormat findDepthFormat();
+		VkFormat GetSwapChainImageFormat();
 
 		VkResult acquireNextImage(uint32_t* imageIndex);
 		VkResult SubmitCommandBuffers(const VkCommandBuffer* Buffers, uint32_t* ImageIndex);
-
+		void	 ClearColors(VkCommandBuffer& cmdBuffer, iColor clearColor);
 		bool compareSwapFormat(const VulkanSwapChain& SwapChain) const {
 			return SwapChain.m_SwapChainDepthFormat == m_SwapChainDepthFormat && SwapChain.m_SwapChainImageFormat == m_SwapChainImageFormat;
 		}
-
+		void ShutDown();
 
 	private:
 		//helper functions
@@ -88,7 +92,9 @@ namespace TDS
 		VkRenderPass						m_RenderPass;
 
 		std::vector<VkImage>				m_vDepthImages;
-		std::vector<VkDeviceMemory>			m_vDepthImageMemory;
+		/*std::vector<VkDeviceMemory>			m_vDepthImageMemory;*/
+		std::vector<VkClearAttachment>		m_ClearAttachments;
+		std::vector<VmaAllocation>			m_vDepthImageAllocation;
 		std::vector<VkImageView>			m_vDepthImageViews;
 		std::vector<VkImage>				m_vSwapChainImages;
 		std::vector<VkImageView>			m_vSwapChainImageViews;

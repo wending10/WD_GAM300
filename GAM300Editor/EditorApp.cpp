@@ -4,8 +4,10 @@
 #include <vector>
 #include <array>
 #include <sstream>
+#include <imgui/imgui.h>
 
 #include "EditorApp.h"
+
 #include "Logger/Logger.h"
 #include "Input/Input.h"
 #include "vulkanTools/Model.h"
@@ -13,35 +15,49 @@
 #include "vulkanTools/FrameInfo.h"
 #include "Timestep/Timestep.h"
 #include "sceneManager/sceneManager.h"
-
-#include <imgui/imgui.h>
+#include "Tools/ShaderReflector.h"
+#include "Shader/ShaderLoader.h"
+#include "Rendering/GraphicsManager.h"
+#include "components/components.h"
+#include "Rendering/RendererSystem.h"
+#include "vulkanTools/VulkanHelper.h"
+#include "EditorRenderer/ImguiLayer.h"
+#include "vulkanTools/CommandManager.h"
+#include "GraphicsResource/TextureInfo.h"
+#include "vulkanTools/VulkanTexture.h"
+#include "Rendering/renderPass.h"
+#include "vulkanTools/FrameBuffer.h"
+#include "Tools/DDSConverter.h"
+#include "imguiHelper/ImguiProperties.h"
+#include "imguiHelper/ImguiScene.h"
+#include "imguiHelper/ImguiGamePlayScene.h"
+#include "Physics/PhysicsSystem.h"
+#include "Rendering/ObjectPicking.h"
 
 bool isPlaying = false;
+bool startPlaying = false;
 
 namespace TDS
 {
     Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
     {
-        m_window.createWindow(wndproc, 1280, 800);
-        m_pVKInst = std::make_shared<VulkanInstance>(m_window);
-        m_Renderer = std::make_shared<Renderer>(m_window, *m_pVKInst.get());
+        m_window.createWindow(wndproc, 1280,720);
+
+        //m_pVKInst = std::make_shared<VulkanInstance>(m_window);
+        //m_Renderer = std::make_shared<Renderer>(m_window, *m_pVKInst.get());
         Log::Init();
         TDS_INFO("window width: {}, window height: {}", m_window.getWidth(), m_window.getHeight());
 
-        m_globalPool = DescriptorPool::Builder(*m_pVKInst.get()).setMaxSets(VulkanSwapChain::MAX_FRAMES_IN_FLIGHT)
-            .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VulkanSwapChain::MAX_FRAMES_IN_FLIGHT)
-            .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VulkanSwapChain::MAX_FRAMES_IN_FLIGHT)
-            .build();
-
-        models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");
+       /* models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");*/
     }
     void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         IMGUI_WIN32_WNDPROCHANDLER_FORWARD_DECLARATION;
         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
         //can extern  some imgui wndproc handler | tbc
-
+        SetWindowHandle(hWnd);
+        
         switch (uMsg)
         {
 
@@ -107,136 +123,189 @@ namespace TDS
         }break;
         }
     }
+    void Application::SetWindowHandle(HWND hWnd)
+    {
+        m_handler = hWnd;
+    }
+    HWND Application::GetWindowHandle()
+    {
+        return m_handler;
+    }
     void Application::Initialize()
     {
-        m_AssetManager.Init();
-        m_AssetManager.PreloadAssets();
-        SceneManager::GetInstance()->Init();
-        ecs.initializeSystems(1);
-        //Run();
+        ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
+        GraphicsManager::getInstance().Init(&m_window);
+        AssetManager::GetInstance()->PreloadAssets();
+        skyboxrender.Init();
     }
 
     void Application::Update()
     {
-        /*auto executeUpdate = GetFunctionPtr<void(*)(void)>
+        DDSConverter::Init();
+
+        auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "ExecuteUpdate"
-            );*/
+            );
 
-        std::vector<std::unique_ptr<Buffer>> uboBuffers(VulkanSwapChain::MAX_FRAMES_IN_FLIGHT);
-        for (int i = 0; i < uboBuffers.size(); i++) {
-            uboBuffers[i] = std::make_unique<Buffer>(
-                *m_pVKInst.get(),
-                sizeof(GlobalUBO),
-                1,
-                VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-                VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-            uboBuffers[i]->map();
-        }
+        auto executeLateUpdate = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteLateUpdate"
+            );
 
-        auto globalSetLayout =
-            DescriptorSetLayout::Builder(*m_pVKInst.get())
-            .AddBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
-            //.AddBinding(0,VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_ALL_GRAPHICS)
-            .build();
+        auto executeFixedUpdate = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteFixedUpdate"
+            );
 
-        std::vector<VkDescriptorSet> globalDescriptorSets(VulkanSwapChain::MAX_FRAMES_IN_FLIGHT);
-        for (int i = 0; i < globalDescriptorSets.size(); i++) {
-            auto bufferInfo = uboBuffers[i]->descriptorinfo();
-            DescriptorWriter(*globalSetLayout, *m_globalPool)
-                .writeBuffer(0, &bufferInfo)
-                .Build(globalDescriptorSets[i]);
-        }
+        auto reloadScripts = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "Reload"
+            );
 
+        auto addScript = GetFunctionPtr<bool(*)(int, const char*)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptViaName"
+            );
+        SceneManager::GetInstance()->toggleScript = GetFunctionPtr<bool(*)(int, const char*)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ToggleScriptViaName"
+            );
 
-
-        RendererManager renderermgr{ *m_pVKInst.get(), m_Renderer->getSwapChainRenderPass(), globalSetLayout->getDescSetLayout() };
-        //PointLightSystem PlightSystem{ *m_pVKInst.get(), m_Renderer->getSwapChainRenderPass(), globalSetLayout->getDescSetLayout() };
         initImgui();
         float lightx = 0.f;
+
         while (m_window.processInputEvent())
         {
             TimeStep::CalculateDeltaTime();
-			float DeltaTime = TimeStep::GetDeltaTime();
+            float DeltaTime = TimeStep::GetDeltaTime();
+            std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
+			std::shared_ptr<GamePlayScene> pGamePlayScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
+            if (pScene->isFocus)
+            {
+                GraphicsManager::getInstance().setCamera(m_camera);
+                GraphicsManager::getInstance().GetCamera().setEditorCamera(true);
+                GraphicsManager::getInstance().GetCamera().setScrollWheel(true);
+
+            }
+            else if (pGamePlayScene->isFocus)
+            {
+                GraphicsManager::getInstance().setCamera(m_GameCamera);
+                GraphicsManager::getInstance().GetCamera().setEditorCamera(false);
+            }
+            else
+            {
+                GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
+            }
+
+            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime, isPlaying);
+
+            lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
+            RendererSystem::lightPosX = lightx;
+
+            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
+            if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x >0 && m_windowdimension.y > 0)
+            {
+                GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
+                std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
+                pScene->Resize();
+
+                std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
+                pGamePlatScene->Resize();
+            }
+            GraphicsManager::getInstance().StartFrame();
+            VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
+            std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+
+            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
+            if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
+                skyboxrender.RenderSkyBox(commandBuffer, frame);
+           
             if (isPlaying)
             {
-                ecs.runSystems(1, DeltaTime);
+                if (startPlaying)
+                {
+                    SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+                    startPlaying = false;
+                }
+                executeFixedUpdate();
+                ecs.runSystems(1, DeltaTime); // Other systems
+                executeUpdate();
+                //executeLateUpdate();
             }
-
-            imguiHelper::Update();
-            //ImGui::Begin("Profiler");
-            //ImGui::Text("FPS: %.3f", 1.f / DeltaTime);
-            //ImGui::End();
-
-            if (auto commandbuffer = m_Renderer->BeginFrame())
+            else
             {
-                int frameIndex = m_Renderer->getFrameIndex();
+                startPlaying = true;
+                if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
+                {
+                    PhysicsSystem::SetIsPlaying(false);
+                    CameraSystem::SetIsPlaying(false);
+                }
+            }
+            ecs.runSystems(2, DeltaTime); // Event handler
+            ecs.runSystems(3, DeltaTime); // Graphics
+         
+            imguiHelper::Update();
 
-                FrameInfo frameinfo{
-                    frameIndex,
-                    DeltaTime,
-                    commandbuffer,
-                    m_camera,
-                    globalDescriptorSets[frameIndex],
-                    *models.get()
-                };
+            // event handling systems 
+            GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
 
-                m_camera.UpdateCamera(DeltaTime);
-                /*UniformBufferObject ubo{};
-                ubo.model = Mat4();
-                ubo.view = m_camera.GetViewMatrix();
-                ubo.proj = Mat4::Perspective(m_camera.m_Fov * Mathf::Deg2Rad,
-                    m_Renderer->getAspectRatio(), 0.1f, 10.f);
-                ubo.proj.m[1][1] *= -1;*/
+           GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));
+            GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
 
-                lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
+            imguiHelper::Draw(commandBuffer);
 
-                GlobalUBO PLUbo;
-                PLUbo.m_Projection = Mat4::Perspective(m_camera.m_Fov * Mathf::Deg2Rad,
-                    m_Renderer->getAspectRatio(), 0.1f, 10.f);
-                PLUbo.m_Projection.m[1][1] *= -1;
-                PLUbo.m_View = m_camera.GetViewMatrix();
-                PLUbo.m_vPointLights[0].m_Position = Vec4(lightx, 0.5f, 0.f, 0.2f);
-                PLUbo.m_vPointLights[0].m_Color = Vec4(1.f, 1.f, 1.f, 1.f);
-                //PlightSystem.update(frameinfo, PLUbo);
-                uboBuffers[frameIndex]->WritetoBuffer(&PLUbo);
-                uboBuffers[frameIndex]->flush();
-
-                m_Renderer->BeginSwapChainRenderPass(commandbuffer);
-
-                renderermgr.draw(frameinfo);
-                //ImGui::ShowDemoWindow();
-                // for (uint32_t i = 0; i < m_Renderer->getImageViewContainer().size(); i++)
-                //     m_Dset[i] = ImGui_ImplVulkan_AddTexture(VK_NULL_HANDLE, m_Renderer->getImageView(i), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-               /*  ImGui::Begin("Scene");
-                 ImGui::Image((ImTextureID)globalDescriptorSets[frameIndex], {1, 0}, {0, 1});
-                 ImGui::End();*/
-                imguiHelper::Draw(commandbuffer);
-
-                m_Renderer->EndSwapChainRenderPass(commandbuffer);
-                m_Renderer->EndFrame();
+            GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
+            GraphicsManager::getInstance().EndFrame();
+            // Reloading
+            if (GetKeyState(VK_F5) & 0x8000)
+            {
+                isPlaying = false;
+                compileScriptAssembly();
+                SceneManager::GetInstance()->saveCurrentScene();
+                reloadScripts();
+                SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
             }
 
-            //// Update and Render additional Platform Windows
-            //if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            //{
-            //    ImGui::UpdatePlatformWindows();
-            //    ImGui::RenderPlatformWindowsDefault();
-            //}
             Input::scrollStop();
-            //executeUpdate();
+            
         }
-        //stopScriptEngine();
-        vkDeviceWaitIdle(m_pVKInst.get()->getVkLogicalDevice());
+        stopScriptEngine();
+      
+
+        AssetManager::GetInstance()->ShutDown();
+
+        vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
+        if (m_ImGuiDescPool)
+        {
+            vkDestroyDescriptorPool(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), m_ImGuiDescPool, 0);
+            m_ImGuiDescPool = nullptr;
+        }
         imguiHelper::Exit();
         ecs.destroy();
+        
+        skyboxrender.ShutDown();
+        GraphicsManager::getInstance().ShutDown();
+        DDSConverter::Destroy();
     }
 
     void Application::Run()
     {
         startScriptEngine();
+        buildManagedScriptCsProj();
+        compileScriptAssembly();
 
         // Step 1: Get Functions
         auto init = GetFunctionPtr<void(*)(void)>
@@ -246,8 +315,175 @@ namespace TDS
                 "Init"
             );
 
+        auto reloadScripts = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "Reload"
+            );
+
+        SceneManager::GetInstance()->addScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptViaName"
+            );
+        SceneManager::GetInstance()->removeScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "RemoveScriptViaName"
+            );
+
         // Step 2: Initialize
         init();
+
+        std::shared_ptr<Properties> properties = static_pointer_cast<Properties>(LevelEditorManager::GetInstance()->panels[PanelTypes::PROPERTIES]);
+        properties->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetScriptVariablesEditor"
+            );
+
+        SceneManager::GetInstance()->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetScriptVariables"
+            );
+
+        SceneManager::GetInstance()->hasScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "HasScriptViaName"
+            );
+
+        SceneManager::GetInstance()->getAllScripts = GetFunctionPtr<std::vector<std::string>(*)()>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetAllScripts"
+            );
+
+        ecs.addScriptList = GetFunctionPtr<void(*)(EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptList"
+            );
+
+        ecs.removeScriptList = GetFunctionPtr<void(*)(EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "RemoveEntity"
+            );
+
+        SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(EntityID, std::string, std::string, bool)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueBool"
+            );
+
+        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int, bool)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueInt"
+            );
+
+        SceneManager::GetInstance()->setDouble = GetFunctionPtr<void(*)(EntityID, std::string, std::string, double)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueDouble"
+            );
+
+        SceneManager::GetInstance()->setFloat = GetFunctionPtr<void(*)(EntityID, std::string, std::string, float)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueFloat"
+            );
+
+        SceneManager::GetInstance()->setString = GetFunctionPtr<void(*)(EntityID, std::string, std::string, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueString"
+            );
+
+        //SceneManager::GetInstance()->setChar = GetFunctionPtr<void(*)(EntityID, std::string, std::string, char)>
+        //    (
+        //        "ScriptAPI",
+        //        "ScriptAPI.EngineInterface",
+        //        "SetValueChar"
+        //    );
+
+        SceneManager::GetInstance()->setVector3 = GetFunctionPtr<void(*)(EntityID, std::string, std::string, Vec3)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVector3"
+            );
+
+        SceneManager::GetInstance()->setGameObject = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetGameObject"
+            );
+
+        SceneManager::GetInstance()->setComponent = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetComponent"
+            );
+
+        SceneManager::GetInstance()->setScriptReference = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetScript"
+            );
+
+        SceneManager::GetInstance()->updateName = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "UpdateGameObjectName"
+            );
+
+        SceneManager::GetInstance()->isScriptEnabled = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "IsScriptEnabled"
+            );
+
+        SceneManager::GetInstance()->awake = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteAwake"
+            );
+
+        SceneManager::GetInstance()->start = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteStart"
+            );
+
+
+        SceneManager::GetInstance()->Init();
+        ecs.initializeSystems(1);
+        ecs.initializeSystems(2);
+        ecs.initializeSystems(3);
     }
 
     Application::~Application()
@@ -257,7 +493,11 @@ namespace TDS
 
     void Application::startScriptEngine()
     {
-        // Step 1: Loading the coreclr.dll
+        // Get the .NET Runtime's path first
+        const auto DOT_NET_PATH = getDotNetRuntimePath();
+        if (DOT_NET_PATH.empty())
+            throw std::runtime_error("Failed to find .NET Runtime.");
+
         // Get the current executable directory so that we can find the coreclr.dll to load
         std::string runtimePath(MAX_PATH, '\0');
         GetModuleFileNameA(nullptr, runtimePath.data(), MAX_PATH);
@@ -265,14 +505,14 @@ namespace TDS
         // Since PathRemoveFileSpecA() removes from data(), the size is not updated, so we must manually update it
         runtimePath.resize(std::strlen(runtimePath.data()));
 
+        // Also, while we're at it, set the current working directory to the current executable directory
         std::filesystem::current_path(runtimePath);
 
         // Construct the CoreCLR path
-        std::string coreClrPath(runtimePath); // Works
-        coreClrPath += "\\coreclr.dll";
+        const std::string CORE_CLR_PATH = DOT_NET_PATH + "\\coreclr.dll";
 
         // Load the CoreCLR DLL
-        coreClr = LoadLibraryExA(coreClrPath.c_str(), nullptr, 0);
+        coreClr = LoadLibraryExA(CORE_CLR_PATH.c_str(), nullptr, 0);
         if (!coreClr)
             throw std::runtime_error("Failed to load CoreCLR.");
 
@@ -282,7 +522,8 @@ namespace TDS
         shutdownCoreClr = getCoreClrFuncPtr<coreclr_shutdown_ptr>("coreclr_shutdown");
 
         // Step 3: Construct AppDomain properties used when starting the runtime
-        std::string tpaList = buildTpaList(runtimePath);
+        std::string tpaList = buildTpaList(runtimePath) + buildTpaList(DOT_NET_PATH);
+
         // Define CoreCLR properties
         std::array propertyKeys =
         {
@@ -306,6 +547,7 @@ namespace TDS
             &hostHandle,             // Host handle
             &domainId                // AppDomain ID
         );
+
         // Check if intiialization of CoreCLR failed
         if (result < 0)
         {
@@ -314,28 +556,6 @@ namespace TDS
                 << "Failed to initialize CoreCLR. Error 0x" << result << "\n";
             throw std::runtime_error(oss.str());
         }
-    }
-
-    std::string Application::buildTpaList(const std::string& directory)
-    {
-        // Constants
-        static const std::string SEARCH_PATH = directory + "\\*.dll";
-        static constexpr char PATH_DELIMITER = ';';
-        // Create a osstream object to compile the string
-        std::ostringstream tpaList;
-        // Search the current directory for the TPAs (.DLLs)
-        WIN32_FIND_DATAA findData;
-        HANDLE fileHandle = FindFirstFileA(SEARCH_PATH.c_str(), &findData);
-        if (fileHandle != INVALID_HANDLE_VALUE)
-        {
-            do
-            {
-                // Append the assembly to the list
-                tpaList << directory << '\\' << findData.cFileName << PATH_DELIMITER;
-            } while (FindNextFileA(fileHandle, &findData));
-            FindClose(fileHandle);
-        }
-        return tpaList.str();
     }
 
     void Application::stopScriptEngine()
@@ -351,44 +571,249 @@ namespace TDS
         }
     }
 
+    std::string Application::buildTpaList(const std::string& directory)
+    {
+        // Constants
+        const std::string SEARCH_PATH = directory + "\\*.dll";
+        static constexpr char PATH_DELIMITER = ';';
+
+        // Create a osstream object to compile the string
+        std::ostringstream tpaList;
+
+        // Search the current directory for the TPAs (.DLLs)
+        WIN32_FIND_DATAA findData;
+        HANDLE fileHandle = FindFirstFileA(SEARCH_PATH.c_str(), &findData);
+        if (fileHandle != INVALID_HANDLE_VALUE)
+        {
+            do
+            {
+                // Append the assembly to the list
+                tpaList << directory << '\\' << findData.cFileName << PATH_DELIMITER;
+            } while (FindNextFileA(fileHandle, &findData));
+            FindClose(fileHandle);
+        }
+
+        return tpaList.str();
+    }
+
+    void Application::compileScriptAssembly()
+    {
+        //relative path to the script assembly project file
+        const char* PROJ_PATH =
+            "../ManagedScripts/ManagedScripts.csproj";
+
+        std::wstring buildCmd = L" build \"" +
+            std::filesystem::relative(PROJ_PATH).wstring() +
+#ifdef _DEBUG
+            L"\" -c Debug --no-self-contained " +
+            L"-o \"../scriptDLL/\" -r \"win-x64\"";
+#endif // DEBUG
+#ifdef NDEBUG
+        L"\" -c Release --no-self-contained " +
+            L"-o \"../scriptDLL/\" -r \"win-x64\"";
+#endif // NDEBUG
+
+            
+
+        // Define the struct to config the compiler process call
+        STARTUPINFOW startInfo;
+        PROCESS_INFORMATION pi;
+        ZeroMemory(&startInfo, sizeof(startInfo));
+        ZeroMemory(&pi, sizeof(pi));
+        startInfo.cb = sizeof(startInfo);
+
+        // Start compiler process
+        const auto SUCCESS = CreateProcess
+        (
+            L"C:\\Program Files\\dotnet\\dotnet.exe", buildCmd.data(),
+            nullptr, nullptr, true, NULL, nullptr, nullptr,
+            &startInfo, &pi
+        );
+
+        // Check that we launched the process
+        if (!SUCCESS)
+        {
+            auto err = GetLastError();
+            std::ostringstream oss;
+            oss << "Failed to launch compiler. Error code: "
+                << std::hex << err;
+            throw std::runtime_error(oss.str());
+        }
+
+        // Wait for process to end
+        DWORD exitCode{};
+        while (true)
+        {
+            const auto EXEC_SUCCESS =
+                GetExitCodeProcess(pi.hProcess, &exitCode);
+            if (!EXEC_SUCCESS)
+            {
+                auto err = GetLastError();
+                std::ostringstream oss;
+                oss << "Failed to query process. Error code: "
+                    << std::hex << err;
+                throw std::runtime_error(oss.str());
+            }
+            if (exitCode != STILL_ACTIVE)
+                break;
+        }
+
+        // Successful build
+        if (exitCode == 0)
+        {
+            // Copy out files
+            std::filesystem::copy_file
+            (
+                "../scriptDLL/ManagedScripts.dll",
+                "ManagedScripts.dll",
+                std::filesystem::copy_options::overwrite_existing
+            );
+        }
+        // Failed build
+        else
+        {
+             throw std::runtime_error("Failed to build managed scripts!");
+        }
+    }
+
+    void Application::buildManagedScriptCsProj()
+    {
+        std::string filePath = "../ManagedScripts/ManagedScripts.csproj";
+        std::ofstream csprojFile(filePath);
+
+        if (csprojFile.is_open())
+        {
+            csprojFile << R"(
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Platforms>x64</Platforms>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <OutputPath>$(SolutionDir)\$(Configuration)-$(Platform)</OutputPath>
+        <PlatformTarget>x64</PlatformTarget>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <OutputPath>$(SolutionDir)\$(Configuration)-$(Platform)</OutputPath>
+        <PlatformTarget>x64</PlatformTarget>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+    <Reference Include="ScriptAPI"> )";
+#ifdef _DEBUG
+        csprojFile << R"(
+        <HintPath>..\Debug-x64\ScriptAPI.dll</HintPath>
+        )";
+#endif  //_DEBUG
+#ifdef NDEBUG
+        csprojFile << R"(
+        <HintPath>..\Release-x64\ScriptAPI.dll</HintPath>
+        )";
+#endif //NDEBUG
+            csprojFile << R"(
+    </Reference>
+    </ItemGroup>
+</Project>
+            )";
+
+            std::cout << "Generated " << filePath << " successfully." << std::endl;
+
+            csprojFile.close();
+        }
+        else
+        {
+            std::cerr << "Unable to open file: " << filePath << std::endl;
+        }
+    }
+
+    std::string Application::getDotNetRuntimePath() const
+    {
+        // Check if any .NET Runtime is even installed
+        const std::filesystem::path PATH =
+            std::filesystem::path("C:/Program Files/dotnet/shared/Microsoft.NETCore.App");
+        if (!std::filesystem::exists(PATH))
+            return "";
+        // Check all folders in the directory to find versions
+        std::pair<int, std::filesystem::path> latestVer = { -1, {} };
+        for (const auto& DIR_ENTRY : std::filesystem::directory_iterator(PATH))
+        {
+            // Is a file, not a folder
+            if (!DIR_ENTRY.is_directory())
+                continue;
+            // Get the directory's name
+            const auto& DIR = DIR_ENTRY.path();
+            const auto& DIR_NAME = (--(DIR.end()))->string();
+            if (DIR_NAME.empty())
+                continue;
+            // Get the version number
+            const int VER_NUM = DIR_NAME[0] - '0';
+            // We will only naively check major version here and ignore the rest of 
+            // semantic versioning to keep things simple for this sample.
+            if (VER_NUM > latestVer.first)
+            {
+                latestVer = { VER_NUM, DIR };
+            }
+        }
+        // Check if we found any valid versions
+        if (latestVer.first >= 0)
+        {
+            // Replace all forward slashes with backslashes 
+            // (.NET can't handle forward slashes)
+            auto dotnetPath = latestVer.second.string();
+            std::replace_if
+            (
+                dotnetPath.begin(), dotnetPath.end(),
+                [](char c) { return c == '/'; },
+                '\\'
+            );
+            return dotnetPath;
+        }
+        return "";
+    }
+
     bool Application::initImgui()
     {
-        /* VkDescriptorPoolSize pool_sizes[] =
-         {
-             { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
-             { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
-             { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
-             { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
-             { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
-             { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
-             { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
-             { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
-             { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
-             { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
-             { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
-         };
+        VkDescriptorPoolSize pool_sizes[] =
+        {
+            { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+            { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+            { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+            { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+            { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+            { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+            { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+            { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+            { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+            { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+            { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+        };
 
-         VkDescriptorPoolCreateInfo pool_info = {};
-         pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-         pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-         pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
-         pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
-         pool_info.pPoolSizes = pool_sizes;
+        VkDescriptorPoolCreateInfo pool_info = {};
+        pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+        pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+        pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
+        pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+        pool_info.pPoolSizes = pool_sizes;
 
-         vkCreateDescriptorPool(m_pVKInst.get()->m_logicalDevice, &pool_info, nullptr
-           , &m_pVKInst.get()->m_ImguiDescriptorPool);*/
+        vkCreateDescriptorPool(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), &pool_info, nullptr
+            , &m_ImGuiDescPool);
 
         ImGui_ImplVulkan_InitInfo initInfo{};
 
-        initInfo.Instance = m_pVKInst->getInstance();
-        initInfo.PhysicalDevice = m_pVKInst->getVkPhysicalDevice();
-        initInfo.Device = m_pVKInst->getVkLogicalDevice();
-        initInfo.QueueFamily = m_pVKInst->findPhysicalQueueFamilies().graphicsFamily.value();
-        initInfo.Queue = m_pVKInst->getGraphicsQueue();
+        initInfo.Instance = GraphicsManager::getInstance().getVkInstance().getInstance();
+        initInfo.PhysicalDevice = GraphicsManager::getInstance().getVkInstance().getVkPhysicalDevice();
+        initInfo.Device = GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice();
+        initInfo.QueueFamily = GraphicsManager::getInstance().getVkInstance().GetGraphicsQueueIndex();
+        initInfo.Queue = GraphicsManager::getInstance().getVkInstance().getGraphicsQueue();
         initInfo.PipelineCache = VK_NULL_HANDLE;
 
 
-        initInfo.DescriptorPool = m_globalPool.get()->getDescPool();
+        initInfo.DescriptorPool = m_ImGuiDescPool;
         initInfo.Subpass = 0;
         initInfo.MinImageCount = 2;
         initInfo.ImageCount = 2;
@@ -396,12 +821,12 @@ namespace TDS
         initInfo.Allocator = nullptr;
         initInfo.CheckVkResultFn = nullptr;
 
-        imguiHelper::InitializeImgui(initInfo, m_Renderer->getSwapChainRenderPass(), m_window.getWindowHandler());
+        imguiHelper::InitializeImgui(initInfo, GraphicsManager::getInstance().GetSwapchainRenderer().getSwapChainRenderPass(), m_window.getWindowHandler());
 
-        if (VkCommandBuffer FCB{ m_pVKInst->beginSingleTimeCommands() }; FCB != nullptr)
+        if (VkCommandBuffer FCB{ GraphicsManager::getInstance().getVkInstance().beginSingleTimeCommands() }; FCB != nullptr)
         {
             imguiHelper::ImguiCreateFont(FCB);
-            m_pVKInst->endSingleTimeCommands(FCB);
+            GraphicsManager::getInstance().getVkInstance().endSingleTimeCommands(FCB);
             ImGui_ImplVulkan_DestroyFontUploadObjects();
         }
         else
@@ -410,10 +835,7 @@ namespace TDS
             return false;
         }
 
-        /* for(uint32_t i = 0; i < m_pVKInst.get()->swapChainImageViews.size(); i++)
-             m_pVKInst.get()->m_descriptorSets[i] = ImGui_ImplVulkan_AddTexture(m_pVKInst.get()->m_textureSampler, m_pVKInst.get()->swapChainImageViews[i], VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);*/
-
-
+       
         return true;
 
     }

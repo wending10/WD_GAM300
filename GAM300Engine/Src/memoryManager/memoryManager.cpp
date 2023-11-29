@@ -92,7 +92,7 @@ namespace TDS
 	****************************************************************************/
 	void MemoryManager::commitBook(const ArchetypeID& archetypeID)
 	{
-		int componentID = 0;
+		//int componentID = 0;
 		for (int componentID = 0; componentID < archetypeID.size(); ++componentID)
 		{
 			if (archetypeID[componentID] == '0')
@@ -100,7 +100,8 @@ namespace TDS
 				continue;
 			}
 
-			commit(books[archetypeID].committedSize[componentID], books[archetypeID].startOfComponent[componentID]);
+			auto& commitSize = books[archetypeID].committedSize[componentID];
+			commit(commitSize, books[archetypeID].startOfComponent[componentID]);
 		}
 	}
 
@@ -117,7 +118,7 @@ namespace TDS
 	****************************************************************************/
 	void MemoryManager::freeBook(const ArchetypeID& archetypeID)
 	{
-		int componentID = 0;
+		//int componentID = 0;
 		for (int componentID = 0; componentID < archetypeID.size(); ++componentID)
 		{
 			if (archetypeID[componentID] == '0')
@@ -148,6 +149,14 @@ namespace TDS
 		{
 			resizePage(archetypeID, componentID);
 		}
+	}
+	/*!*************************************************************************
+	Getting all the component data in the given book (Archetypes) using
+	ArchetypeID
+	****************************************************************************/
+	DLL_API std::vector<unsigned char*>& MemoryManager::getComponents(ArchetypeID archetypeID)
+	{
+		return books[archetypeID].startOfComponent;
 	}
 
 	/*!*************************************************************************

@@ -62,7 +62,7 @@ namespace TDS
         m[0][3] = 0.0f;        m[1][3] = 0.0f;        m[2][3] = 0.0f;        m[3][3] = 1.0f;
     }
 
-    Mat4::~Mat4() {}
+    //Mat4::~Mat4() {}
 
     Mat4 Mat4::identity()
     {
@@ -302,7 +302,7 @@ namespace TDS
 
     Mat4 Mat4::Ortho(float left, float right, float bottom, float top, float zNear, float zFar)
     {
-        Mat4 result(1.f);
+        Mat4 result = Mat4::identity();
         result.m[0][0] = 2.0f / (right - left);
         result.m[1][1] = 2.0f / (top - bottom);
         result.m[2][2] = -2.0f / (zFar - zNear);
@@ -384,6 +384,22 @@ namespace TDS
         result.m[3][3] = 1.0f;
 
         return result;
+    }
+    float* Mat4::Mat4Value_ptr(const Mat4& mat)
+    {
+        float* ptr = new float[16];
+
+        for (int i{ 0 }; i < 4; ++i)
+        {
+            for (int j{ 0 }; j < 4; ++j)
+            {
+                ptr[i * 4 + j] = mat.m[i][j];
+            }
+        }
+
+
+
+        return  ptr;
     }
 #if 0 // unsure if correct implementation
   	Quat Mat4::toQuat(Mat4 const& m4)
@@ -680,6 +696,17 @@ namespace TDS
         );
     }
 
+    Vec4 operator*(Mat4 const& mat, Vec4 const& vec)
+    {
+        float vec0, vec1, vec2, vec3;
+        vec0 = mat.m[0][0] * vec.x + mat.m[1][0] * vec.y + mat.m[2][0] * vec.z + mat.m[3][0] * vec.w;
+        vec1 = mat.m[0][1] * vec.x + mat.m[1][1] * vec.y + mat.m[2][1] * vec.z + mat.m[3][1] * vec.w;
+        vec2 = mat.m[0][2] * vec.x + mat.m[1][2] * vec.y + mat.m[2][2] * vec.z + mat.m[3][2] * vec.w;
+        vec3 = mat.m[0][3] * vec.x + mat.m[1][3] * vec.y + mat.m[2][3] * vec.z + mat.m[3][3] * vec.w;
+
+        return Vec4(vec0, vec1, vec2, vec3);
+    }
+
     Mat4 operator/(Mat4 const& var, float const& value)
     {
         return Mat4(
@@ -735,6 +762,11 @@ namespace TDS
             << "| " << std::setw(maxLen) << var.m[0][2] << " " << std::setw(maxLen) << var.m[1][2] << " " << std::setw(maxLen) << var.m[2][2] << " " << std::setw(maxLen) << var.m[3][2] << " |" << std::endl
             << "| " << std::setw(maxLen) << var.m[0][3] << " " << std::setw(maxLen) << var.m[1][3] << " " << std::setw(maxLen) << var.m[2][3] << " " << std::setw(maxLen) << var.m[3][3] << " |";
         return os;
+    }
+
+    Vec4 mat4Vec4(Mat4& mat, Vec4& vec)
+    {
+        return mat * vec;
     }
 
 }  // namespace WD

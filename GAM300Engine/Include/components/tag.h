@@ -15,39 +15,33 @@
 
 namespace TDS
 {
-	class DLL_API Tag : public IComponent
+	class Tag : public IComponent
 	{
 	public:
 		/*!*************************************************************************
 		Initializes the Tag component when created
 		****************************************************************************/
-		Tag();
+		DLL_API Tag();
 		/*!*************************************************************************
 		Initializes the Tag component when created, given another Tag component to
 		move (for ECS)
 		****************************************************************************/
-		Tag(Tag&& toMove) noexcept;
+		DLL_API Tag(Tag&& toMove) noexcept;
 		/*!*************************************************************************
 		Destructor for the Tag component class
 		****************************************************************************/
-		~Tag() = default;
-		/*!*************************************************************************
-		Deserializes the Tag component
-		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj);
-		/*!*************************************************************************
-		Serializes the Tag component
-		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
-
+		DLL_API ~Tag() = default;
 		/*!*************************************************************************
 		Getter and setter functions for the variables in the Tag component class
 		****************************************************************************/
-		std::string GetTag() { return mTag; }
-		void SetTag(std::string tag) { mTag = tag; }
+		DLL_API std::string GetTag() { return mTag; }
+		DLL_API void SetTag(std::string tag) { mTag = tag; }
 
-		std::string GetTargetTag() { return mTargetTag; }
-		void SetTargetTag(std::string target) { mTargetTag = target; }
+		DLL_API std::string GetTargetTag() { return mTargetTag; }
+		DLL_API void SetTargetTag(std::string target) { mTargetTag = target; }
+
+		RTTR_ENABLE(IComponent);
+		RTTR_REGISTRATION_FRIEND
 
 	private:
 		std::string mTag;

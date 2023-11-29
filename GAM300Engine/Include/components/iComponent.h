@@ -16,24 +16,33 @@
 
 #include "sceneManager/serialization.h"
 
+// Macro to define a serialized field
+//#define SerializeField(type, name)					\
+//private:											\
+//    type name##_;									\
+//public:												\
+//    property type name {							\
+//        type get() { return name##_; }				\
+//        void set(type value) { name##_ = value; }	\
+//    }												\
+//RTTR_REGISTRATION									\
+//{													\
+//	rttr::registration::class_<type>(#type)			\
+//		.property(name, &type::TYPE)				\
+//}
+
 
 namespace TDS
 {
-	class DLL_API IComponent : public Serializer
+	class IComponent : public Serializer
 	{
 	public:
 		/*!*************************************************************************
 		Destructor of the abstract IComponent class
 		****************************************************************************/
-		virtual ~IComponent() = default;
-		/*!*************************************************************************
-		Deserialize function of the abstract IComponent class
-		****************************************************************************/
-		virtual bool Deserialize(const rapidjson::Value& obj) = 0;
-		/*!*************************************************************************
-		Serialize function of the abstract IComponent class
-		****************************************************************************/
-		virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const = 0;
+		DLL_API virtual ~IComponent() = default;
+
+		RTTR_ENABLE();
 	};
 }
 

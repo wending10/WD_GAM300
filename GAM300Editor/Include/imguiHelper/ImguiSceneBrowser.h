@@ -28,11 +28,27 @@ namespace TDS
 		SceneBrowser();
 
 		/*!*************************************************************************
+		This function is the init function for Scene Broswer panel
+		****************************************************************************/
+		void init() {}
+
+		/*!*************************************************************************
 		This function is the update function for Scene Broswer panel
 		****************************************************************************/
 		void update();
 
+		/*!*************************************************************************
+		This function is to open a file dialog for Save As with a filename based on user input
+		****************************************************************************/
+		static std::string SaveFile(const char* filter, HWND inHwnd);
+
+
+
 	private:
+		float buttonSize;
+		bool deleteSceneConfirmation;
+		int renameFileID;
+		std::string renameFileOldName;
 	};
 }
 

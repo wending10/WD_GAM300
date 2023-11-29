@@ -27,12 +27,15 @@ namespace TDS
 		//BEHAVIORTREE,
 		ASSETBROWSER,
 		SCENEBROWSER,
+		SCRIPTBROWSER,
 		CONSOLE,
 		TOOLBAR,
 		PROFILER,
 		BEHAVIOURTREEEDITOR,
 		//ANIMATIONBROWSER,
 		// TILEMAP,
+		GAMEPLAYSCENE,
+		SCENE,
 		AUDIOLER
 		// ANIMATION
 	};
@@ -40,13 +43,16 @@ namespace TDS
 	class LevelEditorPanel
 	{
 	public:
+		virtual void init() = 0;
+
 		virtual void update() = 0;
 
 		std::string panelTitle;
-		ImGuiWindowFlags flags;
+		ImGuiWindowFlags flags{};
 		ImVec2 windowPadding;
 
-		bool rightClick;
+		bool rightClick{ false };
+		bool makeFocus{ false };
 	private:
 	};
 
@@ -56,6 +62,8 @@ namespace TDS
 		static std::unique_ptr<LevelEditorManager>& GetInstance();
 
 		std::map<PanelTypes, std::shared_ptr<LevelEditorPanel>> panels;	// cant be unique pointer for some reason
+
+		bool (*getScript)(EntityID, std::string, rttr::variant&);
 	private:
 		// Unique pointer to SceneManager
 		static std::unique_ptr<LevelEditorManager> m_instance;

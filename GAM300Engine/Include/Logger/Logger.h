@@ -25,26 +25,26 @@
 namespace TDS
 {
 	//template class TDS_API std::shared_ptr<spdlog::logger>;
-	class DLL_API Log
+	class Log
 	{
 	public:
-		static void Init();
+		DLL_API static void Init();
 
 
 		/*!*************************************************************************
 		Retrieves CoreLogger info
 		****************************************************************************/
-		static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+		DLL_API static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 
 		/*!*************************************************************************
 		Retrieves ClientLogger info
 		****************************************************************************/
-		static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+		DLL_API static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
 
 		/*!*************************************************************************
 		Outputs spdlog info via output string stream for ImGui
 		****************************************************************************/
-		static std::string GetImguiLog();
+		DLL_API static std::string GetImguiLog();
 		
 
 	private:
@@ -63,7 +63,7 @@ namespace TDS
 #define TDS_CRITICAL(...) ::TDS::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 //Assertion failed, it will track where it happened and print it in console (for debug)
-#define TDS_EXO_ASSERT(x, ...) {if((x)) { TDS_EXO_CRITICAL("Assert Failed: {} {}\n\tIn File:{}\n\tLine: {}",x, __VA_ARGS__,__FILE__,__LINE__);__debugbreak();}}
+#define TDS_ASSERT(x, ...) {if((x)) { TDS_CRITICAL("Assert Failed: {} {}\n\tIn File:{}\n\tLine: {}",x, __VA_ARGS__,__FILE__,__LINE__);__debugbreak();}}
 
 //Client 
 //#define TDS_TRACE(...) ::TDS::Log::GetClientLogger()->trace(__VA_ARGS__)

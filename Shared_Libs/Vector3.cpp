@@ -3,13 +3,13 @@
 namespace TDS
 {
     Vec3::Vec3() : x(0), y(0), z(0) {}
-    Vec3::Vec3(const Vec3& v) : x(v.x), y(v.y), z(v.z) {}
+    //Vec3::Vec3(const Vec3& v) : x(v.x), y(v.y), z(v.z) {}
     Vec3::Vec3(float value) : x(value), y(value), z(value) {}
     Vec3::Vec3(float data[]) : x(data[0]), y(data[1]), z(data[2]) {}
     Vec3::Vec3(float newX, float newY, float newZ) : x(newX), y(newY), z(newZ) {}
     Vec3::Vec3(const Vec2& v, float newZ) : x(v.x), y(v.y), z(newZ) {}
     Vec3::Vec3(const float* newX, const float* newY, const float* newZ) : x(*newX), y(*newY), z(*newZ) {}
-    Vec3::~Vec3() {}
+    //Vec3::~Vec3() {}
 
     Vec3 Vec3::back() { return Vec3(0.f, 0.f, -1.f); }
     Vec3 Vec3::down() { return Vec3(0.f, -1.f, 0.f); }
@@ -50,6 +50,7 @@ namespace TDS
     }
 
     void Vec3::Set(float newX, float newY, float newZ) { x = newX; y = newY; z = newZ; }
+
     std::string Vec3::ToString()
     {
         std::ostringstream oss;
@@ -270,6 +271,18 @@ namespace TDS
         return newVec * (magA + (magB - magA) * t);
     }
 
+    float* Vec3::Vec3Value_ptr(const Vec3& vec)
+    {
+        float* ptr = new float[3];
+
+        for (int i{ 0 }; i < 3; ++i)
+        {
+            ptr[i] = vec[i];
+        }
+
+        return  ptr;
+    }
+
     Vec3& Vec3::operator=(const Vec3& v) 
     {
         x = v.x;
@@ -441,6 +454,11 @@ namespace TDS
     bool operator!=(const Vec3& v1, const Vec3& v2) 
     {
         return v1.x != v2.x || v1.y != v2.y || v1.z != v2.z;
+    }
+
+    Vec3 floatsToVec3(float x, float y, float z)
+    {
+        return Vec3(x, y, z);
     }
 
 }  // namespace WD

@@ -3,47 +3,50 @@
 
 namespace TDS
 {
-	
+	ImGui_ImplVulkan_InitInfo Profiler::m_vulkanInfo;
 	Profiler::Profiler()
 	{
 		//selected = 0;
 		//selectedFolder = -1;
 		//renameCheck = false;
 
-		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse ;
+		flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 		panelTitle = "Profiler Window";
 		windowPadding = ImVec2(0.f, 0.f);
-		
-		
+
+
 		//insertEntities();
 	}
 
-	
-		
-	void Profiler::getVulkanInfo()
+
+
+	void Profiler::getVulkanInfo(ImGui_ImplVulkan_InitInfo& vulkanInfo)
 	{
-		
+		m_vulkanInfo = vulkanInfo;
 	}
 
 	void Profiler::update()
 	{
-		
-		ImGui::Text("Application: ");
+		vkGetPhysicalDeviceProperties(m_vulkanInfo.PhysicalDevice, &deviceProperties);
+		ImGui::Text("Application: ", deviceProperties.deviceID);
 
 		char* engineName = (char*)"TDS Engine";
 		char* organizationName = (char*)"by Tear Drop Studio";
 
 		ImVec4 yellow(1.0f, 0.8f, 0.0f, 1.0f); //We'll use yellow to print the results
-		
+
 
 		//GPU
-		ImGui::Text(GPU_name.c_str());
-		
-		
+		ImGui::Text("GPU: %s", deviceProperties.deviceName);
+
 
 		//Brand
-		ImGui::Text(Vulkan_API_version.c_str());
-		
+		uint32_t vulkanMajor = VK_VERSION_MAJOR(deviceProperties.apiVersion);
+		uint32_t vulkanMinor = VK_VERSION_MINOR(deviceProperties.apiVersion);
+		uint32_t vulkanPatch = VK_VERSION_PATCH(deviceProperties.apiVersion);
+
+		ImGui::Text("API Version : %d.%d.%d", vulkanMajor, vulkanMinor, vulkanPatch);
+
 		ImGui::Separator();
 
 		//VRAM
@@ -65,14 +68,14 @@ namespace TDS
 		fps_log.push_back(ImGui::GetIO().Framerate);
 		char engine_name[25];
 		sprintf_s(engine_name, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &fps_log[0], static_cast<int>(fps_log.size()), 0, engine_name, 0.0f, 100.0f, ImVec2(200, 100));
+		ImGui::PlotHistogram("##framerate", &fps_log[0], static_cast<int>(fps_log.size()), 0, engine_name, 0.0f, 100.0f, ImVec2(200, 70));
 
 		//Milliseconds
 		if (ms_log.size() > 100)
 			ms_log.erase(ms_log.begin());
 		ms_log.push_back(1 / (ImGui::GetIO().Framerate / 1000));
 		sprintf_s(engine_name, 25, "Milliseconds %.1f", ms_log[ms_log.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &ms_log[0], static_cast<int>(ms_log.size()), 0, engine_name, 0.0f, 40.0f, ImVec2(200, 100));
+		ImGui::PlotHistogram("##framerate", &ms_log[0], static_cast<int>(ms_log.size()), 0, engine_name, 0.0f, 40.0f, ImVec2(200, 70));
 	}
-		
+
 }

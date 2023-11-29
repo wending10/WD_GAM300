@@ -1,13 +1,3 @@
-/*!*****************************************************************************
- * \file          GraphicsAllocator.cpp
- * \author        Eugene Ho Shu Sheng
- * \par DP email: shushengeugene.ho@digipen.edu
- * \par Course:   CSD3400
- * \par Section:  A
- * \date          01/10/2023
- * \brief         This file contains the implementation of 
- *				  the GraphicsAllocator class.
- *******************************************************************************/
 #define VMA_IMPLEMENTATION
 #include "vulkanTools/GraphicsAllocator.h"
 #include "vulkanTools/vulkanInstance.h"
@@ -21,8 +11,6 @@ namespace TDS
 	}
 	GraphicsAllocator::~GraphicsAllocator()
 	{
-		if (m_VulkanAllocator)
-			vmaDestroyAllocator(m_VulkanAllocator);
 	}
 	void GraphicsAllocator::Init(VulkanInstance& instance)
 	{
@@ -33,6 +21,7 @@ namespace TDS
 		vmaCreateinfo.instance = instance.getInstance();
 		vmaCreateinfo.instance = instance.getInstance();
 		vmaCreateAllocator(&vmaCreateinfo, &m_VulkanAllocator);
+
 	}
 
 	void GraphicsAllocator::UnMapMemory(VmaAllocation allocation)
@@ -43,6 +32,18 @@ namespace TDS
 	void GraphicsAllocator::FreeMemory(VmaAllocation allocation)
 	{
 		vmaFreeMemory(GraphicsAllocator::GetInstance().GetAllocator(), allocation);
+	}
+
+	void GraphicsAllocator::ShutDown()
+	{
+
+		if (m_TotalAllocatedBytes > 0)
+		{
+			TDS_INFO("Still have memory {} allocated", m_TotalAllocatedBytes);
+			__debugbreak();
+		}
+		if (m_VulkanAllocator)
+			vmaDestroyAllocator(m_VulkanAllocator);
 	}
 
 
