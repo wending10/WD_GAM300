@@ -160,6 +160,7 @@
     <ClInclude Include="Screen.hxx" />
     <ClInclude Include="SceneLoader.hxx" />
     <ClInclude Include="Script.hxx" />
+    <ClInclude Include="Serialization.hxx" />
     <ClInclude Include="TypeConversion.hxx" />
     <ClInclude Include="UIPopUp.hxx" />
     <ClInclude Include="Vector2.hxx" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Screen.cxx" />
     <ClCompile Include="SceneLoader.cxx" />
     <ClCompile Include="Script.cxx" />
+    <ClCompile Include="Serialization.cxx" />
     <ClCompile Include="Time.hxx" />
     <ClCompile Include="TypeConversion.cxx" />
     <ClCompile Include="UIPopUp.cxx" />

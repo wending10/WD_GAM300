@@ -33,13 +33,13 @@ namespace ScriptAPI
 		Axis GetDirection();
 		void SetDirection(Axis value);
 
+		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
 
 		TransformComponent transform;
 
 	internal:
 		CapsuleColliderComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		property bool IsTrigger

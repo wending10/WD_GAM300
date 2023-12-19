@@ -42,7 +42,7 @@ public class Flashlight_Script : Script
             {
                 lightSourceObj.GetGraphicComponent().SetColourAlpha(0.6f);
             }
-            Input.KeyRelease(Keycode.F);
+            //Input.KeyRelease(Keycode.F);
         }
 
         //Remove this chunck of code when building

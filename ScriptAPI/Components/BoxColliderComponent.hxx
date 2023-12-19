@@ -23,13 +23,13 @@ namespace ScriptAPI
 		void SetSizeY(float valueY);
 		void SetSizeZ(float valueZ);
 
+		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
 
 		TransformComponent transform;
 
 	internal:
 		BoxColliderComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		property bool IsTrigger

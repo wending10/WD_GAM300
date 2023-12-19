@@ -345,14 +345,14 @@ namespace TDS
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
-                "GetScriptVariablesEditor"
+                "GetVariablesEditor"
             );
 
         SceneManager::GetInstance()->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
             (
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
-                "GetScriptVariables"
+                "GetVariables"
             );
 
         SceneManager::GetInstance()->hasScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
@@ -383,6 +383,7 @@ namespace TDS
                 "RemoveEntity"
             );
 
+        /*
         SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(EntityID, std::string, std::string, bool)>
             (
                 "ScriptAPI",
@@ -451,6 +452,21 @@ namespace TDS
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "SetScript"
+            );
+        */
+
+        SceneManager::GetInstance()->setScriptValue = GetFunctionPtr<void(*)(EntityID, std::string, ScriptValues)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVariable"
+            );
+
+        SceneManager::GetInstance()->setScriptValues = GetFunctionPtr<void(*)(EntityID, std::string, std::vector<ScriptValues>&)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVariables"
             );
 
         SceneManager::GetInstance()->updateName = GetFunctionPtr<bool(*)(EntityID, std::string)>

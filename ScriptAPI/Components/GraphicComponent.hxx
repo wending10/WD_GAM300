@@ -8,10 +8,11 @@ namespace ScriptAPI {
 		float getColourAlpha();
 		void SetColourAlpha(float value);
 
+		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID);
+
 	internal:
 		GraphicComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		TDS::EntityID entityID;

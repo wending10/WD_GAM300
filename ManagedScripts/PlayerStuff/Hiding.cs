@@ -72,7 +72,7 @@ public class Hiding : Script
                     }
                 }*/
 
-                Input.KeyRelease(Keycode.E);
+                //Input.KeyRelease(Keycode.E);
             }
         }
         else if (hiding)
@@ -86,7 +86,7 @@ public class Hiding : Script
                 player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
                 player.GetComponent<FPS_Controller_Script>().enableHeadBob = true;
                 _flashlight.is_Enabled = true;
-                Input.KeyRelease(Keycode.E);
+                //Input.KeyRelease(Keycode.E);
             }
         }
         
