@@ -981,8 +981,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -1427,8 +1426,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -1609,8 +1607,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -1835,8 +1832,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -2149,8 +2145,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -2771,8 +2766,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -2997,8 +2991,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -3091,8 +3084,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -3537,8 +3529,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -4379,8 +4370,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -4605,8 +4595,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -4919,8 +4908,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -5409,8 +5397,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -6050,7 +6037,7 @@
                 }
             },
             "Box Collider": {
-                "IsTrigger": false,
+                "IsTrigger": true,
                 "Collider Center": {
                     "x": 267.7040100097656,
                     "y": 296.58447265625,
@@ -6075,8 +6062,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -6389,8 +6375,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -6615,8 +6600,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -7149,8 +7133,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -7287,8 +7270,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -7469,8 +7451,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -7651,8 +7632,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -7745,8 +7725,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8015,8 +7994,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8114,7 +8092,7 @@
                 "Position": {
                     "x": 177.69464111328125,
                     "y": 296.58447265625,
-                    "z": -108.8836669921875
+                    "z": -108.88365936279297
                 },
                 "Scale": {
                     "x": 2.200000047683716,
@@ -8124,15 +8102,15 @@
                 "Rotation": {
                     "x": 0.0,
                     "y": 0.0,
-                    "z": 3.141592502593994
+                    "z": 3.1415913105010986
                 }
             },
             "Box Collider": {
                 "IsTrigger": false,
                 "Collider Center": {
                     "x": 217.89434814453125,
-                    "y": 296.58447265625,
-                    "z": -27.70496368408203
+                    "y": 296.58441162109375,
+                    "z": -27.7049560546875
                 },
                 "Collider Size": {
                     "x": 23.341598510742188,
@@ -8153,8 +8131,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8379,8 +8356,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8517,8 +8493,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8611,8 +8586,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8793,8 +8767,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -8975,8 +8948,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -9245,8 +9217,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -9779,8 +9750,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -10665,8 +10635,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -10935,8 +10904,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11029,8 +10997,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11123,8 +11090,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11217,8 +11183,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11311,8 +11276,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11405,8 +11369,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11499,8 +11462,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11593,8 +11555,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11687,8 +11648,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11781,8 +11741,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11875,8 +11834,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -11969,8 +11927,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12063,8 +12020,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12245,8 +12201,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12339,8 +12294,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12433,8 +12387,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12542,14 +12495,14 @@
                 "Rotation": {
                     "x": 0.0,
                     "y": 0.0,
-                    "z": -3.1415910720825195
+                    "z": -3.1415908336639404
                 }
             },
             "Box Collider": {
                 "IsTrigger": false,
                 "Collider Center": {
                     "x": -757.6528930664063,
-                    "y": 296.58453369140625,
+                    "y": 296.5845642089844,
                     "z": -27.592124938964844
                 },
                 "Collider Size": {
@@ -12571,8 +12524,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12709,8 +12661,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12803,8 +12754,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -12941,8 +12891,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13035,8 +12984,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13173,8 +13121,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13311,8 +13258,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13405,8 +13351,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13543,8 +13488,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13681,8 +13625,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13819,8 +13762,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -13969,8 +13911,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14063,8 +14004,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14201,8 +14141,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14295,8 +14234,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14433,8 +14371,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14703,8 +14640,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14797,8 +14733,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14891,8 +14826,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -14985,8 +14919,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15123,8 +15056,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15217,8 +15149,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15311,8 +15242,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15405,8 +15335,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15499,8 +15428,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15593,8 +15521,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15687,8 +15614,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15781,8 +15707,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15875,8 +15800,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -15969,8 +15893,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16151,8 +16074,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16289,8 +16211,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16383,8 +16304,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16477,8 +16397,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16615,8 +16534,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16753,8 +16671,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -16891,8 +16808,7 @@
                     "x": 0.0,
                     "y": 0.0,
                     "z": 0.0
-                },
-                "Model Init": true
+                }
             },
             "Graphics Component": {
                 "PointLight": false,
@@ -17127,7 +17043,7 @@
                 "AngularDamping": 0.05000000074505806,
                 "MotionType": "DYNAMIC",
                 "UseGravity": false,
-                "sensorActivate": false
+                "sensorActivate": true
             },
             "Sphere Collider": {
                 "IsTrigger": false,
@@ -17257,7 +17173,13 @@
         "113": {},
         "114": {},
         "115": {},
-        "116": {},
+        "116": {
+            "OnTriggerTest": {
+                "gameObject": {
+                    "ScriptAPI.GameObject": 116
+                }
+            }
+        },
         "117": {},
         "118": {},
         "119": {},
@@ -17430,217 +17352,152 @@
         "285": {
             "FPS_Controller_Script": {
                 "rb": {
-                    "Component": 285
+                    "ScriptAPI.RigidBodyComponent": 285
                 },
                 "startingVOstr": {
-                    "String": "pc_lockpickstart"
+                    "System.String": "pc_lockpickstart"
                 },
                 "startingVO": {
-                    "Component": 285
-                },
-                "footStepSoundEffects": {
-                    "System.String[]": 0
-                },
-                "currentFootStepPlaying": {
-                    "Int": 0
-                },
-                "audio": {
-                    "Component": 285
+                    "ScriptAPI.AudioComponent": 285
                 },
                 "playerCamera": {
-                    "Component": 286
+                    "ScriptAPI.CameraComponent": 286
                 },
                 "fov": {
-                    "Float": 60.0
+                    "System.Single": "60"
                 },
                 "invertCamera": {
-                    "Bool": false
+                    "System.Boolean": "False"
                 },
                 "cameraCanMove": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "mouseSensitivity": {
-                    "Float": 20.0
+                    "System.Single": "20"
                 },
                 "maxLookAngle": {
-                    "Float": 250.0
+                    "System.Single": "250"
                 },
                 "lockCursor": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "crosshair": {
-                    "Bool": true
-                },
-                "yaw": {
-                    "Float": 20.375
-                },
-                "pitch": {
-                    "Float": -5.8888893
+                    "System.Boolean": "True"
                 },
                 "enableZoom": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "holdToZoom": {
-                    "Bool": false
+                    "System.Boolean": "False"
                 },
                 "zoomKey": {
-                    "UInt": 56
+                    "System.UInt32": "56"
                 },
                 "zoomFOV": {
-                    "Float": 30.0
+                    "System.Single": "30"
                 },
                 "zoomStepTime": {
-                    "Float": 5.0
-                },
-                "isZoomed": {
-                    "Bool": true
+                    "System.Single": "5"
                 },
                 "playerCanMove": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "walkSpeed": {
-                    "Float": 2.0
+                    "System.Single": "2"
                 },
                 "maxVelocityChange": {
-                    "Float": 10.0
+                    "System.Single": "10"
                 },
                 "isWalking": {
-                    "Bool": false
+                    "System.Boolean": "False"
                 },
                 "enableSprint": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "unlimitedSprint": {
-                    "Bool": false
+                    "System.Boolean": "False"
                 },
                 "sprintKey": {
-                    "UInt": 42
+                    "System.UInt32": "42"
                 },
                 "sprintSpeed": {
-                    "Float": 3.0
+                    "System.Single": "3"
                 },
                 "currentSprintSpeed": {
-                    "Float": 3.0
+                    "System.Single": "3"
                 },
                 "sprintDuration": {
-                    "Float": 5.0
+                    "System.Single": "5"
                 },
                 "sprintCooldown": {
-                    "Float": 0.5
+                    "System.Single": "0.5"
                 },
                 "sprintFOV": {
-                    "Float": 80.0
+                    "System.Single": "80"
                 },
                 "sprintFOVStepTime": {
-                    "Float": 10.0
+                    "System.Single": "10"
                 },
                 "useSprintBar": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "hideBarWhenFull": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "sprintBarWidthPercent": {
-                    "Float": 0.3
+                    "System.Single": "0.3"
                 },
                 "sprintBarHeightPercent": {
-                    "Float": 0.015
+                    "System.Single": "0.015"
                 },
                 "isSprinting": {
-                    "Bool": false
-                },
-                "sprintRemaining": {
-                    "Float": 5.0
-                },
-                "sprintBarWidth": {
-                    "Float": 0.0
-                },
-                "sprintBarHeight": {
-                    "Float": 0.0
-                },
-                "isSprintCooldown": {
-                    "Bool": false
-                },
-                "sprintCooldownReset": {
-                    "Float": 0.5
+                    "System.Boolean": "False"
                 },
                 "enableJump": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "jumpKey": {
-                    "UInt": 45
+                    "System.UInt32": "45"
                 },
                 "jumpPower": {
-                    "Float": 5.0
-                },
-                "isGrounded": {
-                    "Bool": false
+                    "System.Single": "5"
                 },
                 "enableCrouch": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "holdToCrouch": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "crouchKey": {
-                    "UInt": 43
+                    "System.UInt32": "43"
                 },
                 "crouchHeight": {
-                    "Float": 0.75
+                    "System.Single": "0.75"
                 },
                 "speedReduction": {
-                    "Float": 0.5
-                },
-                "isCrouched": {
-                    "Bool": false
-                },
-                "originalScale": {
-                    "Vector3": {
-                        "X": 8.082494735717773,
-                        "Y": 8.082499504089355,
-                        "Z": 8.082494735717773
-                    }
+                    "System.Single": "0.5"
                 },
                 "playerHealth": {
-                    "Int": 100
+                    "System.Int32": "100"
                 },
                 "enableHeadBob": {
-                    "Bool": true
+                    "System.Boolean": "True"
                 },
                 "joint": {
-                    "Component": 0
+                    "ScriptAPI.TransformComponent": 0
                 },
                 "bobSpeed": {
-                    "Float": 10.0
+                    "System.Single": "10"
                 },
                 "bobAmount": {
-                    "Vector3": {
+                    "ScriptAPI.Vector3": {
                         "X": 0.15000000596046448,
                         "Y": 0.05000000074505806,
                         "Z": 0.0
                     }
                 },
-                "jointOriginalPos": {
-                    "Vector3": {
-                        "X": 0.0,
-                        "Y": 0.0,
-                        "Z": 0.0
-                    }
-                },
-                "timer": {
-                    "Float": 0.0
-                },
                 "gameObject": {
-                    "GameObject": 285
-                },
-                "is_Enabled": {
-                    "Bool": true
-                },
-                "is_Awake": {
-                    "Bool": false
-                },
-                "is_Start": {
-                    "Bool": true
+                    "ScriptAPI.GameObject": 285
                 }
             }
         }

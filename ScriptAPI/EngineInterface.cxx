@@ -170,11 +170,11 @@ namespace ScriptAPI
                 for each (NameScriptPair ^ script in scripts[i])
                 {
                     SAFE_NATIVE_CALL_BEGIN
-                        //if (!script->Value->getAwakeFlag())
-                        //{
+                        if (!script->Value->getAwakeFlag())
+                        {
                             script->Value->Awake();
                             script->Value->setAwakeFlag();
-                        //}
+                        }
                     SAFE_NATIVE_CALL_END
                 }
             }
@@ -488,6 +488,11 @@ namespace ScriptAPI
             {
                 continue;
             }
+            
+            if (field->Name == "is_Enabled" || field->Name == "is_Awake" || field->Name == "is_Start")
+            {
+                continue;
+            }
 
             if (field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 || field->IsPublic) // Either SerializedField or public variables
             {
@@ -539,6 +544,11 @@ namespace ScriptAPI
                 continue;
             }
 
+            if (field->Name == "is_Enabled" || field->Name == "is_Awake" || field->Name == "is_Start")
+            {
+                continue;
+            }
+
             if ((field->GetCustomAttributes(SerializeFieldAttribute::typeid, true)->Length > 0 || field->IsPublic) && 
                 field->GetCustomAttributes(HideInInspectorAttribute::typeid, true)->Length <= 0) // Either SerializedField or public variables, but not HideInInspector
             {
@@ -570,7 +580,11 @@ namespace ScriptAPI
         {
             if (field->Name == toSystemString(variableInfo.name))
             {
-                Serialization::SetValue(currentObject, field, variableInfo);
+                if (field->Name != "is_Enabled" && field->Name != "is_Awake" && field->Name != "is_Start")
+                {
+                    Serialization::SetValue(currentObject, field, variableInfo);
+                }
+
                 return;
             }
         }
@@ -596,7 +610,10 @@ namespace ScriptAPI
         {
             if (field->Name == toSystemString(allVariableInfo[currentVariableIndex].name))
             {
-                Serialization::SetValue(currentObject, field, allVariableInfo[currentVariableIndex]);
+                if (field->Name != "is_Enabled" && field->Name != "is_Awake" && field->Name != "is_Start")
+                {
+                    Serialization::SetValue(currentObject, field, allVariableInfo[currentVariableIndex]);
+                }
 
                 ++currentVariableIndex;
                 if (currentVariableIndex == allVariableInfo.size())
@@ -716,4 +733,87 @@ namespace ScriptAPI
 
         // return list;
     // }
+
+
+    /*!*************************************************************************
+    * Calls all script OnTriggerEnter function
+    ***************************************************************************/
+    void EngineInterface::ExecuteOnTriggerEnter(TDS::EntityID trigger, TDS::EntityID collider)
+    {
+        ColliderComponent^ colliderComponent;
+
+        if (TDS::GetBoxCollider(collider))
+        {
+            colliderComponent = gcnew BoxColliderComponent(collider);
+        }
+        else if (TDS::GetCapsuleCollider(collider))
+        {
+            colliderComponent = gcnew CapsuleColliderComponent(collider);
+        }
+        else if (TDS::GetSphereCollider(collider))
+        {
+            colliderComponent = gcnew SphereColliderComponent(collider);
+        }
+
+        for each (NameScriptPair ^ script in scripts[trigger])
+        {
+            SAFE_NATIVE_CALL_BEGIN
+                script->Value->OnTriggerEnter(colliderComponent);
+            SAFE_NATIVE_CALL_END
+        }
+    }
+    /*!*************************************************************************
+    * Calls all script OnTriggerEnter function
+    ***************************************************************************/
+    void EngineInterface::ExecuteOnTriggerStay(TDS::EntityID trigger, TDS::EntityID collider)
+    {
+        ColliderComponent^ colliderComponent;
+
+        if (TDS::GetBoxCollider(collider))
+        {
+            colliderComponent = gcnew BoxColliderComponent(collider);
+        }
+        else if (TDS::GetCapsuleCollider(collider))
+        {
+            colliderComponent = gcnew CapsuleColliderComponent(collider);
+        }
+        else if (TDS::GetSphereCollider(collider))
+        {
+            colliderComponent = gcnew SphereColliderComponent(collider);
+        }
+
+        for each (NameScriptPair ^ script in scripts[trigger])
+        {
+            SAFE_NATIVE_CALL_BEGIN
+                script->Value->OnTriggerStay(colliderComponent);
+            SAFE_NATIVE_CALL_END
+        }
+    }
+    /*!*************************************************************************
+    * Calls all script OnTriggerEnter function
+    ***************************************************************************/
+    void EngineInterface::ExecuteOnTriggerExit(TDS::EntityID trigger, TDS::EntityID collider)
+    {
+        ColliderComponent^ colliderComponent;
+
+        if (TDS::GetBoxCollider(collider))
+        {
+            colliderComponent = gcnew BoxColliderComponent(collider);
+        }
+        else if (TDS::GetCapsuleCollider(collider))
+        {
+            colliderComponent = gcnew CapsuleColliderComponent(collider);
+        }
+        else if (TDS::GetSphereCollider(collider))
+        {
+            colliderComponent = gcnew SphereColliderComponent(collider);
+        }
+
+        for each (NameScriptPair ^ script in scripts[trigger])
+        {
+            SAFE_NATIVE_CALL_BEGIN
+                script->Value->OnTriggerExit(colliderComponent);
+            SAFE_NATIVE_CALL_END
+        }
+    }
 }

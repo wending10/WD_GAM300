@@ -38,7 +38,7 @@ public class Hiding : Script
         _flashlight = player.GetComponent<Flashlight_Script>();
         hidingPos = closet.transform.GetPosition();
         _RotationAngle = 180;
-        if (interactable && closet.GetRigidBodyComponent().IsSensorActivated())
+        if (interactable && closet.GetComponent<RigidBodyComponent>().IsSensorActivated())
         {
             if (Input.GetKeyDown(Keycode.E) && hiding == false)
             {
@@ -94,7 +94,7 @@ public class Hiding : Script
 
     private void OnTriggerEnter(GameObject other)
     {
-        if (other.GetNameTagComponent().GetName() == "Enemy" && hiding == true)
+        if (other.GetComponent<NameTagComponent>().GetName() == "Enemy" && hiding == true)
         {
             if (enemyPathfinding.isChasingPlayer && hiding == true)
             {

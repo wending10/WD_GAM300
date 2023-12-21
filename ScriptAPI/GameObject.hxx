@@ -27,6 +27,8 @@ namespace ScriptAPI
         TransformComponent transform;
 
     internal:
+        GameObject() { }
+        GameObject(TDS::EntityID ID);
         void SetEntityID(TDS::EntityID ID);
     private:
 

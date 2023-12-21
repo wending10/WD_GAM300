@@ -26,7 +26,11 @@ namespace ScriptAPI
 
 		if (type == BoxColliderComponent::typeid)
 		{
-			return safe_cast<T>(BoxColliderComponent(entityID));
+			if (BoxColliderComponent(entityID).gameObject)
+			{
+				BoxColliderComponent^ boxCollider = gcnew BoxColliderComponent(entityID);
+			}
+			return safe_cast<T>(gcnew BoxColliderComponent(entityID));
 		}
 		else if (type == CameraComponent::typeid)
 		{
@@ -34,7 +38,11 @@ namespace ScriptAPI
 		}
 		else if (type == CapsuleColliderComponent::typeid)
 		{
-			return safe_cast<T>(CapsuleColliderComponent(entityID));
+			if (CapsuleColliderComponent(entityID).gameObject)
+			{
+				CapsuleColliderComponent^ boxCollider = gcnew CapsuleColliderComponent(entityID);
+			}
+			return safe_cast<T>(gcnew CapsuleColliderComponent(entityID));
 		}
 		else if (type == NameTagComponent::typeid)
 		{
@@ -46,7 +54,11 @@ namespace ScriptAPI
 		}
 		else if (type == SphereColliderComponent::typeid)
 		{
-			return safe_cast<T>(SphereColliderComponent(entityID));
+			if (SphereColliderComponent(entityID).gameObject)
+			{
+				SphereColliderComponent^ boxCollider = gcnew SphereColliderComponent(entityID);
+			}
+			return safe_cast<T>(gcnew SphereColliderComponent(entityID));
 		}
 		else if (type == TransformComponent::typeid)
 		{
@@ -67,6 +79,9 @@ namespace ScriptAPI
 
 		return safe_cast<T>(EngineInterface::GetScriptReference(entityID, type->FullName));
 	}
+
+	GameObject::GameObject(TDS::EntityID ID) : entityID (ID)
+	{ }
 
 	void GameObject::SetEntityID(TDS::EntityID id)
 	{

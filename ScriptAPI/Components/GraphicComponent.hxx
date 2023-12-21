@@ -1,5 +1,6 @@
 #pragma once
 #include "ComponentBase.hxx"
+#include "TransformComponent.hxx"
 
 namespace ScriptAPI {
 	public value class GraphicComponent : ComponentBase
@@ -10,6 +11,8 @@ namespace ScriptAPI {
 
 		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID);
+
+		TransformComponent transform;
 
 	internal:
 		GraphicComponent(TDS::EntityID ID);

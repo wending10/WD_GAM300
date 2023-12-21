@@ -39,6 +39,8 @@ bool startPlaying = false;
 
 namespace TDS
 {
+    bool SceneManager::isPlaying;
+
     Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
     {
@@ -237,9 +239,11 @@ namespace TDS
             {
                 if (startPlaying)
                 {
+                    SceneManager::GetInstance()->isPlaying = true;
                     SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
                     startPlaying = false;
                 }
+                SceneManager::GetInstance()->start();
                 executeFixedUpdate();
                 ecs.runSystems(1, DeltaTime); // Other systems
                 executeUpdate();
@@ -248,6 +252,7 @@ namespace TDS
             else
             {
                 startPlaying = true;
+                SceneManager::GetInstance()->isPlaying = false;
                 if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
                 {
                     PhysicsSystem::SetIsPlaying(false);
@@ -495,6 +500,27 @@ namespace TDS
                 "ScriptAPI",
                 "ScriptAPI.EngineInterface",
                 "ExecuteStart"
+            );
+
+        PhysicsSystem::OnTriggerEnter = GetFunctionPtr<void(*)(EntityID, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteOnTriggerEnter"
+            );
+
+        PhysicsSystem::OnTriggerStay = GetFunctionPtr<void(*)(EntityID, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteOnTriggerStay"
+            );
+
+        PhysicsSystem::OnTriggerExit = GetFunctionPtr<void(*)(EntityID, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteOnTriggerExit"
             );
 
 

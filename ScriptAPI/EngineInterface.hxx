@@ -128,6 +128,19 @@ namespace ScriptAPI
 		***************************************************************************/
 		static Script^ GetScriptReference(TDS::EntityID entityId, System::String^ script);
 
+		/*!*************************************************************************
+		* Calls all script OnTriggerEnter function
+		***************************************************************************/
+		static void ExecuteOnTriggerEnter(TDS::EntityID trigger, TDS::EntityID collider);
+		/*!*************************************************************************
+		* Calls all script OnTriggerEnter function
+		***************************************************************************/
+		static void ExecuteOnTriggerStay(TDS::EntityID trigger, TDS::EntityID collider);
+		/*!*************************************************************************
+		* Calls all script OnTriggerEnter function
+		***************************************************************************/
+		static void ExecuteOnTriggerExit(TDS::EntityID trigger, TDS::EntityID collider);
+
 		using ScriptList = System::Collections::Generic::Dictionary<String^, Script^>;
 		using NameScriptPair = System::Collections::Generic::KeyValuePair<String^, Script^>;
 		static System::Collections::Generic::SortedList<TDS::EntityID, ScriptList^>^ GetScriptList();

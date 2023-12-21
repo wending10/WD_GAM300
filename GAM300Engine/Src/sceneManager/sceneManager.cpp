@@ -18,6 +18,7 @@ namespace TDS
 {
 	// Unique pointer to instance of Scene
 	std::unique_ptr<SceneManager> SceneManager::m_instance;
+	bool SceneManager::isPlaying;
 
 	/*!*************************************************************************
 	Returns an instance of the SceneManager
@@ -680,8 +681,11 @@ namespace TDS
 		DeserializeFromFile(filePath + scene + ".json");
 		currentScene = scene;
 		currentSceneSaved = true;
-		start();
-		awake();
+
+		if (isPlaying)
+		{
+			awake();
+		}
 	}
 
 	/*!*************************************************************************

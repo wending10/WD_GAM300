@@ -150,6 +150,8 @@ namespace TDS
 		void(*awake)(void);
 		void(*start)(void);
 
+		static bool isPlaying;
+
 	private:
 		// Unique pointer to SceneManager
 		static std::unique_ptr<SceneManager> m_instance;
