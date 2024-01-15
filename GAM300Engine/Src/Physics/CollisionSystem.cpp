@@ -37,7 +37,7 @@ namespace TDS
 			{
 				continue;
 			}
-			//if (PhysicsSystem::GetIsPlaying()) continue;
+			if (PhysicsSystem::GetIsPlaying()) continue;
 			if (GetSphereCollider(entities[i]))
 			{
 				SphereCollider* vSphere = GetSphereCollider(entities[i]);
@@ -48,33 +48,33 @@ namespace TDS
 				}
 				else
 				{
-					TDS::AssetModel *tmp_assetModel = AssetManager::GetInstance()->GetModelFactory().GetModel(_graphics[i].GetModelName(), _graphics[i].GetAsset());
-					std::string key = _graphics[i].GetMeshName();
-					auto it = tmp_assetModel->m_Meshes.find(key);
-					if (it != tmp_assetModel->m_Meshes.end())
-					{
-						MeshData* tmp_MeshData = &(it->second);
-						Vec3 minBoundingBox(FLT_MAX, FLT_MAX, FLT_MAX);
-						Vec3 maxBoundingBox(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-						for (auto& modelCoord : tmp_MeshData->m_VertexData)
-						{
-							minBoundingBox.x = Mathf::Min(minBoundingBox.x, modelCoord.m_Pos.x);
-							minBoundingBox.y = Mathf::Min(minBoundingBox.y, modelCoord.m_Pos.y);
-							minBoundingBox.z = Mathf::Min(minBoundingBox.z, modelCoord.m_Pos.z);
+					//TDS::AssetModel *tmp_assetModel = AssetManager::GetInstance()->GetModelFactory().GetModel(_graphics[i].GetModelName(), _graphics[i].GetAsset());
+					//std::string key = _graphics[i].GetMeshName();
+					//auto it = tmp_assetModel->m_Meshes.find(key);
+					//if (it != tmp_assetModel->m_Meshes.end())
+					//{
+					//	MeshData* tmp_MeshData = &(it->second);
+					//	Vec3 minBoundingBox(FLT_MAX, FLT_MAX, FLT_MAX);
+					//	Vec3 maxBoundingBox(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+					//	for (auto& modelCoord : tmp_MeshData->m_VertexData)
+					//	{
+					//		minBoundingBox.x = Mathf::Min(minBoundingBox.x, modelCoord.m_Pos.x);
+					//		minBoundingBox.y = Mathf::Min(minBoundingBox.y, modelCoord.m_Pos.y);
+					//		minBoundingBox.z = Mathf::Min(minBoundingBox.z, modelCoord.m_Pos.z);
 
-							maxBoundingBox.x = Mathf::Max(maxBoundingBox.x, modelCoord.m_Pos.x);
-							maxBoundingBox.y = Mathf::Max(maxBoundingBox.y, modelCoord.m_Pos.y);
-							maxBoundingBox.z = Mathf::Max(maxBoundingBox.z, modelCoord.m_Pos.z);
+					//		maxBoundingBox.x = Mathf::Max(maxBoundingBox.x, modelCoord.m_Pos.x);
+					//		maxBoundingBox.y = Mathf::Max(maxBoundingBox.y, modelCoord.m_Pos.y);
+					//		maxBoundingBox.z = Mathf::Max(maxBoundingBox.z, modelCoord.m_Pos.z);
 
-						}
+					//	}
 
-						Vec3 vRadius = (maxBoundingBox - minBoundingBox) * 0.5f; // size of the box collider 
-						Vec3 vCenter = (maxBoundingBox + minBoundingBox) * 0.5f; // center of the box collider
-						float vRadiusMax = Mathf::Max(vRadius.x, Mathf::Max(vRadius.y, vRadius.z));
-						Vec4 worldCenter = _transform[i].GetTransformMatrix() * Vec4(vCenter, 1.f);
-						vSphere->SetColliderCenter(Vec3(worldCenter.x, worldCenter.y, worldCenter.z));
-						vSphere->SetColliderRadius(vRadiusMax);
-					}
+					//	Vec3 vRadius = (maxBoundingBox - minBoundingBox) * 0.5f; // size of the box collider 
+					//	Vec3 vCenter = (maxBoundingBox + minBoundingBox) * 0.5f; // center of the box collider
+					//	float vRadiusMax = Mathf::Max(vRadius.x, Mathf::Max(vRadius.y, vRadius.z));
+					//	Vec4 worldCenter = _transform[i].GetTransformMatrix() * Vec4(vCenter, 1.f);
+					//	vSphere->SetColliderCenter(Vec3(worldCenter.x, worldCenter.y, worldCenter.z));
+					//	vSphere->SetColliderRadius(vRadiusMax);
+					//}
 				}
 				
 
