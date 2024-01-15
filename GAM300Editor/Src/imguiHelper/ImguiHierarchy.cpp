@@ -671,6 +671,12 @@ namespace TDS
 					bool currentItemHovered = false;
 					selected = ImGui::Selectable(nameTagComponent->GetName().c_str(), selectedEntity == entityID, ImGuiSelectableFlags_SpanAllColumns);
 
+					if (ImGui::BeginDragDropSource())
+					{
+						ImGui::SetDragDropPayload("draggedEntityProperty", &entityID, sizeof(int));
+						ImGui::EndDragDropSource();
+					}
+
 					if (ImGui::IsItemHovered())
 					{
 						anyItemHovered = true;

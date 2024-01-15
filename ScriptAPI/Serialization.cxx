@@ -12,7 +12,11 @@ namespace ScriptAPI
 		System::String^ fieldType = variable->FieldType->ToString();
 		variableInfo.type = toStdString(fieldType);
 
-		if (fieldType->Contains("System"))
+		if (fieldType->Contains("[]"))
+		{
+
+		}
+		else if (fieldType->Contains("System"))
 			variableInfo.value = toStdString(variable->GetValue(object)->ToString());
 		else if (fieldType == "ScriptAPI.Vector2")
 		{
@@ -45,15 +49,15 @@ namespace ScriptAPI
 		}
 		else if (fieldType->Contains("GameObject")) // Other entities
 		{
-			variableInfo.referenceEntityID = safe_cast<GameObject^>(variable->GetValue(object))->GetEntityID();
+			variableInfo.referenceEntityID = variable->GetValue(object) ? safe_cast<GameObject^>(variable->GetValue(object))->GetEntityID() : 0;
 		}
 		else if (fieldType->Contains("Component")) // Components
 		{
-			variableInfo.referenceEntityID = safe_cast<ComponentBase^>(variable->GetValue(object))->GetEntityID();
+			variableInfo.referenceEntityID = variable->GetValue(object) ? safe_cast<ComponentBase^>(variable->GetValue(object))->GetEntityID() : 0;
 		}
 		else if (fieldType->Contains("ScriptAPI")) // All other scripts
 		{
-			variableInfo.referenceEntityID = safe_cast<Script^>(variable->GetValue(object))->gameObject->GetEntityID();
+			variableInfo.referenceEntityID = variable->GetValue(object) ? safe_cast<Script^>(variable->GetValue(object))->gameObject->GetEntityID() : 0;
 		}
 		else
 		{
@@ -71,7 +75,11 @@ namespace ScriptAPI
 		System::String^ fieldType = variable->FieldType->ToString();
 		System::String^ value = toSystemString(variableInfo.value);
 
-		if (fieldType == "System.Boolean")
+		if (fieldType->Contains("[]"))
+		{
+
+		}
+		else if (fieldType == "System.Boolean")
 			variable->SetValue(object, Convert::ToBoolean(value));
 		else if (fieldType == "System.Int16")
 			variable->SetValue(object, Convert::ToInt16(value));
