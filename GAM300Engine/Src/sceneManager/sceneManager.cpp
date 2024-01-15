@@ -65,6 +65,7 @@ namespace TDS
 		ecs.registerComponent<WinData>("Win Data");
 		ecs.registerComponent<UISprite>("UI Sprite");
 		ecs.registerComponent<SoundInfo>("Audio");
+		ecs.registerComponent<Particle_Component>("Particles");
 
 		startScene = "";
 		//startScene = "MainMenu";
