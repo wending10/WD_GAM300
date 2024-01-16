@@ -513,7 +513,7 @@ namespace TDS
 
 								if (ImGui::BeginDragDropTarget())
 								{
-									if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("draggedEntityProperty"))
+									if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("draggedEntity"))
 									{
 										// Changing either component / script
 										// Need to check if dragged entity has such component / script
