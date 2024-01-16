@@ -379,7 +379,6 @@ namespace TDS
 			if (ImGui::BeginDragDropSource())
 			{
 				ImGui::SetDragDropPayload("draggedEntity", &entityID, sizeof(int));
-				ImGui::SetDragDropPayload("draggedEntityProperty", &entityID, sizeof(int));
 				ImGui::EndDragDropSource();
 			}
 
@@ -453,7 +452,6 @@ namespace TDS
 		if (ImGui::BeginDragDropSource())
 		{
 			ImGui::SetDragDropPayload("draggedEntity", &entityID, sizeof(int));
-			ImGui::SetDragDropPayload("draggedEntityProperty", &entityID, sizeof(int));
 			ImGui::EndDragDropSource();
 		}
 
@@ -673,7 +671,7 @@ namespace TDS
 
 					if (ImGui::BeginDragDropSource())
 					{
-						ImGui::SetDragDropPayload("draggedEntityProperty", &entityID, sizeof(int));
+						ImGui::SetDragDropPayload("draggedEntity", &entityID, sizeof(int));
 						ImGui::EndDragDropSource();
 					}
 
