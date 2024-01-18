@@ -527,7 +527,7 @@ namespace TDS
 										}
 										else if (scriptValue.type.find("Component") != scriptValue.type.npos) // Component
 										{
-											if (payloadEntityID != selectedEntity && getComponentByName(scriptValue.type, payloadEntityID))
+											if (/*payloadEntityID != selectedEntity &&*/ getComponentByName(scriptValue.type, payloadEntityID))
 											{
 												scriptValue.referenceEntityID = payloadEntityID;
 												sceneManagerInstance->setScriptValue(selectedEntity, scriptName, scriptValue);
@@ -535,7 +535,7 @@ namespace TDS
 										}
 										else // Script
 										{
-											if (payloadEntityID != selectedEntity && sceneManagerInstance->hasScript(payloadEntityID, scriptValue.type))
+											if (/*payloadEntityID != selectedEntity &&*/ sceneManagerInstance->hasScript(payloadEntityID, scriptValue.type))
 											{
 												scriptValue.referenceEntityID = payloadEntityID;
 												sceneManagerInstance->setScriptValue(selectedEntity, scriptName, scriptValue);
