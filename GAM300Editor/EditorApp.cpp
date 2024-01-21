@@ -144,7 +144,7 @@ namespace TDS
     void Application::Update()
     {
         DDSConverter::Init();
-
+        m_window.GetWindowPos();
         auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",

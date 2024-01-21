@@ -170,6 +170,11 @@ namespace ScriptAPI
 		static float GetMousePositionDifferenceX();
 		static float GetMousePositionDifferenceY();
 		static void KeyRelease(uint32_t keycode);
+		static void HideMouse();
+		static void SetMousePosX(uint32_t Xpos);
+		static void SetMousePosY(uint32_t Ypos);
+		static void CenterMouse();
+
 
 		//static float Get2DMousePosX();
 		//static float Get2DMousePosY();
@@ -181,5 +186,7 @@ namespace ScriptAPI
 		static System::Collections::Generic::Dictionary<System::String^, System::Tuple<uint32_t, uint32_t>^>^ AxisDictionary;
 		static float mousePositionX;
 		static float mousePositionY;
+		static int WinPosX;
+		static int WinPosY;
 	};
 }

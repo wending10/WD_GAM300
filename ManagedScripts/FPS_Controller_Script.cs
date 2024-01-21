@@ -118,6 +118,7 @@ public class FPS_Controller_Script : Script
     private float timer = 0;
     #endregion
 
+
     public override void Awake()
     {
         rb = gameObject.GetComponent<RigidBodyComponent>();
@@ -220,17 +221,21 @@ public class FPS_Controller_Script : Script
                 playerCamera.transform.SetRotationX(pitch);
                 playerCamera.transform.SetRotationY(transform.GetRotation().Y);
             }
-            if (Input.GetLocalMousePosX() > 0.8f)
-            {
-                yaw++;
-                transform.SetRotationY(yaw);
-            }
-            if (Input.GetLocalMousePosX() < -0.8f)
-            {
-                yaw--;
-                transform.SetRotationY(yaw);
-            }
+            //if (Input.GetLocalMousePosX() > 0.8f)
+            //{
+            //    yaw++;
+            //    transform.SetRotationY(yaw);
+            //}
+            //if (Input.GetLocalMousePosX() < -0.8f)
+            //{
+            //    yaw--;
+            //    transform.SetRotationY(yaw);
+            //}
         }
+        Input.HideMouse();
+        Input.CenterMouse();
+
+
 
         #region Camera Zoom
 

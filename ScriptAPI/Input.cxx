@@ -1,4 +1,7 @@
 #include "Input.hxx"
+#include "Rendering/GraphicsManagerWrapperCalls.h"
+#include "Windows.h"
+
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
@@ -125,4 +128,31 @@ namespace ScriptAPI
 		mousePositionX = TDS::Input::getMousePosition().x;
 		mousePositionY = TDS::Input::getMousePosition().y;
 	}
+
+	void Input::HideMouse() {
+		ShowCursor(FALSE);
+	}
+
+	void Input::SetMousePosX(uint32_t Xpos) {
+		mousePositionX = Xpos;
+	}
+
+	void Input::SetMousePosY(uint32_t Ypos) {
+		mousePositionY = Ypos;
+	}
+
+	void Input::CenterMouse() {
+		int width = TDS::GetScreenWidth();
+		int height = TDS::GetScreenHeight();
+		
+		//get top left of window
+		int windowX = TDS::GraphicsManagerWrapperCalls::GetWinPosX();
+		int windowY = TDS::GraphicsManagerWrapperCalls::GetWinPosY();
+
+		int centerX = windowX + (width / 2);
+		int centerY = windowY + ( height / 2);
+
+		//SetCursorPos(centerX, centerY);
+	}
+
 }
