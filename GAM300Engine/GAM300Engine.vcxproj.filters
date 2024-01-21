@@ -107,6 +107,7 @@
     <ClCompile Include="Src\components\AudioSource.cpp" />
     <ClCompile Include="Src\AI\UIPopupManager.cpp" />
     <ClCompile Include="Src\Physics\ContactListenerImpl.cpp" />
+    <ClCompile Include="Src\Input\InputSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -246,6 +247,8 @@
     <ClInclude Include="Include\AI\UIPopupManager.h" />
     <ClInclude Include="Include\eventmanager\eventHandler.h" />
     <ClInclude Include="Include\Physics\ContactListenerImpl.h" />
+    <ClInclude Include="Include\Input\InputListener.h" />
+    <ClInclude Include="Include\Input\InputSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />
