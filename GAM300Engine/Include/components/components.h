@@ -26,6 +26,7 @@
 #include "UiSprite.h"
 #include "fmod_engine/AudioEngine.h"
 #include "SoundInfo.h"
+#include "ParticleComponent.h"
 
 // Helper functions for components
 namespace TDS

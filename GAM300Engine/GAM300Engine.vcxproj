@@ -194,6 +194,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="Include\ecs\ecs.cpp" />
+    <ClInclude Include="Include\components\ParticleComponent.h" />
     <ClInclude Include="Include\AssetManagement\Revamped\MeshFactory.h" />
     <ClInclude Include="Include\GraphicsResource\GeomSerializer.h" />
     <ClInclude Include="Include\GraphicsResource\GeomStruct.h" />
@@ -210,6 +211,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Include\Rendering\GraphicsManagerWrapperCalls.cpp" />
     <ClCompile Include="Src\components\AudioSource.cpp" />
     <ClCompile Include="Src\AI\UIPopupManager.cpp" />
+    <ClCompile Include="Src\components\ParticleComponent.cpp" />
     <ClCompile Include="src\components\SoundInfo.cpp" />
     <ClCompile Include="src\fmod_engine\AudioEngine.cpp" />
     <ClCompile Include="Src\GraphicsResource\GeomStruct.cpp" />
@@ -269,6 +271,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Src\Rendering\GridRenderer.cpp" />
     <ClCompile Include="Src\Rendering\ObjectPicking.cpp" />
+    <ClCompile Include="Src\Rendering\ParticleSystem.cpp" />
     <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
     <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
@@ -397,6 +400,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\Material.h" />
     <ClInclude Include="Include\Rendering\ModelElement.h" />
     <ClInclude Include="Include\Rendering\ObjectPicking.h" />
+    <ClInclude Include="Include\Rendering\ParticleSystem.h" />
     <ClInclude Include="Include\Rendering\RenderDataManager.h" />
     <ClInclude Include="Include\Rendering\Renderer2D.h" />
     <ClInclude Include="Include\Rendering\Renderer3D.h" />
