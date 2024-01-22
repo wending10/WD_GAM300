@@ -198,8 +198,11 @@ public class FPS_Controller_Script : Script
     {
         #region Camera
         // Control camera movement
+        //Input.HideMouse();
+        
         if (cameraCanMove)
         {
+            
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             {
                 yaw = transform.GetRotation().Y + Input.GetAxis("Mouse X") * mouseSensitivity;
@@ -221,6 +224,20 @@ public class FPS_Controller_Script : Script
                 playerCamera.transform.SetRotationX(pitch);
                 playerCamera.transform.SetRotationY(transform.GetRotation().Y);
             }
+            //Input.CenterMouseX();
+            //Input.CenterMouseY();
+            //else if (Input.GetLocalMousePosX() > 0.95f || Input.GetLocalMousePosX() < -0.95f)
+            //{
+            //    //set mouse pos to center
+            //    //Console.WriteLine(Input.GetScreenMouseX());
+            //    Input.CenterMouseX();
+            //    //Console.WriteLine(Input.GetScreenMouseX());
+
+            //}
+            //else if (Input.GetLocalMousePoxY() > 0.9f || Input.GetLocalMousePoxY() < -0.9f)
+            //{
+            //    Input.CenterMouseY();
+            //}
             //if (Input.GetLocalMousePosX() > 0.8f)
             //{
             //    yaw++;
@@ -230,11 +247,8 @@ public class FPS_Controller_Script : Script
             //{
             //    yaw--;
             //    transform.SetRotationY(yaw);
-            //}
+            //}   
         }
-        Input.HideMouse();
-        Input.CenterMouse();
-
 
 
         #region Camera Zoom
@@ -291,7 +305,7 @@ public class FPS_Controller_Script : Script
             {
                 isZoomed = false;
                 playerCamera.SetFieldOfView(Mathf.Lerp(playerCamera.GetFieldOfView(), sprintFOV, sprintFOVStepTime * Time.deltaTime));
-                
+
                 // Drain sprint remaining while sprinting
                 if (!unlimitedSprint)
                 {
@@ -438,7 +452,7 @@ public class FPS_Controller_Script : Script
                     }
                 }
                 // this is the command to move the object, modify the variable if needed for too slow/fast
-                gameObject.GetComponent<RigidBodyComponent>().SetLinearVelocity(velocityChange*100);
+                gameObject.GetComponent<RigidBodyComponent>().SetLinearVelocity(velocityChange * 100);
             }
             // All movement calculations while walking
             else
@@ -460,12 +474,12 @@ public class FPS_Controller_Script : Script
                 velocityChange.Y = 0;
 
                 // this is the command to move the object, modify the variable if needed for too slow/fast
-                gameObject.GetComponent<RigidBodyComponent>().SetLinearVelocity(velocityChange*100);
+                gameObject.GetComponent<RigidBodyComponent>().SetLinearVelocity(velocityChange * 100);
 
             }
 
         }
-       
+
         //if (isCollided)
         //{
         //    Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
