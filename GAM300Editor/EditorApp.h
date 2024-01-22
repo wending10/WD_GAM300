@@ -23,7 +23,7 @@
 
 namespace TDS
 {
-	class Application : public InputListener
+	class Application/* : public InputListener*/
 	{
 	public:
 
@@ -148,11 +148,11 @@ namespace TDS
 
 
 		// Inherited via InputListener
-		virtual void onKeyPressed(int key) override;
+		//virtual void onKeyPressed(int key) override;
 
-		virtual void onKeyDown(int key) override;
+		//virtual void onKeyDown(int key) override;
 
-		virtual void onKeyUp(int key) override;
+		//virtual void onKeyUp(int key) override;
 
 };//class application
 
