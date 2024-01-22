@@ -403,6 +403,14 @@ namespace TDS
 			{
 				selectedEntity = entityID;
 				popupOpened = true;
+				if (ImGui::Selectable("Reset Parent"))
+				{
+					reorderingHierarchy(entityID, hierarchyList[hierarchyList.size() - 1]);
+					ImGui::EndPopup();
+					ImGui::Unindent();
+					ImGui::PopID();
+					return;
+				}
 				if (ImGui::Selectable("Remove Entity"))
 				{
 					removeEntity(selectedEntity);
@@ -495,6 +503,17 @@ namespace TDS
 		{
 			selectedEntity = entityID;
 			popupOpened = true;
+			if (ImGui::Selectable("Reset Parent"))
+			{
+				reorderingHierarchy(entityID, hierarchyList[hierarchyList.size() - 1]);
+				ImGui::EndPopup();
+				ImGui::PopID();
+				if (opened)
+				{
+					ImGui::TreePop();
+				}
+				return;
+			}
 			if (ImGui::Selectable("Remove Entity"))
 			{
 				removeEntity(selectedEntity);
@@ -689,6 +708,14 @@ namespace TDS
 					{
 						selectedEntity = entityID;
 						popupOpened = true;
+						if (ImGui::Selectable("Reset Parent"))
+						{
+							reorderingHierarchy(entityID, hierarchyList[hierarchyList.size() - 1]);
+							ImGui::EndPopup();
+							ImGui::Unindent();
+							ImGui::PopID();
+							return;
+						}
 						if (ImGui::Selectable("Remove Entity"))
 						{
 							removeEntity(selectedEntity);
