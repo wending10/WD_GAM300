@@ -59,22 +59,22 @@ namespace TDS
 					m_KeyDelayTimer = 0.25f;
 
 					// For Debug Purposes
-					//if (i == 'G')
-					//{
-					//	setCursorVisible(false);
-					//}
-					//if (i == 'H')
-					//{
-					//	setCursorVisible(true);
-					//}
-					//if (i == 'B')
-					//{
-					//	setMouseLock(true);
-					//}
-					//if (i == 'N') 
-					//{
-					//	setMouseLock(false);
-					//}
+					/*if (i == 'G')
+					{
+						setCursorVisible(false);
+					}
+					if (i == 'H')
+					{
+						setCursorVisible(true);
+					}
+					if (i == 'B')
+					{
+						setMouseLock(true);
+					}
+					if (i == 'N') 
+					{
+						setMouseLock(false);
+					}*/
 				}
 				// KEY IS DOWN
 				else if ((m_keys_state[i] & 0x80) && m_keys_state[i] == m_old_keys_state[i])
@@ -200,7 +200,7 @@ namespace TDS
 	}
 
 	void InputSystem::lockMouseCenter(HWND hwnd) {
-		POINT centerScreen = { centerX, centerY };
+		POINT centerScreen = { m_winCenter.x, m_winCenter.y };
 		ClientToScreen(hwnd, &centerScreen);
 		SetCursorPos(centerScreen.x, centerScreen.y);
 	}
@@ -212,5 +212,25 @@ namespace TDS
 	bool InputSystem::getMouseLock()
 	{
 		return isMouseLocked;
+	}
+
+	TDS::Vec2 InputSystem::getWindowCenter()
+	{
+		return TDS::Vec2(m_winCenter.x, m_winCenter.y);
+	}
+
+	int InputSystem::getWindowCenterX()
+	{
+		return m_winCenter.x;
+	}
+
+	int InputSystem::getWindowCenterY()
+	{
+		return m_winCenter.y;
+	}
+
+	void InputSystem::setWindowCenter(int x, int y)
+	{
+		m_winCenter = Point(x, y);
 	}
 }

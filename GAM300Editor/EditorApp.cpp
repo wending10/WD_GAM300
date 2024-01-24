@@ -66,8 +66,8 @@ namespace TDS
         switch (uMsg)
         {
         case WM_CREATE:
-            TDS::InputSystem::GetInstance()->centerX = GetSystemMetrics(SM_CXSCREEN) / 2;
-            TDS::InputSystem::GetInstance()->centerY = GetSystemMetrics(SM_CYSCREEN) / 2;
+            TDS::InputSystem::GetInstance()->setWindowCenter(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2);
+            break;
         case WM_DESTROY:
             PostQuitMessage(0);
             break;
@@ -133,8 +133,7 @@ namespace TDS
                     if (activeWindow != nullptr) {
                         RECT windowRect;
                         if (GetWindowRect(activeWindow, &windowRect)) {
-                            TDS::InputSystem::GetInstance()->centerX = (windowRect.left + windowRect.right) / 2;
-                            TDS::InputSystem::GetInstance()->centerY = (windowRect.top + windowRect.bottom) / 2;
+                            TDS::InputSystem::GetInstance()->setWindowCenter((windowRect.left + windowRect.right) / 2, (windowRect.top + windowRect.bottom) / 2);
                         }
                     }
                     TDS::InputSystem::GetInstance()->lockMouseCenter(hWnd);

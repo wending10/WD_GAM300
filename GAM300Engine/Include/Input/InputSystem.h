@@ -44,6 +44,10 @@ namespace TDS
 		void lockMouseCenter(HWND hwnd);
 		void setMouseLock(bool lock);
 		bool getMouseLock();
+		TDS::Vec2 getWindowCenter();
+		int getWindowCenterX();
+		int getWindowCenterY();
+		void setWindowCenter(int x, int y);
 
 		struct KeyState
 		{
@@ -52,13 +56,11 @@ namespace TDS
 			bool up;
 		};
 
-	public:
-		int centerX, centerY;
 	private:
 		static std::unique_ptr<InputSystem> m_instance;
 		float m_KeyDelayTimer;
-		unsigned char m_keys_state[256];
-		unsigned char m_old_keys_state[256];
+		unsigned char m_keys_state[256] = {};
+		unsigned char m_old_keys_state[256] = {};
 		KeyState allKeyStates[256];
 		Point m_old_mouse_pos;
 		bool m_first_time;
@@ -69,6 +71,7 @@ namespace TDS
 		bool m_mouseScrollDown;
 		// Gets Raw Mouse Input Acceleration (Relative Mouse Movement) (-ve or +ve intger for xy depending on how fast mouse accelerated)
 		Point m_rawMouseInput;
-		bool isMouseLocked;
+		bool isMouseLocked = false;
+		Point m_winCenter;
 	};
 }
