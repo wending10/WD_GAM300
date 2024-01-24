@@ -157,7 +157,7 @@ namespace TDS
 
 	bool TDSCamera::moving()
 	{
-		auto& inputSystem = InputSystem::GetInstance();
+		auto& inputSystem = TDS::InputSystem::GetInstance();
 		if (inputSystem->isKeyDown('W'))
 		{
 			keys.up = true;
