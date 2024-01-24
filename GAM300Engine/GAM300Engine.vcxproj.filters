@@ -275,7 +275,6 @@
     <ClInclude Include="Include\Rendering\Revamped\FrameBufferObjects\ShadowMapPass.h" />
     <ClInclude Include="Include\Rendering\Revamped\FrameBufferObjects\LightingPass.h" />
     <ClInclude Include="Include\AssetManagement\Revamped\MeshFactory.h" />
-    <ClInclude Include="Include\Input\InputListener.h" />
     <ClInclude Include="Include\Input\InputSystem.h" />
   </ItemGroup>
   <ItemGroup>
