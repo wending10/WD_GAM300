@@ -1,6 +1,6 @@
 {
     "Archetype Sizes": {
-        "11000010000010": {
+        "110000100000100": {
             "0": 816,
             "1": 1200,
             "6": 1584,
@@ -9,7 +9,7 @@
     },
     "Entity Data": {
         "1": {
-            "ArchetypeID": "11000010000010",
+            "ArchetypeID": "110000100000100",
             "Enabled": true,
             "Name Tag": {
                 "Name": "BackGround",
@@ -87,7 +87,7 @@
             }
         },
         "2": {
-            "ArchetypeID": "11000010000010",
+            "ArchetypeID": "110000100000100",
             "Enabled": true,
             "Name Tag": {
                 "Name": "PlayButton",
@@ -165,7 +165,7 @@
             }
         },
         "3": {
-            "ArchetypeID": "11000010000010",
+            "ArchetypeID": "110000100000100",
             "Enabled": true,
             "Name Tag": {
                 "Name": "SettingsButton",
@@ -243,7 +243,7 @@
             }
         },
         "4": {
-            "ArchetypeID": "11000010000010",
+            "ArchetypeID": "110000100000100",
             "Enabled": true,
             "Name Tag": {
                 "Name": "QuitButton",
@@ -321,7 +321,7 @@
             }
         },
         "5": {
-            "ArchetypeID": "11000010000010",
+            "ArchetypeID": "110000100000100",
             "Enabled": true,
             "Name Tag": {
                 "Name": "TeamLogo",
@@ -399,7 +399,7 @@
             }
         },
         "6": {
-            "ArchetypeID": "11000010000010",
+            "ArchetypeID": "110000100000100",
             "Enabled": true,
             "Name Tag": {
                 "Name": "Title",
@@ -489,15 +489,6 @@
                 },
                 "gameObject": {
                     "ScriptAPI.GameObject": 2
-                },
-                "is_Enabled": {
-                    "System.Boolean": "True"
-                },
-                "is_Awake": {
-                    "System.Boolean": "True"
-                },
-                "is_Start": {
-                    "System.Boolean": "True"
                 }
             }
         },

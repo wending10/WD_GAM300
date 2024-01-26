@@ -104,6 +104,8 @@
     <ClCompile Include="Src\components\AudioSource.cpp" />
     <ClCompile Include="Src\AI\UIPopupManager.cpp" />
     <ClCompile Include="Src\Physics\ContactListenerImpl.cpp" />
+    <ClCompile Include="Src\Rendering\ParticleSystem.cpp" />
+    <ClCompile Include="Src\components\ParticleComponent.cpp" />
     <ClCompile Include="Src\Identifier\UniqueID.cpp" />
     <ClCompile Include="Src\GraphicsResource\GeomStruct.cpp" />
     <ClCompile Include="Src\GraphicsResource\Revamped\ModelPack.cpp" />
@@ -252,6 +254,8 @@
     <ClInclude Include="Include\AI\UIPopupManager.h" />
     <ClInclude Include="Include\eventmanager\eventHandler.h" />
     <ClInclude Include="Include\Physics\ContactListenerImpl.h" />
+    <ClInclude Include="Include\Rendering\ParticleSystem.h" />
+    <ClInclude Include="Include\components\ParticleComponent.h" />
     <ClInclude Include="Include\MacroHelper.h" />
     <ClInclude Include="Include\Identifier\TypeInformation.h" />
     <ClInclude Include="Include\Serialization\Serialization.h" />
@@ -271,7 +275,6 @@
     <ClInclude Include="Include\Rendering\Revamped\FrameBufferObjects\ShadowMapPass.h" />
     <ClInclude Include="Include\Rendering\Revamped\FrameBufferObjects\LightingPass.h" />
     <ClInclude Include="Include\AssetManagement\Revamped\MeshFactory.h" />
-    <ClInclude Include="Include\Input\InputListener.h" />
     <ClInclude Include="Include\Input\InputSystem.h" />
   </ItemGroup>
   <ItemGroup>
