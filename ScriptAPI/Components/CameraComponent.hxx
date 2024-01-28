@@ -29,17 +29,17 @@ namespace ScriptAPI
 		float GetMouseSensitivity();
 		void SetMouseSensitivity(float value);
 
-		bool GetIsEnabled();
-		void SetIsEnabled(bool value);
-
 		Vector3 getForwardVector();
 		void setForwardVector(float angle);
 
 		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
+
 		virtual void SetEnabled(bool enabled);
+		virtual bool GetEnabled();
 
 		TransformComponent transform;
+		GameObject^ gameObject;
 
 	internal:
 		CameraComponent(TDS::EntityID ID);
@@ -74,11 +74,6 @@ namespace ScriptAPI
 		{
 			float get();
 			void set(float value);
-		}
-		property bool IsEnabled
-		{
-			bool get();
-			void set(bool value);
 		}
 
 		TDS::EntityID entityID;

@@ -1,5 +1,6 @@
 #include "CameraComponent.hxx"
 #include "../TypeConversion.hxx"
+#include "../EngineInterface.hxx"
 
 namespace ScriptAPI
 {
@@ -228,44 +229,6 @@ namespace ScriptAPI
 		MouseSensitivity = value;
 	}
 
-	// ISENABLED =============================================================================
-	// Private
-	bool CameraComponent::IsEnabled::get()
-	{
-		// May wanna change to a function
-		if (!TDS::GetCameraComponent(entityID))
-		{
-			// throw error instead (not sure how)
-			return false;
-		}
-
-		TDS::EntityID id = entityID;
-		return TDS::getComponentIsEnable("Camera Component", id);
-	}
-	void CameraComponent::IsEnabled::set(bool value)
-	{
-		// May wanna change to a function
-		if (!TDS::GetCameraComponent(entityID))
-		{
-			// throw error instead (not sure how)
-			return;
-		}
-
-		TDS::EntityID id = entityID;
-		std::string componentName = "Camera Component";
-		TDS::setComponentIsEnable(componentName, id, value);
-	}
-
-	// Public
-	bool CameraComponent::GetIsEnabled()
-	{
-		return IsEnabled;
-	}
-	void CameraComponent::SetIsEnabled(bool value)
-	{
-		IsEnabled = value;
-	}
-
 	// FORWARDVECTOR =========================================================================
 	// 
 	Vector3 CameraComponent::getForwardVector()
@@ -295,12 +258,15 @@ namespace ScriptAPI
 
 	// CONSTRUCTOR ===========================================================================
 	CameraComponent::CameraComponent(TDS::EntityID ID) : entityID (ID), transform(TransformComponent(ID))
-	{ }
+	{
+		gameObject = EngineInterface::GetGameObject(ID);
+	}
 
 	void CameraComponent::SetEntityID(TDS::EntityID ID)
 	{
 		entityID = ID;
 		transform = TransformComponent(ID);
+		gameObject = EngineInterface::GetGameObject(ID);
 	}
 
 	TDS::EntityID CameraComponent::GetEntityID()
@@ -310,6 +276,10 @@ namespace ScriptAPI
 
 	void CameraComponent::SetEnabled(bool enabled)
 	{
-		TDS::ecs.setEntityIsEnabled(GetEntityID(), enabled);
+		TDS::setComponentIsEnable("Camera Component", GetEntityID(), enabled);
+	}
+	bool CameraComponent::GetEnabled()
+	{
+		return TDS::getComponentIsEnable("Camera Component", GetEntityID());
 	}
 }
