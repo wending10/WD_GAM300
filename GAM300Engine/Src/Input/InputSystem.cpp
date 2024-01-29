@@ -203,9 +203,16 @@ namespace TDS
 	void InputSystem::setCursorVisible(bool visible)
 	{
 		ShowCursor(visible ? TRUE : FALSE);
+		mouseVisible = visible;
 	}
 
-	void InputSystem::lockMouseCenter(HWND hwnd) {
+	bool InputSystem::getCursorVisible()
+	{
+		return mouseVisible;
+	}
+
+	void InputSystem::lockMouseCenter(HWND hwnd) 
+	{
 		POINT centerScreen = { m_winCenter.x, m_winCenter.y };
 		ClientToScreen(hwnd, &centerScreen);
 		SetCursorPos(centerScreen.x, centerScreen.y);
@@ -238,5 +245,10 @@ namespace TDS
 	void InputSystem::setWindowCenter(int x, int y)
 	{
 		m_winCenter = Point(x, y);
+	}
+
+	short& InputSystem::getWheelDelta()
+	{
+		return wheelDelta;
 	}
 }

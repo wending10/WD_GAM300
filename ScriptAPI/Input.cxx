@@ -102,11 +102,13 @@ namespace ScriptAPI
 
 	float Input::GetMousePositionDifferenceX()
 	{
-		return TDS::Input::getMousePosition().x - mousePositionX;
+		//return TDS::Input::getMousePosition().x - mousePositionX;
+		return TDS::InputSystem::GetInstance()->getLocalMousePosX() - (TDS::InputSystem::GetInstance()->getWindowCenterX() - 40);
 	}
 	float Input::GetMousePositionDifferenceY()
 	{
-		return mousePositionY - TDS::Input::getMousePosition().y;
+		//return mousePositionY - TDS::Input::getMousePosition().y;
+		return TDS::InputSystem::GetInstance()->getLocalMousePosY() - (TDS::InputSystem::GetInstance()->getWindowCenterY() - 90);
 	}
 
 	Vector3 Input::GetMousePosition()
@@ -297,6 +299,11 @@ namespace ScriptAPI
 	bool InputSystem::isMouseLocked()
 	{
 		return TDS::InputSystem::GetInstance()->getMouseLock();
+	}
+
+	Vector3 InputSystem::GetLocalMousePos()
+	{
+		return Vector3(GetLocalMousePosX(), GetLocalMousePoxY(), 0);
 	}
 
 	float InputSystem::GetLocalMousePosX()

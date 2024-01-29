@@ -338,10 +338,10 @@ public class LockPick1 : Script
     //{
     //    return radians * (180 / 3.1415926535897931f);
     //}
-    //float toRadians(float degree)
-    //{
-    //    return degree * (3.1415926535897931f / 180);
-    //}
+    float toRadians(float degree)
+    {
+        return degree * (3.1415926535897931f / 180);
+    }
 
 
 
@@ -375,7 +375,7 @@ public class LockPick1 : Script
     public AudioClip[] lockSoundEffects;
     public AudioClip[] rattleSoundEffects;
     float delay = 0.4f;
-    public GameObject _NumOfTries;
+    //public GameObject _NumOfTries;
     //public Text _AmtOfTries;
 
     [Range(1, 25)]
@@ -392,15 +392,21 @@ public class LockPick1 : Script
     private bool displayTutorial;
     [SerializeField] bool played;
 
+
+    private Vector3 originalPosition;
+
     // Start is called before the first frame update
-    void Awake()
+    override public void Awake()
     {
         newLock();
+        originalPosition = transform.GetPosition();
     }
-
+    
     // Update is called once per frame
-    void Update()
+    override public void Update()
     {
+        InputSystem.Lock(false);
+
         if (!_TutorialCompleted)
         {
             // NOTE: Audio
@@ -423,22 +429,30 @@ public class LockPick1 : Script
         }
         else
         {
-            _NumOfTries.SetActive(true);
+            //_NumOfTries.SetActive(true);
 
             #region Move Pick
             if (movePick)
             {
-                Vector3 dir = new Vector3(0, 0, 0); // = Input.mousePosition - cam.WorldToScreenPoint(transform.GetPosition());
+                //Vector3 dir = Input.mousePosition - cam.WorldToScreenPoint(transform.position);
+                Vector3 dir = InputSystem.GetLocalMousePos() - new Vector3(Screen.width / 2, Screen.height / 2, 0); // cam.WorldToScreenPoint(transform.GetPosition());
 
-                eulerAngle = Vector3.Angle(dir, Vector3.Up());
+                Console.WriteLine("Mouse:\t" + InputSystem.GetLocalMousePos().X + "\t" + InputSystem.GetLocalMousePos().Y + "\t" + dir.Z);
+
+                //eulerAngle = Vector3.Angle(dir, Vector3.Up());
+                eulerAngle = Vector3.Angle(dir, Vector3.Down());
 
                 Vector3 cross = Vector3.Cross(Vector3.Up(), dir);
                 if (cross.Z < 0) { eulerAngle = -eulerAngle; }
-
-                eulerAngle = Mathf.Clamp(eulerAngle, -maxAngle, maxAngle);
+                eulerAngle = Mathf.Clamp(eulerAngle, toRadians(-maxAngle), toRadians(maxAngle));
 
                 Quaternion rotateTo = Quaternion.AngleAxis(eulerAngle, Vector3.Forward());
-                transform.SetRotation(Quaternion.EulerAngle(rotateTo));
+                //transform.SetRotation(Quaternion.EulerAngle(rotateTo));
+
+                Vector3 originalRotation = transform.GetRotation();
+                transform.SetRotation(new Vector3(originalRotation.X, originalRotation.Y, eulerAngle));
+                //Vector2 addedPosition = new Vector2(-Mathf.Sin(eulerAngle) * 2.5f, Mathf.Cos(eulerAngle) * 2.5f);
+                //transform.SetPosition(new Vector3(originalPosition.X + addedPosition.X, originalPosition.X + addedPosition.Y, -15));
             }
 
             if (Input.GetKeyDown(Keycode.E))
@@ -547,6 +561,7 @@ public class LockPick1 : Script
             //{
             //    _AmtOfTries.color = Color.red;
             //}
+
         }
     }
 

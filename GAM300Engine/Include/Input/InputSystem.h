@@ -43,6 +43,7 @@ namespace TDS
 		int getRawMouseInputY();
 		void setRawMouseInput(int x, int y);
 		void setCursorVisible(bool visible);
+		bool getCursorVisible();
 		void lockMouseCenter(HWND hwnd);
 		void setMouseLock(bool lock);
 		bool getMouseLock();
@@ -50,6 +51,8 @@ namespace TDS
 		int getWindowCenterX();
 		int getWindowCenterY();
 		void setWindowCenter(int x, int y);
+
+		short& getWheelDelta();
 
 		struct KeyState
 		{
@@ -75,5 +78,6 @@ namespace TDS
 		Point m_rawMouseInput;
 		bool isMouseLocked = false;
 		Point m_winCenter;
+		bool mouseVisible = false;
 	};
 }
