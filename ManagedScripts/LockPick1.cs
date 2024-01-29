@@ -405,7 +405,7 @@ public class LockPick1 : Script
     // Update is called once per frame
     override public void Update()
     {
-        InputSystem.Lock(false);
+        Input.Lock(false);
 
         if (!_TutorialCompleted)
         {
@@ -432,12 +432,12 @@ public class LockPick1 : Script
             //_NumOfTries.SetActive(true);
 
             #region Move Pick
-            if (movePick)
-            {
+            //if (movePick)
+            //{
                 //Vector3 dir = Input.mousePosition - cam.WorldToScreenPoint(transform.position);
-                Vector3 dir = InputSystem.GetLocalMousePos() - new Vector3(Screen.width / 2, Screen.height / 2, 0); // cam.WorldToScreenPoint(transform.GetPosition());
+                Vector3 dir = Input.GetLocalMousePos() - new Vector3(Screen.width / 2, Screen.height / 2, 0); // cam.WorldToScreenPoint(transform.GetPosition());
 
-                Console.WriteLine("Mouse:\t" + InputSystem.GetLocalMousePos().X + "\t" + InputSystem.GetLocalMousePos().Y + "\t" + dir.Z);
+                Console.WriteLine("Mouse:\t" + Input.GetGlobalMousePosX() + "\t" + Input.GetGlobalMousePosY() + "\t" + dir.Z);
 
                 //eulerAngle = Vector3.Angle(dir, Vector3.Up());
                 eulerAngle = Vector3.Angle(dir, Vector3.Down());
@@ -453,7 +453,7 @@ public class LockPick1 : Script
                 transform.SetRotation(new Vector3(originalRotation.X, originalRotation.Y, eulerAngle));
                 //Vector2 addedPosition = new Vector2(-Mathf.Sin(eulerAngle) * 2.5f, Mathf.Cos(eulerAngle) * 2.5f);
                 //transform.SetPosition(new Vector3(originalPosition.X + addedPosition.X, originalPosition.X + addedPosition.Y, -15));
-            }
+            //}
 
             if (Input.GetKeyDown(Keycode.E))
             {

@@ -299,12 +299,32 @@ namespace ScriptAPI
 		return TDS::InputSystem::GetInstance()->getMouseLock();
 	}
 
+	Vector3 Input::GetLocalMousePos()
+	{
+		return Vector3(GetLocalMousePosX(), GetLocalMousePosY(), 0);
+	}
+
 	float Input::GetLocalMousePosX()
 	{
 		return TDS::InputSystem::GetInstance()->getLocalMousePosX();
 	}
 
-	float Input::GetLocalMousePoxY()
+	Vector3 Input::GetGlobalMousePosition()
+	{
+		return Vector3(GetGlobalMousePosX(), GetGlobalMousePosY(), 0.0f);
+	}
+
+	float Input::GetGlobalMousePosX()
+	{
+		return TDS::InputSystem::GetInstance()->getGlobalMousePosX();
+	}
+
+	float Input::GetGlobalMousePosY()
+	{
+		return TDS::InputSystem::GetInstance()->getGlobalMousePosY();
+	}
+
+	float Input::GetLocalMousePosY()
 	{
 		return TDS::InputSystem::GetInstance()->getLocalMousePosY();
 	}
@@ -337,11 +357,6 @@ namespace ScriptAPI
 	float Input::GetAxisY()
 	{
 		return TDS::InputSystem::GetInstance()->getAxisY();
-	}
-
-	Vector3 Input::GetMousePosition()
-	{
-		return Vector3(TDS::InputSystem::GetInstance()->getLocalMousePosX(), TDS::InputSystem::GetInstance()->getLocalMousePosY(), 0.0f);
 	}
 
 	int Input::GetHorizontalAxis()

@@ -198,28 +198,30 @@ namespace TDS
 
 	int InputSystem::getAxisX()
 	{
-		if (m_rawMouseInput.x < 0)
-		{
-			return -1;
-		}
-		if (m_rawMouseInput.x > 0)
-		{
-			return 1;
-		}
-		return 0;
+		//if (m_rawMouseInput.x < 0)
+		//{
+		//	return -1;
+		//}
+		//if (m_rawMouseInput.x > 0)
+		//{
+		//	return 1;
+		//}
+		//return 0;
+		return Mathf::Clamp(m_rawMouseInput.x, -1, 1);
 	}
 
 	int InputSystem::getAxisY()
 	{
-		if (m_rawMouseInput.y < 0)
-		{
-			return -1;
-		}
-		if (m_rawMouseInput.y > 0)
-		{
-			return 1;
-		}
-		return 0;
+		//if (m_rawMouseInput.y < 0)
+		//{
+		//	return -1;
+		//}
+		//if (m_rawMouseInput.y > 0)
+		//{
+		//	return 1;
+		//}
+		//return 0;
+		return Mathf::Clamp(m_rawMouseInput.y, -1, 1);
 	}
 
 	int InputSystem::getHorizontalAxis()

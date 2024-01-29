@@ -301,7 +301,7 @@ namespace TDS
                     SceneManager::GetInstance()->start();
                 }
 
-                //if (!InputSystem::GetInstance()->getCursorVisible())
+                if (!InputSystem::GetInstance()->getCursorVisible())
                 {
                     executeFixedUpdate();
                     ecs.runSystems(1, DeltaTime); // Other systems
@@ -346,6 +346,7 @@ namespace TDS
             }
 
             Input::scrollStop();
+            TDS::InputSystem::GetInstance()->setRawMouseInput(0, 0);
         }
         stopScriptEngine();
       

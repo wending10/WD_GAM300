@@ -264,9 +264,12 @@ namespace ScriptAPI
 		static bool isMouseLocked();
 
 		static Vector3 GetLocalMousePos();
-
 		static float GetLocalMousePosX();
-		static float GetLocalMousePoxY();
+		static float GetLocalMousePosY();
+
+		static Vector3 GetGlobalMousePosition();
+		static float GetGlobalMousePosX();
+		static float GetGlobalMousePosY();
 
 		static float GetMouseDeltaX();
 		static float GetMouseDeltaY();
@@ -277,7 +280,6 @@ namespace ScriptAPI
 		static float GetAxisX();
 		static float GetAxisY();
 
-		static Vector3 GetMousePosition();
 
 		static int GetHorizontalAxis();
 		static int GetVerticalAxis();
