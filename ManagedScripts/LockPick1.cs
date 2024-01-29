@@ -489,7 +489,7 @@ public class LockPick1 : Script
     //                float randomRotation = Random.insideUnitCircle.x;
     //                transform.eulerAngles += new Vector3(0, 0, Random.Range((-randomRotation - 1), (randomRotation + 1)));
 
-    //                if (Input.GetKeyDown(KeyCode.E) || Input.GetKey(KeyCode.E))
+    //                if (Input.GetKeyDown(Keycode.E) || Input.GetKey(Keycode.E))
     //                {
     //                    if (!GetComponents<AudioSource>()[1].isPlaying)
     //                    {

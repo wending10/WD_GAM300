@@ -31,9 +31,9 @@ namespace TDS
 		bool isMouseScrollUp();
 		bool isMouseScrollDown();
 		bool mouseMoved();
-		TDS::Vec2 getLocalMousePos();
-		int getLocalMousePosX();
-		int getLocalMousePosY();
+		TDS::Vec2 getGlobalMousePos();
+		int getGlobalMousePosX();
+		int getGlobalMousePosY();
 		TDS::Vec2 getMouseDelta();
 		int getMouseDeltaX();
 		int getMouseDeltaY();
@@ -41,6 +41,10 @@ namespace TDS
 		TDS::Vec2 getRawMouseInput();
 		int getRawMouseInputX();
 		int getRawMouseInputY();
+		int getAxisX();
+		int getAxisY();
+		int getHorizontalAxis();
+		int getVerticalAxis();
 		void setRawMouseInput(int x, int y);
 		void setCursorVisible(bool visible);
 		void lockMouseCenter(HWND hwnd);
@@ -50,6 +54,10 @@ namespace TDS
 		int getWindowCenterX();
 		int getWindowCenterY();
 		void setWindowCenter(int x, int y);
+		TDS::Vec2 getLocalMousePos();
+		int getLocalMousePosX();
+		int getLocalMousePosY();
+		void setLocalMousePos(int x, int y);
 
 		struct KeyState
 		{
@@ -75,5 +83,6 @@ namespace TDS
 		Point m_rawMouseInput;
 		bool isMouseLocked = false;
 		Point m_winCenter;
+		Point m_localMousePos;
 	};
 }

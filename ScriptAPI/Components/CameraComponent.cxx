@@ -293,6 +293,34 @@ namespace ScriptAPI
 		//TDS::GetCameraComponent(entityID)->setForwardVector(rotatedMatrix * forwardVector);
 	}
 
+	// RIGHTVECTOR =========================================================================
+	// 
+
+	Vector3 CameraComponent::getRightVector()
+	{
+		// May wanna change to a function
+		if (!TDS::GetCameraComponent(entityID))
+		{
+			// throw error instead (not sure how)
+			return Vector3(0.f, 0.f, 0.f);
+		}
+
+		return Vector3(TDS::GetCameraComponent(entityID)->getRightVector());
+	}
+	void CameraComponent::setRightVector(float angle)
+	{
+		// May wanna change to a function
+		if (!TDS::GetCameraComponent(entityID))
+		{
+			// throw error instead (not sure how)
+			return;
+		}
+
+		//TDS::Vec3 forwardVector = TDS::GetCameraComponent(entityID)->getForwardVector();
+		//TDS::Mat3 rotatedMatrix = TDS::Mat3::RotateY(angle);
+		//TDS::GetCameraComponent(entityID)->setForwardVector(rotatedMatrix * forwardVector);
+	}
+
 	// CONSTRUCTOR ===========================================================================
 	CameraComponent::CameraComponent(TDS::EntityID ID) : entityID (ID), transform(TransformComponent(ID))
 	{ }

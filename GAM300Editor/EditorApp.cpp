@@ -86,10 +86,10 @@ namespace TDS
             Input::processMouseInput(wParam, lParam);
         }break;
 
-        case WM_MOUSEMOVE:
+        /*case WM_MOUSEMOVE:
         {
             Input::updateMousePosition(lParam);
-        }break;
+        }break;*/
 
         case WM_KEYDOWN:
         {
@@ -144,6 +144,13 @@ namespace TDS
             }break;
             case WM_MOUSEWHEEL: {
                 InputSystem::GetInstance()->processMouseScroll(wParam);
+            }break;
+            case WM_MOUSEMOVE:
+            {
+                POINT p;
+                GetCursorPos(&p);
+                ScreenToClient(GetActiveWindow(), &p);
+                InputSystem::GetInstance()->setLocalMousePos(p.x, p.y);
             }break;
         }
     }
