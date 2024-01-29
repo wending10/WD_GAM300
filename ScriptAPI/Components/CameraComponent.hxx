@@ -32,6 +32,9 @@ namespace ScriptAPI
 		Vector3 getForwardVector();
 		void setForwardVector(float angle);
 
+		Vector3 getRightVector();
+		void setRightVector(float angle);
+
 		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
 

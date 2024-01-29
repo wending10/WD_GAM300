@@ -36,7 +36,6 @@ namespace TDS
 			m_first_time = false;
 		}
 		m_mouseMoved = false;
-
 		if (current_mouse_pos.x != m_old_mouse_pos.x || current_mouse_pos.y != m_old_mouse_pos.y)
 		{
 			m_mouseMoved = true;
@@ -57,23 +56,6 @@ namespace TDS
 				{
 					allKeyStates[i].pressed = true;
 					m_KeyDelayTimer = 0.25f;
-					// For Debug Purposes
-					/*if (i == 'G')
-					{
-						setCursorVisible(false);
-					}
-					if (i == 'H')
-					{
-						setCursorVisible(true);
-					}
-					if (i == 'B')
-					{
-						setMouseLock(true);
-					}
-					if (i == 'N') 
-					{
-						setMouseLock(false);
-					}*/
 				}
 				// KEY IS DOWN
 				else if ((m_keys_state[i] & 0x80) && m_keys_state[i] == m_old_keys_state[i])
@@ -129,16 +111,35 @@ namespace TDS
 	}
 	TDS::Vec2 InputSystem::getLocalMousePos()
 	{
-		return TDS::Vec2(m_old_mouse_pos.x, m_old_mouse_pos.y);
+		return Vec2(m_localMousePos.x, m_localMousePos.y);
 	}
 	int InputSystem::getLocalMousePosX()
 	{
-		return m_old_mouse_pos.x;
+		return m_localMousePos.x;
 	}
 	int InputSystem::getLocalMousePosY()
 	{
+		return m_localMousePos.y;
+	}
+
+	void InputSystem::setLocalMousePos(int x, int y)
+	{
+		m_localMousePos = Point(x, y);
+	}
+
+	TDS::Vec2 InputSystem::getGlobalMousePos()
+	{
+		return TDS::Vec2(m_old_mouse_pos.x, m_old_mouse_pos.y);
+	}
+	int InputSystem::getGlobalMousePosX()
+	{
+		return m_old_mouse_pos.x;
+	}
+	int InputSystem::getGlobalMousePosY()
+	{
 		return m_old_mouse_pos.y;
 	}
+
 	TDS::Vec2 InputSystem::getMouseDelta()
 	{
 		return TDS::Vec2(m_mouse_delta.x, m_mouse_delta.y);
@@ -193,6 +194,58 @@ namespace TDS
 	int InputSystem::getRawMouseInputY()
 	{
 		return m_rawMouseInput.y;
+	}
+
+	int InputSystem::getAxisX()
+	{
+		if (m_rawMouseInput.x < 0)
+		{
+			return -1;
+		}
+		if (m_rawMouseInput.x > 0)
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	int InputSystem::getAxisY()
+	{
+		if (m_rawMouseInput.y < 0)
+		{
+			return -1;
+		}
+		if (m_rawMouseInput.y > 0)
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	int InputSystem::getHorizontalAxis()
+	{
+		if (isKeyPressed('A') || isKeyDown('A'))
+		{
+			return -1;
+		}
+		if (isKeyPressed('D') || isKeyDown('D'))
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	int InputSystem::getVerticalAxis()
+	{
+		if (isKeyPressed('W') || isKeyDown('W'))
+		{
+			return 1;
+		}
+		if (isKeyPressed('S') || isKeyDown('S'))
+		{
+			return -1;
+		}
+		return 0;
 	}
 
 	void InputSystem::setRawMouseInput(int x, int y)

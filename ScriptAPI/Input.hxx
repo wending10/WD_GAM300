@@ -13,7 +13,7 @@
 
 namespace ScriptAPI
 {
-	public ref class Keycode
+	/*public ref class Keycode
 	{
 	public:
 		static uint32_t A = TDS_A;
@@ -84,9 +84,9 @@ namespace ScriptAPI
 		static uint32_t M4 = TDS_MOUSE_X1 + MAX_KEYS;
 		static uint32_t M5 = TDS_MOUSE_X2 + MAX_KEYS;
 		static uint32_t SCROLL = TDS_MOUSE_SCROLL + MAX_KEYS;
-	};
+	};*/
 
-	public ref class VirtualKeyCodes
+	public ref class Keycode
 	{
 	public:
 		// Alphabets
@@ -172,8 +172,8 @@ namespace ScriptAPI
 		static uint32_t F12 = 0x7B;
 
 		// Mouse buttons
-		static uint32_t M1 = 0x01;
-		static uint32_t M2 = 0x02;
+		static uint32_t M1 = 0x01;	//Left
+		static uint32_t M2 = 0x02;	//Right
 		static uint32_t MIDDLE = 0x04;
 		static uint32_t M4 = 0x05;
 		static uint32_t M5 = 0x06;
@@ -186,62 +186,62 @@ namespace ScriptAPI
 		// Add more keys as needed
 	};
 
-	public ref class Input
-	{
-	public:
-		static void InputSetup();
-		static float GetAxisRaw(System::String^ code);
-		static float GetAxis(System::String^ code);
-		static bool GetKey(uint32_t keycode);
-		static bool GetKeyDown(uint32_t keycode);
-		static bool GetKeyUp(uint32_t keycode);
-		static bool GetMouseButton(uint32_t button);
-		static bool GetMouseButtonUp(uint32_t button);
-		static bool GetMouseButtonDown(uint32_t button);
-		static float GetLocalMousePosX();
-		static float GetLocalMousePosY();
-		static float GetMousePositionDifferenceX();
-		static float GetMousePositionDifferenceY();
-		static void KeyRelease(uint32_t keycode);
+	//public ref class Input
+	//{
+	//public:
+	//	static void InputSetup();
+	//	static float GetAxisRaw(System::String^ code);
+	//	static float GetAxis(System::String^ code);
+	//	static bool GetKey(uint32_t keycode);
+	//	static bool GetKeyDown(uint32_t keycode);
+	//	static bool GetKeyUp(uint32_t keycode);
+	//	static bool GetMouseButton(uint32_t button);
+	//	static bool GetMouseButtonUp(uint32_t button);
+	//	static bool GetMouseButtonDown(uint32_t button);
+	//	static float GetLocalMousePosX();
+	//	static float GetLocalMousePosY();
+	//	static float GetMousePositionDifferenceX();
+	//	static float GetMousePositionDifferenceY();
+	//	static void KeyRelease(uint32_t keycode);
 
-		//new functions by amadeus for testing
-		static void HideMouse();
-		static void SetMousePosX(uint32_t Xpos);
-		static void SetMousePosY(uint32_t Ypos);
-		static void CenterMouseX();
-		static void CenterMouseY();
-		static void UpdateLastMousePos(int windowX, int windowY);
-		static int GetScreenMouseX();
-		static int GetScreenMouseY();
-		static void CenterLastMousePos();
-		static int ScreenMousePosdX();
-		static int ScreenMousePosdY();
+	//	//new functions by amadeus for testing
+	//	static void HideMouse();
+	//	static void SetMousePosX(uint32_t Xpos);
+	//	static void SetMousePosY(uint32_t Ypos);
+	//	static void CenterMouseX();
+	//	static void CenterMouseY();
+	//	static void UpdateLastMousePos(int windowX, int windowY);
+	//	static int GetScreenMouseX();
+	//	static int GetScreenMouseY();
+	//	static void CenterLastMousePos();
+	//	static int ScreenMousePosdX();
+	//	static int ScreenMousePosdY();
 
 
-		//static float Get2DMousePosX();
-		//static float Get2DMousePosY();
-		static Vector3 GetMousePosition();
-		
-		
+	//	//static float Get2DMousePosX();
+	//	//static float Get2DMousePosY();
+	//	static Vector3 GetMousePosition();
+	//	
+	//	
 
-		static void InputUpdate();
-		//static float mousePickedPositionX = TDS::Input::final_x_pos;
-		//static float mousePickedPositionY = TDS::Input::final_y_pos;
+	//	static void InputUpdate();
+	//	//static float mousePickedPositionX = TDS::Input::final_x_pos;
+	//	//static float mousePickedPositionY = TDS::Input::final_y_pos;
 
-	private:
-		static System::Collections::Generic::Dictionary<System::String^, System::Tuple<uint32_t, uint32_t>^>^ AxisDictionary;
-		static float mousePositionX;
-		static float mousePositionY;
-		static int WinPosX;
-		static int WinPosY;
+	//private:
+	//	static System::Collections::Generic::Dictionary<System::String^, System::Tuple<uint32_t, uint32_t>^>^ AxisDictionary;
+	//	static float mousePositionX;
+	//	static float mousePositionY;
+	//	static int WinPosX;
+	//	static int WinPosY;
 
-		static int LastMousePosX;
-		static int LastMousePosY;
-	};
+	//	static int LastMousePosX;
+	//	static int LastMousePosY;
+	//};
 
 
 	// NEW INPUT CLASS STUFF
-	public ref class InputSystem
+	public ref class Input
 	{
 	public:
 		//Get key is held
@@ -271,78 +271,15 @@ namespace ScriptAPI
 		static float GetMouseDeltaX();
 		static float GetMouseDeltaY();
 
-		static float GetRawMouseAxisX();
-		static float GetRawMouseAxisY();
+		static float GetRawAxisX();
+		static float GetRawAxisY();
+
+		static float GetAxisX();
+		static float GetAxisY();
+
+		static Vector3 GetMousePosition();
+
+		static int GetHorizontalAxis();
+		static int GetVerticalAxis();
 	};
 }
-
-/*enum class Keycode : uint32_t
-	{
-		A = TDS_A,
-		B = TDS_B,
-		C = TDS_C,
-		D = TDS_D,
-		E = TDS_E,
-		F = TDS_F,
-		G = TDS_G,
-		H = TDS_H,
-		I = TDS_I,
-		J = TDS_J,
-		K = TDS_K,
-		L = TDS_L,
-		M = TDS_M,
-		N = TDS_N,
-		O = TDS_O,
-		P = TDS_P,
-		Q = TDS_Q,
-		R = TDS_R,
-		S = TDS_S,
-		T = TDS_T,
-		U = TDS_U,
-		V = TDS_V,
-		W = TDS_W,
-		X = TDS_X,
-		Y = TDS_Y,
-		Z = TDS_Z,
-
-		UP = TDS_UP,
-		DOWN = TDS_DOWN,
-		LEFT = TDS_LEFT,
-		RIGHT = TDS_RIGHT,
-
-		ZERO = TDS_0,
-		ONE = TDS_1,
-		TWO = TDS_2,
-		THREE = TDS_3,
-		FOUR = TDS_4,
-		FIVE = TDS_5,
-		SIX = TDS_6,
-		SEVEN = TDS_7,
-		EIGHT = TDS_8,
-		NINE = TDS_9,
-		MINUS = TDS_MINUS,
-		PLUS = TDS_PLUS,
-
-		SHIFT = TDS_SHIFT,
-		CTRL = TDS_CONTROL,
-		ALT = TDS_ALT,
-		SPACE = TDS_SPACE,
-		ESC = TDS_ESCAPE,
-		CAPS = TDS_CAPSLOCK,
-		TAB = TDS_TAB,
-		ENTER = TDS_ENTER,
-		BACKSPACE = TDS_BACKSPACE,
-		TILDE = TDS_TILDE,
-		COMMA = TDS_COMMA,
-		PERIOD = TDS_PERIOD,
-		SLASH = TDS_SLASH,
-		SEMICOLON = TDS_SEMICOLON,
-
-		M1 = TDS_MOUSE_LEFT,
-		M2 = TDS_MOUSE_RIGHT,
-		MIDDLE = TDS_MOUSE_MIDDLE,
-		M4 = TDS_MOUSE_X1,
-		M5 = TDS_MOUSE_X2,
-		SCROLL = TDS_MOUSE_SCROLL,
-	};
-*/
