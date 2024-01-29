@@ -189,10 +189,9 @@ public class FPS_Controller_Script : Script
         #region Camera
         if (cameraCanMove)
         {
-            
             if (Input.GetAxisX() != 0 || Input.GetAxisY() != 0)
             {
-                yaw = transform.GetRotation().X + Input.GetAxisX() * mouseSensitivity;
+                yaw = transform.GetRotation().Y + Input.GetAxisX() * mouseSensitivity;
 
                 if (!invertCamera)
                 {

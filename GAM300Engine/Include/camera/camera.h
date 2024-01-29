@@ -1,7 +1,6 @@
 #ifndef TDS_CAMERA
 #define TDS_CAMERA
 
-#include "Input/Input.h"
 #include "dotnet/ImportExport.h"
 
 namespace TDS
