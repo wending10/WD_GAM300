@@ -37,6 +37,8 @@ namespace TDS
 		DLL_API bool getScrollWheel() const { return m_ScrollWheel; }
 		DLL_API void setScrollWheel(bool scrollWheel) { m_ScrollWheel = scrollWheel; }
 		DLL_API Vec3 getForwardVector() { return m_Front; }
+		DLL_API Vec3 getRightVector() { return m_Right; }
+
 		float m_Fov{ 45.f };
 	private:
 
