@@ -1,5 +1,5 @@
 #include "components/UiSprite.h"
-#include "Input/Input.h"
+#include "Input/InputSystem.h"
 namespace TDS
 {
 
@@ -27,7 +27,8 @@ namespace TDS
 		.method("SetFontName", &UISprite::SetFontName)
 		.method("SetFontMessage", &UISprite::SetFontMessage)
 		.method("SetFontColour", &UISprite::SetFontColour)
-		.method("SetFontBackgroundColour", &UISprite::SetFontBackgroundColour);
+		.method("SetFontBackgroundColour", &UISprite::SetFontBackgroundColour)
+		.method("SetEnableSprite", &UISprite::SetEnableSprite);
 	}
 		UISprite::UISprite() :
 		m_TextureReference(),
@@ -81,7 +82,7 @@ namespace TDS
 
 	bool UISprite::IsMouseCollided()
 	{
-		Vec2 mousePos = Input::getLocalMousePos();
+		Vec2 mousePos = InputSystem::GetInstance()->getLocalMousePos();
 
 		if (mousePos.x >= m_BoundingBoxMin.x && mousePos.x <= m_BoundingBoxMax.x &&
 			mousePos.y >= m_BoundingBoxMin.y && mousePos.y <= m_BoundingBoxMax.y)
@@ -141,6 +142,9 @@ namespace TDS
 		m_BackGroundColour = Vec4(x, y, z, w);
 	}
 
-
+	void TDS::UISprite::SetEnableSprite(bool status)
+	{
+		m_EnableSprite = status;
+	}
 
 }
