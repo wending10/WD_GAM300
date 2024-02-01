@@ -387,7 +387,7 @@ public class LockPick1 : Script
     private float unlockAngle;
     private Vector2 unlockRange;
     private float keyPressTime;
-    [SerializeField] private bool movePick;
+    private bool movePick;
     private bool deduct;
     private bool displayTutorial;
     [SerializeField] bool played;
@@ -398,10 +398,8 @@ public class LockPick1 : Script
     // Start is called before the first frame update
     override public void Awake()
     {
-        Console.WriteLine("hmm");
         newLock();
         originalPosition = transform.GetPosition();
-        Console.WriteLine("hmmmmmm");
     }
     
     // Update is called once per frame
