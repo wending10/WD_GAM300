@@ -57,13 +57,15 @@ void TDS::GamePlayScene::update()
 		//}
 		if (inputSystem->isKeyPressed(VK_ESCAPE))
 		{
+			gamePaused = true;
 			inputSystem->setCursorVisible(true);
 			inputSystem->setMouseLock(false);
 		}
-		else if (inputSystem->getCursorVisible() && ImGui::IsWindowHovered() && inputSystem->isMousePressed(VK_LBUTTON))
+		else if (inputSystem->getCursorVisible() && ImGui::IsWindowHovered() && inputSystem->isMousePressed(VK_LBUTTON) && gamePaused)
 		{
 			inputSystem->setCursorVisible(false);
 			inputSystem->setMouseLock(true);
+			gamePaused = false;
 		}
 
 
