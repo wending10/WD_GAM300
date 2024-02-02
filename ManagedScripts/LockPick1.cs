@@ -334,10 +334,10 @@ public class LockPick1 : Script
     //    movePick = true;
     //}
 
-    //float toDegree(float radians)
-    //{
-    //    return radians * (180 / 3.1415926535897931f);
-    //}
+    float toDegree(float radians)
+    {
+        return radians * (180 / 3.1415926535897931f);
+    }
     float toRadians(float degree)
     {
         return degree * (3.1415926535897931f / 180);
@@ -372,8 +372,10 @@ public class LockPick1 : Script
     public float maxAngle = 90;
     public float lockSpeed = 10;
     public bool unlocked;
-    public AudioClip[] lockSoundEffects;
-    public AudioClip[] rattleSoundEffects;
+    //public AudioClip[] lockSoundEffects;
+    //public AudioClip[] rattleSoundEffects;
+    public AudioClip lockSoundEffects;
+    public AudioClip rattleSoundEffects;
     float delay = 0.4f;
     //public GameObject _NumOfTries;
     //public Text _AmtOfTries;
@@ -383,7 +385,7 @@ public class LockPick1 : Script
 
     [SerializeField] private int numOfTries;
     private float percentage;
-    private float eulerAngle;
+    [SerializeField] private float eulerAngle;
     private float unlockAngle;
     private Vector2 unlockRange;
     private float keyPressTime;
@@ -392,16 +394,29 @@ public class LockPick1 : Script
     private bool displayTutorial;
     [SerializeField] bool played;
 
-
     private Vector3 originalPosition;
+    private Vector3 originalRotation;
 
     // Start is called before the first frame update
     override public void Awake()
     {
         newLock();
         originalPosition = transform.GetPosition();
+        originalRotation = transform.GetRotation();
+
+        lockSoundEffects.add_clips("Lock Turning Audio");
+        lockSoundEffects.add_clips("lockpick success");
+        lockSoundEffects.add_clips("lockpick_failtryl");
+
+        rattleSoundEffects.add_clips("temp_lockrattle1");
+        rattleSoundEffects.add_clips("temp_lockrattle2");
+        rattleSoundEffects.add_clips("temp_lockrattle3");
+        rattleSoundEffects.add_clips("temp_lockrattle4");
+        rattleSoundEffects.add_clips("temp_lockrattle5");
+        rattleSoundEffects.add_clips("temp_lockrattle6");
+
     }
-    
+
     // Update is called once per frame
     override public void Update()
     {
@@ -450,17 +465,22 @@ public class LockPick1 : Script
                 Vector3 originalRotation = transform.GetRotation();
                 transform.SetRotation(new Vector3(originalRotation.X, originalRotation.Y, eulerAngle));
 
-                Vector2 addedPosition = new Vector2(-Mathf.Sin(eulerAngle), Mathf.Cos(eulerAngle));
-                transform.SetPosition(new Vector3(originalPosition.X + addedPosition.X * 1000, originalPosition.Y + addedPosition.Y * 300, -4000));
+                Vector3 scale = transform.GetScale();
+                Vector2 newPosition = new Vector2(originalPosition.X * Mathf.Cos(eulerAngle) - originalPosition.Y * Mathf.Sin(eulerAngle),
+                                                  originalPosition.X * Mathf.Sin(eulerAngle) + originalPosition.Y * Mathf.Cos(eulerAngle));
+                transform.SetPosition(new Vector3(newPosition.X, newPosition.Y, originalPosition.Z));
             }
 
             if (Input.GetKeyDown(Keycode.E))
             {
+                originalRotation = transform.GetRotation();
                 movePick = false;
                 keyPressTime = 1;
                 // NOTE: Audio
                 //GetComponent<AudioSource>().clip = lockSoundEffects[0];
                 //GetComponent<AudioSource>().Play();
+
+
             }
             if (Input.GetKeyUp(Keycode.E))
             {
@@ -470,17 +490,26 @@ public class LockPick1 : Script
             }
             #endregion
 
-            #region Check if pick is at correct position
-            percentage = Mathf.Round(100 - Mathf.Abs(((eulerAngle - unlockAngle) / 100) * 100));
-            float lockRotation = ((percentage / 100) * maxAngle) * keyPressTime;
-            float maxRotation = (percentage / 100) * maxAngle;
-            float lockLerp = Mathf.LerpAngle(innerLock.GetRotation().Z, lockRotation, Time.deltaTime * lockSpeed);
-            innerLock.SetRotation(new Vector3(0, 0, lockLerp));
 
-            if (lockLerp >= maxRotation - 1)
+            //        percentage = Mathf.Round(100 - Mathf.Abs(((eulerAngleDeg - unlockAngle) / 100) * 100));
+            //        float maxRotation = (percentage / 100) * maxAngle;
+            //        float lockRotation = maxRotation * keyPressTime;
+            //        float lockLerp = Mathf.LerpAngle(toDegree(innerLock.GetRotation().Z), lockRotation, Time.deltaTime * lockSpeed);
+            //        innerLock.SetRotation(new Vector3(0, 0, toRadians(lockLerp)));
+
+            #region Check if pick is at correct position
+            float eulerAngleDegree = toDegree(eulerAngle);
+            percentage = Mathf.Round(100 - Mathf.Abs(((eulerAngleDegree - unlockAngle) / 100) * 100));
+            float maxRotation = (percentage / 100) * maxAngle;
+            float lockRotation = maxRotation * keyPressTime;
+            float lockLerp = Mathf.LerpAngle(toDegree(innerLock.GetRotation().Z), lockRotation, Time.deltaTime * lockSpeed);
+            innerLock.SetRotation(new Vector3(0, 0, toRadians(lockLerp)));
+
+            if (!movePick && (lockLerp >= maxRotation - 1))
             {
-                if (eulerAngle < unlockRange.Y && eulerAngle > unlockRange.X)
+                if (eulerAngleDegree < unlockRange.Y && eulerAngleDegree > unlockRange.X)
                 {
+                    Console.WriteLine("hmm");
                     movePick = true;
                     keyPressTime = 0;
                     // NOTE: Audio
@@ -504,7 +533,7 @@ public class LockPick1 : Script
                 {
                     //float randomRotation = ScriptAPI.Random.insideUnitCircle.x;
                     float randomRotation = ScriptAPI.Random.Range(-1,1); // NOTE: Not sure if insideUnitCircle keeps changing or is a fixed Vector2 that is reset on Start
-                    transform.SetRotation(transform.GetRotation() + new Vector3(0, 0, ScriptAPI.Random.Range((-randomRotation - 1), (randomRotation + 1))));
+                    transform.SetRotationZ(originalRotation.Z + (float)(randomRotation / 180.0 * Math.PI));
 
                     if (Input.GetKeyDown(Keycode.E) || Input.GetKey(Keycode.E))
                     {
@@ -566,7 +595,8 @@ public class LockPick1 : Script
 
     public void newLock()
     {
-        Cursor.visible = false;
+        Input.Lock(false);
+
         //Cursor.lockState = CursorLockMode.None;
         // NOTE: Audio
         //GetComponent<AudioSource>().volume = 1f;
