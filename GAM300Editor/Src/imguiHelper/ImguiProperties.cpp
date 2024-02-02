@@ -950,7 +950,7 @@ namespace TDS
 			else if (propertyName.get_type() == rttr::type::get<float>())
 			{
 				float newValue = propertyName.get_value(componentInstance).convert<float>();
-				ImguiInput(propertyName.get_name().to_string(), newValue);
+				ImguiInput(propertyName.get_name().to_string(), newValue,0.0001f);
 				propertyName.set_value(componentInstance, newValue);
 			}
 			else if (propertyName.get_type() == rttr::type::get<bool>())
