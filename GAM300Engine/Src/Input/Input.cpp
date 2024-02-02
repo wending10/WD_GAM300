@@ -331,13 +331,13 @@ namespace TDS
 	}
 
 	void Input::centerandhidemouse(HWND hwnd) {
-		POINT center;
-		LPRECT windowsrect{};
-		GetWindowRect(hwnd,windowsrect);
-		center.x = windowsrect->right - windowsrect->left;
-		center.y = windowsrect->top - windowsrect->bottom;
-		ScreenToClient(hwnd, &center);
-		SetCursorPos(center.x, center.y);
+		//POINT center;
+		//LPRECT windowsrect{};
+		//GetWindowRect(hwnd,windowsrect);
+		//center.x = windowsrect->right - windowsrect->left;
+		//center.y = windowsrect->top - windowsrect->bottom;
+		//ScreenToClient(hwnd, &center);
+		//SetCursorPos(center.x, center.y);
 		//ShowCursor(FALSE);
 	}
 

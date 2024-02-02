@@ -92,7 +92,7 @@ public class GhostPathfinding : Script
         //set MOUSEPOS to be the position where the ghost will go (ghost approaches cabinet in the room)
         //Vector3 wp1 = Input.GetMousePosition(); //seems like there is offset
         //old: 
-        Vector3 wp1 = new Vector3(Input.ScreenMousePosdX(), Input.ScreenMousePosdY(), 0);
+        Vector3 wp1 = new Vector3(Input.GetMouseDeltaX(), Input.GetMouseDeltaY(), 0);
         //using my own:
         //Vector3 wp1 = new Vector3(Input.GetLocalMousePosX(), Input.GetLocalMousePosY(), 0); 
 
