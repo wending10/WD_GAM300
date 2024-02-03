@@ -205,6 +205,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Identifier\UniqueID.h" />
     <ClInclude Include="Include\MacroHelper.h" />
     <ClInclude Include="Include\Input\InputSystem.h" />
+    <ClInclude Include="Include\Physics\CollisionCollectorImpl.h" />
     <ClInclude Include="Include\Physics\ContactListenerImpl.h" />
     <ClCompile Include="Src\GraphicsResource\Revamped\MeshController.cpp" />
     <ClCompile Include="Include\Rendering\GraphicsManagerWrapperCalls.cpp" />

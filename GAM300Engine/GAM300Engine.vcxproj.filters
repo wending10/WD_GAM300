@@ -276,6 +276,7 @@
     <ClInclude Include="Include\Rendering\Revamped\FrameBufferObjects\LightingPass.h" />
     <ClInclude Include="Include\AssetManagement\Revamped\MeshFactory.h" />
     <ClInclude Include="Include\Input\InputSystem.h" />
+    <ClInclude Include="Include\Physics\CollisionCollectorImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />
