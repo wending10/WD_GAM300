@@ -5,6 +5,7 @@ namespace TDS
 {
 	// Unique pointer to instance of Scene
 	std::unique_ptr<InputSystem> InputSystem::m_instance;
+	Vec2 InputSystem::m_uiMousePos;
 
 	InputSystem::InputSystem()
 	{
@@ -305,5 +306,20 @@ namespace TDS
 	short& InputSystem::getWheelDelta()
 	{
 		return wheelDelta;
+	}
+
+	void InputSystem::setUIMousePos(Vec2 mousePos)
+	{
+		m_uiMousePos = mousePos;
+	}
+
+	float InputSystem::getUIMousePosX()
+	{
+		return m_uiMousePos.x;
+	}
+
+	float InputSystem::getUIMousePosY()
+	{
+		return m_uiMousePos.y;
 	}
 }

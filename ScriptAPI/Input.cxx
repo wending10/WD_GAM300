@@ -364,4 +364,14 @@ namespace ScriptAPI
 	{
 		return TDS::InputSystem::GetInstance()->getVerticalAxis();
 	}
+
+	float Input::GetUIMousePosX()
+	{
+		return TDS::InputSystem::GetInstance()->getUIMousePosX();
+	}
+
+	float Input::GetUIMousePosY()
+	{
+		return TDS::InputSystem::GetInstance()->getUIMousePosY();
+	}
 }

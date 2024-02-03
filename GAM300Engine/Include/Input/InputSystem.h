@@ -62,6 +62,10 @@ namespace TDS
 
 		short& getWheelDelta();
 
+		static void setUIMousePos(Vec2 mousePos);
+		float getUIMousePosX();
+		float getUIMousePosY();
+
 		struct KeyState
 		{
 			bool pressed;
@@ -88,5 +92,6 @@ namespace TDS
 		Point m_winCenter;
 		bool mouseVisible = false;
 		Point m_localMousePos;
+		static Vec2 m_uiMousePos;
 	};
 }
