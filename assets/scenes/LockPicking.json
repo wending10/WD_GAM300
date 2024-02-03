@@ -449,9 +449,6 @@
                 "numOfTries": {
                     "System.Int32": "0"
                 },
-                "eulerAngle": {
-                    "System.Single": "0"
-                },
                 "played": {
                     "System.Boolean": "False"
                 },
