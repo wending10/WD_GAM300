@@ -29,8 +29,7 @@ RTTR_REGISTRATION
 		.property("IsRayCast", &RigidBody::mIsRayCast)
 		.property("RayOrigin", &RigidBody::mRayOrigin)
 		.property("RayDirection", &RigidBody::mRayDirection)
-		.property("RayScale", &RigidBody::mRayScale)
-		.property("RayHit", &RigidBody::mIsRayHit); // remove later
+		.property("RayScale", &RigidBody::mRayScale);
 
 	rttr::registration::enumeration<RigidBody::MotionType>("MotionType")
 		(
