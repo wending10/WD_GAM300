@@ -438,17 +438,28 @@ namespace TDS
 								Vec4 localPosition = transformComponent->getLocalPosition(parent);
 								Vec3 localPositionVec3 = localPosition;
 								ImguiInput("Position", localPositionVec3);
-								transformComponent->setLocalPosition(parent, Vec4(localPositionVec3, localPosition.w));
+
+								if (localPositionVec3 - Vec3(localPosition) != Vec3(0.f, 0.f, 0.f))
+								{
+									transformComponent->setLocalPosition(parent, Vec4(localPositionVec3, localPosition.w));
+								}
 
 								Vec3 parentScale = parentTransformComponent->GetScale();
 								Vec3 reflectedScale = oldScale - parentScale;
 								ImguiInput("Scale", reflectedScale);
-								transformComponent->SetScale(reflectedScale + parentScale);
+								if (reflectedScale != Vec3(0.f, 0.f, 0.f))
+								{
+									transformComponent->SetScale(reflectedScale + parentScale);
+								}
 
 								Vec3 parentRotation = parentTransformComponent->GetRotation();
 								Vec3 reflectedRotation = oldRotation - parentRotation;
 								ImguiInput("Rotation", reflectedRotation);
-								transformComponent->SetRotation(reflectedRotation + parentRotation);
+
+								if (reflectedRotation != Vec3(0.f, 0.f, 0.f))
+								{
+									transformComponent->SetRotation(reflectedRotation + parentRotation);
+								}
 							}
 							else
 							{
@@ -598,7 +609,7 @@ namespace TDS
 								bool value = scriptValue.value == "False" ? false : true;
 								if (ImguiInput(scriptValue.name, value))
 								{
-									scriptValue.value = value ? "True" : "False";
+									scriptValue.value = std::to_string(value);
 									sceneManagerInstance->setScriptValue(selectedEntity, scriptName, scriptValue);
 									//sceneManagerInstance->setBool(selectedEntity, scriptName, scriptValue.name, value);
 								}
@@ -1090,6 +1101,18 @@ namespace TDS
 					{
 						addComponentByName("Graphics Component", selectedEntity);
 					}
+					if (!GetDirLightComponent(selectedEntity) && ImGui::Selectable("DirectionalLight"))
+					{
+						addComponentByName("DirectionalLight", selectedEntity);
+					}
+					if (!GetSpotLightComponent(selectedEntity) && ImGui::Selectable("SpotLight"))
+					{
+						addComponentByName("SpotLight", selectedEntity);
+					}
+					if (!GetPointLightComponent(selectedEntity) && ImGui::Selectable("PointLight"))
+					{
+						addComponentByName("PointLight", selectedEntity);
+					}
 
 					break;
 				case AddComponentStage::SCRIPTS:
@@ -1197,6 +1220,7 @@ namespace TDS
 				//}
 				ImGui::EndPopup();
 			}
+
 		}
 	}
 
@@ -1226,7 +1250,7 @@ namespace TDS
 			else if (propertyName.get_type() == rttr::type::get<float>())
 			{
 				float newValue = propertyName.get_value(componentInstance).convert<float>();
-				ImguiInput(propertyName.get_name().to_string(), newValue,0.0001f);
+				ImguiInput(propertyName.get_name().to_string(), newValue);
 				propertyName.set_value(componentInstance, newValue);
 			}
 			else if (propertyName.get_type() == rttr::type::get<bool>())
@@ -1410,7 +1434,10 @@ namespace TDS
 					|| propertyName.get_name().to_string() == "FakeScale"
 					|| propertyName.get_name().to_string() == "OldPosition"
 					|| propertyName.get_name().to_string() == "OldScale"
-					|| propertyName.get_name().to_string() == "OldRotation") continue;
+					|| propertyName.get_name().to_string() == "OldRotation"
+					|| propertyName.get_name().to_string() == "OldFakePosition"
+					|| propertyName.get_name().to_string() == "OldFakeScale"
+					|| propertyName.get_name().to_string() == "OldFakeRotation") continue;
 
 				Vec3 newValue = propertyName.get_value(componentInstance).convert<Vec3>();
 				ImguiInput(propertyName.get_name().to_string(), newValue);
