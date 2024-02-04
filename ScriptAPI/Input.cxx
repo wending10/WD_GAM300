@@ -365,6 +365,16 @@ namespace ScriptAPI
 		return TDS::InputSystem::GetInstance()->getVerticalAxis();
 	}
 
+	float Input::GetSensitivity()
+	{
+		return TDS::InputSystem::GetInstance()->getSensitivity();
+	}
+
+	void Input::SetSensitivity(float value)
+	{
+		TDS::InputSystem::GetInstance()->setSensitivity(value);
+	}
+
 	float Input::GetUIMousePosX()
 	{
 		return TDS::InputSystem::GetInstance()->getUIMousePosX();

@@ -287,5 +287,8 @@ namespace ScriptAPI
 		static float GetUIMousePosX();
 		static float GetUIMousePosY();
 
+		static float GetSensitivity();
+		static void SetSensitivity(float value);
+
 	};
 }
