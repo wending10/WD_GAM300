@@ -43,14 +43,18 @@ public class InventoryScript : Script
             Console.WriteLine("I pressed");
             toggleInventory();
         }
-        Input.Lock(!InventoryIsOpen);
-        Input.HideMouse(InventoryIsOpen);  // For some reason visibility = hide ?
 
         if (InventoryIsOpen) // Inventory opened
         {
+            Input.Lock(false);
+            Input.HideMouse(false);
             checkMouseInput();
         }
-        
+        else if (!InventoryIsOpen && !PopupUI.isDisplayed)
+        {
+            Input.Lock(true);
+            Input.HideMouse(true);
+        }
     }
 
     public void toggleInventory()

@@ -58,6 +58,7 @@ public class View_Object : Script
         if(isExamining)
         {
             Console.WriteLine("Examining");
+            GraphicsManagerWrapper.ToggleViewFrom2D(true);
             CheckMouseInput();
             CheckKeyboardInput();
             UpdateCamera();
@@ -120,7 +121,7 @@ public class View_Object : Script
 
             isExamining = false;
             isZoomed = false;
-
+            GraphicsManagerWrapper.ToggleViewFrom2D(false);
             InventoryScript.InventoryIsOpen = true;
             GameObjectScriptFind("InventoryObject").SetActive(true);
             gameObject.SetActive(false);
@@ -133,13 +134,11 @@ public class View_Object : Script
 
         if (isZoomed)
         {
-            CameraComponent cam = ObjectViewerCam.GetComponent<CameraComponent>();
-            ObjectViewerCam.GetComponent<CameraComponent>().SetFieldOfView(Mathf.Lerp(cam.GetFieldOfView(), 30, 30 * Time.deltaTime));
+            ObjectViewerCam.GetComponent<CameraComponent>().SetFieldOfView(30f);
         }
         else
         {
-            CameraComponent cam = ObjectViewerCam.GetComponent<CameraComponent>();
-            ObjectViewerCam.GetComponent<CameraComponent>().SetFieldOfView(Mathf.Lerp(cam.GetFieldOfView(), 60, 5f * Time.deltaTime));
+            ObjectViewerCam.GetComponent<CameraComponent>().SetFieldOfView(60f);
         }
     }
 }
