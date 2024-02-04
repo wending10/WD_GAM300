@@ -96,9 +96,8 @@ void TDS::GamePlayScene::update()
 
 			float normalizedLocalMouseX = ((globalMousePos.x - window_pos.x) / (window_size.x * 0.5f)) - 1.f;
 			float normalizedLocalMouseY = ((window_pos.y + window_size.y - globalMousePos.y) / (window_size.y * 0.5f)) - 1.f;
-			Vec2 localMousePos = { normalizedLocalMouseX, normalizedLocalMouseY };
 
-			//Input::setLocalMousePos(localMousePos);
+			InputSystem::setUIMousePos(Vec2(normalizedLocalMouseX, normalizedLocalMouseY));
 
 		}
 		ShowCursor(show_cursor);

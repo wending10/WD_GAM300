@@ -48,6 +48,7 @@ namespace TDS
 		m_TextureName(std::move(toMove.m_TextureName)),
 		m_ModelName(std::move(toMove.m_ModelName)),
 		m_MeshName(toMove.m_MeshName),
+		m_MeshNodeName(toMove.m_MeshNodeName),
 		m_Color(toMove.m_Color),
 		m_PointLightID(toMove.m_PointLightID),
 		m_Pointlight(toMove.m_Pointlight),

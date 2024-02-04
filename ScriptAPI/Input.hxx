@@ -283,5 +283,12 @@ namespace ScriptAPI
 
 		static int GetHorizontalAxis();
 		static int GetVerticalAxis();
+
+		static float GetUIMousePosX();
+		static float GetUIMousePosY();
+
+		static float GetSensitivity();
+		static void SetSensitivity(float value);
+
 	};
 }

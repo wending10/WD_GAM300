@@ -121,26 +121,23 @@ namespace TDS
 
             // Input System Stuff
             case WM_INPUT: {
+               
                 RAWINPUT rawInput;
                 UINT size = sizeof(RAWINPUT);
 
                 GetRawInputData((HRAWINPUT)lParam, RID_INPUT, &rawInput, &size, sizeof(RAWINPUTHEADER));
 
                 if (rawInput.header.dwType == RIM_TYPEMOUSE) {
+
                     // Process mouse input
                     TDS::InputSystem::GetInstance()->setRawMouseInput(rawInput.data.mouse.lLastX, rawInput.data.mouse.lLastY);
-                }
 
-                if (TDS::InputSystem::GetInstance()->getMouseLock())
-                {
-                    HWND activeWindow = GetForegroundWindow();
-                    if (activeWindow != nullptr) {
-                        RECT windowRect;
-                        if (GetWindowRect(activeWindow, &windowRect)) {
-                            TDS::InputSystem::GetInstance()->setWindowCenter((windowRect.left + windowRect.right) / 2, (windowRect.top + windowRect.bottom) / 2);
-                        }
-                    }
-                    TDS::InputSystem::GetInstance()->lockMouseCenter(hWnd);
+                    // Accumulate the X-axis mouse movement
+                    InputSystem::GetInstance()->accumulatedMouseX += rawInput.data.mouse.lLastX;
+
+                    // Accumulate the Y-axis mouse movement
+                    InputSystem::GetInstance()->accumulatedMouseY += rawInput.data.mouse.lLastY;
+
                 }
 
             }break;
@@ -153,6 +150,18 @@ namespace TDS
                 GetCursorPos(&p);
                 ScreenToClient(GetActiveWindow(), &p);
                 InputSystem::GetInstance()->setLocalMousePos(p.x, p.y);
+                if (TDS::InputSystem::GetInstance()->getMouseLock())
+                {
+                    HWND activeWindow = GetForegroundWindow();
+                    if (activeWindow != nullptr) {
+                        RECT windowRect;
+                        if (GetWindowRect(activeWindow, &windowRect)) {
+                            TDS::InputSystem::GetInstance()->setWindowCenter((windowRect.left + windowRect.right) / 2, (windowRect.top + windowRect.bottom) / 2);
+                        }
+                    }
+                    TDS::InputSystem::GetInstance()->lockMouseCenter(hWnd);
+                }
+
             }break;
         }
     }
@@ -173,15 +182,6 @@ namespace TDS
         GraphicsManager::getInstance().GetDebugRenderer().Init();
         GraphicsManager::getInstance().InitSkyBox();
 
-        //register the grid
-        for (size_t i = 0; i < pathfinder.GetGrid().size(); ++i)
-        {
-            for (size_t j = 0; j < pathfinder.GetGrid()[i].size(); ++j)
-            {
-                // do some RegisterEntity using pathfinder.GetGrid()[i][j].get();
-            }
-        }
-
         // Raw Input for Mouse Movement
         RAWINPUTDEVICE rid;
         rid.usUsagePage = 0x01;  // Mouse
@@ -191,6 +191,15 @@ namespace TDS
 
         if (RegisterRawInputDevices(&rid, 1, sizeof(RAWINPUTDEVICE)) == FALSE) {
             std::cout << "Mouse Failed to Register" << std::endl;
+        }
+
+        //register the grid
+        for (size_t i = 0; i < pathfinder.GetGrid().size(); ++i)
+        {
+            for (size_t j = 0; j < pathfinder.GetGrid()[i].size(); ++j)
+            {
+                // do some RegisterEntity using pathfinder.GetGrid()[i][j].get();
+            }
         }
     }
 
@@ -294,6 +303,12 @@ namespace TDS
            
             if (isPlaying)
             {
+                if (Input::isKeyPressed(VK_ESCAPE))
+                {
+                    gamePaused = !gamePaused;
+                    std::cout << "editor system paused = " << gamePaused << std::endl;
+                }
+
                 if (startPlaying)
                 {
                     SceneManager::GetInstance()->isPlaying = true;
@@ -360,6 +375,8 @@ namespace TDS
 
             Input::scrollStop();
             TDS::InputSystem::GetInstance()->setRawMouseInput(0, 0);
+            InputSystem::GetInstance()->accumulatedMouseX = 0;
+            InputSystem::GetInstance()->accumulatedMouseY = 0;
         }
         stopScriptEngine();
       
