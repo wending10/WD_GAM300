@@ -358,7 +358,6 @@ namespace TDS
 		for (std::uint32_t i = 0; i < Node.mNumMeshes; ++i)
 		{
 			aiMesh& mesh = *Scene.mMeshes[Node.mMeshes[i]];
-
 			std::int32_t iUV = -1, iColor = -1;
 
 			if (mesh.HasPositions() == false || mesh.HasFaces() == false)
@@ -388,23 +387,23 @@ namespace TDS
 			}
 
 			auto GetTextureIndex = [&]()->int
-			{
-				for (std::uint32_t i = 0; i < mesh.GetNumUVChannels(); ++i)
 				{
-					if (mesh.HasTextureCoords(i))
-						return i;
-				}
-				return -1;
-			};
+					for (std::uint32_t i = 0; i < mesh.GetNumUVChannels(); ++i)
+					{
+						if (mesh.HasTextureCoords(i))
+							return i;
+					}
+					return -1;
+				};
 			auto GetColorIndex = [&]()->int
-			{
-				for (std::uint32_t i = 0; i < mesh.GetNumUVChannels(); ++i)
 				{
-					if (mesh.HasVertexColors(i))
-						return i;
-				}
-				return -1;
-			};
+					for (std::uint32_t i = 0; i < mesh.GetNumUVChannels(); ++i)
+					{
+						if (mesh.HasVertexColors(i))
+							return i;
+					}
+					return -1;
+				};
 			iUV = GetTextureIndex();
 			iColor = GetColorIndex();
 
@@ -415,9 +414,9 @@ namespace TDS
 			aiVector3D pos;
 			AccumulatedTransform.DecomposeNoScaling(currRotation, pos);
 
-			aiMatrix4x4 translateMat = GetTranslationMatrix(Node.mTransformation);
-			aiMatrix4x4 rotationMat = GetRotationMatrix(Node.mTransformation);
-			aiMatrix4x4 scaleMat = GetScaleMatrix(Node.mTransformation);
+			aiMatrix4x4 translateMat = GetTranslationMatrix(AccumulatedTransform);
+			aiMatrix4x4 rotationMat = GetRotationMatrix(AccumulatedTransform);
+			aiMatrix4x4 scaleMat = GetScaleMatrix(AccumulatedTransform);
 
 			aiMatrix4x4 identity;
 
@@ -434,8 +433,8 @@ namespace TDS
 			rawMesh.m_MeshName = std::string(mesh.mName.C_Str());
 
 
-			aiVector3D aMin = mesh.mAABB.mMin;
-			aiVector3D aMax = mesh.mAABB.mMax;
+			aiVector3D aMin = AccumulatedTransform * mesh.mAABB.mMin;
+			aiVector3D aMax = AccumulatedTransform * mesh.mAABB.mMax;
 
 			aMin = translateMat * aMin;
 			aMax = translateMat * aMax;
@@ -482,10 +481,6 @@ namespace TDS
 					const auto B = currRotation.Rotate(mesh.mBitangents[i]);
 					const auto N = currRotation.Rotate(mesh.mNormals[i]);
 
-					//const auto T = mesh.mTangents[i];
-					//const auto B = mesh.mBitangents[i];
-					//const auto N = mesh.mNormals[i];
-
 					vert.m_Normal = { N.x, N.y, N.z };
 					vert.m_Tangent = { T.x, T.y, T.z };
 					vert.m_Bitangent = { B.x, B.y, B.z };
@@ -497,7 +492,6 @@ namespace TDS
 				else
 				{
 					const auto N = currRotation.Rotate(mesh.mNormals[i]);
-					/*				const auto N = mesh.mNormals[i];*/
 					vert.m_Normal = { N.x, N.y, N.z };
 					vert.m_Tangent = { 1.f, 0.f, 0.f };
 					vert.m_Bitangent = { 1.f, 0.f, 0.f };
@@ -589,19 +583,19 @@ namespace TDS
 	{
 		m_MeshRef.resize(m_Scene->mNumMeshes);
 		std::function<void(const aiNode& Node)> ProcessNode = [&](const aiNode& Node) noexcept
-		{
-			for (std::uint32_t i = 0; i < Node.mNumMeshes; ++i)
 			{
-				aiMesh* pMesh = m_Scene->mMeshes[Node.mMeshes[i]];
+				for (std::uint32_t i = 0; i < Node.mNumMeshes; ++i)
+				{
+					aiMesh* pMesh = m_Scene->mMeshes[Node.mMeshes[i]];
 
-				m_MeshRef[Node.mMeshes[i]].m_Nodes.emplace_back(&Node);
-			}
+					m_MeshRef[Node.mMeshes[i]].m_Nodes.emplace_back(&Node);
+				}
 
-			for (std::uint32_t i = 0; i < Node.mNumChildren; ++i)
-			{
-				ProcessNode(*Node.mChildren[i]);
-			}
-		};
+				for (std::uint32_t i = 0; i < Node.mNumChildren; ++i)
+				{
+					ProcessNode(*Node.mChildren[i]);
+				}
+			};
 
 		ProcessNode(*m_Scene->mRootNode);
 

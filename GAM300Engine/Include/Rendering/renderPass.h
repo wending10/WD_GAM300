@@ -5,7 +5,7 @@
 #include "Rendering/RenderTarget.h"
 #include "dotnet/ImportExport.h"
 namespace TDS {
-
+	
 	struct AttachmentClearColor
 	{
 		VkClearColorValue color{ {0.0f,0.0f,0.0f,1.f} };
@@ -20,8 +20,6 @@ namespace TDS {
 		VkAttachmentStoreOp stencilStoreOP;
 		AttachmentClearColor clear = AttachmentClearColor{};
 	};
-
-
 	class RenderPass
 	{
 	public:
