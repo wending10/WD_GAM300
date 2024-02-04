@@ -325,7 +325,6 @@ namespace TDS
 	void PhysicsSystem::JPH_PreRaycast(const EntityID& entities, Transform* _transform, RigidBody* _rigidbody)
 	{
 		JPH::Vec3 vRayOrigin = JoltToTDS::ToVec3(_rigidbody->getRayOrigin() + _transform->GetPosition());
-		TDS_INFO("origin: {},{},{}",vRayOrigin.GetX(), vRayOrigin.GetY(), vRayOrigin.GetZ());
 		JPH::Vec3 vRayDirection = JoltToTDS::ToVec3(_rigidbody->getRayDirection());
 		float vRayScale = _rigidbody->getRayScale();
 		JPH::RayCast ray { vRayOrigin, vRayScale * vRayDirection};
@@ -337,14 +336,12 @@ namespace TDS
 	void PhysicsSystem::JPH_PostRaycast(const EntityID& entities, Transform* _transform, RigidBody* _rigidbody)
 	{
 		const JPH::BroadPhaseQuery* broadphase = &m_pSystem->GetBroadPhaseQuery();
-		//std::cout << collector->HadHit() << '\n';
 		if (collector->HadHit())
 		{
 			JPH::BroadPhaseCastResult* result = collector->mHits.data();
 			auto entityID = findEntityByID(result->mBodyID.GetIndex());
 			if (entityID.has_value())
 			{
-				std::cout << entityID.value() << '\n';
 				GetRigidBody(entityID.value())->setIsRayHit(true);
 			}
 		}

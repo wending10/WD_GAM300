@@ -208,7 +208,8 @@ namespace TDS
 		//	return 1;
 		//}
 		//return 0;
-		return Mathf::Clamp(m_rawMouseInput.x, -1, 1);
+		//return Mathf::Clamp(m_rawMouseInput.x, -1, 1);
+		return accumulatedMouseX;
 	}
 
 	int InputSystem::getAxisY()
@@ -222,7 +223,8 @@ namespace TDS
 		//	return 1;
 		//}
 		//return 0;
-		return Mathf::Clamp(m_rawMouseInput.y, -1, 1);
+		//return Mathf::Clamp(m_rawMouseInput.y, -1, 1);
+		return accumulatedMouseY;
 	}
 
 	int InputSystem::getHorizontalAxis()

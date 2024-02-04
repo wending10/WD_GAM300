@@ -62,9 +62,14 @@ namespace TDS
 
 		short& getWheelDelta();
 
+
 		static void setUIMousePos(Vec2 mousePos);
 		float getUIMousePosX();
 		float getUIMousePosY();
+
+		float getSensitivity() { return 0.1f; }
+		void setSensitivity(float value) { m_sensitivity = value; }
+
 
 		struct KeyState
 		{
@@ -72,6 +77,9 @@ namespace TDS
 			bool down;
 			bool up;
 		};
+
+		int accumulatedMouseX = 0;
+		int accumulatedMouseY = 0;
 
 	private:
 		static std::unique_ptr<InputSystem> m_instance;
@@ -93,5 +101,6 @@ namespace TDS
 		bool mouseVisible = false;
 		Point m_localMousePos;
 		static Vec2 m_uiMousePos;
+		float m_sensitivity = 0.1f;
 	};
 }

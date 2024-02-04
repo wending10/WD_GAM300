@@ -1,15 +1,8 @@
 {
     "Archetype Sizes": {
         "110000000000000": {
-            "0": 136,
-            "1": 336
-        },
-        "110100110000000": {
-            "0": 136,
-            "1": 336,
-            "3": 128,
-            "6": 352,
-            "7": 96
+            "0": 272,
+            "1": 672
         },
         "110000111000000": {
             "0": 272,
@@ -22,6 +15,13 @@
             "0": 272,
             "1": 672,
             "12": 720
+        },
+        "110100110000000": {
+            "0": 136,
+            "1": 336,
+            "3": 128,
+            "6": 352,
+            "7": 96
         }
     },
     "Entity Data": {
@@ -130,8 +130,7 @@
                     "y": 0.0,
                     "z": 0.0
                 },
-                "RayScale": 1.0,
-                "RayHit": false
+                "RayScale": 1.0
             },
             "Sphere Collider": {
                 "IsTrigger": false,
@@ -142,143 +141,6 @@
                 },
                 "Collider Radius": 19.198165893554688,
                 "Radius Factor": 1.0
-            }
-        },
-        "2": {
-            "ArchetypeID": "110100110000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "New Entity",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 0,
-                "HierarchyIndex": 1,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -1.8302431106567383,
-                    "y": -0.6436772346496582,
-                    "z": -2.203622817993164
-                },
-                "Scale": {
-                    "x": 13.015198707580566,
-                    "y": 13.015198707580566,
-                    "z": 13.015198707580566
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -115.42106628417969,
-                    "y": -0.6436772346496582,
-                    "z": -2.203622817993164
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 13.015198707580566,
-                    "y": 13.015198707580566,
-                    "z": 13.015198707580566
-                },
-                "OldPosition": {
-                    "x": -1.8302431106567383,
-                    "y": -0.6436772346496582,
-                    "z": -2.203622817993164
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Box Collider": {
-                "IsTrigger": false,
-                "Collider Center": {
-                    "x": -1.8302431106567383,
-                    "y": -0.6436772346496582,
-                    "z": -2.203622817993164
-                },
-                "Collider Size": {
-                    "x": 13.015198707580566,
-                    "y": 13.015198707580566,
-                    "z": 13.015198707580566
-                },
-                "Collider Scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "Offset Scale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Offset Center": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Mesh Renderer": true,
-                "Debug": false,
-                "ModelName": "cube_Bin.bin",
-                "MeshName": "Cube",
-                "MeshNodeName": "cube_Bin.bin",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false
-            },
-            "Rigid Body": {
-                "Mass": 1.0,
-                "Linear Velocity": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Angular Velocity": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Friction": 0.20000000298023224,
-                "Restitution": 0.0,
-                "GravityFactor": 1.0,
-                "LinearDamping": 0.05000000074505806,
-                "AngularDamping": 0.05000000074505806,
-                "MotionType": "DYNAMIC",
-                "UseGravity": false,
-                "sensorActivate": false,
-                "IsRayCast": true,
-                "RayOrigin": {
-                    "x": 50.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "RayDirection": {
-                    "x": 1.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "RayScale": 10.0,
-                "RayHit": false
             }
         },
         "3": {
@@ -386,8 +248,7 @@
                     "y": 0.0,
                     "z": 0.0
                 },
-                "RayScale": 1.0,
-                "RayHit": false
+                "RayScale": 1.0
             },
             "Sphere Collider": {
                 "IsTrigger": false,
@@ -647,6 +508,142 @@
                     "z": 0.0
                 }
             }
+        },
+        "7": {
+            "ArchetypeID": "110100110000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "New Entity",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 0,
+                "HierarchyIndex": 3,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -127.4024429321289,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 10.598400115966797,
+                    "y": 10.598400115966797,
+                    "z": 10.598400115966797
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -127.4024429321289,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 10.598400115966797,
+                    "y": 10.598400115966797,
+                    "z": 10.598400115966797
+                },
+                "OldPosition": {
+                    "x": -127.4024429321289,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Box Collider": {
+                "IsTrigger": false,
+                "Collider Center": {
+                    "x": -127.4024429321289,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Collider Size": {
+                    "x": 10.598400115966797,
+                    "y": 10.598400115966797,
+                    "z": 10.598400115966797
+                },
+                "Collider Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Offset Scale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Offset Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Mesh Renderer": true,
+                "Debug": false,
+                "ModelName": "cube_Bin.bin",
+                "MeshName": "Cube",
+                "MeshNodeName": "cube_Bin.bin",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false
+            },
+            "Rigid Body": {
+                "Mass": 1.0,
+                "Linear Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Angular Velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Friction": 0.20000000298023224,
+                "Restitution": 0.0,
+                "GravityFactor": 1.0,
+                "LinearDamping": 0.05000000074505806,
+                "AngularDamping": 0.05000000074505806,
+                "MotionType": "DYNAMIC",
+                "UseGravity": false,
+                "sensorActivate": false,
+                "IsRayCast": true,
+                "RayOrigin": {
+                    "x": 50.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "RayDirection": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "RayScale": 1.0
+            }
         }
     },
     "Scripts": {
@@ -660,18 +657,18 @@
                 }
             }
         },
-        "2": {},
         "3": {},
         "4": {},
         "5": {},
-        "6": {}
+        "6": {},
+        "7": {}
     },
     "Active Archetype": {
         "1": "110000111000000",
-        "2": "110100110000000",
         "3": "110000111000000",
         "4": "110000000000100",
         "5": "110000000000100",
-        "6": "110000000000000"
+        "6": "110000000000000",
+        "7": "110100110000000"
     }
 }
