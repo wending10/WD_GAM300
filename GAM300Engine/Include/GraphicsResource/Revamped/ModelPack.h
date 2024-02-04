@@ -4,11 +4,8 @@ namespace TDS
 {
 	struct Modelpack
 	{
-		std::uint32_t		m_TotalMeshCnt;
-		std::string			m_ModelName;
 		TDSModel			m_ModelHandle;
-
-
+		std::string			m_ModelName;
 
 		DLL_API Modelpack();
 
