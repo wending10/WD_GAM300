@@ -36,7 +36,6 @@
 #include "Rendering/ObjectPicking.h"
 #include "Input/InputSystem.h"
 #include "Rendering/GridRenderer.h"
-#include "MessagingSystem/MessageSystem.h"
 
 bool isPlaying = false;
 bool gamePaused = false;
@@ -176,9 +175,7 @@ namespace TDS
         ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
         GraphicsManager::getInstance().Init(&m_window);
         AssetManager::GetInstance()->PreloadAssets();
-        //skyboxrender.Init();
-        GraphicsManager::getInstance().GetDebugRenderer().Init();
-        GraphicsManager::getInstance().InitSkyBox();
+        skyboxrender.Init();
 
         // Raw Input for Mouse Movement
         RAWINPUTDEVICE rid;
@@ -237,7 +234,7 @@ namespace TDS
                 "ScriptAPI.EngineInterface",
                 "ToggleScriptViaName"
             );
-        GraphicsManager::getInstance().m_EditorRender = &imguiHelper::Draw;
+
         initImgui();
         float lightx = 0.f;
 
@@ -274,17 +271,25 @@ namespace TDS
             Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
             if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x > 0 && m_windowdimension.y > 0)
             {
-                BROADCAST_MESSAGE("Resize Event", m_window.getWidth(), m_window.getHeight());
-                /*GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());*/
+                GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
                 std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
                 pScene->Resize();
 
                 std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
                 pGamePlatScene->Resize();
-
-
             }
+            GraphicsManager::getInstance().StartFrame();
+            VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
+            std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
 
+            GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
+            if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
+                skyboxrender.RenderSkyBox(commandBuffer, frame);
+
+            //render grid
+            //gridrender.Render(commandBuffer, frame);
+            //gridrender.SetColour(0, 0, Color(1.0f, 0.0f, 0.0f, 1.0f));
+            pathfinder.DisplayPathAnimated(DeltaTime); //display path
            
             if (isPlaying)
             {
@@ -319,35 +324,27 @@ namespace TDS
                 {
                     PhysicsSystem::SetIsPlaying(false);
                     CameraSystem::SetIsPlaying(false);
+                    InputSystem::GetInstance()->setMouseLock(false);
+                    InputSystem::GetInstance()->setCursorVisible(true);
                 }
             }
+
             ecs.runSystems(2, DeltaTime); // Event handler
-            if (GraphicsManager::getInstance().IsRenderOn())
-            {
-                GraphicsManager::getInstance().StartFrame();
+            ecs.runSystems(3, DeltaTime); // Graphics
+         
+            imguiHelper::Update();
 
+            // event handling systems 
+            GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
 
-                ecs.runSystems(3, DeltaTime);
+            //GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));
+            GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, InputSystem::GetInstance()->getLocalMousePos());
+            GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
 
-                imguiHelper::Update();
+            imguiHelper::Draw(commandBuffer);
 
-                // event handling systems 
-                //GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
-
-
-
-                //VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-                //std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
-     /*           GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));*/
-               /* GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);*/
-
-          /*      imguiHelper::Draw(commandBuffer);*/
-
-                GraphicsManager::getInstance().DrawFrame();
-
-                /*GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);*/
-                GraphicsManager::getInstance().EndFrame();
-            }
+            GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
+            GraphicsManager::getInstance().EndFrame();
             // Reloading
             if (GetKeyState(VK_F5) & 0x8000)
             {
@@ -376,7 +373,8 @@ namespace TDS
         }
         imguiHelper::Exit();
         ecs.destroy();
-       
+        
+        skyboxrender.ShutDown();
         GraphicsManager::getInstance().ShutDown();
         DDSConverter::Destroy();
         //shutdown grid

@@ -17,8 +17,6 @@ namespace TDS
 		std::unordered_map<std::string, std::uint32_t> m_InstanceCnt;
 		std::uint32_t m_CurrentIndex = 0;
 		bool m_UpdateTextureArray3D = true;
-		bool m_UpdateArrayBatch = true;
-		bool m_UpdateArrayInstance = true;
 		bool m_UpdateTextureArray2D = true;
 		/*void Preload(ResourceAllocator& resourceMgr)
 		{
@@ -88,8 +86,6 @@ namespace TDS
 			}
 			m_UpdateTextureArray3D = true;
 			m_UpdateTextureArray2D = true;
-			m_UpdateArrayInstance = true;
-			m_UpdateArrayBatch = true;
 		}
 
 		//static void Load(std::string_view path, TypeReference<Texture>& textureRef, ResourceAllocator& resourceMgr)
@@ -148,8 +144,6 @@ namespace TDS
 					m_TextureArray[index].LoadTexture(path);
 					m_UpdateTextureArray3D = true;
 					m_UpdateTextureArray2D = true;
-					m_UpdateArrayInstance = true;
-					m_UpdateArrayBatch = true;
 					return;
 				}
 				else
@@ -184,8 +178,6 @@ namespace TDS
 			textureRef.m_ResourcePtr = &m_TextureArray[newIndex];
 			m_UpdateTextureArray3D = true;
 			m_UpdateTextureArray2D = true;
-			m_UpdateArrayInstance = true;
-			m_UpdateArrayBatch = true;
 			m_TextureIndices[fileName] = newIndex++;
 		}
 		void DestroyAllTextures()

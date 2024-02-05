@@ -29,10 +29,7 @@ namespace TDS
 		static void CollisionSystemInit();
 		// Main purpose is to get the offset value from each collider and pass to graphics for render
 		static void CollisionSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, GraphicsComponent* _graphics);
-
-		static void PreInit();
-		//For imgui rendering of debug colliders
-		static bool					m_RenderDebugDrawing;
+		
 		// Center at 0,0,0, length = 1
 		static std::vector<float> cubeVertices;
 		static std::vector<unsigned int> cubeIndices;
@@ -51,7 +48,7 @@ namespace TDS
 		static void ClearAll();
 		// Cube functions
 		static void GenerateCube();
-
+		
 		// Sphere functions
 		static void GenerateSphere();
 		static std::vector<float> getUnitPositiveX(unsigned int pointsPerRow);

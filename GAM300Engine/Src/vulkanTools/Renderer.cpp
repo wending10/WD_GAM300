@@ -12,8 +12,6 @@
 #include <vulkanTools/Renderer.h>
 #include "Rendering/GraphicsManager.h"
 #include "vulkanTools/CommandManager.h"
-#include "Rendering/GraphicsManager.h"
-#include "MessagingSystem/MessageSystem.h"
 namespace TDS {
 
 	//Renderer class constructor
@@ -21,8 +19,6 @@ namespace TDS {
 	{
 		recreateSwapChain();
 		createCommandBuffers();
-		RegisterEvent();
-
 	}
 
 	//Renderer class destructor
@@ -35,11 +31,6 @@ namespace TDS {
 	{
 		freeCommandBuffers();
 		m_SwapChain->ShutDown();
-	}
-
-	void Renderer::RegisterEvent()
-	{
-		REGISTER_MESSAGE("Resize Swapchain", this, &Renderer::recreateSwapChain);
 	}
 
 	//recreates the data from using the previous swapchain
