@@ -1,11 +1,12 @@
-#pragma once
+#ifndef PATHFINDER
+#define PATHFINDER
 /*
 @author		Thea Sea
 @email		thea.sea@digipen.edu
-@brief		pathfinding grid system 
+@brief		pathfinding grid system
 			- handles pathfinding, grid system, tile system and calculation of final cost in A* pathfinding
 */
-#include "Tools/Tile.h"
+#include "Tile.h"
 #include <list>
 #include <memory>
 
@@ -19,6 +20,14 @@ namespace TDS
 		void DisplayPathAnimated(const double _dt, const float _animSpeed = 0.5f);
 		const std::vector<std::vector<std::shared_ptr<Tile>>>& GetGrid() const { return m_Grid; }
 
+		// For ECS System
+		static void Initialize();
+		static void Update(const float dt, const std::vector<EntityID>& entities, Transform* _transform);
+		DLL_API static std::unique_ptr<Pathfinder>& GetInstance();
+
+		void SetStart();
+		void SetGoal();
+
 	private:
 		void FindPath();
 		void CreateGrid();
@@ -29,6 +38,8 @@ namespace TDS
 		uint32_t CalculateDistance(Tile* _currentTile, Tile* _nextTile);
 
 	private:
+		static std::unique_ptr<Pathfinder> pathfinder;
+
 		uint32_t m_TotalRows;
 		uint32_t m_TotalCols;
 		bool m_AllowDiagonals;
@@ -44,3 +55,4 @@ namespace TDS
 	};
 }
 
+#endif #PATHFINDER

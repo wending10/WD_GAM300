@@ -4,12 +4,15 @@
 @brief		pathfinding grid system
 			- handles pathfinding, grid system, tile system and calculation of final cost in A* pathfinding
 */
-#include "Tools/Pathfinder.h"
+#include "AI/Pathfinder.h"
 #include <cmath>
 #include <chrono>
+#include "components/components.h"
 
 namespace TDS
 {
+	std::unique_ptr<Pathfinder> Pathfinder::pathfinder;
+
 	Pathfinder::Pathfinder() :
 		m_TotalRows(12),
 		m_TotalCols(18),
@@ -228,6 +231,40 @@ namespace TDS
 
 		printf("Pathfinder failed to find a solution\n");
 		return;
+	}
+
+	// For ECS System
+	void Pathfinder::Initialize()
+	{
+		pathfinder->GetInstance();
+		
+		// Register the grid
+		
+		for (size_t i = 0; i < pathfinder->GetGrid().size(); ++i)
+		{
+		    for (size_t j = 0; j < pathfinder->GetGrid()[i].size(); ++j)
+		    {
+		        // do some RegisterEntity using pathfinder.GetGrid()[i][j].get();
+		    }
+		}
+	}
+	void Pathfinder::Update(const float dt, const std::vector<EntityID>& entities, Transform* _transform)
+	{
+		// Render grid
+		
+		//gridrender.Render(commandBuffer, frame);
+		//gridrender.SetColour(0, 0, Color(1.0f, 0.0f, 0.0f, 1.0f));
+		//pathfinder->DisplayPathAnimated(GetDeltaTime()); //display path
+	}
+
+	std::unique_ptr<Pathfinder>& Pathfinder::GetInstance()
+	{
+		if (pathfinder == nullptr)
+		{
+			pathfinder = std::make_unique<Pathfinder>();
+		}
+
+		return pathfinder;
 	}
 }
 

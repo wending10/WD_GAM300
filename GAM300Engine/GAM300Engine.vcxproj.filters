@@ -122,6 +122,9 @@
     <ClCompile Include="Src\components\PointLightComponent.cpp" />
     <ClCompile Include="Src\components\DirLightComponent.cpp" />
     <ClCompile Include="Src\components\SpotLightComponent.cpp" />
+    <ClCompile Include="Src\AI\Pathfinder.cpp" />
+    <ClCompile Include="Src\AI\Tile.cpp" />
+    <ClCompile Include="Src\AI\TileEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Shared_Libs\MathCommon.h" />
@@ -285,6 +288,9 @@
     <ClInclude Include="Include\components\DirLightComponent.h" />
     <ClInclude Include="Include\components\CompReflectionMacro.h" />
     <ClInclude Include="Include\components\SpotLightComponent.h" />
+    <ClInclude Include="Include\AI\Pathfinder.h" />
+    <ClInclude Include="Include\AI\Tile.h" />
+    <ClInclude Include="Include\AI\TileEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger\Logger.h" />

@@ -28,6 +28,7 @@ namespace TDS
 	ECSSystem<AI>									_AISystem(1);
 	ECSSystem<Transform, CameraComponent>			_CameraSystem(1);
 	ECSSystem<Transform>							_AudioSystem(1);
+	ECSSystem<Transform>							_PathfinderSystem(1);
 
 	ECSSystem<Transform>							_EventHandler_ChildTransform(2);
 	ECSSystem<NameTag>								_EventHandler_Enable(2);
