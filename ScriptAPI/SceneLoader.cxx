@@ -19,11 +19,10 @@ namespace ScriptAPI
 		TDS::SceneManager::GetInstance()->start();
 	}
 
-	void SceneLoader::LoadStartingCutscene() 
+	void SceneLoader::LoadStartingCutscene()
 	{
 		EngineInterface::Reload();
-		TDS::SceneManager::GetInstance()->loadScene("Starting Cutscene");
-
+		TDS::SceneManager::GetInstance()->loadScene("StartingCutscene");
 		TDS::SceneManager::GetInstance()->awake();
 		TDS::SceneManager::GetInstance()->start();
 	}
