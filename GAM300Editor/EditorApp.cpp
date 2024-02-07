@@ -37,6 +37,7 @@
 #include "Input/InputSystem.h"
 #include "Rendering/GridRenderer.h"
 #include "Tools/Pathfinder.h"
+#include "MessagingSystem/MessageSystem.h"
 
 bool isPlaying = false;
 bool gamePaused = false;
@@ -57,14 +58,45 @@ namespace TDS
 		Log::Init();
 		TDS_INFO("window width: {}, window height: {}", m_window.getWidth(), m_window.getHeight());
 
-		/* models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");*/
-	}
-	void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-	{
-		IMGUI_WIN32_WNDPROCHANDLER_FORWARD_DECLARATION;
-		ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
-		//can extern  some imgui wndproc handler | tbc
-		SetWindowHandle(hWnd);
+       /* models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");*/
+    }
+    void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+    {
+        IMGUI_WIN32_WNDPROCHANDLER_FORWARD_DECLARATION;
+        ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
+        //can extern  some imgui wndproc handler | tbc
+        SetWindowHandle(hWnd);
+        
+        switch (uMsg)
+        {
+        case WM_CREATE:
+            TDS::InputSystem::GetInstance()->setWindowCenter(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2);
+            break;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            break;
+        case WM_PAINT:
+            ValidateRect(m_window.getWindowHandler(), NULL);
+            break;
+        case WM_SIZE: //for resize of window may need it for fullscreen?
+            m_window.setWidth(LOWORD(lParam));
+            m_window.setHeight(HIWORD(lParam));
+            m_window.WindowIsResizing(true);
+            m_window.WindowIsResizing(true);
+            if (wParam == SIZE_MINIMIZED)
+            {
+                BROADCAST_MESSAGE("Stop Rendering");
+            }
+            else
+            {
+                BROADCAST_MESSAGE("Continue Rendering");
+
+            }
+            break;
+        case WM_XBUTTONUP:
+        {
+            //Input::processMouseInput(wParam, lParam);
+        }break;
 
 		switch (uMsg)
 		{
@@ -140,7 +172,25 @@ namespace TDS
 				// Accumulate the Y-axis mouse movement
 				InputSystem::GetInstance()->accumulatedMouseY += rawInput.data.mouse.lLastY;
 
-			}
+            }break;
+        }
+    }
+    void Application::SetWindowHandle(HWND hWnd)
+    {
+        m_handler = hWnd;
+    }
+    HWND Application::GetWindowHandle()
+    {
+        return m_handler;
+    }
+    void Application::Initialize()
+    {
+        ShaderReflector::GetInstance()->Init(SHADER_DIRECTORY, REFLECTED_BIN);
+        GraphicsManager::getInstance().Init(&m_window);
+        AssetManager::GetInstance()->PreloadAssets();
+        //skyboxrender.Init();
+        GraphicsManager::getInstance().GetDebugRenderer().Init();
+        GraphicsManager::getInstance().InitSkyBox();
 
 		}break;
 		case WM_MOUSEWHEEL: {
@@ -273,480 +323,490 @@ namespace TDS
 			float DeltaTime = TimeStep::GetDeltaTime();
 			std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
 			std::shared_ptr<GamePlayScene> pGamePlayScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
-			if (pScene->isFocus)
-			{
-				GraphicsManager::getInstance().setCamera(m_camera);
-				GraphicsManager::getInstance().GetCamera().setEditorCamera(true);
-				GraphicsManager::getInstance().GetCamera().setScrollWheel(true);
-
-			}
-			else if (pGamePlayScene->isFocus)
-			{
-				GraphicsManager::getInstance().setCamera(m_GameCamera);
-				GraphicsManager::getInstance().GetCamera().setEditorCamera(false);
-			}
-			else
-			{
-				GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
-			}
-
-			GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime, isPlaying);
-
-			lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
-			RendererSystem::lightPosX = lightx;
-
-			Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
-			if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x > 0 && m_windowdimension.y > 0)
-			{
-				GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());
-				std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
-				pScene->Resize();
-
-				std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
-				pGamePlatScene->Resize();
-			}
-			GraphicsManager::getInstance().StartFrame();
-			VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
-			std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
-
-			GraphicsManager::getInstance().getRenderPass().beginRenderPass(commandBuffer, &GraphicsManager::getInstance().getFrameBuffer());
-			if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
-				skyboxrender.RenderSkyBox(commandBuffer, frame);
-
-			//render grid
-			//gridrender.Render(commandBuffer, frame);
-			//gridrender.SetColour(0, 0, Color(1.0f, 0.0f, 0.0f, 1.0f));
-			pathfinder.DisplayPathAnimated(DeltaTime); //display path
-
-			if (isPlaying)
-			{
-				if (Input::isKeyPressed(VK_ESCAPE))
-				{
-					gamePaused = !gamePaused;
-					std::cout << "editor system paused = " << gamePaused << std::endl;
-				}
-
-				if (startPlaying)
-				{
-					SceneManager::GetInstance()->isPlaying = true;
-					SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
-					startPlaying = false;
-					SceneManager::GetInstance()->awake();
-					SceneManager::GetInstance()->start();
-				}
-
-				if (!gamePaused)
-				{
-					executeFixedUpdate();
-					ecs.runSystems(1, DeltaTime); // Other systems
-					executeUpdate();
-					executeLateUpdate();
-				}
-			}
-			else
-			{
-				startPlaying = true;
-				SceneManager::GetInstance()->isPlaying = false;
-				if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
-				{
-					PhysicsSystem::SetIsPlaying(false);
-					CameraSystem::SetIsPlaying(false);
-				}
-			}
-			ecs.runSystems(2, DeltaTime); // Event handler
-			ecs.runSystems(3, DeltaTime); // Graphics
-
-			imguiHelper::Update();
-
-			// event handling systems 
-			GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
-
-			//GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));
-			GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, InputSystem::GetInstance()->getLocalMousePos());
-			GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);
-
-			imguiHelper::Draw(commandBuffer);
-
-			GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);
-			GraphicsManager::getInstance().EndFrame();
-			// Reloading
-			if (GetKeyState(VK_F5) & 0x8000)
-			{
-				isPlaying = false;
-				compileScriptAssembly();
-				SceneManager::GetInstance()->saveCurrentScene();
-				reloadScripts();
-				SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
-			}
-
-			Input::scrollStop();
-			TDS::InputSystem::GetInstance()->setRawMouseInput(0, 0);
-			InputSystem::GetInstance()->accumulatedMouseX = 0;
-			InputSystem::GetInstance()->accumulatedMouseY = 0;
-		}
-		stopScriptEngine();
-
-
-		AssetManager::GetInstance()->ShutDown();
-
-		vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
-		if (m_ImGuiDescPool)
-		{
-			vkDestroyDescriptorPool(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), m_ImGuiDescPool, 0);
-			m_ImGuiDescPool = nullptr;
-		}
-		imguiHelper::Exit();
-		ecs.destroy();
-
-		skyboxrender.ShutDown();
-		GraphicsManager::getInstance().ShutDown();
-		DDSConverter::Destroy();
-		//shutdown grid
-		//gridrender.ShutDown();
-
-		PhysicsSystem::JPH_SystemShutdown();
-	}
-
-	void Application::Run()
-	{
-		startScriptEngine();
-		buildManagedScriptCsProj();
-		compileScriptAssembly();
-
-		// Step 1: Get Functions
-		auto init = GetFunctionPtr<void(*)(void)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"Init"
-			);
-
-		auto reloadScripts = GetFunctionPtr<void(*)(void)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"Reload"
-			);
-
-		SceneManager::GetInstance()->addScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"AddScriptViaName"
-			);
-		SceneManager::GetInstance()->removeScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"RemoveScriptViaName"
-			);
-
-		// Step 2: Initialize
-		init();
-
-		std::shared_ptr<Properties> properties = static_pointer_cast<Properties>(LevelEditorManager::GetInstance()->panels[PanelTypes::PROPERTIES]);
-		properties->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"GetVariablesEditor"
-			);
-
-		SceneManager::GetInstance()->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"GetVariables"
-			);
-
-		SceneManager::GetInstance()->hasScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"HasScriptViaName"
-			);
-
-		SceneManager::GetInstance()->getAllScripts = GetFunctionPtr<std::vector<std::string>(*)()>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"GetAllScripts"
-			);
-
-		ecs.addScriptList = GetFunctionPtr<void(*)(EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"AddScriptList"
-			);
-
-		ecs.removeScriptList = GetFunctionPtr<void(*)(EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"RemoveEntity"
-			);
-
-		/*
-		SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(EntityID, std::string, std::string, bool)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetValueBool"
-			);
-
-		SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int, bool)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetValueInt"
-			);
-
-		SceneManager::GetInstance()->setDouble = GetFunctionPtr<void(*)(EntityID, std::string, std::string, double)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetValueDouble"
-			);
-
-		SceneManager::GetInstance()->setFloat = GetFunctionPtr<void(*)(EntityID, std::string, std::string, float)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetValueFloat"
-			);
-
-		SceneManager::GetInstance()->setString = GetFunctionPtr<void(*)(EntityID, std::string, std::string, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetValueString"
-			);
-
-		//SceneManager::GetInstance()->setChar = GetFunctionPtr<void(*)(EntityID, std::string, std::string, char)>
-		//    (
-		//        "ScriptAPI",
-		//        "ScriptAPI.EngineInterface",
-		//        "SetValueChar"
-		//    );
-
-		SceneManager::GetInstance()->setVector3 = GetFunctionPtr<void(*)(EntityID, std::string, std::string, Vec3)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetVector3"
-			);
-
-		SceneManager::GetInstance()->setGameObject = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetGameObject"
-			);
-
-		SceneManager::GetInstance()->setComponent = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetComponent"
-			);
-
-		SceneManager::GetInstance()->setScriptReference = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetScript"
-			);
-		*/
-
-		SceneManager::GetInstance()->setScriptValue = GetFunctionPtr<void(*)(EntityID, std::string, ScriptValues)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetVariable"
-			);
-
-		SceneManager::GetInstance()->setScriptValues = GetFunctionPtr<void(*)(EntityID, std::string, std::vector<ScriptValues>&)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"SetVariables"
-			);
-
-		SceneManager::GetInstance()->updateName = GetFunctionPtr<bool(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"UpdateGameObjectName"
-			);
-
-		SceneManager::GetInstance()->isScriptEnabled = GetFunctionPtr<bool(*)(EntityID, std::string)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"IsScriptEnabled"
-			);
-
-		SceneManager::GetInstance()->awake = GetFunctionPtr<void(*)(void)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"ExecuteAwake"
-			);
-
-		SceneManager::GetInstance()->start = GetFunctionPtr<void(*)(void)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"ExecuteStart"
-			);
-
-		PhysicsSystem::OnTriggerEnter = GetFunctionPtr<void(*)(EntityID, EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"ExecuteOnTriggerEnter"
-			);
-
-		PhysicsSystem::OnTriggerStay = GetFunctionPtr<void(*)(EntityID, EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"ExecuteOnTriggerStay"
-			);
-
-		PhysicsSystem::OnTriggerExit = GetFunctionPtr<void(*)(EntityID, EntityID)>
-			(
-				"ScriptAPI",
-				"ScriptAPI.EngineInterface",
-				"ExecuteOnTriggerExit"
-			);
-
-
-		SceneManager::GetInstance()->Init();
-		ecs.initializeSystems(1);
-		ecs.initializeSystems(2);
-		ecs.initializeSystems(3);
-	}
-
-	Application::~Application()
-	{
-		m_window.~WindowsWin();
-	}
-
-	void Application::startScriptEngine()
-	{
-		// Get the .NET Runtime's path first
-		const auto DOT_NET_PATH = getDotNetRuntimePath();
-		if (DOT_NET_PATH.empty())
-			throw std::runtime_error("Failed to find .NET Runtime.");
-
-		// Get the current executable directory so that we can find the coreclr.dll to load
-		std::string runtimePath(MAX_PATH, '\0');
-		GetModuleFileNameA(nullptr, runtimePath.data(), MAX_PATH);
-		PathRemoveFileSpecA(runtimePath.data());
-		// Since PathRemoveFileSpecA() removes from data(), the size is not updated, so we must manually update it
-		runtimePath.resize(std::strlen(runtimePath.data()));
-
-		// Also, while we're at it, set the current working directory to the current executable directory
-		std::filesystem::current_path(runtimePath);
-
-		// Construct the CoreCLR path
-		const std::string CORE_CLR_PATH = DOT_NET_PATH + "\\coreclr.dll";
-
-		// Load the CoreCLR DLL
-		coreClr = LoadLibraryExA(CORE_CLR_PATH.c_str(), nullptr, 0);
-		if (!coreClr)
-			throw std::runtime_error("Failed to load CoreCLR.");
-
-		// Step 2: Get CoreCLR hosting functions
-		initializeCoreClr = getCoreClrFuncPtr<coreclr_initialize_ptr>("coreclr_initialize");
-		createManagedDelegate = getCoreClrFuncPtr<coreclr_create_delegate_ptr>("coreclr_create_delegate");
-		shutdownCoreClr = getCoreClrFuncPtr<coreclr_shutdown_ptr>("coreclr_shutdown");
-
-		// Step 3: Construct AppDomain properties used when starting the runtime
-		std::string tpaList = buildTpaList(runtimePath) + buildTpaList(DOT_NET_PATH);
-
-		// Define CoreCLR properties
-		std::array propertyKeys =
-		{
-			"TRUSTED_PLATFORM_ASSEMBLIES",      // Trusted assemblies (like the GAC)
-			"APP_PATHS",                        // Directories to probe for application assemblies
-		};
-		std::array propertyValues =
-		{
-			tpaList.c_str(),
-			runtimePath.c_str()
-		};
-
-		// Step 4: Start the CoreCLR runtime
-		int result = initializeCoreClr
-		(
-			runtimePath.c_str(),     // AppDomain base path
-			"SampleHost",            // AppDomain friendly name, this can be anything you want really
-			propertyKeys.size(),     // Property count
-			propertyKeys.data(),     // Property names
-			propertyValues.data(),   // Property values
-			&hostHandle,             // Host handle
-			&domainId                // AppDomain ID
-		);
-
-		// Check if intiialization of CoreCLR failed
-		if (result < 0)
-		{
-			std::ostringstream oss;
-			oss << std::hex << std::setfill('0') << std::setw(8)
-				<< "Failed to initialize CoreCLR. Error 0x" << result << "\n";
-			throw std::runtime_error(oss.str());
-		}
-	}
-
-	void Application::stopScriptEngine()
-	{
-		// Shutdown CoreCLR
-		const int RESULT = shutdownCoreClr(hostHandle, domainId);
-		if (RESULT < 0)
-		{
-			std::stringstream oss;
-			oss << std::hex << std::setfill('0') << std::setw(8)
-				<< "Failed to shut down CoreCLR. Error 0x" << RESULT << "\n";
-			throw std::runtime_error(oss.str());
-		}
-	}
-
-	std::string Application::buildTpaList(const std::string& directory)
-	{
-		// Constants
-		const std::string SEARCH_PATH = directory + "\\*.dll";
-		static constexpr char PATH_DELIMITER = ';';
-
-		// Create a osstream object to compile the string
-		std::ostringstream tpaList;
-
-		// Search the current directory for the TPAs (.DLLs)
-		WIN32_FIND_DATAA findData;
-		HANDLE fileHandle = FindFirstFileA(SEARCH_PATH.c_str(), &findData);
-		if (fileHandle != INVALID_HANDLE_VALUE)
-		{
-			do
-			{
-				// Append the assembly to the list
-				tpaList << directory << '\\' << findData.cFileName << PATH_DELIMITER;
-			} while (FindNextFileA(fileHandle, &findData));
-			FindClose(fileHandle);
-		}
-
-		return tpaList.str();
-	}
-
-	void Application::compileScriptAssembly()
-	{
-		//relative path to the script assembly project file
-		const char* PROJ_PATH =
-			"../ManagedScripts/ManagedScripts.csproj";
-
-		std::wstring buildCmd = L" build \"" +
-			std::filesystem::relative(PROJ_PATH).wstring() +
+            if (pScene->isFocus)
+            {
+                GraphicsManager::getInstance().setCamera(m_camera);
+                GraphicsManager::getInstance().GetCamera().setEditorCamera(true);
+                GraphicsManager::getInstance().GetCamera().setScrollWheel(true);
+
+            }
+            else if (pGamePlayScene->isFocus)
+            {
+                GraphicsManager::getInstance().setCamera(m_GameCamera);
+                GraphicsManager::getInstance().GetCamera().setEditorCamera(false);
+            }
+            else
+            {
+                GraphicsManager::getInstance().GetCamera().setScrollWheel(false);
+            }
+
+            GraphicsManager::getInstance().GetCamera().UpdateCamera(DeltaTime, isPlaying);
+
+            lightx = lightx < -1.f ? 1.f : lightx - 0.005f;
+            RendererSystem::lightPosX = lightx;
+
+            Vec3 m_windowdimension{ static_cast<float>(m_window.getWidth()), static_cast<float>(m_window.getHeight()), 1.f };
+            if (GraphicsManager::getInstance().getFrameBuffer().getDimensions() != m_windowdimension && m_windowdimension.x > 0 && m_windowdimension.y > 0)
+            {
+                BROADCAST_MESSAGE("Resize Event", m_window.getWidth(), m_window.getHeight());
+                /*GraphicsManager::getInstance().getFrameBuffer().resize(m_windowdimension, GraphicsManager::getInstance().getRenderPass().getRenderPass());*/
+                std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
+                pScene->Resize();
+
+                std::shared_ptr<GamePlayScene> pGamePlatScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
+                pGamePlatScene->Resize();
+
+
+            }
+
+
+            //render grid
+            //gridrender.Render(commandBuffer, frame);
+            //gridrender.SetColour(0, 0, Color(1.0f, 0.0f, 0.0f, 1.0f));
+            pathfinder.DisplayPathAnimated(DeltaTime); //display path
+           
+            if (isPlaying)
+            {
+                if (Input::isKeyPressed(VK_ESCAPE))
+                {
+                    gamePaused = !gamePaused;
+                    std::cout << "editor system paused = " << gamePaused << std::endl;
+                }
+
+                if (startPlaying)
+                {
+                    SceneManager::GetInstance()->isPlaying = true;
+                    SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+                    startPlaying = false;
+                    SceneManager::GetInstance()->awake();
+                    SceneManager::GetInstance()->start();
+                }
+
+                if (!gamePaused)
+                {
+                    executeFixedUpdate();
+                    ecs.runSystems(1, DeltaTime);
+                    executeUpdate();
+                    executeLateUpdate();
+                }
+            }
+            else
+            {
+                startPlaying = true;
+                SceneManager::GetInstance()->isPlaying = false;
+                if (PhysicsSystem::GetIsPlaying() || CameraSystem::GetIsPlaying()) // consider moving it to another seperate system (EditorApp?)
+                {
+                    PhysicsSystem::SetIsPlaying(false);
+                    CameraSystem::SetIsPlaying(false);
+                    InputSystem::GetInstance()->setMouseLock(false);
+                    InputSystem::GetInstance()->setCursorVisible(true);
+                }
+            }
+
+            ecs.runSystems(2, DeltaTime); // Event handler
+            if (GraphicsManager::getInstance().IsRenderOn())
+            {
+                GraphicsManager::getInstance().StartFrame();
+
+
+                ecs.runSystems(3, DeltaTime);
+
+                imguiHelper::Update();
+
+                // event handling systems 
+                //GraphicsManager::getInstance().getRenderPass().endRenderPass(commandBuffer);
+
+
+
+                //VkCommandBuffer commandBuffer = GraphicsManager::getInstance().getCommandBuffer();
+                //std::uint32_t frame = GraphicsManager::getInstance().GetSwapchainRenderer().getFrameIndex();
+     /*           GraphicsManager::getInstance().getObjectPicker().Update(commandBuffer, frame, Vec2( Input::getMousePosition().x, Input::getMousePosition().y ));*/
+               /* GraphicsManager::getInstance().GetSwapchainRenderer().BeginSwapChainRenderPass(commandBuffer);*/
+
+          /*      imguiHelper::Draw(commandBuffer);*/
+
+                GraphicsManager::getInstance().DrawFrame();
+
+                /*GraphicsManager::getInstance().GetSwapchainRenderer().EndSwapChainRenderPass(commandBuffer);*/
+                GraphicsManager::getInstance().EndFrame();
+            }
+            // Reloading
+            if (GetKeyState(VK_F5) & 0x8000)
+            {
+                isPlaying = false;
+                compileScriptAssembly();
+                SceneManager::GetInstance()->saveCurrentScene();
+                reloadScripts();
+                SceneManager::GetInstance()->loadScene(SceneManager::GetInstance()->getCurrentScene());
+            }
+
+            Input::scrollStop();
+            TDS::InputSystem::GetInstance()->setRawMouseInput(0, 0);
+            InputSystem::GetInstance()->accumulatedMouseX = 0;
+            InputSystem::GetInstance()->accumulatedMouseY = 0;
+        }
+        stopScriptEngine();
+      
+
+        AssetManager::GetInstance()->ShutDown();
+
+        vkDeviceWaitIdle(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice());
+        if (m_ImGuiDescPool)
+        {
+            vkDestroyDescriptorPool(GraphicsManager::getInstance().getVkInstance().getVkLogicalDevice(), m_ImGuiDescPool, 0);
+            m_ImGuiDescPool = nullptr;
+        }
+        imguiHelper::Exit();
+        ecs.destroy();
+       
+        GraphicsManager::getInstance().ShutDown();
+        DDSConverter::Destroy();
+        //shutdown grid
+        //gridrender.ShutDown();
+
+        PhysicsSystem::JPH_SystemShutdown();
+    }
+
+    void Application::Run()
+    {
+        startScriptEngine();
+        buildManagedScriptCsProj();
+        compileScriptAssembly();
+
+        // Step 1: Get Functions
+        auto init = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "Init"
+            );
+
+        auto reloadScripts = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "Reload"
+            );
+
+        SceneManager::GetInstance()->addScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptViaName"
+            );
+        SceneManager::GetInstance()->removeScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "RemoveScriptViaName"
+            );
+
+        // Step 2: Initialize
+        init();
+
+        std::shared_ptr<Properties> properties = static_pointer_cast<Properties>(LevelEditorManager::GetInstance()->panels[PanelTypes::PROPERTIES]);
+        properties->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetVariablesEditor"
+            );
+
+        SceneManager::GetInstance()->getScriptVariables = GetFunctionPtr<std::vector<ScriptValues>(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetVariables"
+            );
+
+        SceneManager::GetInstance()->hasScript = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "HasScriptViaName"
+            );
+
+        SceneManager::GetInstance()->getAllScripts = GetFunctionPtr<std::vector<std::string>(*)()>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "GetAllScripts"
+            );
+
+        ecs.addScriptList = GetFunctionPtr<void(*)(EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "AddScriptList"
+            );
+
+        ecs.removeScriptList = GetFunctionPtr<void(*)(EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "RemoveEntity"
+            );
+
+        /*
+        SceneManager::GetInstance()->setBool = GetFunctionPtr<void(*)(EntityID, std::string, std::string, bool)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueBool"
+            );
+
+        SceneManager::GetInstance()->setInt = GetFunctionPtr<void(*)(EntityID, std::string, std::string, int, bool)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueInt"
+            );
+
+        SceneManager::GetInstance()->setDouble = GetFunctionPtr<void(*)(EntityID, std::string, std::string, double)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueDouble"
+            );
+
+        SceneManager::GetInstance()->setFloat = GetFunctionPtr<void(*)(EntityID, std::string, std::string, float)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueFloat"
+            );
+
+        SceneManager::GetInstance()->setString = GetFunctionPtr<void(*)(EntityID, std::string, std::string, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetValueString"
+            );
+
+        //SceneManager::GetInstance()->setChar = GetFunctionPtr<void(*)(EntityID, std::string, std::string, char)>
+        //    (
+        //        "ScriptAPI",
+        //        "ScriptAPI.EngineInterface",
+        //        "SetValueChar"
+        //    );
+
+        SceneManager::GetInstance()->setVector3 = GetFunctionPtr<void(*)(EntityID, std::string, std::string, Vec3)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVector3"
+            );
+
+        SceneManager::GetInstance()->setGameObject = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetGameObject"
+            );
+
+        SceneManager::GetInstance()->setComponent = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetComponent"
+            );
+
+        SceneManager::GetInstance()->setScriptReference = GetFunctionPtr<void(*)(EntityID, std::string, std::string, EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetScript"
+            );
+        */
+
+        SceneManager::GetInstance()->setScriptValue = GetFunctionPtr<void(*)(EntityID, std::string, ScriptValues)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVariable"
+            );
+
+        SceneManager::GetInstance()->setScriptValues = GetFunctionPtr<void(*)(EntityID, std::string, std::vector<ScriptValues>&)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "SetVariables"
+            );
+
+        SceneManager::GetInstance()->updateName = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "UpdateGameObjectName"
+            );
+
+        SceneManager::GetInstance()->isScriptEnabled = GetFunctionPtr<bool(*)(EntityID, std::string)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "IsScriptEnabled"
+            );
+
+        SceneManager::GetInstance()->awake = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteAwake"
+            );
+
+        SceneManager::GetInstance()->start = GetFunctionPtr<void(*)(void)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteStart"
+            );
+
+        PhysicsSystem::OnTriggerEnter = GetFunctionPtr<void(*)(EntityID, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteOnTriggerEnter"
+            );
+
+        PhysicsSystem::OnTriggerStay = GetFunctionPtr<void(*)(EntityID, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteOnTriggerStay"
+            );
+
+        PhysicsSystem::OnTriggerExit = GetFunctionPtr<void(*)(EntityID, EntityID)>
+            (
+                "ScriptAPI",
+                "ScriptAPI.EngineInterface",
+                "ExecuteOnTriggerExit"
+            );
+
+
+        SceneManager::GetInstance()->Init();
+        ecs.initializeSystems(1);
+        ecs.initializeSystems(2);
+        ecs.initializeSystems(3);
+    }
+
+    Application::~Application()
+    {
+        m_window.~WindowsWin();
+    }
+
+    void Application::startScriptEngine()
+    {
+        // Get the .NET Runtime's path first
+        const auto DOT_NET_PATH = getDotNetRuntimePath();
+        if (DOT_NET_PATH.empty())
+            throw std::runtime_error("Failed to find .NET Runtime.");
+
+        // Get the current executable directory so that we can find the coreclr.dll to load
+        std::string runtimePath(MAX_PATH, '\0');
+        GetModuleFileNameA(nullptr, runtimePath.data(), MAX_PATH);
+        PathRemoveFileSpecA(runtimePath.data());
+        // Since PathRemoveFileSpecA() removes from data(), the size is not updated, so we must manually update it
+        runtimePath.resize(std::strlen(runtimePath.data()));
+
+        // Also, while we're at it, set the current working directory to the current executable directory
+        std::filesystem::current_path(runtimePath);
+
+        // Construct the CoreCLR path
+        const std::string CORE_CLR_PATH = DOT_NET_PATH + "\\coreclr.dll";
+
+        // Load the CoreCLR DLL
+        coreClr = LoadLibraryExA(CORE_CLR_PATH.c_str(), nullptr, 0);
+        if (!coreClr)
+            throw std::runtime_error("Failed to load CoreCLR.");
+
+        // Step 2: Get CoreCLR hosting functions
+        initializeCoreClr = getCoreClrFuncPtr<coreclr_initialize_ptr>("coreclr_initialize");
+        createManagedDelegate = getCoreClrFuncPtr<coreclr_create_delegate_ptr>("coreclr_create_delegate");
+        shutdownCoreClr = getCoreClrFuncPtr<coreclr_shutdown_ptr>("coreclr_shutdown");
+
+        // Step 3: Construct AppDomain properties used when starting the runtime
+        std::string tpaList = buildTpaList(runtimePath) + buildTpaList(DOT_NET_PATH);
+
+        // Define CoreCLR properties
+        std::array propertyKeys =
+        {
+            "TRUSTED_PLATFORM_ASSEMBLIES",      // Trusted assemblies (like the GAC)
+            "APP_PATHS",                        // Directories to probe for application assemblies
+        };
+        std::array propertyValues =
+        {
+            tpaList.c_str(),
+            runtimePath.c_str()
+        };
+
+        // Step 4: Start the CoreCLR runtime
+        int result = initializeCoreClr
+        (
+            runtimePath.c_str(),     // AppDomain base path
+            "SampleHost",            // AppDomain friendly name, this can be anything you want really
+            propertyKeys.size(),     // Property count
+            propertyKeys.data(),     // Property names
+            propertyValues.data(),   // Property values
+            &hostHandle,             // Host handle
+            &domainId                // AppDomain ID
+        );
+
+        // Check if intiialization of CoreCLR failed
+        if (result < 0)
+        {
+            std::ostringstream oss;
+            oss << std::hex << std::setfill('0') << std::setw(8)
+                << "Failed to initialize CoreCLR. Error 0x" << result << "\n";
+            throw std::runtime_error(oss.str());
+        }
+    }
+
+    void Application::stopScriptEngine()
+    {
+        // Shutdown CoreCLR
+        const int RESULT = shutdownCoreClr(hostHandle, domainId);
+        if (RESULT < 0)
+        {
+            std::stringstream oss;
+            oss << std::hex << std::setfill('0') << std::setw(8)
+                << "Failed to shut down CoreCLR. Error 0x" << RESULT << "\n";
+            throw std::runtime_error(oss.str());
+        }
+    }
+
+    std::string Application::buildTpaList(const std::string& directory)
+    {
+        // Constants
+        const std::string SEARCH_PATH = directory + "\\*.dll";
+        static constexpr char PATH_DELIMITER = ';';
+
+        // Create a osstream object to compile the string
+        std::ostringstream tpaList;
+
+        // Search the current directory for the TPAs (.DLLs)
+        WIN32_FIND_DATAA findData;
+        HANDLE fileHandle = FindFirstFileA(SEARCH_PATH.c_str(), &findData);
+        if (fileHandle != INVALID_HANDLE_VALUE)
+        {
+            do
+            {
+                // Append the assembly to the list
+                tpaList << directory << '\\' << findData.cFileName << PATH_DELIMITER;
+            } while (FindNextFileA(fileHandle, &findData));
+            FindClose(fileHandle);
+        }
+
+        return tpaList.str();
+    }
+
+    void Application::compileScriptAssembly()
+    {
+        //relative path to the script assembly project file
+        const char* PROJ_PATH =
+            "../ManagedScripts/ManagedScripts.csproj";
+
+        std::wstring buildCmd = L" build \"" +
+            std::filesystem::relative(PROJ_PATH).wstring() +
 #ifdef _DEBUG
 			L"\" -c Debug --no-self-contained " +
 			L"-o \"../scriptDLL/\" -r \"win-x64\"";
