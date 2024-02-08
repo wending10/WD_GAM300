@@ -1090,7 +1090,18 @@ namespace TDS
 					{
 						addComponentByName("Graphics Component", selectedEntity);
 					}
-
+					if (!GetDirLightComponent(selectedEntity) && ImGui::Selectable("DirectionalLight"))
+					{
+						addComponentByName("DirectionalLight", selectedEntity);
+					}
+					if (!GetSpotLightComponent(selectedEntity) && ImGui::Selectable("SpotLight"))
+					{
+						addComponentByName("SpotLight", selectedEntity);
+					}
+					if (!GetPointLightComponent(selectedEntity) && ImGui::Selectable("PointLight"))
+					{
+						addComponentByName("PointLight", selectedEntity);
+					}
 					break;
 				case AddComponentStage::SCRIPTS:
 
