@@ -36,7 +36,6 @@
 #include "Rendering/ObjectPicking.h"
 #include "Input/InputSystem.h"
 #include "Rendering/GridRenderer.h"
-#include "Tools/Pathfinder.h"
 #include "MessagingSystem/MessageSystem.h"
 
 bool isPlaying = false;

@@ -57,24 +57,14 @@ namespace TDS
 					float CameraSpeed = m_Speed;
 					if (keys.up)
 					{
-						//m_Position += m_Front * CameraSpeed;
-						// TO DELETE
-						m_Position += m_Up * CameraSpeed;
+						m_Position += m_Front * CameraSpeed;
 					}
 					if (keys.down)
-						//m_Position -= m_Front * CameraSpeed;
-						// TO DELETE
-						m_Position -= m_Up * CameraSpeed;
+						m_Position -= m_Front * CameraSpeed;
 					if (keys.left)
 						m_Position -= m_Right * CameraSpeed;
 					if (keys.right)
 						m_Position += m_Right * CameraSpeed;
-
-					// TO DELETE
-					if (InputSystem::GetInstance()->isKeyPressed('Q') || InputSystem::GetInstance()->isKeyDown('Q'))
-						m_Position += m_Front * CameraSpeed;
-					if (InputSystem::GetInstance()->isKeyPressed('E') || InputSystem::GetInstance()->isKeyDown('E'))
-						m_Position -= m_Front * CameraSpeed;
 				}
 
 				//if (Input::isMouseButtonPressed(TDS_MOUSE_RIGHT))
@@ -213,12 +203,7 @@ namespace TDS
 			keys.right = false;
 		}
 
-		//return keys.up || keys.left || keys.down || keys.right;
-
-		// TO DELETE
-		return keys.up || keys.left || keys.down || keys.right ||
-			InputSystem::GetInstance()->isKeyPressed('Q') || InputSystem::GetInstance()->isKeyDown('Q') ||
-			InputSystem::GetInstance()->isKeyPressed('E') || InputSystem::GetInstance()->isKeyDown('E');
+		return keys.up || keys.left || keys.down || keys.right;
 
 		//if (Input::keystatus == Input::KeyStatus::PRESSED || Input::keystatus == Input::KeyStatus::REPEATED)
 		//{
@@ -275,10 +260,6 @@ namespace TDS
 			m_Pitch = 89.f;
 		if (m_Pitch < -89.f)
 			m_Pitch = -89.f;
-
-		// TO DELETE
-		m_Yaw = -90.f;
-		m_Pitch = -89.f;
 
 		updateViewMatrix();
 
