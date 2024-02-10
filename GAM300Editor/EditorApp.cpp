@@ -286,11 +286,6 @@ namespace TDS
             if (GraphicsManager::getInstance().IsViewingFrom2D() == false)
                 skyboxrender.RenderSkyBox(commandBuffer, frame);
 
-            //render grid
-            //gridrender.Render(commandBuffer, frame);
-            //gridrender.SetColour(0, 0, Color(1.0f, 0.0f, 0.0f, 1.0f));
-            pathfinder.DisplayPathAnimated(DeltaTime); //display path
-           
             if (isPlaying)
             {
                 if (Input::isKeyPressed(VK_ESCAPE))

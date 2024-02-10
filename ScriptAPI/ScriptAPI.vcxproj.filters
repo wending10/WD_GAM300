@@ -123,6 +123,9 @@
     <ClInclude Include="Components\ViewObject.hxx">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pathfinder.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineInterface.cxx">
@@ -219,6 +222,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\ViewObject.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinder.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -8,10 +8,12 @@
 #include <cmath>
 #include <chrono>
 #include "components/components.h"
+#include "sceneManager/sceneManager.h"
 
 namespace TDS
 {
 	std::unique_ptr<Pathfinder> Pathfinder::pathfinder;
+	std::unique_ptr<WaypointPathfinder> WaypointPathfinder::waypointPathfinder;
 
 	Pathfinder::Pathfinder() :
 		m_TotalRows(12),
@@ -20,21 +22,35 @@ namespace TDS
 	{
 		CreateGrid();
 
-		m_Start = m_Grid[2][2];
-		m_Goal = m_Grid[2][10];
+		// 6350, 2477
+		// -3573, -1392
+		// 2777, 1085
 
-		m_Grid[1][5]->SetTraversable(false);
-		m_Grid[2][5]->SetTraversable(false);
-		m_Grid[3][5]->SetTraversable(false);
-		m_Grid[4][5]->SetTraversable(false);
-		m_Grid[1][6]->SetTraversable(false);
+		//auto entities = ecs.getEntities();
+		//for (int i = 0; i < entities.size(); ++i)
+		//{
+		//	if (ecs.getComponent<NameTag>(entities[i])->GetName() != "Main_F" &&
+		//		ecs.getComponent<Transform>(entities[i])->GetPosition().y == 0)
+		//	{
+		//		std::cout << entities[i] << std::endl;
+		//	}
+		//}
 
-		m_Start->SetSolidColor(Vec3(0.0f, 1.0f, 0.0f));
-		m_Goal->SetSolidColor(Vec3(0.0f, 0.0f, 1.0f));
+		//m_Start = m_Grid[2][2];
+		//m_Goal = m_Grid[2][10];
 
-		m_OpenList.push_back(m_Start.get());
+		//m_Grid[1][5]->SetTraversable(false);
+		//m_Grid[2][5]->SetTraversable(false);
+		//m_Grid[3][5]->SetTraversable(false);
+		//m_Grid[4][5]->SetTraversable(false);
+		//m_Grid[1][6]->SetTraversable(false);
 
-		FindPath();
+		//m_Start->SetSolidColor(Vec3(0.0f, 1.0f, 0.0f));
+		//m_Goal->SetSolidColor(Vec3(0.0f, 0.0f, 1.0f));
+
+		//m_OpenList.push_back(m_Start.get());
+
+		//FindPath();
 	}
 
 	void Pathfinder::CreateGrid()
@@ -176,6 +192,20 @@ namespace TDS
 	{
 		auto startTime = std::chrono::high_resolution_clock::now();
 
+		// Reset
+		PathTiles.clear();
+		m_ClosedList.clear();
+		m_OpenList.clear();
+		m_OpenList.emplace_back(m_Start.get());
+
+		for (int row = 0; row < m_TotalRows; ++row)
+		{
+			for (int col = 0; col < m_TotalCols; ++col)
+			{
+				m_Grid[row][col]->SetGCost(UINT32_MAX);
+			}
+		}
+
 		while (!m_OpenList.empty())
 		{
 			Tile* currentTile = *m_OpenList.begin();
@@ -183,7 +213,7 @@ namespace TDS
 			for (Tile* tile : m_OpenList)
 			{
 				if (tile->GetFCost() < currentTile->GetFCost() ||
-					tile->GetFCost() == currentTile->GetFCost() && tile->GetHCost() < currentTile->GetHCost())
+					(tile->GetFCost() == currentTile->GetFCost() && tile->GetHCost() < currentTile->GetHCost()))
 				{
 					currentTile = tile;
 				}
@@ -212,7 +242,7 @@ namespace TDS
 				if (currentTile->GetGCost() == UINT32_MAX)
 					currentTile->SetGCost(0);
 
-				const uint32_t gCost = currentTile->GetGCost() + CalculateDistance(currentTile, neighborTile);
+				float gCost = currentTile->GetGCost() + CalculateDistance(currentTile, neighborTile);
 
 				if (gCost < neighborTile->GetGCost())
 				{
@@ -265,6 +295,263 @@ namespace TDS
 		}
 
 		return pathfinder;
+	}
+
+	void Pathfinder::ReadLayout(std::string path)
+	{
+		std::string filePath = SceneManager::GetInstance()->getAssetPath();
+		filePath += path;
+
+		std::ifstream is;
+		is.open(filePath);
+		std::string currentRow;
+
+		if (!is.good())
+		{
+			return;
+		}
+
+		m_TotalRows = 0;
+		m_TotalCols = 0;
+		while (is >> currentRow)
+		{
+			if (m_TotalCols == 0)
+				m_TotalCols = currentRow.size();
+
+			++m_TotalRows;
+		}
+
+		is.close();
+		is.open(filePath);
+
+		CreateGrid();
+
+		int currentRowCount = 0;
+		while (is >> currentRow)
+		{
+			for (int i = 0; i < m_TotalCols; ++i)
+			{
+				if (currentRow[i] == '0')
+				{
+					m_Grid[currentRowCount][i]->SetTraversable(false);
+				}
+				else
+				{
+					m_Grid[currentRowCount][i]->SetTraversable(true);
+				}
+			}
+			
+			++currentRowCount;
+		}
+
+		is.close();
+	}
+
+	void Pathfinder::SetTopLeft(Vec2 topLeft)
+	{
+		topLeftWorldPosition = topLeft;
+	}
+
+	void Pathfinder::SetGridSize(Vec2 _gridSize)
+	{
+		gridSize = _gridSize;
+	}
+
+	void Pathfinder::SetStart(int row, int col)
+	{
+		m_Start = m_Grid[row][col];
+	}
+
+	void Pathfinder::SetGoal(int row, int col)
+	{
+		m_Goal = m_Grid[row][col];
+	}
+
+	Vec2 Pathfinder::GetNextStep()
+	{
+		if (!PathTiles.size())
+		{
+			FindPath();
+		}
+
+		if (!PathTiles.size()) // Still no path
+		{
+			return Vec2(0.0f, 0.0f);
+		}
+
+		Vec2 nextStep = topLeftWorldPosition + Vec2(gridSize.x * PathTiles[0]->GetGridX(), gridSize.y * PathTiles[0]->GetGridY());
+		PathTiles.erase(PathTiles.begin());
+
+		return nextStep;
+	}
+
+	// Waypoint Pathfinder ==================================================================
+	std::unique_ptr<WaypointPathfinder>& WaypointPathfinder::GetInstance()
+	{
+		if (waypointPathfinder == nullptr)
+		{
+			waypointPathfinder = std::make_unique<WaypointPathfinder>();
+		}
+
+		return waypointPathfinder;
+	}
+	void WaypointPathfinder::ClearRoomWaypoints()
+	{
+		rooms.clear();
+		waypoints.clear();
+	}
+	int WaypointPathfinder::AddRoom(Vec2 topLeft, Vec2 bottomRight)
+	{
+		Room newRoom{ rooms.size(), topLeft, bottomRight };
+		rooms.emplace_back(newRoom);
+		return newRoom.roomID;
+	}
+	int WaypointPathfinder::AddWaypoint(Vec2 waypointPosition)
+	{
+		Waypoint newWaypoint{ waypoints.size(), waypointPosition };
+		waypoints.emplace_back(newWaypoint);
+		return newWaypoint.waypointID;
+	}
+	void WaypointPathfinder::AddWaypointRoomConnection(int waypointID, int roomID)
+	{
+		waypoints[waypointID].rooms.emplace_back(&rooms[roomID]);
+		rooms[roomID].waypoints.emplace_back(&waypoints[waypointID]);
+	}
+	void WaypointPathfinder::AddNeighbour(int waypointID, int neighbourWaypointID)
+	{
+		waypoints[waypointID].neighbourWaypoints.emplace_back(&waypoints[neighbourWaypointID]);
+		waypoints[waypointID].neighbourWaypointsDistance.emplace_back(Vec2::Distance(waypoints[waypointID].position, waypoints[neighbourWaypointID].position));
+	}
+
+	int WaypointPathfinder::GetRoomID(Vec2 position)
+	{
+		for (int i = 0; i < rooms.size(); ++i)
+		{
+			if (rooms[i].topLeftBoundary.x <= position.x && rooms[i].bottomRightBoundary.x >= position.x &&
+				rooms[i].topLeftBoundary.y <= position.y && rooms[i].bottomRightBoundary.y >= position.y)
+			{
+				return i;
+			}
+		}
+
+		return rooms.size();
+	}
+
+	void WaypointPathfinder::FindPath(Vec2 start, Vec2 goal)
+	{
+		// 1. Find start & goal room IDs
+		// 2. If rooms are different, find path from waypoints
+		// 3. If rooms are the same, walk straight to the goal
+
+		// 1
+		goalPosition = goal;
+		int startRoom = GetRoomID(start);
+		int goalRoom = GetRoomID(goal);
+		foundPath.clear();
+
+		// 2
+		if (startRoom == goalRoom)
+		{
+			return;
+		}
+
+		// 3
+		// Reset
+		closedList.clear();
+		openList.clear();
+
+		for (int i = 0; i < waypoints.size(); ++i)
+		{
+			waypoints[i].gCost = FLT_MAX;
+			waypoints[i].parent = nullptr;
+		}
+
+		// add in all waypoints that are in same room as start
+		Waypoint* firstWaypoint = nullptr;
+		float distance = FLT_MAX;
+		for (auto waypoint : rooms[startRoom].waypoints)
+		{
+			float currentDistance = Vec2::Distance(waypoint->position, start);
+			if (firstWaypoint == nullptr || currentDistance < distance)
+			{
+				firstWaypoint = waypoint;
+				distance = currentDistance;
+			}
+		}
+		openList.emplace_back(firstWaypoint);
+		firstWaypoint->gCost = Vec2::Distance(start, firstWaypoint->position);
+
+		while (!openList.empty())
+		{
+			Waypoint* currentWaypoint = openList[0];
+			int currentWaypointOpenListID = 0;
+
+			for (int i = 0; i < openList.size(); ++i)
+			{
+				if (openList[i]->fCost < currentWaypoint->fCost ||
+					(openList[i]->fCost == currentWaypoint->fCost && openList[i]->hCost < currentWaypoint->hCost))
+				{
+					currentWaypoint = openList[i];
+					currentWaypointOpenListID = i;
+				}
+			}
+
+			openList.erase(openList.begin() + currentWaypointOpenListID);
+			closedList.emplace_back(currentWaypoint);
+
+			for (auto room : currentWaypoint->rooms) // checking for goal
+			{
+				if (room->roomID == goalRoom) // same room as goal
+				{
+					// Create path
+					foundPath.emplace_back(goal);
+
+					Waypoint* createPathWaypoint = currentWaypoint;
+					while (createPathWaypoint != nullptr)
+					{
+						foundPath.emplace(foundPath.begin(), createPathWaypoint->position);
+						createPathWaypoint = createPathWaypoint->parent;
+					}
+
+					return;
+				}
+			}
+
+			for (int i = 0; i < currentWaypoint->neighbourWaypoints.size(); ++i)
+			{
+				Waypoint* neighbourWaypoint = currentWaypoint->neighbourWaypoints[i];
+				float neighbourGCost = currentWaypoint->gCost + currentWaypoint->neighbourWaypointsDistance[i];
+
+				if (neighbourGCost < neighbourWaypoint->gCost)
+				{
+					neighbourWaypoint->gCost = neighbourGCost;
+					neighbourWaypoint->hCost = Vec2::Distance(neighbourWaypoint->position, goal);
+					neighbourWaypoint->fCost = neighbourWaypoint->gCost + neighbourWaypoint->hCost;
+					neighbourWaypoint->parent = currentWaypoint;
+
+					const auto iter = std::find(openList.begin(), openList.end(), neighbourWaypoint);
+					if (iter == openList.end())
+					{
+						openList.push_back(neighbourWaypoint);
+					}
+				}
+			}
+		}
+
+		printf("Pathfinder failed to find a solution\n");
+		return;
+	}
+
+	Vec2 WaypointPathfinder::NextStep()
+	{
+		if (!foundPath.size()) // Walk straight to goal
+		{
+			return goalPosition;
+		}
+
+		Vec2 toReturn = foundPath[0];
+		foundPath.erase(foundPath.begin());
+		return toReturn;
 	}
 }
 
