@@ -11,7 +11,6 @@
 #include "imguiHelper/ImguiAudio.h"
 #include "Tools/CompilerRevamped/MeshLoader.h"
 #include <string>
-#include "GraphicsResource/Revamped/ModelPack.h"
 #include "AssetManagement/Revamped/MeshFactory.h"
 
 #define ASSET_PATH "../assets"
@@ -136,9 +135,18 @@ namespace TDS
 					}
 					//set initial transform position,
 
-					transformComp->SetRealPosition(rootNodes.second.m_SceneTranslation);
-					transformComp->SetRealScale(rootNodes.second.m_SceneScale);
-					transformComp->SetRealRotate(rootNodes.second.m_SceneRotation);
+					if (ModelAssetName == "Adjusted_Bin.bin")
+					{
+						transformComp->SetPosition(rootNodes.second.m_SceneTranslation);
+						transformComp->SetRotation(rootNodes.second.m_SceneRotation);
+						transformComp->SetScale(rootNodes.second.m_SceneScale);
+					}
+					else
+					{
+						transformComp->SetRealPosition(rootNodes.second.m_SceneTranslation);
+						//transformComp->SetRealScale(rootNodes.second.m_SceneScale);
+						//transformComp->SetRealRotate(rootNodes.second.m_SceneRotation);
+					}
 					// push this entity into the main root
 
 				}
@@ -174,13 +182,25 @@ namespace TDS
 						childGrapComp->m_MeshName = meshNode.first;
 						childGrapComp->m_ModelName = ModelAssetName;
 						childGrapComp->m_MeshNodeName = rootNodes.first;
-						//Set initial transform positions
-						childTransformComp->SetRealPosition(rootNodes.second.m_SceneTranslation);
-						childTransformComp->SetRealScale(rootNodes.second.m_SceneScale);
-						childTransformComp->SetRealRotate(rootNodes.second.m_SceneRotation);
-						//childTransformComp->SetScale(Vec3(1.f, 1.f, 1.f));
-						//childTransformComp->SetRotation(Vec3(0.f, 0.f, 0.f));
-						//If entity validity check
+						//Set initial transform position
+						if (ModelAssetName == "Adjusted_Bin.bin")
+						{
+							childTransformComp->SetPosition(rootNodes.second.m_SceneTranslation);
+							childTransformComp->SetRotation(rootNodes.second.m_SceneRotation);
+							childTransformComp->SetScale(rootNodes.second.m_SceneScale);
+						}
+						else
+						{
+							childTransformComp->SetRealPosition(rootNodes.second.m_SceneTranslation);
+
+							//transformComp->SetRealScale(rootNodes.second.m_SceneScale);
+							//transformComp->SetRealRotate(rootNodes.second.m_SceneRotation);
+						}
+						/*		childTransformComp->SetRealScale(rootNodes.second.m_SceneScale);
+								childTransformComp->SetRealRotate(rootNodes.second.m_SceneRotation);*/
+								//childTransformComp->SetScale(Vec3(1.f, 1.f, 1.f));
+								//childTransformComp->SetRotation(Vec3(0.f, 0.f, 0.f));
+								//If entity validity check
 						if (nodeEntityID != 0)
 						{
 							//Push into the root parent
@@ -628,6 +648,7 @@ namespace TDS
 	std::string AssetBrowser::LoadAssetRevamped(const std::string& FileName)
 	{
 		std::string OutputPath{};
+		std::string OutName{};
 		if (strstr(FileName.c_str(), ".jpg") || strstr(FileName.c_str(), ".png") || strstr(FileName.c_str(), ".dds"))
 		{
 			lookUp = false;
@@ -708,23 +729,24 @@ namespace TDS
 				MeshLoader::GetInstance().RunCompiler(req);
 
 				std::string OutputFile = req.m_OutFile;
-				AssetManager::GetInstance()->GetMeshFactory().LoadModel(OutputFile);
-				OutputPath = OutputFile;
+				OutName = AssetManager::GetInstance()->GetMeshFactory().LoadModel(OutputFile);
+
+				/*OutputPath = OutputFile;*/
 
 
 			}
 			else
 			{
-				AssetManager::GetInstance()->GetMeshFactory().LoadModel(OutPath);
-				OutputPath = OutPath;
+				OutName = AssetManager::GetInstance()->GetMeshFactory().LoadModel(OutPath);
+				/*OutputPath = OutPath;*/
 			}
 
-			std::filesystem::path FilePath(OutputPath);
-			std::string assetName = FilePath.filename().string();
+			//std::filesystem::path FilePath(OutputPath);
+			//std::string assetName = FilePath.filename().string();
 
-			BuildEntityMeshHierachy(assetName, currEntity);
+			BuildEntityMeshHierachy(OutName, currEntity);
 
-			return assetName;
+			return OutName;
 		}
 		//if .json, load scene...
 		if (strstr(FileName.c_str(), ".ttf"))

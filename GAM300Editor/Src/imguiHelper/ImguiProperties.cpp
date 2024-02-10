@@ -1090,7 +1090,18 @@ namespace TDS
 					{
 						addComponentByName("Graphics Component", selectedEntity);
 					}
-
+					if (!GetDirLightComponent(selectedEntity) && ImGui::Selectable("DirectionalLight"))
+					{
+						addComponentByName("DirectionalLight", selectedEntity);
+					}
+					if (!GetSpotLightComponent(selectedEntity) && ImGui::Selectable("SpotLight"))
+					{
+						addComponentByName("SpotLight", selectedEntity);
+					}
+					if (!GetPointLightComponent(selectedEntity) && ImGui::Selectable("PointLight"))
+					{
+						addComponentByName("PointLight", selectedEntity);
+					}
 					break;
 				case AddComponentStage::SCRIPTS:
 
@@ -1226,7 +1237,7 @@ namespace TDS
 			else if (propertyName.get_type() == rttr::type::get<float>())
 			{
 				float newValue = propertyName.get_value(componentInstance).convert<float>();
-				ImguiInput(propertyName.get_name().to_string(), newValue,0.0001f);
+				ImguiInput(propertyName.get_name().to_string(), newValue, 0.0001f);
 				propertyName.set_value(componentInstance, newValue);
 			}
 			else if (propertyName.get_type() == rttr::type::get<bool>())
@@ -1410,7 +1421,10 @@ namespace TDS
 					|| propertyName.get_name().to_string() == "FakeScale"
 					|| propertyName.get_name().to_string() == "OldPosition"
 					|| propertyName.get_name().to_string() == "OldScale"
-					|| propertyName.get_name().to_string() == "OldRotation") continue;
+					|| propertyName.get_name().to_string() == "OldRotation"
+					|| propertyName.get_name().to_string() == "OldFakePosition"
+					|| propertyName.get_name().to_string() == "OldFakeScale"
+					|| propertyName.get_name().to_string() == "OldFakeRotation") continue;
 
 				Vec3 newValue = propertyName.get_value(componentInstance).convert<Vec3>();
 				ImguiInput(propertyName.get_name().to_string(), newValue);
