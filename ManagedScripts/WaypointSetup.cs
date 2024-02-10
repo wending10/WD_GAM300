@@ -285,19 +285,19 @@ public class WaypointSetup : Script
     }
     public override void Update()
 	{
-        if (playerMoved)
-        {
-            Vector2 start = new Vector2(2320, -1000);       // monster position
-            Vector2 goal = new Vector2(-1750, -1000);       // player position
-            WaypointPathfinder.FindPath(start, goal);
-            playerMoved = false;
-            monsterPositionX = 2320;
-            monsterPositionY = -1000;
-        }
+        //if (playerMoved)
+        //{
+        //    Vector2 start = new Vector2(2320, -1000);       // monster position
+        //    Vector2 goal = new Vector2(-1750, -1000);       // player position
+        //    WaypointPathfinder.FindPath(start, goal);
+        //    playerMoved = false;
+        //    monsterPositionX = 2320;
+        //    monsterPositionY = -1000;
+        //}
 
-        Vector2 monsterPosition = WaypointPathfinder.NextStep(new Vector2(monsterPositionX, monsterPositionY), 1);
-        monsterPositionX = monsterPosition.X;
-        monsterPositionY = monsterPosition.Y;
-        Console.WriteLine(monsterPositionX + "\t\t" + monsterPositionY);
+        //Vector2 monsterPosition = WaypointPathfinder.NextStep(new Vector2(monsterPositionX, monsterPositionY), 1);
+        //monsterPositionX = monsterPosition.X;
+        //monsterPositionY = monsterPosition.Y;
+        //Console.WriteLine(monsterPositionX + "\t\t" + monsterPositionY);
 	}
  }
