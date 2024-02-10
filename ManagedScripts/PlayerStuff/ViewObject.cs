@@ -7,6 +7,7 @@ public class View_Object : Script
     GameObject ObjectViewer;
     GameObject ObjectViewerCam;
     GameObject ObjectViewerModel;
+    GameObject ViewingModel;
     
     //public static string ModelName;
     public static string ObjectName;
@@ -21,9 +22,9 @@ public class View_Object : Script
     {
     }
 
+    // MAKE SURE OBJECTVIEWER IS ACTIVE WHEN STARTING THE GAME SO START() RUNS
     public override void Start()
     {
-        // MAKE SURE OBJECT THAT IS ATTACHED IS ACTIVE WHEN STARTING GAME
         Console.WriteLine("Init ObjectViewer\n");
         ObjectViewer        = GameObjectScriptFind("ObjectViewer");
         ObjectViewerCam     = GameObjectScriptFind("ObjectViewerCam");
@@ -48,7 +49,10 @@ public class View_Object : Script
             GameObjectScriptFind("InventoryObject").SetActive(false);
             InventoryScript.InventoryIsOpen = false;
 
-            //ObjectViewerModel.GetComponent<GraphicComponent>().SetModelName(ObjectName); // Not working..
+            //ObjectViewerModel.GetComponent<GraphicComponent>().SetModelName("cube_Bin.bin"); // Not working.. probably becaus some models have many entities
+            ViewingModel = GameObjectScriptFind(ObjectName);
+            ViewingModel.transform.SetPosition(ObjectViewerModel.transform.GetPosition());
+            ViewingModel.SetActive(true);
 
             isExamining = true;
             isZoomed = false;
@@ -74,14 +78,16 @@ public class View_Object : Script
             Console.WriteLine("A pressed");
 
             rotateValue += 0.01f;
-            ObjectViewerModel.transform.SetRotation(new Vector3(0, rotateValue, 0));
+            //ObjectViewerModel.transform.SetRotation(new Vector3(0, rotateValue, 0));
+            ViewingModel.transform.SetRotation(new Vector3(0, rotateValue, 0));
         }
         else if (Input.GetKey(Keycode.D))
         {
             Console.WriteLine("D pressed");
 
             rotateValue -= 0.01f;
-            ObjectViewerModel.transform.SetRotation(new Vector3(0, rotateValue, 0));
+            //ObjectViewerModel.transform.SetRotation(new Vector3(0, rotateValue, 0));
+            ViewingModel.transform.SetRotation(new Vector3(0, rotateValue, 0));
         }
 
         if (Input.GetKey(Keycode.S))
@@ -91,7 +97,8 @@ public class View_Object : Script
             if (ObjectViewerModel.transform.GetPosition().Y > -1.0f)
             {
                 root_y -= 0.01f;
-                ObjectViewerModel.transform.SetPositionY(root_y);
+                //ObjectViewerModel.transform.SetPositionY(root_y);
+                ViewingModel.transform.SetPositionY(root_y);
             }
         }
         else if (Input.GetKey(Keycode.W))
@@ -101,7 +108,8 @@ public class View_Object : Script
             if (ObjectViewerModel.transform.GetPosition().Y < 1.0f)
             {
                 root_y += 0.01f;
-                ObjectViewerModel.transform.SetPositionY(root_y);
+                //ObjectViewerModel.transform.SetPositionY(root_y);
+                ViewingModel.transform.SetPositionY(root_y);
             }
         }
     }
@@ -124,6 +132,7 @@ public class View_Object : Script
             GraphicsManagerWrapper.ToggleViewFrom2D(false);
             InventoryScript.InventoryIsOpen = true;
             GameObjectScriptFind("InventoryObject").SetActive(true);
+            ViewingModel.SetActive(false);
             gameObject.SetActive(false);
         }
     }
@@ -138,7 +147,7 @@ public class View_Object : Script
         }
         else
         {
-            ObjectViewerCam.GetComponent<CameraComponent>().SetFieldOfView(60f);
+            ObjectViewerCam.GetComponent<CameraComponent>().SetFieldOfView(120f);
         }
     }
 }

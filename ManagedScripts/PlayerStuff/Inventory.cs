@@ -28,6 +28,7 @@ public class InventoryScript : Script
         
     }
 
+    // MAKE SURE INVENTORYOBJECT IS ACTIVE WHEN STARTING THE GAME SO START() RUNS
     public override void Start()
     {
         Console.WriteLine("Start Invenctory");
@@ -119,7 +120,7 @@ public class InventoryScript : Script
 
         notesObjsImg = new List<string>
         {
-            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Notes1.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
             "Notes7.dds",            "Notes8.dds",
@@ -129,7 +130,7 @@ public class InventoryScript : Script
 
         noteObjsInInventory = new List<string>
         {
-            "",           "",
+            "Note Test",           "",
             "",           "",
             "",           "",
             "Note7",           "Note8",
@@ -149,7 +150,7 @@ public class InventoryScript : Script
 
         paintingObjsInInventory = new List<string>
         {
-            "Painting_Living_Bin.bin",            "",
+            "Painting Test",            "",
             "",            "",
             "",            "",
             "",            "",
@@ -206,20 +207,6 @@ public class InventoryScript : Script
     
     bool withinButton(GameObject obj)
     {
-        Vector3 ObjectPos = obj.transform.GetPosition();
-        Vector3 ObjectScale = obj.transform.GetScale();
-        float mouseX = Input.GetUIMousePosX();       
-        float mouseY = Input.GetUIMousePosY();       
-        float minX = ObjectPos.X - ObjectScale.X * 0.5f;
-        float maxX = ObjectPos.X + ObjectScale.X * 0.5f;
-        float minY = ObjectPos.Y - ObjectScale.Y * 0.5f;
-        float maxY = ObjectPos.Y + ObjectScale.Y * 0.5f;
-
-        //Console.WriteLine("MouseX: " + mouseX + " MinX: " + minX + " MaxX: " + maxX);
-        //Console.WriteLine("MouseY: " + mouseY + " MinY: " + minY + " MaxY: " + maxY);
-        if (mouseX >= minX && mouseX <= maxX && mouseY >= minY && mouseY <= maxY)
-            return true;
-        else
-            return false;
+        return obj.GetComponent<UISpriteComponent>().IsMouseCollided();
     }
 }
