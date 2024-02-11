@@ -1,6 +1,8 @@
 #include "TransformComponent.hxx"
 #include "../Shared_Libs/Vector4.h"
 #include "../Shared_Libs/Matrix4.h"
+#include "../GameObject.hxx"
+#include "../EngineInterface.hxx"
 
 namespace ScriptAPI
 {
@@ -166,24 +168,65 @@ namespace ScriptAPI
 
 	Vector3 TransformComponent::TransformDirection(Vector3 direction)
 	{
-		TDS::Mat4 matrix = TDS::GetTransform(entityID)->GenerateTransfom();
-		TDS::Vec4 directionVec4 = TDS::floatsToVec4(direction.X, direction.Y, direction.Z, 1.0f);
-		TDS::Vec4 returnDirectionVec4 = TDS::mat4Vec4(matrix, directionVec4);
+		// May wanna change to a function
+		if (!TDS::GetTransform(entityID))
+		{
+			// throw error instead (not sure how)
+			return Vector3(0.f, 0.f, 0.f);
+		}
 
-		return Vector3(directionVec4.x, directionVec4.y, directionVec4.z);
+		// A -> x + 1
+		// D -> x - 1
+		// W -> z + 1
+		// S -> z - 1
+
+		Vector3 toReturn = Vector3(0, 0, 0);
+		if (direction.X != 0)
+		{
+			TDS::Vec3 rightVector = TDS::GetTransform(entityID)->getRightVector();
+			rightVector.x = -rightVector.x;
+			toReturn = Vector3(rightVector) * direction.X;
+		}
+		if (direction.Y != 0)
+		{
+			// To Do
+		}
+		if (direction.Z != 0)
+		{
+			TDS::Vec3 forwardVector = TDS::GetTransform(entityID)->getForwardVector();
+			forwardVector.x = -forwardVector.x;
+			toReturn = toReturn + Vector3(forwardVector) * direction.Z;
+		}
+
+		return toReturn;
 	}
 
 	// CONSTRUCTOR ===========================================================================
 	TransformComponent::TransformComponent(TDS::EntityID ID) : entityID (ID)
+	{
+		gameObject = EngineInterface::GetGameObject(ID);
+	}
+
+	TransformComponent::TransformComponent(TDS::EntityID ID, GameObject^ _gameObject) : entityID(ID), gameObject(_gameObject)
 	{ }
 
 	void TransformComponent::SetEntityID(TDS::EntityID ID)
 	{
 		entityID = ID;
+		gameObject = EngineInterface::GetGameObject(ID);
 	}
 
 	TDS::EntityID TransformComponent::GetEntityID()
 	{
 		return entityID;
+	}
+
+	void TransformComponent::SetEnabled(bool enabled)
+	{
+		TDS::setComponentIsEnable("Transform", GetEntityID(), enabled);
+	}
+	bool TransformComponent::GetEnabled()
+	{
+		return TDS::getComponentIsEnable("Transform", GetEntityID());
 	}
 }

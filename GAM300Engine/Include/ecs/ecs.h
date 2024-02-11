@@ -107,9 +107,9 @@ namespace TDS
 
         // TYPEDEF
         typedef std::function<void(const float, const std::vector<EntityID>&, Cs*...)>
-                                            RunFunc;
+            RunFunc;
         typedef std::function<void(void)>
-                                            InitFunc;
+            InitFunc;
 
         // Setting the update function in the mFunc function pointer 
         void                                action(InitFunc initFunc, RunFunc runFunc);
@@ -198,10 +198,11 @@ namespace TDS
         //track which entity is which archetype
         struct Record
         {
-            Archetype*                      archetype;
-            Archetype*                      activeArchetype; // used in systems
+            Archetype* archetype;
+            Archetype* activeArchetype; // used in systems
             std::uint32_t                   index;
             bool                            isEnabled;
+            bool                            previouslyEnabled;
         };
 
         // TYPEDEFS
@@ -252,7 +253,7 @@ namespace TDS
         void                         runSystems(const int layer, const float elapsedMilliseconds);
 
         // Gets the archetype class pointer of the given archetype ID
-        Archetype*                   getArchetype(const ArchetypeID& id);
+        Archetype* getArchetype(const ArchetypeID& id);
 
         // Gets all archetypes
         ArchetypesArray              getAllArchetypes();
@@ -318,9 +319,15 @@ namespace TDS
 
         bool                         getEntityIsEnabled(const EntityID& entityId);
 
+        bool                         getEntityPreviouslyEnabled(const EntityID& entityId);
+
         void                         setEntityIsEnabled(const EntityID& entityId, bool _isEnabled);
 
+        void                         setEntityPreviouslyEnabled(const EntityID& entityId);
+
         ArchetypeID                  getActiveArchetype(const EntityID& entityID);
+
+        void                         setActiveArchetype(const EntityID& entityID, const ArchetypeID& newType);
 
         template<typename C>
         void                         setComponentIsEnabled(const EntityID& entityId, bool _isEnabled);
@@ -364,14 +371,14 @@ namespace TDS
 
         // Adding a new component, with component values
         template<typename C>
-        C*                                  add();
+        C* add();
 
         // Adding a new component overload, move component data
         template<typename C>
-        C*                                  add(C&& c);
+        C* add(C&& c);
 
         // Get ID of the entity
-        EntityID                            getID() const;                           
+        EntityID                            getID() const;
 
     private:
         EntityID                            mID;

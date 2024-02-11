@@ -50,13 +50,23 @@ namespace ScriptAPI
 		void SetGravityFactor(float inGravityFactor);
 		float GetGravityFactor();
 
+		// Raycasting (Scripting)
+		bool IsRayHit();
+
+		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
 
+		virtual void SetEnabled(bool enabled);
+		virtual bool GetEnabled();
+
 		TransformComponent transform;
+		GameObject^ gameObject;
+
+		// SENSOR
+		bool IsSensorActivated();
 
 	internal:
 		RigidBodyComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		TDS::EntityID entityID;

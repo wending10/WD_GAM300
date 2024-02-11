@@ -11,12 +11,13 @@
 #include "imgui/ImGuizmo.h"
 #include "eventManager/eventHandler.h"
 #include "../EditorApp.h"
-//#include "Input/Input.h"
+
 namespace TDS
 {
 	Texture data{};
 	VkDescriptorSet m_DescSet = nullptr;
 	std::shared_ptr<EditorConsole> consolelog = static_pointer_cast<EditorConsole>(LevelEditorManager::GetInstance()->panels[PanelTypes::CONSOLE]);
+
 
 	EditorScene::EditorScene()
 	{
@@ -24,9 +25,11 @@ namespace TDS
 		//selectedFolder = -1;
 		//renameCheck = false;
 
-		flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse| ImGuiDockNodeFlags_AutoHideTabBar;
+		flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse| ImGuiWindowFlags_AlwaysAutoResize | ImGuiDockNodeFlags_AutoHideTabBar;
 		panelTitle = "Scene";
 		windowPadding = ImVec2(0.f, 0.f);
+		
+
 	}
 
 	std::string tempPath = "../assets/textures/texture.dds";
@@ -36,8 +39,12 @@ namespace TDS
 	}
 	void EditorScene::update()
 	{
+		
 		isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
-
+		/*TDS_INFO("Window Height is: ");
+		TDS_INFO(ImGui::GetWindowHeight());
+		TDS_INFO("Content Height is: ");
+		TDS_INFO(ImGui::GetContentRegionAvail().y);*/
 		if (ImGui::BeginMenuBar())
 		{
 			if (isPlaying)
@@ -91,13 +98,23 @@ namespace TDS
 		isFocus = ImGui::IsWindowFocused() && ImGui::IsItemVisible();
 		static bool view2D = false;
 		
-		ImVec2 vSize = ImGui::GetContentRegionAvail();
+		ImVec2 vSize /*= ImGui::GetContentRegionAvail()*/;
+		if (ImGui::GetContentRegionAvail().x < (ImGui::GetContentRegionAvail().y * (16.0f / 9.0f)))
+		{
+			vSize = ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().x * (9.0f / 16.0f)); //scale y
+		}
+		else
+		{
+			vSize = ImVec2(ImGui::GetContentRegionAvail().y * (16.0f / 9.0f), ImGui::GetContentRegionAvail().y); //scale x
+		}
 
 		GraphicsManager::getInstance().getViewportScreen().x = ImGui::GetWindowPos().x;
 		GraphicsManager::getInstance().getViewportScreen().y = ImGui::GetWindowPos().y;
-		GraphicsManager::getInstance().getViewportScreen().z = ImGui::GetContentRegionAvail().x;
-		GraphicsManager::getInstance().getViewportScreen().w = ImGui::GetContentRegionAvail().y;
-	
+		//GraphicsManager::getInstance().getViewportScreen().z = ImGui::GetContentRegionAvail().x;
+		//GraphicsManager::getInstance().getViewportScreen().w = ImGui::GetContentRegionAvail().y;
+		GraphicsManager::getInstance().getViewportScreen().z = vSize.x;
+		GraphicsManager::getInstance().getViewportScreen().w = vSize.y;
+		GraphicsManager::getInstance().getOffset() = ImGui::GetWindowHeight();
 		ImGui::Image((ImTextureID)m_DescSet, vSize);
 		//drag drop code MUST be directly under imgui::image code
 		if (ImGui::BeginDragDropTarget())
@@ -137,7 +154,8 @@ namespace TDS
 
 		selectedEntity = hierarchyPanel->getSelectedEntity();
 
-		if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT) && !ImGuizmo::IsUsing())
+		//if (Input::isMouseButtonPressed(TDS_MOUSE_LEFT) && !ImGuizmo::IsUsing() && !ImGuizmo::IsOver())
+		if (InputSystem::GetInstance()->isMousePressed(VK_LBUTTON) && !ImGuizmo::IsUsing() && !ImGuizmo::IsOver())
 		{
 			if (GraphicsManager::getInstance().getObjectPicker().getActiveObject() != 0 && GraphicsManager::getInstance().getObjectPicker().getActiveObject() < 10000)
 			{
@@ -145,6 +163,7 @@ namespace TDS
 
 				hierarchyPanel->setSelectedEntity(selectedEntity);
 			}
+			//Input::releaseTheMouse(TDS_MOUSE_LEFT);
 		}
 
 
@@ -153,7 +172,6 @@ namespace TDS
 			if (GraphicsManager::getInstance().IsViewingFrom2D())
 			{
 				GraphicsComponent* graphComp = reinterpret_cast<GraphicsComponent*>(getComponentByName("Graphics Component", selectedEntity));
-
 				if (graphComp != nullptr && graphComp->m_UsedIn2D)
 				{
 					view2D = false;
@@ -168,7 +186,19 @@ namespace TDS
 			}
 			else
 			{
-				ImGuizmo::SetOrthographic(false);
+				UISprite* sprite = reinterpret_cast<UISprite*>(getComponentByName("UI Sprite", selectedEntity));
+
+				if (sprite != nullptr)
+				{
+					view2D = true;
+					ImGuizmo::SetOrthographic(true);
+				}
+				else
+				{
+					view2D = false;
+					ImGuizmo::SetOrthographic(false);
+				}
+				
 			}
 			ImGuizmo::SetDrawlist();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
@@ -198,15 +228,23 @@ namespace TDS
 
 			const auto& trans = ecs.getComponent<Transform>(selectedEntity);
 
+			if (!trans)
+			{
+				return;
+			}
+
 			Vec3 snap = 1.0f;
 
 			float* _proj = Mat4::Mat4Value_ptr(projection);
 			float* _view = Mat4::Mat4Value_ptr(view);
 			float* _trans = Mat4::Mat4Value_ptr(trans->GetTransformMatrix());
 			float* _snap = Vec3::Vec3Value_ptr(snap);
-			if (TDS::Input::isKeyPressed(TDS_1)) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::TRANSLATE); }
-			else if (TDS::Input::isKeyPressed(TDS_2)) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::SCALE); }
-			else if (TDS::Input::isKeyPressed(TDS_3)) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::ROTATE); }
+			//if (TDS::Input::isKeyPressed(TDS_1)) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::TRANSLATE); }
+			//else if (TDS::Input::isKeyPressed(TDS_2)) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::SCALE); }
+			//else if (TDS::Input::isKeyPressed(TDS_3)) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::ROTATE); }
+			if (InputSystem::GetInstance()->isKeyPressed('1')) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::TRANSLATE); }
+			else if (InputSystem::GetInstance()->isKeyPressed('2')) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::SCALE); }
+			else if (InputSystem::GetInstance()->isKeyPressed('3')) { m_gizmoType = static_cast<int>(ImGuizmo::OPERATION::ROTATE); }
 			bool val = ImGuizmo::Manipulate(
 				_view, _proj, (ImGuizmo::OPERATION)m_gizmoType, ImGuizmo::WORLD, _trans,
 				nullptr, false ? _snap : nullptr
@@ -252,9 +290,9 @@ namespace TDS
 	{
 		if (m_DescSet)
 		{
-			ImGui_ImplVulkan_RemoveTexture(m_DescSet);
-			m_DescSet = ImGui_ImplVulkan_AddTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-
+			//ImGui_ImplVulkan_RemoveTexture(m_DescSet);
+			//m_DescSet = ImGui_ImplVulkan_AddTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+			ImGui_ImplVulkan_UpdateTexture(GraphicsManager::getInstance().getFinalImage().getSampler(), m_DescSet, GraphicsManager::getInstance().getFinalImage().getImageView(), VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 		}
 	}
 }

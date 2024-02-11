@@ -1,14 +1,30 @@
 #include "SceneLoader.hxx"
 #include "TypeConversion.hxx"
+#include "EngineInterface.hxx"
 namespace ScriptAPI
 {
 	void SceneLoader::LoadMainMenu()
 	{
-		
-		TDS::SceneManager::GetInstance()->loadScene("Main Menu");
+		EngineInterface::Reload();
+		TDS::SceneManager::GetInstance()->loadScene("MainMenu");
+		TDS::SceneManager::GetInstance()->awake();
+		TDS::SceneManager::GetInstance()->start();
+
 	}
 	void SceneLoader::LoadMainGame()
 	{
-		TDS::SceneManager::GetInstance()->loadScene("Presentation Game");
+		EngineInterface::Reload();
+		TDS::SceneManager::GetInstance()->loadScene("GameScene");
+		TDS::SceneManager::GetInstance()->awake();
+		TDS::SceneManager::GetInstance()->start();
 	}
+
+	void SceneLoader::LoadStartingCutscene()
+	{
+		EngineInterface::Reload();
+		TDS::SceneManager::GetInstance()->loadScene("StartingCutscene");
+		TDS::SceneManager::GetInstance()->awake();
+		TDS::SceneManager::GetInstance()->start();
+	}
+
 }

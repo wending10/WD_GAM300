@@ -131,7 +131,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(SolutionDir)Shared_Libs;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)GAM300Engine\Include;$(SolutionDir)GAM300Engine\Include\Geometry\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(SolutionDir)Shared_Libs;$(SolutionDir)Dependencies\spdlog\include;$(SolutionDir)GAM300Engine\Include;$(SolutionDir)GAM300Engine\Include\Geometry;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -194,16 +194,52 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Shared_Libs\Vector3.cpp" />
     <ClCompile Include="..\Shared_Libs\Vector4.cpp" />
     <ClCompile Include="Include\ecs\ecs.cpp" />
-    <ClCompile Include="Src\components\SoundInfo.cpp" />
+    <ClInclude Include="Include\AI\Pathfinder.h" />
+    <ClInclude Include="Include\AI\Tile.h" />
+    <ClInclude Include="Include\AI\TileEntity.h" />
+    <ClInclude Include="Include\components\CompReflectionMacro.h" />
+    <ClInclude Include="Include\components\DirLightComponent.h" />
+    <ClInclude Include="Include\components\ParticleComponent.h" />
+    <ClInclude Include="Include\AssetManagement\Revamped\MeshFactory.h" />
+    <ClInclude Include="Include\components\PointLightComponent.h" />
+    <ClInclude Include="Include\components\SpotLightComponent.h" />
+    <ClInclude Include="Include\GraphicsResource\GeomSerializer.h" />
+    <ClInclude Include="Include\GraphicsResource\GeomStruct.h" />
+    <ClInclude Include="Include\GraphicsResource\Revamped\MeshController.h" />
+    <ClInclude Include="Include\GraphicsResource\Revamped\ModelPack.h" />
+    <ClInclude Include="Include\Identifier\HashID.h" />
+    <ClInclude Include="Include\Identifier\TypeInformation.h" />
+    <ClInclude Include="Include\Identifier\UniqueID.h" />
+    <ClInclude Include="Include\MacroHelper.h" />
+    <ClInclude Include="Include\Input\InputSystem.h" />
+    <ClInclude Include="Include\MessagingSystem\MessageSystem.h" />
+    <ClInclude Include="Include\Physics\CollisionCollectorImpl.h" />
+    <ClInclude Include="Include\Physics\ContactListenerImpl.h" />
+    <ClCompile Include="Src\AI\Pathfinder.cpp" />
+    <ClCompile Include="Src\AI\Tile.cpp" />
+    <ClCompile Include="Src\AI\TileEntity.cpp" />
+    <ClCompile Include="Src\components\DirLightComponent.cpp" />
+    <ClCompile Include="Src\components\PointLightComponent.cpp" />
+    <ClCompile Include="Src\components\SpotLightComponent.cpp" />
+    <ClCompile Include="Src\GraphicsResource\Revamped\MeshController.cpp" />
     <ClCompile Include="Include\Rendering\GraphicsManagerWrapperCalls.cpp" />
+    <ClCompile Include="Src\components\AudioSource.cpp" />
+    <ClCompile Include="Src\AI\UIPopupManager.cpp" />
+    <ClCompile Include="Src\components\ParticleComponent.cpp" />
+    <ClCompile Include="src\components\SoundInfo.cpp" />
+    <ClCompile Include="src\fmod_engine\AudioEngine.cpp" />
+    <ClCompile Include="Src\GraphicsResource\GeomStruct.cpp" />
+    <ClCompile Include="Src\GraphicsResource\Revamped\ModelPack.cpp" />
+    <ClCompile Include="Src\Identifier\UniqueID.cpp" />
+    <ClCompile Include="Src\Input\InputSystem.cpp" />
+    <ClCompile Include="Src\MessagingSystem\MessageSystem.cpp" />
+    <ClCompile Include="Src\Physics\ContactListenerImpl.cpp" />
     <ClCompile Include="Src\Physics\Interface\PhysicsInterface.cpp" />
     <ClCompile Include="Src\AI\aiSystem.cpp" />
     <ClCompile Include="Src\AI\behaviourTree.cpp" />
-    <ClCompile Include="Src\AssetManagement\ResourceAllocator.cpp" />
     <ClCompile Include="Src\camera\camerasystem\CameraSystem.cpp" />
     <ClCompile Include="Src\camera\SphereFrustum.cpp" />
     <ClCompile Include="Src\components\ai.cpp" />
-    <ClCompile Include="src\components\AudioSource.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
     <ClCompile Include="Src\components\cameraComponent.cpp" />
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
@@ -219,7 +255,6 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\components\winData.cpp" />
     <ClCompile Include="Src\eventManager\eventHandler.cpp" />
     <ClCompile Include="Src\ExceptionHandler\ExceptionHandler.cpp" />
-    <ClCompile Include="Src\fmod_engine\AudioEngine.cpp" />
     <ClCompile Include="Src\Geometry\AABB.cpp" />
     <ClCompile Include="Src\Geometry\Geometry.cpp" />
     <ClCompile Include="Src\Geometry\Line.cpp" />
@@ -229,7 +264,6 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\Geometry\Triangle.cpp" />
     <ClCompile Include="Src\GraphicsResource\FontInfo.cpp" />
     <ClCompile Include="Src\GridManager\GridManager.cpp" />
-    <ClCompile Include="Src\Identifier\GUID.cpp" />
     <ClCompile Include="Src\AssetManagement\AssetManager.cpp" />
     <ClCompile Include="Src\GraphicsResource\AssetModel.cpp" />
     <ClCompile Include="Src\GraphicsResource\TextureInfo.cpp" />
@@ -252,15 +286,23 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Src\Rendering\GridRenderer.cpp" />
     <ClCompile Include="Src\Rendering\ObjectPicking.cpp" />
+    <ClCompile Include="Src\Rendering\ParticleSystem.cpp" />
     <ClCompile Include="Src\Rendering\RenderDataManager.cpp" />
     <ClCompile Include="Src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Src\Rendering\Renderer3D.cpp" />
     <ClCompile Include="Src\Rendering\RendererSystem.cpp" />
     <ClCompile Include="Src\Rendering\renderPass.cpp" />
     <ClCompile Include="Src\Rendering\RenderTarget.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\DeferredController.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\FrameBuffers\CompositionPass.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\FrameBuffers\DebugView.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\FrameBuffers\FrameBufferObject.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\FrameBuffers\G_Buffer.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\LightingBuffer.cpp" />
+    <ClCompile Include="Src\Rendering\Revamped\MaterialPipeline.cpp" />
     <ClCompile Include="Src\Rendering\Skybox.cpp" />
+    <ClCompile Include="Src\Rendering\UISpriteWrapper.cpp" />
     <ClCompile Include="Src\Rendering\UiSystem.cpp" />
-    <ClCompile Include="Src\ResourceManagement\ResouceManager.cpp" />
     <ClCompile Include="Src\sceneManager\sceneManager.cpp" />
     <ClCompile Include="Src\sceneManager\serialization.cpp" />
     <ClCompile Include="Src\sceneManager\serializationHelperFunctions.cpp" />
@@ -304,17 +346,15 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Shared_Libs\Vector4.h" />
     <ClInclude Include="Include\AI\aiSystem.h" />
     <ClInclude Include="Include\AI\behaviourTree.h" />
+    <ClInclude Include="Include\AI\UIPopupManager.h" />
     <ClInclude Include="Include\Animation\Pose.h" />
     <ClInclude Include="Include\AssetManagement\AssetManager.h" />
     <ClInclude Include="Include\AssetManagement\FactoryBase.h" />
     <ClInclude Include="Include\AssetManagement\FontFactory.h" />
-    <ClInclude Include="Include\AssetManagement\ModelFactory.h" />
-    <ClInclude Include="Include\AssetManagement\ResourceAllocator.h" />
     <ClInclude Include="Include\AssetManagement\TextureFactory.h" />
     <ClInclude Include="Include\camera\Camerasystem\CameraSystem.h" />
     <ClInclude Include="Include\camera\SphereFrustum.h" />
     <ClInclude Include="Include\components\ai.h" />
-    <ClInclude Include="Include\components\AudioSource.h" />
     <ClInclude Include="Include\components\boxCollider.h" />
     <ClInclude Include="Include\components\cameraComponent.h" />
     <ClInclude Include="Include\components\capsuleCollider.h" />
@@ -323,6 +363,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\components\iComponent.h" />
     <ClInclude Include="Include\components\nameTag.h" />
     <ClInclude Include="Include\components\rigidBody.h" />
+    <ClInclude Include="Include\components\SoundInfo.h" />
     <ClInclude Include="Include\components\sphereCollider.h" />
     <ClInclude Include="Include\components\sprite.h" />
     <ClInclude Include="Include\components\tag.h" />
@@ -332,11 +373,12 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\ecs\ecs.h" />
     <ClInclude Include="Include\ecs\ecs.hpp" />
     <ClInclude Include="Include\ecs\systems.h" />
+    <ClInclude Include="Include\eventmanager\eventHandler.h" />
     <ClInclude Include="Include\eventmanager\eventmanager.h" />
     <ClInclude Include="Include\eventmanager\eventmanager.hpp" />
     <ClInclude Include="Include\ExceptionHandler\ExceptionHandler.h" />
     <ClInclude Include="Include\fmod_engine\AudioEngine.h" />
-    <ClInclude Include="Include\components\SoundInfo.h" />
+    <ClInclude Include="Include\fmod_engine\SoundInfo.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
     <ClInclude Include="Include\Geometry\Geometry.h" />
     <ClInclude Include="Include\Geometry\Line.h" />
@@ -347,7 +389,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\GraphicsResource\AssetModel.h" />
     <ClInclude Include="Include\GraphicsResource\FontInfo.h" />
     <ClInclude Include="Include\GraphicsResource\GraphicsResourceDefines.h" />
-    <ClInclude Include="Include\GraphicsResource\Material.h" />
+    <ClInclude Include="Include\GraphicsResource\MaterialInfo.h" />
     <ClInclude Include="Include\GraphicsResource\TextureInfo.h" />
     <ClInclude Include="Include\GraphicsResource\VertexInfo.h" />
     <ClInclude Include="Include\GridManager\GridManager.h" />
@@ -358,11 +400,12 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\memoryManager\memoryManager.h" />
     <ClInclude Include="Include\Model\ModelTransform.h" />
     <ClInclude Include="Include\Model\Skeleton.h" />
+    <ClInclude Include="Include\Physics\CollisionSystem.h" />
     <ClInclude Include="Include\Physics\Interface\PhysicsInterface.h" />
     <ClInclude Include="Include\Physics\JPHLayers.h" />
-    <ClInclude Include="Include\Physics\CollisionSystem.h" />
     <ClInclude Include="Include\Physics\PhysicsSystem.h" />
     <ClInclude Include="Include\propertyManager\registration.h" />
+    <ClInclude Include="Include\Random\RandomGen.h" />
     <ClInclude Include="Include\Rendering\Batch2D.h" />
     <ClInclude Include="Include\Rendering\DebugRenderer.h" />
     <ClInclude Include="Include\Rendering\FontRenderer.h" />
@@ -373,6 +416,7 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\Material.h" />
     <ClInclude Include="Include\Rendering\ModelElement.h" />
     <ClInclude Include="Include\Rendering\ObjectPicking.h" />
+    <ClInclude Include="Include\Rendering\ParticleSystem.h" />
     <ClInclude Include="Include\Rendering\RenderDataManager.h" />
     <ClInclude Include="Include\Rendering\Renderer2D.h" />
     <ClInclude Include="Include\Rendering\Renderer3D.h" />
@@ -380,9 +424,18 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\Rendering\RenderLayer.h" />
     <ClInclude Include="Include\Rendering\renderPass.h" />
     <ClInclude Include="Include\Rendering\RenderTarget.h" />
+    <ClInclude Include="Include\Rendering\Revamped\DeferredController.h" />
+    <ClInclude Include="Include\Rendering\Revamped\FrameBuffers\CompositionPass.h" />
+    <ClInclude Include="Include\Rendering\Revamped\FrameBuffers\DebugView.h" />
+    <ClInclude Include="Include\Rendering\Revamped\FrameBuffers\FrameBufferObject.h" />
+    <ClInclude Include="Include\Rendering\Revamped\FrameBuffers\G_Buffer.h" />
+    <ClInclude Include="Include\Rendering\Revamped\FrameBuffers\LightingBuffer.h" />
+    <ClInclude Include="Include\Rendering\Revamped\MaterialPipeline.h" />
     <ClInclude Include="Include\Rendering\Skybox.h" />
+    <ClInclude Include="Include\Rendering\UISpriteWrapper.h" />
     <ClInclude Include="Include\Rendering\UiSystem.h" />
     <ClInclude Include="Include\sceneManager\serializationHelperFunctions.h" />
+    <ClInclude Include="Include\Serialization\Serialization.h" />
     <ClInclude Include="Include\Shader\ShaderData.h" />
     <ClInclude Include="Include\Shader\ShaderLoader.h" />
     <ClInclude Include="Include\sceneManager\sceneManager.h" />
@@ -394,8 +447,6 @@ xcopy /y /d "$(SolutionDir)Libs\rttr_core.dll" "$(OutDir)"</Command>
     <ClInclude Include="Include\vulkanTools\GlobalBufferPool.h" />
     <ClInclude Include="Include\vulkanTools\GraphicsAllocator.h" />
     <ClInclude Include="Include\camera\camera.h" />
-    <ClInclude Include="Include\Identifier\GUID.h" />
-    <ClInclude Include="Include\Identifier\Identifier.h" />
     <ClInclude Include="Include\dotnet\ImportExport.h" />
     <ClInclude Include="Include\Logger\Logger.h" />
     <ClInclude Include="Include\pch.h" />

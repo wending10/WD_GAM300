@@ -40,6 +40,14 @@ namespace ScriptAPI
         void virtual LateUpdate() {};
         void virtual OnDisable() {};
         void virtual OnDestroy() {};
+
+        void virtual OnTriggerEnter(ColliderComponent^ collider) {};
+        void virtual OnTriggerStay(ColliderComponent^ collider) {};
+        void virtual OnTriggerExit(ColliderComponent^ collider) {};
+
+        void SetEnabled(bool enabled) { is_Enabled = enabled; };
+        bool GetEnabled() { return is_Enabled; };
+
         void ToggleScript();
 
         generic <typename TResult>
@@ -62,16 +70,18 @@ namespace ScriptAPI
         void setStartFlag();
         bool getStartFlag();
 
-    private:
-        bool is_Enabled;
-        bool is_Awake;
-        bool is_Start;
+    public:
+        [HideInInspector]
+        bool is_Enabled = true;
+        [HideInInspector]
+        bool is_Awake = false;
+        [HideInInspector]
+        bool is_Start = false;
     };
 
     public ref class ScriptSystem
     {
     public:
-
         generic <typename TResult>
         static IAsyncEnumerable<TResult>^ UnityCoroutine(Func<IAsyncEnumerable<TResult>^>^ func, int duration)
         {
@@ -82,7 +92,7 @@ namespace ScriptAPI
             {
                 Thread::Sleep(1);
             }
-
+            
             return func();
         }
 
@@ -106,29 +116,6 @@ namespace ScriptAPI
             /*return Task::FromResult(result);*/
             return func();
         }
-
-        //static void OnTriggerEnter(BoxColliderComponent collider);
-
-        //static void OnTriggerEnter(SphereColliderComponent collider);
-
-        //static void OnTriggerEnter(CapsuleColliderComponent collider);
-
-        //static void OnTriggerStay(BoxColliderComponent collider);
-
-        //static void OnTriggerStay(SphereColliderComponent collider);
-
-        //static void OnTriggerStay(CapsuleColliderComponent collider);
-
-        //static void OnTriggerExit(BoxColliderComponent collider);
-
-        //static void OnTriggerExit(SphereColliderComponent collider);
-
-        //static void OnTriggerExit(CapsuleColliderComponent collider);
-
-        //static float Clamp(float num1, float num2, float num3)
-        //{
-        //    return std::clamp(num1, num2, num3);
-        //}
 
     };
 }

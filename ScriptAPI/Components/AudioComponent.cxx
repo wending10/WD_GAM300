@@ -1,10 +1,34 @@
 #include "AudioComponent.hxx"
+#include "../TypeConversion.hxx"
+#include "../EngineInterface.hxx"
 
 namespace ScriptAPI
 {
+	AudioComponent::AudioComponent(TDS::EntityID ID) : entityID(ID), transform(TransformComponent(ID))
+	{
+		gameObject = EngineInterface::GetGameObject(ID);
+	}
+
+	void AudioComponent::SetEntityID(TDS::EntityID id)
+	{
+		entityID = id;
+		transform = TransformComponent(id);
+		gameObject = EngineInterface::GetGameObject(id);
+	}
+
+	TDS::EntityID AudioComponent::GetEntityID()
+	{
+		return entityID;
+	}
+
 	void AudioComponent::set3DCoords(float x, float y, float z)
 	{
-		position = Vector3({ x, y, z });
+		pos = Vector3(x, y, z);
+	}
+
+	void AudioComponent::set3DCoords(Vector3 in_pos)
+	{
+		pos = in_pos;
 	}
 
 	bool AudioComponent::isLoaded()
@@ -15,6 +39,11 @@ namespace ScriptAPI
 	bool AudioComponent::is3D()
 	{
 		return isit3D;
+	}
+
+	bool AudioComponent::isLoop()
+	{
+		return isitLoop;
 	}
 
 	bool AudioComponent::isMuted()
@@ -30,6 +59,16 @@ namespace ScriptAPI
 	bool AudioComponent::isPaused()
 	{
 		return (whatState == TDS::SOUND_PAUSE);
+	}
+
+	bool AudioComponent::finished(System::String^ str_path)
+	{
+		return TDS::proxy_audio_system::checkifdone(toStdString(str_path));
+	}
+
+	Vector3 AudioComponent::get3DCoords()
+	{
+		return pos;
 	}
 
 	snd AudioComponent::getState()
@@ -57,19 +96,24 @@ namespace ScriptAPI
 		return filePath.c_str();
 	}
 
+	void AudioComponent::setFilePath(System::String^ str_path)
+	{
+		filePath = toStdString(str_path);
+	}
+
 	float AudioComponent::getX()
 	{
-		return position.X;
+		return pos.X;
 	}
 
 	float AudioComponent::getY()
 	{
-		return position.Y;
+		return pos.Y;
 	}
 
 	float AudioComponent::getZ()
 	{
-		return position.Z;
+		return pos.Z;
 	}
 
 	float AudioComponent::getReverbAmount()
@@ -112,14 +156,43 @@ namespace ScriptAPI
 		isitMuted = condition;
 	}
 
-	AudioComponent::AudioComponent(TDS::EntityID ID)
+	void AudioComponent::play(System::String^ pathing)
 	{
-		entityID = ID;
+		TDS::proxy_audio_system::ScriptPlay(toStdString(pathing));
 	}
 
-	TDS::EntityID AudioComponent::GetEntityID()
+	void AudioComponent::playQueue()
 	{
-		return entityID;
+		TDS::proxy_audio_system::Play_queue();
+	}
+
+	void AudioComponent::pause(System::String^ pathing)
+	{
+		TDS::proxy_audio_system::ScriptPause(toStdString(pathing));
+	}
+
+	void AudioComponent::stop(System::String^ pathing)
+	{
+		TDS::proxy_audio_system::ScriptStop(toStdString(pathing));
+	}
+
+	void AudioComponent::Queue(System::String^ str)
+	{
+		TDS::proxy_audio_system::Add_to_Queue(toStdString(str));
+	}
+
+	void AudioComponent::clearQueue()
+	{
+		TDS::proxy_audio_system::Clear_queue();
+	}
+
+	void AudioComponent::SetEnabled(bool enabled)
+	{
+		TDS::setComponentIsEnable("Audio", GetEntityID(), enabled);
+	}
+	bool AudioComponent::GetEnabled()
+	{
+		return TDS::getComponentIsEnable("Audio", GetEntityID());
 	}
 
 	//unique ID
@@ -142,6 +215,10 @@ namespace ScriptAPI
 	std::string AudioComponent::filePath::get()
 	{
 		return TDS::GetSoundInfo(entityID)->getFilePath();
+	}
+	void AudioComponent::filePath::set(std::string value)
+	{
+		TDS::GetSoundInfo(entityID)->setFilePath(value);
 	}
 
 	//loop
@@ -185,17 +262,13 @@ namespace ScriptAPI
 	}
 
 	//3D position
-	Vector3 AudioComponent::position::get()
+	Vector3 AudioComponent::pos::get()
 	{
-		auto[x, y, z] = TDS::GetSoundInfo(entityID)->getPosition();
-
-		return Vector3(x, y, z);
+		return Vector3(TDS::GetSoundInfo(entityID)->get3DCoords());
 	}
-	void AudioComponent::position::set(Vector3 value)
+	void AudioComponent::pos::set(Vector3 value)
 	{
-		float x = value.X, y = value.Y, z = value.Z;
-
-		TDS::GetSoundInfo(entityID)->set3DCoords(x, y, z);
+		TDS::GetSoundInfo(entityID)->set3DCoords(value.X, value.Y, value.Z);
 	}
 
 	//volume

@@ -17,7 +17,7 @@
 #include "dotnet/ImportExport.h"
 #include "components/cameraComponent.h"
 #include "camera/camera.h"
-#include "Input/Input.h"
+#include "Input/InputSystem.h"
 
 namespace TDS
 {
@@ -38,7 +38,7 @@ namespace TDS
 			/*!*************************************************************************
 			Gets mouse position
 			****************************************************************************/
-			static void SetGameCamera(CameraComponent* _camera);
+			static void SetGameCamera(CameraComponent& _camera);
 
 			/*!*************************************************************************
 			Calculates the vectors 

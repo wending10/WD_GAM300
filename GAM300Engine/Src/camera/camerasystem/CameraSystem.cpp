@@ -19,23 +19,50 @@ namespace TDS
 
 	void CameraSystem::CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities, Transform* _transform, CameraComponent* _cameracomponent)
 	{
-		if (GetIsPlaying() == false)
+		static bool set = false;
+
+		if (!entities.size())
 		{
+			return;
+		}
+
+		int entityIndex = 0;
+		for (; entityIndex < entities.size() && (!ecs.getEntityIsEnabled(entities[entityIndex]) || !ecs.getComponentIsEnabled<CameraComponent>(entities[entityIndex])); ++entityIndex);
+		if (entityIndex == entities.size())
+		{
+			set = false;
+			return;
+		}
+
+		if (!GetIsPlaying())
+		{
+			set = true;
 			m_GameCamera = &GraphicsManager::getInstance().GetCamera();
-			SetGameCamera(_cameracomponent);
+			SetGameCamera(_cameracomponent[entityIndex]);
 			SetIsPlaying(true);
 		}
+
+		//static float pitch = _transform[entityIndex].GetRotation().x;
+		//static float yaw = _transform[entityIndex].GetRotation().y;
+
+		m_GameCamera->setPitch(_transform[entityIndex].GetRotation().x);
+		m_GameCamera->setYaw(_transform[entityIndex].GetRotation().y + 90);
+		m_GameCamera->setPosition(_transform[entityIndex].GetPosition());
 		m_GameCamera->GetUpdateViewMatrix();
+		//_cameracomponent[entityIndex].setForwardVector(m_GameCamera->getForwardVector());
+
+		//pitch = _transform[entityIndex].GetRotation().x;
+		//yaw = _transform[entityIndex].GetRotation().y;
 	}
 
-	void CameraSystem::SetGameCamera(CameraComponent* _camera)
+	void CameraSystem::SetGameCamera(CameraComponent& _camera)
 	{
-		m_GameCamera->setYaw(_camera->getYaw());
-		m_GameCamera->setPitch(_camera->getPitch());
-		m_GameCamera->setPosition(_camera->getPosition());
-		m_GameCamera->setSpeed(_camera->getSpeed());
-		m_GameCamera->setFov(_camera->getFOV());
-		m_GameCamera->setMouseSensitivity(_camera->getMouseSensitivity());
+		m_GameCamera->setYaw(_camera.getYaw());
+		m_GameCamera->setPitch(_camera.getPitch());
+		m_GameCamera->setPosition(_camera.getPosition());
+		m_GameCamera->setSpeed(_camera.getSpeed());
+		m_GameCamera->setFov(_camera.getFOV());
+		m_GameCamera->setMouseSensitivity(_camera.getMouseSensitivity());
 	}
 
 	/*void CameraSystem::UpdateViewMatrixSystem(CameraComponent* _cameracomponent)
@@ -58,37 +85,42 @@ namespace TDS
 
 	bool CameraSystem::movingCameraSystem()
 	{
-		key keys;
-		if (Input::keystatus == Input::KeyStatus::PRESSED || Input::keystatus == Input::KeyStatus::REPEATED)
-		{
-			switch (Input::keyCode)
-			{
-			case TDS_W:
-				return keys.up = true;
-				break;
+		//key keys;
+		//if (Input::keystatus == Input::KeyStatus::PRESSED || Input::keystatus == Input::KeyStatus::REPEATED)
+		//{
+		//	switch (Input::keyCode)
+		//	{
+		//	case TDS_W:
+		//		return keys.up = true;
+		//		break;
 
-			case TDS_A:
-				return keys.left = true;
-				break;
+		//	case TDS_A:
+		//		return keys.left = true;
+		//		break;
 
-			case TDS_S:
-				return keys.down = true;
-				break;
+		//	case TDS_S:
+		//		return keys.down = true;
+		//		break;
 
-			case TDS_D:
-				return keys.right = true;
+		//	case TDS_D:
+		//		return keys.right = true;
 
-			default:
-				return false;
-			}
-		}
-		else
-		{
-			keys.up = false;
-			keys.left = false;
-			keys.down = false;
-			keys.right = false;
-		}
-		return false;
+		//	default:
+		//		return false;
+		//	}
+		//}
+		//else
+		//{
+		//	keys.up = false;
+		//	keys.left = false;
+		//	keys.down = false;
+		//	keys.right = false;
+		//}
+		//return false;
+
+		auto& inputSystem = InputSystem::GetInstance();
+
+		//return inputSystem->isKeyPressed('W') || inputSystem->isKeyPressed('A') || inputSystem->isKeyPressed('S') || inputSystem->isKeyPressed('D') ||
+		return inputSystem->isKeyDown('W') || inputSystem->isKeyDown('A') || inputSystem->isKeyDown('S') || inputSystem->isKeyDown('D');
 	}
 }

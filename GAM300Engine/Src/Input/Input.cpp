@@ -7,14 +7,15 @@
 \par Section: a
 \par assignment: M1
 \date 01-10-2023
-\brief  This file implements the input handling system for the TDS engine. 
+\brief  This file implements the input handling system for the TDS engine.
 		Input mapping is implemented via win32 API.
 ****************************************************************************
 ***/
 
 #include "Input/Input.h"
-
-
+#include "Windows.h"
+//#include "Rendering/ObjectPicking.h"
+//#include "Rendering/GraphicsManager.h"
 namespace TDS
 {
 	Input::keyboardInputMap Input::keyboard;
@@ -22,8 +23,9 @@ namespace TDS
 	Input::KeyStatus		Input::keystatus;
 	uint32_t				Input::keyCode;
 	short					Input::wheelDelta;
-	Input::mousePosition	Input::current_mouse_pos;
-	Input::mousePosition	Input::center_mouse_pos;
+	Vec2					Input::local_MousePos;
+	bool					Input::exit_cursor;
+	Vec2					Input::ui_MousePos;
 
 	Input::keyState Input::GetKeyState(uint32_t keycode)
 	{
@@ -227,6 +229,15 @@ namespace TDS
 	{
 		return !mouse.buttons[buttonCode].isDown;
 	}
+	void Input::releaseTheMouse(unsigned int buttonCode)
+	{
+		mouse.buttons[buttonCode].isDown = false;
+	}
+
+	void Input::KeyRelease(uint32_t keycode)
+	{
+		TDS::Input::releaseTheKey(keycode);
+	}
 
 	bool Input::wasMouseButtonHit(unsigned int buttonCode)
 	{
@@ -285,79 +296,80 @@ namespace TDS
 		keyboard.keys[key].isDown = false;
 	}
 
-	void Input::mouseGameplay(bool set)
-	{
-		/*if (set)
-		{
-			COORD pos = { rect.left + ((rect.right - rect.left) / 2), rect.top + ((rect.bottom - rect.top) / 2) };
-			
-			SetCursorPos(pos.X, pos.Y);
-			ShowCursor(false);
-		}
-		else
-		{
-			ShowCursor(true);
-		}*/
-	}
-
-	Vec2 Input::centeredMouse()
-	{
-		/*GetWindowRect(GetConsoleWindow(), &rect);
-		
-		return Vec2({ rect.left + ((rect.right - rect.left) / 2.f), rect.top + ((rect.bottom - rect.top) / 2.f) });*/
-
-		return Vec2(center_mouse_pos.x, center_mouse_pos.y);
-	}
-
 	void Input::setCenteredMouse(float x, float y)
 	{
-		center_mouse_pos.x = x;
-		center_mouse_pos.y = y;
+		local_MousePos = Vec2(x, y);
 	}
 
-	void Input::storeWindowHandleAndRect(HWND sethandle, RECT setrect)
+	void Input::setExitCursor(bool input)
 	{
-		handle = sethandle;
-		rect = setrect;
+		exit_cursor = input;
 	}
 
-	void Input::setCurrentMousePos(float x, float y, Vec2 boundary_horiz, Vec2 boundary_verti)
+	bool Input::getExitCursor()
 	{
-		if(x < boundary_horiz.x)
-		{
-			current_mouse_pos.x = boundary_horiz.x;
-		}
-		else if (x > boundary_horiz.y)
-		{
-			current_mouse_pos.x = boundary_horiz.y;
-		}
-		else
-		{
-			current_mouse_pos.x = x;
-		}
-
-		if (y < boundary_verti.x)
-		{
-			current_mouse_pos.y = boundary_verti.x;
-		}
-		else if (y > boundary_verti.y)
-		{
-			current_mouse_pos.y = boundary_verti.y;
-		}
-		else
-		{
-			current_mouse_pos.y = y;
-		}		
+		return exit_cursor;
 	}
 
-	Vec2 Input::CurrentMousePos()
+	void Input::setLocalMousePos(Vec2 mousePos)
 	{
-		return Vec2(current_mouse_pos.x, current_mouse_pos.y);
+		local_MousePos = mousePos;
 	}
 
-	void Input::normalizeMouse(bool set)
+	Vec2 Input::getLocalMousePos()
 	{
-		
+		return Vec2(local_MousePos.x, local_MousePos.y);
 	}
+
+	float Input::getLocalMousePosX()
+	{
+		return local_MousePos.x;
+	}
+
+	float Input::getLocalMousePosY()
+	{
+		return local_MousePos.y;
+	}
+
+	void Input::setUIMousePos(Vec2 mousePos)
+	{
+		ui_MousePos = mousePos;
+	}
+
+	float Input::getUIMousePosX()
+	{
+		return ui_MousePos.x;
+	}
+
+	float Input::getUIMousePosY()
+	{
+		return ui_MousePos.y;
+	}
+
+	void Input::centerandhidemouse(HWND hwnd) {
+		//POINT center;
+		//LPRECT windowsrect{};
+		//GetWindowRect(hwnd,windowsrect);
+		//center.x = windowsrect->right - windowsrect->left;
+		//center.y = windowsrect->top - windowsrect->bottom;
+		//ScreenToClient(hwnd, &center);
+		//SetCursorPos(center.x, center.y);
+		//ShowCursor(FALSE);
+	}
+	
+	// float Input::GetObjectPickPosX()
+	// {
+	// 	mX = GraphicsManager::getInstance().getViewportScreen().x;
+	// 	mWidth = GraphicsManager::getInstance().getViewportScreen().z;
+
+	// 	return (Input::final_x_pos * mWidth) + mX /*ObjectPick::final_x_pos*/;
+	// }
+
+	// float Input::GetObjectPickPosY()
+	// {
+	// 	mY = GraphicsManager::getInstance().getViewportScreen().y;
+	// 	mHeight = GraphicsManager::getInstance().getViewportScreen().w;
+	// 	return ((Input::final_y_pos - mY) - (GraphicsManager::getInstance().getOffset() - mHeight)) / (mHeight)/*ObjectPick::final_y_pos*/;
+	// }
 
 } //end of namespace

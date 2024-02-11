@@ -14,17 +14,16 @@ namespace TDS
 		void update();
 		void Resize();
 
-		Vec2 get_scene_window_size();
-
 		bool isFocus{ false };
+		bool isControlling{ false };
 	private:
 		VkDescriptorSet m_GamePlayDesc{};
 
 		ImVec2 window_size;
 		ImVec2 window_pos;
 
-		bool exit_cursor;
 		BOOL show_cursor;
+		ImGuiContext* currentContext; // checking is running exe or editor
 	};
 }
 

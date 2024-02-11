@@ -6,6 +6,7 @@
 #include "AssetManagement/FontFactory.h"
 #include "AssetManagement/AssetManager.h"
 #include "components/UiSprite.h"
+#include "Rendering/Revamped/DeferredController.h"
 namespace TDS
 {
 	struct FontVertex
@@ -183,6 +184,10 @@ namespace TDS
 		Buffer.m_Static = false;
 		entry.m_ShaderInputs.m_InputBuffers[10] = Buffer;
 		entry.m_ShaderInputs.m_InputVertex.push_back(VertexBufferInfo(false, layout, sizeof(FontVertex)));
+		auto deferredController = GraphicsManager::getInstance().GetDeferredController();
+
+		auto frameBuffer = deferredController->GetFrameBuffer(RENDER_COMPOSITION);
+		entry.m_FBTarget = frameBuffer;
 		m_Pipeline->Create(entry);
 	}
 
@@ -199,10 +204,10 @@ namespace TDS
 		unsigned int Offset = 0;
 	};
 
-	void FontRenderer::Draw(VkCommandBuffer commandBuffer, int Frame, Vec4 ClearColor)
+	void FontRenderer::Draw(VkCommandBuffer commandBuffer, int Frame)
 	{
-		(ClearColor);
 		PushConstantFont push{};
+		m_Pipeline->BindPipeline();
 		if (m_FontBatch.m_InstanceCnt > 0)
 		{
 			for (std::uint32_t i = 0; i < 12; ++i)
@@ -228,8 +233,8 @@ namespace TDS
 	void FontRenderer::Update(VkCommandBuffer commandBuffer, int Frame)
 	{
 		m_Pipeline->SetCommandBuffer(commandBuffer);
-		m_Pipeline->BindPipeline();
-		m_FontBatch.m_SceneUpdate.ViewingFrom2D = GraphicsManager::getInstance().IsViewingFrom2D() ? 1 : 0;
+
+		m_FontBatch.m_SceneUpdate.ViewingFrom2D = 1;
 		if (m_FontBatch.m_SceneUpdate.ViewingFrom2D == false)
 		{
 			m_FontBatch.m_SceneUpdate.Projection = Mat4::Perspective(GraphicsManager::getInstance().GetCamera().m_Fov * Mathf::Deg2Rad,
@@ -293,7 +298,7 @@ namespace TDS
 		for (auto& eachchar : UiSprite->m_Message)
 		{
 
-			
+
 			m_InstanceInfo[m_InstanceCnt].m_LayerID = UiSprite->m_LayerID > 12 ? 12 : (std::uint32_t)UiSprite->m_LayerID;
 			m_InstanceInfo[m_InstanceCnt].m_FontColor.m_Color = UiSprite->m_Color;
 			m_InstanceInfo[m_InstanceCnt].m_FontColor.bgColor = UiSprite->m_BackGroundColour;
@@ -315,7 +320,7 @@ namespace TDS
 			}
 			else
 			{
-				transform->GenerateTransfom();
+				transform->GenerateTransform();
 			}
 			Mat4 temp = transform->GetTransformMatrix();
 			double charWidth = (glyph.m_PlaneBounds.m_Right - glyph.m_PlaneBounds.m_Left);
@@ -332,12 +337,16 @@ namespace TDS
 
 			Vec3 finalOffset{};
 			finalOffset.x = float(CurrOffset.x + (charWidth * 0.5));
-			
+
 			finalOffset.z = 0.f;
 
 			if (eachchar == 'g' || eachchar == 'j' || eachchar == 'p' || eachchar == 'q' || eachchar == 'y')
 			{
 				finalOffset.y = float(CurrOffset.y + (charHeight * 0.25));
+			}
+			else if (eachchar == '\"' || eachchar == '\'')
+			{
+				finalOffset.y = float(CurrOffset.y + (charHeight + (charHeight * 0.75)));
 			}
 			else
 			{
@@ -359,10 +368,16 @@ namespace TDS
 
 	void DLL_API FontBatch::PrepareBatch()
 	{
+
 		for (std::uint32_t i = 0; i < m_InstanceCnt; ++i)
 		{
 			for (std::uint32_t layer = 0; layer < 12; ++layer)
 			{
+				if (GraphicsManager::getInstance().RenderAllLayer() == false)
+				{
+					if (GraphicsManager::getInstance().LayerToRender() != i)
+						continue;
+				}
 				auto& instanceinfo = m_InstanceInfo[i];
 				if (layer == instanceinfo.m_LayerID)
 				{
@@ -386,11 +401,6 @@ namespace TDS
 		}
 	}
 
-	DLL_API std::shared_ptr<FontRenderer> FontRenderer::GetInstance()
-	{
-		if (m_Instance == nullptr)
-			m_Instance = std::make_shared<FontRenderer>();
-		return m_Instance;
-	}
+
 
 }

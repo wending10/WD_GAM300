@@ -1,5 +1,6 @@
 #include "GraphicsMgrWrapper.hxx"
 
+
 namespace ScriptAPI
 {
 	 void GraphicsManagerWrapper::ToggleViewFrom2D(bool condition)
@@ -23,5 +24,19 @@ namespace ScriptAPI
 	 unsigned int GraphicsManagerWrapper::GetPickedObject()
 	 {
 		 return TDS::GraphicsManagerWrapperCalls::GetPickedObject();
+	 }
+	 void GraphicsManagerWrapper::ToggleLayerToRender(int layerID, bool condition)
+	 {
+		 TDS::UiSystem::ToggleEnableLayer(layerID, condition);
+	 }
+
+	 void GraphicsManagerWrapper::ToggleInventoryLayer(bool condition)
+	 {
+		 ToggleLayerToRender(0, condition);
+		 ToggleLayerToRender(1, condition);
+	 }
+	 void GraphicsManagerWrapper::SetClearColor(Vector4 clearColorVector)
+	 {
+		 TDS::GraphicsManagerWrapperCalls::SetClearColor(clearColorVector.X, clearColorVector.Y, clearColorVector.Z, clearColorVector.W);
 	 }
 }

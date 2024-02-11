@@ -10,7 +10,8 @@
 #include "ecs/ecs.h"
 
 namespace TDS
-{    
+{
+
     static unsigned int ID_Count{ 0 };
 
     /*enum SOUND_STATE : uint16_t
@@ -29,6 +30,11 @@ namespace TDS
         SOUND_PAUSE
     };
 
+    namespace AudioWerls
+    {
+        class AudioEngine;
+    }
+
     DLL_API struct SoundInfo : public IComponent
     {
         unsigned int uniqueID, MSLength;
@@ -37,71 +43,57 @@ namespace TDS
         SOUND_STATE whatState;
         Vec3 position;
         float volume, ReverbAmount;
+        std::map<Vec3*, SOUND_STATE*> position_events;
 
         /**
          * @brief Loading info from a file into SOUNDINFO.
-         * @param obj 
+         * @param obj
          * @return true when success.
         */
-        virtual bool Deserialize(const rapidjson::Value& obj)
-        {
-            position = { obj["PositionX"].GetFloat(), obj["PositionY"].GetFloat(), obj["PositionZ"].GetFloat() };
-            filePath = { obj["file"].GetString() };
-            isitLoop = { obj["Loop"].GetBool() };
-            isit3D = { obj["3D"].GetBool() };
-            
+        //virtual bool Deserialize(const rapidjson::Value& obj)
+        //{
+        //    position = { obj["PositionX"].GetFloat(), obj["PositionY"].GetFloat(), obj["PositionZ"].GetFloat() };
+        //    filePath = { obj["file"].GetString() };
+        //    isitLoop = { obj["Loop"].GetBool() };
+        //    isit3D = { obj["3D"].GetBool() };
+        //    
 
-            return true; //Change this to return based of whether it's really successful or not
-        }
+        //    return true; //Change this to return based of whether it's really successful or not
+        //}
 
-        /**
-         * @brief Storing info from SOUNDINFO into a file
-         * @param writer 
-         * @return true when success.
-        */
-        virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
-        {
-            writer->Key("PositionX");
-            writer->Double(static_cast<float>(position[0]));
+        ///**
+        // * @brief Storing info from SOUNDINFO into a file
+        // * @param writer 
+        // * @return true when success.
+        //*/
+        //virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
+        //{
+        //    writer->Key("PositionX");
+        //    writer->Double(static_cast<float>(position[0]));
 
-            return true; //Change this to return based of whether it's really successful or not
-        }
+        //    return true; //Change this to return based of whether it's really successful or not
+        //}
 
         // convenience method to set the 3D coordinates of the sound.
-        void set3DCoords(float x, float y, float z)
-        {
-            position.Set(x, y, z);
-        }
+        DLL_API  void set3DCoords(float x, float y, float z);
 
-        bool isLoaded()
-        {
-            return (whatState == SOUND_LOADED);
-        }
+        DLL_API  void set3DCoords(Vec3 set_this);
 
-        bool is3D()
-        {
-            return isit3D;
-        }
+        DLL_API  void setFilePath(std::string _path);
 
-        bool isLoop()
-        {
-            return isitLoop;
-        }
-        
-        bool isMuted()
-        {
-            return isitmuted;
-        }
+        DLL_API  void setEvents(Vec3* place, SOUND_STATE& type);
 
-        bool isPlaying()
-        {
-            return (whatState == SOUND_PLAYING);
-        }
+        DLL_API  bool isLoaded();
 
-        bool isPaused()
-        {
-            return (whatState == SOUND_PAUSE);
-        }
+        DLL_API  bool is3D();
+
+        DLL_API  bool isLoop();
+
+        DLL_API  bool isMuted();
+
+        DLL_API  bool isPlaying();
+
+        DLL_API  bool isPaused();
 
         /*bool isPlaying()
         {
@@ -118,118 +110,57 @@ namespace TDS
             return (bool)(whatState & (1 << SOUND_MUTED));
         }*/
 
-        Vec3 getPosition()
-        {
-            return position;
-        }
+        DLL_API  Vec3 get3DCoords();
 
-        SOUND_STATE getState()
-        {
-            return whatState;
-        }
+        DLL_API  std::map<Vec3*, SOUND_STATE*> getEvents();
 
-        unsigned int getUniqueID()
-        {
-            return uniqueID;
-        }
+        DLL_API  SOUND_STATE getState();
 
-        unsigned int getMSLength()
-        {
-            return MSLength;
-        }
+        DLL_API  unsigned int getUniqueID();
 
-        std::string getFilePath()
-        {
-            return filePath;
-        }
+        DLL_API  unsigned int getMSLength();
 
-        const char* getFilePath_inChar()
-        {
-            const char* name = filePath.c_str();
+        DLL_API  std::string getFilePath();
 
-            return name;
-        }
+        DLL_API  const char* getFilePath_inChar();
 
-        float getX()
-        {
-            return position[0]; //!!!!!!!To be replaced when vec container is used
-        }
+        DLL_API  float getX();
 
-        float getY()
-        {
-            return position[1]; //!!!!!!!To be replaced when vec container is used
-        }
+        DLL_API  float getY();
 
-        float getZ()
-        {
-            return position[2]; //!!!!!!!To be replaced when vec container is used
-        }
+        DLL_API  float getZ();
 
-        float getReverbAmount()
-        {
-            return ReverbAmount;
-        }
+        DLL_API  float getReverbAmount();
 
-        float getVolume()
-        {
-            return volume;
-        }
+        DLL_API  float getVolume();
 
         /**
         * Parameter takes in Volume values (0 - 100)
         */
-        void setVolume(float vol)
-        {
-            volume = 20.0f * log10f(vol);
+        DLL_API  void setVolume(float vol);
 
-            if (volume > 1.f)
-            {
-                volume = 1.f;
-            }
-        }
-
-        void setMSLength(unsigned int len)
-        {
-            MSLength = len;
-        }
+        DLL_API  void setMSLength(unsigned int len);
 
         /*void setState(SOUND_STATE setting, bool set)
         {
             whatState |= (set << setting);
         }*/
 
-        void setState(SOUND_STATE setting)
-        {
-            whatState = setting;
-        }
+        DLL_API  void setState(SOUND_STATE setting);
 
-        void setLoop(bool condition)
-        {
-            isitLoop = condition;
-        }
+        DLL_API  void setLoop(bool condition);
 
-        void set3D(bool condition)
-        {
-            isit3D = condition;
-        }
+        DLL_API  void set3D(bool condition);
 
-        void setMute(bool condition)
-        {
-            isitmuted = condition;
-        }
+        DLL_API  void setMute(bool condition);
 
-        void setReverbAmount(float reverb)
-        {
-            ReverbAmount = reverb;
-        }
+        DLL_API  void setReverbAmount(float reverb);
 
-        SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, bool _muted = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f)
-            : filePath(_filePath), isitLoop(_isLoop), isit3D(_is3D), isitmuted(_muted), whatState(_theState), volume(_volume), ReverbAmount(_reverbamount)
-        {            
-            position.Set(_x, _y, _z);
-            MSLength = 0;
-            uniqueID = ID_Count++; //Change UID to include time when added
-        }
+        DLL_API  void play();
+        DLL_API  void pause();
+        DLL_API  void stop();
+
+        DLL_API  SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, bool _muted = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f);
 
         // TODO  implement sound instancing
         // int instanceID = -1; 
@@ -246,13 +177,12 @@ namespace TDS
             volume = rhs.volume;
             ReverbAmount = rhs.ReverbAmount;
         }
-
         RTTR_ENABLE(IComponent);
         RTTR_REGISTRATION_FRIEND
 
     }; //end of SoundInfo struct
 
-    DLL_API  SoundInfo* GetSoundInfo(EntityID);
+    DLL_API  SoundInfo* GetSoundInfo(EntityID ID);
 
 } //end of namespace TDS
 

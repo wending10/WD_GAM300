@@ -939,16 +939,32 @@ namespace TDS
         return mEntityArchetypeMap[entityId].isEnabled;
     }
 
+    inline bool ECS::getEntityPreviouslyEnabled(const EntityID& entityId)
+    {
+        return mEntityArchetypeMap[entityId].previouslyEnabled;
+    }
+
     inline void ECS::setEntityIsEnabled(const EntityID& entityId, bool _isEnabled)
     {
         Record& record = mEntityArchetypeMap[entityId];
         record.isEnabled = _isEnabled;
     }
 
+    inline void ECS::setEntityPreviouslyEnabled(const EntityID& entityId)
+    {
+        Record& record = mEntityArchetypeMap[entityId];
+        record.previouslyEnabled = record.isEnabled;
+    }
+
     // solely for debugging
     inline ArchetypeID ECS::getActiveArchetype(const EntityID& entityID)
     {
         return mEntityArchetypeMap[entityID].activeArchetype->type;
+    }
+
+    inline void ECS::setActiveArchetype(const EntityID& entityID, const ArchetypeID& newType)
+    {
+        mEntityArchetypeMap[entityID].activeArchetype = getArchetype(newType);
     }
 
     template<typename C>

@@ -54,10 +54,9 @@ namespace TDS
 					{
 						std::string tempNewSceneName = "NewScene" + (newSceneCount ? ("(" + std::to_string(newSceneCount) + ")") : "");
 						recheck = false;
-						std::filesystem::path filePath = sceneManager->getScenePath();
-						for (auto& directory_entry : std::filesystem::directory_iterator(filePath))
+						for (auto& scriptName : sceneManager->getAllScripts())
 						{
-							if (tempNewSceneName == directory_entry.path().stem().string())
+							if (tempNewSceneName == scriptName)
 							{
 								++newSceneCount;
 								recheck = true;
@@ -104,9 +103,9 @@ namespace TDS
 				std::string sceneName = directory_entry.path().stem().string();
 				if (ImGui::Button(sceneName.c_str(), {buttonSize , buttonSize}) && sceneName != sceneManager->getCurrentScene())
 				{
-					hierarchyPanel->setSelectedEntity(0);
+					//hierarchyPanel->setSelectedEntity(0);
 					sceneManager->loadScene(sceneName);
-					hierarchyPanel->init();
+					//hierarchyPanel->init();
 				}
 
 				if (rightClick && ImGui::IsItemHovered())

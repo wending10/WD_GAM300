@@ -5,22 +5,9 @@ using System.Threading.Tasks;
 public class YES : Script
 {
     [SerializeField]
-    public Testing test;
-
+    public GameObject test;
     [SerializeField]
-    private bool hmm = false;
-
-    [SerializeField]
-    private double testt;
-
-    [SerializeField]
-    private int testtt;
-
-    [SerializeField]
-    private float testttt;
-
-    [SerializeField]
-    private char testtttt;
+    public GameObject whateven;
 
     public override void Awake() 
     {
@@ -30,7 +17,7 @@ public class YES : Script
     public override void OnEnable() 
     {
         Console.WriteLine("Enabled");
-        ExampleAsync();
+        //ExampleAsync();
     }
 
     public override void Start()

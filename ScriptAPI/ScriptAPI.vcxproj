@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(SolutionDir)Shared_Libs;$(SolutionDir)GAM300Engine\Include\Geometry;$(SolutionDir)Dependencies\assimp\include;$(SolutionDir)GAM300Engine\Include;$(SolutionDir)GAM300Editor\Include;$(SolutionDir)Dependencies\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
@@ -138,11 +138,18 @@
     <ClInclude Include="Components\BoxColliderComponent.hxx" />
     <ClInclude Include="Components\CameraComponent.hxx" />
     <ClInclude Include="Components\CapsuleColliderComponent.hxx" />
+    <ClInclude Include="Components\ColliderComponent.hxx" />
     <ClInclude Include="Components\ComponentBase.hxx" />
+    <ClInclude Include="Components\GraphicComponent.hxx" />
     <ClInclude Include="Components\NameTagComponent.hxx" />
+    <ClInclude Include="Components\PointlightComponent.hxx" />
     <ClInclude Include="Components\RigidBodyComponent.hxx" />
     <ClInclude Include="Components\SphereColliderComponent.hxx" />
+    <ClInclude Include="Components\SpotlightComponent.hxx" />
     <ClInclude Include="Components\TransformComponent.hxx" />
+    <ClInclude Include="Components\UISpriteComponent.hxx" />
+    <ClInclude Include="Components\ViewObject.hxx" />
+    <ClInclude Include="Cursor.hxx" />
     <ClInclude Include="CustomAttributeHeaders.hxx" />
     <ClInclude Include="Debug.hxx" />
     <ClInclude Include="EngineInterface.hxx" />
@@ -151,10 +158,18 @@
     <ClInclude Include="HelperFunctions.hxx" />
     <ClInclude Include="IncludeFromEngine.hxx" />
     <ClInclude Include="Input.hxx" />
+    <ClInclude Include="JsonUtility.hxx" />
     <ClInclude Include="Mathf.hxx" />
+    <ClInclude Include="Pathfinder.hxx" />
+    <ClInclude Include="Quaternion.hxx" />
+    <ClInclude Include="Random.hxx" />
+    <ClInclude Include="Screen.hxx" />
     <ClInclude Include="SceneLoader.hxx" />
     <ClInclude Include="Script.hxx" />
+    <ClInclude Include="Serialization.hxx" />
     <ClInclude Include="TypeConversion.hxx" />
+    <ClInclude Include="UIPopUp.hxx" />
+    <ClInclude Include="Vector2.hxx" />
     <ClInclude Include="Vector3.hxx" />
     <ClInclude Include="Vector4.hxx" />
   </ItemGroup>
@@ -164,19 +179,34 @@
     <ClCompile Include="Components\BoxColliderComponent.cxx" />
     <ClCompile Include="Components\CameraComponent.cxx" />
     <ClCompile Include="Components\CapsuleColliderComponent.cxx" />
+    <ClCompile Include="Components\ColliderComponent.cxx" />
+    <ClCompile Include="Components\GraphicComponent.cxx" />
     <ClCompile Include="Components\NameTagComponent.cxx" />
+    <ClCompile Include="Components\PointlightComponent.cxx" />
     <ClCompile Include="Components\RigidBodyComponent.cxx" />
     <ClCompile Include="Components\SphereColliderComponent.cxx" />
+    <ClCompile Include="Components\SpotlightComponent.cxx" />
     <ClCompile Include="Components\TransformComponent.cxx" />
+    <ClCompile Include="Components\UISpriteComponent.cxx" />
+    <ClCompile Include="Components\ViewObject.cxx" />
+    <ClCompile Include="Cursor.cxx" />
     <ClCompile Include="EngineInterface.cxx" />
     <ClCompile Include="GameObject.cxx" />
     <ClCompile Include="GraphicsMgrWrapper.cxx" />
     <ClCompile Include="Input.cxx" />
+    <ClCompile Include="JsonUtility.cxx" />
     <ClCompile Include="Mathf.cxx" />
+    <ClCompile Include="Pathfinder.cxx" />
+    <ClCompile Include="Quaternion.cxx" />
+    <ClCompile Include="Random.cxx" />
+    <ClCompile Include="Screen.cxx" />
     <ClCompile Include="SceneLoader.cxx" />
     <ClCompile Include="Script.cxx" />
+    <ClCompile Include="Serialization.cxx" />
     <ClCompile Include="Time.hxx" />
     <ClCompile Include="TypeConversion.cxx" />
+    <ClCompile Include="UIPopUp.cxx" />
+    <ClCompile Include="Vector2.cxx" />
     <ClCompile Include="Vector3.cxx" />
     <ClCompile Include="Vector4.cxx" />
   </ItemGroup>

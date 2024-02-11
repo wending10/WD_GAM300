@@ -29,13 +29,25 @@ namespace ScriptAPI
 		float GetMouseSensitivity();
 		void SetMouseSensitivity(float value);
 
+		Vector3 getForwardVector();
+		void setForwardVector(float angle);
+
+		Vector3 getRightVector();
+		void setRightVector(float angle);
+
+		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
 
+		virtual void SetEnabled(bool enabled);
+		virtual bool GetEnabled();
+
+		//void SetGameCamera(CameraComponent camera);
+
 		TransformComponent transform;
+		GameObject^ gameObject;
 
 	internal:
 		CameraComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
 
 	private:
 		property Vector3 CameraOffset

@@ -1,7 +1,6 @@
 #ifndef TDS_CAMERA
 #define TDS_CAMERA
 
-#include "Input/Input.h"
 #include "dotnet/ImportExport.h"
 
 namespace TDS
@@ -10,19 +9,18 @@ namespace TDS
 	{
 	public:
 
-		DLL_API TDSCamera(float Yaw, float pitch,/* float aspectRatio,*/ float zNear = 0.1f, float zFar = 1000.f, Vec3 position = {0.0f, 0.0f, 3.0f}, Vec3 up = {0.0f, 1.0f, 0.0f});
+		DLL_API TDSCamera(float Yaw, float pitch,/* float aspectRatio,*/ float zNear = 0.1f, float zFar = 1000.f, Vec3 position = { 0.0f, 0.0f, 3.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
 
 		//using lookat and Euler Angles
 		DLL_API Mat4 GetViewMatrix() const;
 
-		DLL_API void UpdateCamera(float deltaTime);
+		DLL_API void UpdateCamera(float deltaTime, bool gameIsPlaying);
 
 		DLL_API bool moving();
 
 		DLL_API void ProcessMouseMovement(float mousex, float mousey);
 
 		DLL_API Vec3 getPosition()const { return m_Position; }
-		//static void getImguiWindowSize(Vec2 sizing) { length_x = sizing.x; length_y = sizing.y; }
 
 		// Setters for Game Camera System
 		DLL_API void setPosition(Vec3 position) { m_Position = position; }
@@ -30,15 +28,17 @@ namespace TDS
 		DLL_API void setPitch(float pitch) { m_Pitch = pitch; }
 		DLL_API void setSpeed(float speed) { m_Speed = speed; }
 		DLL_API void setMouseSensitivity(float sensitivity) { m_mouseSensitivity = sensitivity; }
+		DLL_API void setForwardVector(Vec3 fwdvector) { m_Front = fwdvector; }
 		DLL_API void setFov(float fov) { m_Fov = fov; }
 		DLL_API void GetUpdateViewMatrix() { updateViewMatrix(); } // calling updateViewMatrix() for CameraSystem
 		DLL_API void setEditorCamera(bool editorCamera) { m_EditorCamera = editorCamera; }
 		DLL_API bool getEditorCamera() const { return m_EditorCamera; }
 		DLL_API bool getScrollWheel() const { return m_ScrollWheel; }
 		DLL_API void setScrollWheel(bool scrollWheel) { m_ScrollWheel = scrollWheel; }
-		float m_Fov{45.f};
+		DLL_API Vec3 getForwardVector() { return m_Front; }
+		DLL_API Vec3 getRightVector() { return m_Right; }
 
-		//DLL_API static void getImguiWindowSize(float x, float y);
+		float m_Fov{ 45.f };
 	private:
 
 		struct {
@@ -60,25 +60,9 @@ namespace TDS
 		float	m_Yaw{};
 		float	m_Pitch{};
 
-		//Imgui Window
-		struct
-		{
-			Vec2 top_left, top_right,
-				bottom_left, bottom_right;
-
-			void get_ImGui_coord(Vec2 tl = { -1.f, 1.f }, Vec2 tr = { 1.f, 1.f }, Vec2 bl = { -1.f, -1.f }, Vec2 br = { 1.f, -1.f })
-			{
-				top_left = tl;
-				top_right = tr;
-				bottom_left = bl;
-				bottom_right = br;
-			}
-		}ImCoordinates;
-		static float length_x, length_y;
-
 		//option to toggle with
-		float	m_Speed{5.0f};
-		float	m_mouseSensitivity{0.1f}; //should it be in input???
+		float	m_Speed{ 5.0f };
+		float	m_mouseSensitivity{ 0.1f }; //should it be in input???
 		float	m_ZoomLevel{};
 		float	m_Width{};
 		float	m_Height{};
@@ -89,7 +73,7 @@ namespace TDS
 
 		bool m_EditorCamera = true;
 		bool m_ScrollWheel = true;
-		
+
 	};
 
 }//namespace TDS

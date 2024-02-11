@@ -1,5 +1,6 @@
 #include "RigidBodyComponent.hxx"
 #include "Physics/Interface/PhysicsInterface.h"
+#include "../EngineInterface.hxx"
 
 namespace ScriptAPI
 {
@@ -319,17 +320,52 @@ namespace ScriptAPI
 		return TDS::GetGravityFactor(*TDS::GetRigidBody(entityID));
 	}
 
+	bool RigidBodyComponent::IsSensorActivated()
+	{
+		if (!TDS::GetRigidBody(entityID))
+		{
+			// throw error instead (not sure how)
+			return false;
+		}
+		return TDS::GetRigidBody(entityID)->getSensorActivate();
+	}
+
 	// CONSTRUCTOR ===========================================================================
 	RigidBodyComponent::RigidBodyComponent(TDS::EntityID ID) : entityID (ID), transform(TransformComponent(ID))
-	{ }
+	{
+		gameObject = EngineInterface::GetGameObject(ID);
+	}
 
 	void RigidBodyComponent::SetEntityID(TDS::EntityID ID)
 	{
 		entityID = ID;
+		transform = TransformComponent(ID);
+		gameObject = EngineInterface::GetGameObject(ID);
+	}
+
+	bool RigidBodyComponent::IsRayHit()
+	{
+		// May wanna change to a function
+		if (!TDS::GetRigidBody(entityID))
+		{
+			// throw error instead (not sure how)
+			return false;
+		}
+
+		return TDS::GetRigidBody(entityID)->getIsRayHit();
 	}
 
 	TDS::EntityID RigidBodyComponent::GetEntityID()
 	{
 		return entityID;
+	}
+
+	void RigidBodyComponent::SetEnabled(bool enabled)
+	{
+		TDS::setComponentIsEnable("Rigid Body", GetEntityID(), enabled);
+	}
+	bool RigidBodyComponent::GetEnabled()
+	{
+		return TDS::getComponentIsEnable("Rigid Body", GetEntityID());
 	}
 }

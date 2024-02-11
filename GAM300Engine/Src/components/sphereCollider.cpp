@@ -17,9 +17,10 @@ RTTR_REGISTRATION
 
 	rttr::registration::class_<SphereCollider>("Sphere Collider")
 		.property("IsTrigger", &SphereCollider::mIsTrigger)
-		.property("Center", &SphereCollider::mCenter)
-		.property("Radius", &SphereCollider::mRadius);
-
+		.property("Collider Center", &SphereCollider::mColliderCenter)
+		.property("Collider Radius", &SphereCollider::mColliderRadius)
+		.property("Radius Factor", &SphereCollider::mRadiusFactor);
+		
 }
 
 namespace TDS
@@ -28,11 +29,10 @@ namespace TDS
 	Initializes the Collider component when created
 	****************************************************************************/
 	SphereCollider::SphereCollider() : mIsTrigger(false),
-		mCenter(Vec3(0.0f, 0.0f, 0.0f)),
-		mRadius(0.5f)
+									mColliderCenter(Vec3(0.0f, 0.0f, 0.0f)),
+									mColliderRadius(1.0f),
+									mRadiusFactor(1.0f)
 	{
-		//CreateJPHSphereCollider(mRadius);
-
 	}
 
 	/*!*************************************************************************
@@ -40,8 +40,9 @@ namespace TDS
 	component to move (for ECS)
 	****************************************************************************/
 	SphereCollider::SphereCollider(SphereCollider&& toMove) noexcept : mIsTrigger(toMove.mIsTrigger),
-		mCenter(toMove.mCenter),
-		mRadius(toMove.mRadius)
+																		mColliderCenter(toMove.mColliderCenter),
+																		mColliderRadius(toMove.mColliderRadius),
+																		mRadiusFactor(toMove.mRadiusFactor)
 	{ }
 
 

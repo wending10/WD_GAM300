@@ -1,10 +1,12 @@
 #pragma once
 
 #include "ComponentBase.hxx"
+//#include "../GameObject.hxx"
 #include "../GAM300Engine/Include/eventManager/eventHandler.h"
 
 namespace ScriptAPI
 {
+	ref class GameObject;
 	public value class TransformComponent : ComponentBase
 	{
 	public:
@@ -26,13 +28,19 @@ namespace ScriptAPI
 		void SetRotationY(float valueY);
 		void SetRotationZ(float valueZ);
 
-		Vector3 TransformDirection(Vector3 velocity);
+		Vector3 TransformDirection(Vector3 direction);
 
+		virtual TDS::EntityID GetEntityID();
 		virtual void SetEntityID(TDS::EntityID ID);
+
+		virtual void SetEnabled(bool enabled);
+		virtual bool GetEnabled();
+
+		GameObject^ gameObject;
 
 	internal:
 		TransformComponent(TDS::EntityID ID);
-		TDS::EntityID GetEntityID();
+		TransformComponent(TDS::EntityID ID, GameObject^ _gameObject);
 
 	private:
 		property Vector3 Position

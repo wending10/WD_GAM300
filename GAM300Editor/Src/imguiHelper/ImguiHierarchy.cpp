@@ -38,6 +38,7 @@ namespace TDS
 		for (EntityID& entity : allEntities)
 		{
 			NameTag* nameTagComponent = ecs.getComponent<NameTag>(entity);
+
 			if (nameTagComponent->GetHierarchyParent() == 0) // no parent
 			{
 				bool inserted = false;
@@ -216,6 +217,66 @@ namespace TDS
 		}
 	}
 
+	void Hierarchy::removeEntity(EntityID entityID)
+	{
+		for (EntityID childID : ecs.getComponent<NameTag>(entityID)->GetHierarchyChildren())
+		{
+			removeEntity(childID);
+		}
+
+		EntityID parent = ecs.getComponent<NameTag>(entityID)->GetHierarchyParent();
+
+		if (parent == 0)
+		{
+			hierarchyList.erase(std::find(hierarchyList.begin(), hierarchyList.end(), entityID));
+		}
+		else
+		{
+			auto& siblings = ecs.getComponent<NameTag>(parent)->GetHierarchyChildren();
+			siblings.erase(std::find(siblings.begin(), siblings.end(), entityID));
+		}
+
+		// Removing all instance of the removed entity
+		auto allEntities = ecs.getEntities();
+		static auto& sceneManagerInstance = SceneManager::GetInstance();
+
+		for (auto scriptName : sceneManagerInstance->getAllScripts())
+		{
+			// For each entity
+			for (auto currentEntity : allEntities)
+			{
+				if (!sceneManagerInstance->hasScript(currentEntity, scriptName))
+				{
+					continue;
+				}
+
+				std::vector<ScriptValues> allValues = sceneManagerInstance->getScriptVariables(currentEntity, scriptName);
+
+				for (ScriptValues scriptValue : allValues)
+				{
+					if (scriptValue.referenceEntityID == entityID) // there is a entity reference 
+					{
+						if (scriptValue.type == "ScriptAPI.GameObject")
+						{
+							scriptValue.referenceEntityID = 0;
+							sceneManagerInstance->setScriptValue(selectedEntity, scriptName, scriptValue);
+							//sceneManagerInstance->setGameObject(currentEntity, scriptName, scriptValue.name, 0);
+						}
+						else
+						{
+							scriptValue.referenceEntityID = 0;
+							sceneManagerInstance->setScriptValue(selectedEntity, scriptName, scriptValue);
+							//sceneManagerInstance->setScriptReference(currentEntity, scriptName, scriptValue.name, 0, scriptValue.type);
+						}
+					}
+				}
+			}
+		}
+
+		ecs.removeEntity(entityID);
+		selectedEntity = 0;
+	}
+
 	void Hierarchy::makingChildHierarchy(EntityID payloadEntity, EntityID acceptEntity)
 	{
 		NameTag* payloadNameTagComponent = ecs.getComponent<NameTag>(payloadEntity);
@@ -290,7 +351,7 @@ namespace TDS
 	void Hierarchy::drawHierarchy(EntityID entityID)
 	{
 		ImGuiTreeNodeFlags nodeFlags =
-			ImGuiTreeNodeFlags_DefaultOpen |
+			//ImGuiTreeNodeFlags_DefaultOpen |
 			ImGuiTreeNodeFlags_FramePadding |
 			ImGuiTreeNodeFlags_SpanFullWidth | 
 			ImGuiTreeNodeFlags_OpenOnArrow;
@@ -320,6 +381,7 @@ namespace TDS
 				ImGui::SetDragDropPayload("draggedEntity", &entityID, sizeof(int));
 				ImGui::EndDragDropSource();
 			}
+
 			if (ImGui::BeginDragDropTarget())
 			{
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("draggedEntity"))
@@ -331,6 +393,7 @@ namespace TDS
 				}
 				ImGui::EndDragDropTarget();
 			}
+
 			if (opened)
 			{
 				selectedEntity = entityID;
@@ -340,56 +403,21 @@ namespace TDS
 			{
 				selectedEntity = entityID;
 				popupOpened = true;
+				if (ImGui::Selectable("Reset Parent"))
+				{
+					reorderingHierarchy(entityID, hierarchyList[hierarchyList.size() - 1]);
+					ImGui::EndPopup();
+					ImGui::Unindent();
+					ImGui::PopID();
+					return;
+				}
 				if (ImGui::Selectable("Remove Entity"))
 				{
-					EntityID parent = ecs.getComponent<NameTag>(selectedEntity)->GetHierarchyParent();
-
-					if (parent == 0)
-					{
-						hierarchyList.erase(std::find(hierarchyList.begin(), hierarchyList.end(), selectedEntity));
-					}
-					else
-					{
-						auto& siblings = ecs.getComponent<NameTag>(parent)->GetHierarchyChildren();
-						siblings.erase(std::find(siblings.begin(), siblings.end(), selectedEntity));
-					}
-
-					// Removing all instance of the removed entity
-					auto allEntities = ecs.getEntities();
-					static auto& sceneManagerInstance = SceneManager::GetInstance();
-
-					for (auto scriptName : sceneManagerInstance->getAllScripts())
-					{
-						// For each entity
-						for (auto currentEntity : allEntities)
-						{
-							if (!sceneManagerInstance->hasScript(currentEntity, scriptName))
-							{
-								continue;
-							}
-
-							std::vector<ScriptValues> allValues = sceneManagerInstance->getScriptVariables(currentEntity, scriptName);
-
-							for (ScriptValues scriptValue : allValues)
-							{
-								if (scriptValue.referenceEntityID == selectedEntity) // there is a entity reference 
-								{
-									if (scriptValue.type == "ScriptAPI.GameObject")
-									{
-										sceneManagerInstance->setGameObject(currentEntity, scriptName, scriptValue.name, 0);
-									}
-									else
-									{
-										sceneManagerInstance->setScriptReference(currentEntity, scriptName, scriptValue.name, 0, scriptValue.type);
-									}
-								}
-							}
-						}
-					}
-
-					ecs.removeEntity(selectedEntity);
-
-					selectedEntity = 0;
+					removeEntity(selectedEntity);
+					ImGui::EndPopup();
+					ImGui::Unindent();
+					ImGui::PopID();
+					return;
 				}
 
 				ImGui::EndPopup();
@@ -434,6 +462,31 @@ namespace TDS
 			ImGui::SetDragDropPayload("draggedEntity", &entityID, sizeof(int));
 			ImGui::EndDragDropSource();
 		}
+
+		static int tempEntity = 0;
+		static float timer = 0.0f;
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && currentItemHovered)
+		{
+			tempEntity = entityID;
+			timer = 0.5f;
+		}
+
+		if (tempEntity == entityID)
+		{
+			if (timer > 0)
+			{
+				if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
+				{
+					selectedEntity = tempEntity;
+				}
+				timer -= GetDeltaTime();
+			}
+			else 
+			{
+				tempEntity = 0;
+			}
+		}
+
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("draggedEntity"))
@@ -445,63 +498,32 @@ namespace TDS
 			}
 			ImGui::EndDragDropTarget();
 		}
-		if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && currentItemHovered)
-		{
-			selectedEntity = entityID;
-		}
 
 		if (ImGui::BeginPopupContextItem())
 		{
 			selectedEntity = entityID;
 			popupOpened = true;
+			if (ImGui::Selectable("Reset Parent"))
+			{
+				reorderingHierarchy(entityID, hierarchyList[hierarchyList.size() - 1]);
+				ImGui::EndPopup();
+				ImGui::PopID();
+				if (opened)
+				{
+					ImGui::TreePop();
+				}
+				return;
+			}
 			if (ImGui::Selectable("Remove Entity"))
 			{
-				EntityID parent = ecs.getComponent<NameTag>(selectedEntity)->GetHierarchyParent();
-				if (parent == 0)
+				removeEntity(selectedEntity);
+				ImGui::EndPopup();
+				ImGui::PopID();
+				if (opened)
 				{
-					hierarchyList.erase(std::find(hierarchyList.begin(), hierarchyList.end(), selectedEntity));
+					ImGui::TreePop();
 				}
-				else
-				{
-					auto& siblings = ecs.getComponent<NameTag>(parent)->GetHierarchyChildren();
-					siblings.erase(std::find(siblings.begin(), siblings.end(), selectedEntity));
-				}
-
-				// Removing all instance of the removed entity
-				auto allEntities = ecs.getEntities();
-				static auto& sceneManagerInstance = SceneManager::GetInstance();
-
-				for (auto scriptName : sceneManagerInstance->getAllScripts())
-				{
-					// For each entity
-					for (auto currentEntity : allEntities)
-					{
-						if (!sceneManagerInstance->hasScript(currentEntity, scriptName))
-						{
-							continue;
-						}
-
-						std::vector<ScriptValues> allValues = sceneManagerInstance->getScriptVariables(currentEntity, scriptName);
-
-						for (ScriptValues scriptValue : allValues)
-						{
-							if (scriptValue.referenceEntityID == selectedEntity) // there is a entity reference 
-							{
-								if (scriptValue.type == "ScriptAPI.GameObject")
-								{
-									sceneManagerInstance->setGameObject(currentEntity, scriptName, scriptValue.name, 0);
-								}
-								else
-								{
-									sceneManagerInstance->setScriptReference(currentEntity, scriptName, scriptValue.name, 0, scriptValue.type);
-								}
-							}
-						}
-					}
-				}
-
-				ecs.removeEntity(selectedEntity);
-				selectedEntity = 0;
+				return;
 			}
 
 			ImGui::EndPopup();
@@ -525,6 +547,7 @@ namespace TDS
 		if (opened)
 		{
 			auto& children = ecs.getComponent<NameTag>(entityID)->GetHierarchyChildren();
+			
 			std::uint32_t originalSize = children.size();
 			for (auto childEntity : children)
 			{
@@ -546,6 +569,12 @@ namespace TDS
 	****************************************************************************/
 	void Hierarchy::update()
 	{
+		if (currentFilename != SceneManager::GetInstance()->getCurrentScene()) 
+		{
+			selectedEntity = 0;
+			init();
+			currentFilename = SceneManager::GetInstance()->getCurrentScene();
+		}
 		if (ImGui::BeginMenuBar())
 		{
 			// Add entity (make it a menu item if there are prefabs)
@@ -634,11 +663,11 @@ namespace TDS
 				{
 					drawHierarchy(childEntity);
 
-					if (originalSize != hierarchyList.size())
-					{
-						ImGui::TreePop();
-						return;
-					}
+					//if (originalSize != hierarchyList.size())
+					//{
+					//	ImGui::TreePop();
+					//	return;
+					//}
 				}
 				ImGui::TreePop();
 			}
@@ -659,6 +688,12 @@ namespace TDS
 					bool currentItemHovered = false;
 					selected = ImGui::Selectable(nameTagComponent->GetName().c_str(), selectedEntity == entityID, ImGuiSelectableFlags_SpanAllColumns);
 
+					if (ImGui::BeginDragDropSource())
+					{
+						ImGui::SetDragDropPayload("draggedEntity", &entityID, sizeof(int));
+						ImGui::EndDragDropSource();
+					}
+
 					if (ImGui::IsItemHovered())
 					{
 						anyItemHovered = true;
@@ -673,53 +708,21 @@ namespace TDS
 					{
 						selectedEntity = entityID;
 						popupOpened = true;
+						if (ImGui::Selectable("Reset Parent"))
+						{
+							reorderingHierarchy(entityID, hierarchyList[hierarchyList.size() - 1]);
+							ImGui::EndPopup();
+							ImGui::Unindent();
+							ImGui::PopID();
+							return;
+						}
 						if (ImGui::Selectable("Remove Entity"))
 						{
-							EntityID parent = ecs.getComponent<NameTag>(selectedEntity)->GetHierarchyParent();
-
-							if (parent == 0)
-							{
-								hierarchyList.erase(std::find(hierarchyList.begin(), hierarchyList.end(), selectedEntity));
-							}
-							else
-							{
-								auto& siblings = ecs.getComponent<NameTag>(parent)->GetHierarchyChildren();
-								siblings.erase(std::find(siblings.begin(), siblings.end(), selectedEntity));
-							}
-
-							// Removing all instance of the removed entity
-							auto allEntities = ecs.getEntities();
-							for (auto scriptName : sceneManagerInstance->getAllScripts())
-							{
-								// For each entity
-								for (auto currentEntity : allEntities)
-								{
-									if (!sceneManagerInstance->hasScript(currentEntity, scriptName))
-									{
-										continue;
-									}
-
-									std::vector<ScriptValues> allValues = sceneManagerInstance->getScriptVariables(currentEntity, scriptName);
-
-									for (ScriptValues scriptValue : allValues)
-									{
-										if (scriptValue.referenceEntityID == selectedEntity) // there is a entity reference 
-										{
-											if (scriptValue.type == "ScriptAPI.GameObject")
-											{
-												sceneManagerInstance->setGameObject(currentEntity, scriptName, scriptValue.name, 0);
-											}
-											else
-											{
-												sceneManagerInstance->setScriptReference(currentEntity, scriptName, scriptValue.name, 0, scriptValue.type);
-											}
-										}
-									}
-								}
-							}
-
-							ecs.removeEntity(selectedEntity);
-							selectedEntity = 0;
+							removeEntity(selectedEntity);
+							ImGui::EndPopup();
+							ImGui::Unindent();
+							ImGui::PopID();
+							return;
 						}
 
 						ImGui::EndPopup();
