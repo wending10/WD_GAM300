@@ -23,7 +23,7 @@ rttr::registration::class_<CameraComponent>("Camera Component")
 	.property("MouseSensitivity", &CameraComponent::m_mouseSensitivity);
 }
 
-namespace TDS
+namespace TDS 
 {
 	/*!*************************************************************************
 	Initializes the CameraComponent when created

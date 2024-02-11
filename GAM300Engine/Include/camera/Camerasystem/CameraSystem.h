@@ -19,21 +19,21 @@
 #include "camera/camera.h"
 #include "Input/InputSystem.h"
 
-namespace TDS
+namespace TDS 
 {
 	class DLL_API CameraSystem
 	{
-	public:
-		/*!*************************************************************************
-		Initializes the CameraSystem when created
-		****************************************************************************/
-		static void CameraSystemInit();
+		public:
+			/*!*************************************************************************
+			Initializes the CameraSystem when created
+			****************************************************************************/
+			static void CameraSystemInit();
 
-		/*!*************************************************************************
-		Updates the CameraSystem based on keys and mouse position
-		****************************************************************************/
-		static void CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities,
-			Transform* _transform, CameraComponent* _cameracomponent);
+			/*!*************************************************************************
+			Updates the CameraSystem based on keys and mouse position
+			****************************************************************************/
+			static void CameraSystemUpdate(const float dt, const std::vector<EntityID>& entities, 
+										   Transform* _transform,CameraComponent* _cameracomponent);
 
 			/*!*************************************************************************
 			Gets mouse position

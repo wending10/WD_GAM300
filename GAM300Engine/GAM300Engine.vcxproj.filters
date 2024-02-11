@@ -63,6 +63,7 @@
     <ClCompile Include="Src\vulkanTools\VertexTypes.cpp" />
     <ClCompile Include="Src\vulkanTools\GlobalBufferPool.cpp" />
     <ClCompile Include="Src\vulkanTools\CommandManager.cpp" />
+    <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Src\vulkanTools\FrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\DirectFrameBuffer.cpp" />
     <ClCompile Include="Src\vulkanTools\VMATypes\VMABuffer.cpp" />
@@ -73,12 +74,10 @@
     <ClCompile Include="Src\components\graphicsComponent.cpp" />
     <ClCompile Include="..\Shared_Libs\Color.cpp" />
     <ClCompile Include="..\Shared_Libs\Color8UNorm.cpp" />
-    <ClCompile Include="src\components\AudioSource.cpp" />
     <ClCompile Include="Src\components\sphereCollider.cpp" />
     <ClCompile Include="Src\components\capsuleCollider.cpp" />
     <ClCompile Include="Src\components\boxCollider.cpp" />
     <ClCompile Include="Src\sceneManager\serializationHelperFunctions.cpp" />
-    <ClCompile Include="Src\fmod_engine\AudioEngine.cpp" />
     <ClCompile Include="Src\Rendering\RenderTarget.cpp" />
     <ClCompile Include="Src\Rendering\renderPass.cpp" />
     <ClCompile Include="Src\GridManager\GridManager.cpp" />
@@ -98,8 +97,6 @@
     <ClCompile Include="Src\Rendering\ObjectPicking.cpp" />
     <ClCompile Include="Src\vulkanTools\Synchronization.cpp" />
     <ClCompile Include="Src\Rendering\FontSystem.cpp" />
-    <ClCompile Include="Src\Rendering\GraphicsManager.cpp" />
-    <ClCompile Include="Src\components\SoundInfo.cpp" />
     <ClCompile Include="Include\Rendering\GraphicsManagerWrapperCalls.cpp" />
     <ClCompile Include="src\fmod_engine\AudioEngine.cpp" />
     <ClCompile Include="src\components\SoundInfo.cpp" />
@@ -189,7 +186,7 @@
     <ClInclude Include="Include\AI\aiSystem.h" />
     <ClInclude Include="Include\AI\behaviourTree.h" />
     <ClInclude Include="Include\fmod_engine\AudioEngine.h" />
-    <ClInclude Include="Include\components\SoundInfo.h" />
+    <ClInclude Include="Include\fmod_engine\SoundInfo.h" />
     <ClInclude Include="Include\Geometry\AABB.h" />
     <ClInclude Include="Include\Geometry\Geometry.h" />
     <ClInclude Include="Include\Geometry\Line.h" />
@@ -230,7 +227,6 @@
     <ClInclude Include="Include\Rendering\RenderLayer.h" />
     <ClInclude Include="..\Shared_Libs\Color.h" />
     <ClInclude Include="..\Shared_Libs\Color8UNorm.h" />
-    <ClInclude Include="Include\components\AudioSource.h" />
     <ClInclude Include="Include\components\boxCollider.h" />
     <ClInclude Include="Include\components\capsuleCollider.h" />
     <ClInclude Include="Include\components\sphereCollider.h" />

@@ -2,7 +2,6 @@
 #define IMGUI_ASSET_BROWSER
 
 #include "ImguiHelper.h"
-#include "ImguiAudio.h"
 
 namespace TDS 
 {
@@ -25,7 +24,6 @@ namespace TDS
 		float padding = 10.f;
 		std::string path1;
 		std::string selectedpath;
-		AudioImgui audimg;
 		bool loadonce = true;
 		bool show_fbx = false;
 		bool show_bin = true;

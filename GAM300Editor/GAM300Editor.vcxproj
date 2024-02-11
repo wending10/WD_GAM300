@@ -119,10 +119,6 @@
     <ClCompile Include="Src\Tools\TextureCompressor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fmod.dll" />
-    <None Include="fmodL.dll" />
-    <None Include="fmodstudio.dll" />
-    <None Include="fmodstudioL.dll" />
     <None Include="GAM300Engine.dll" />
     <None Include="imgui.ini" />
   </ItemGroup>
@@ -241,9 +237,8 @@
       <AdditionalDependencies>GAM300Engine.lib;vulkan-1.lib;meshoptimizer_d.lib;assimp-vc143-mtd.lib;SPIRVd.lib;shadercd.lib;glslangd.lib;glslang-default-resource-limitsd.lib;OGLCompilerd.lib;OSDependentd.lib;spirv-cross-cored.lib;spirv-cross-glsld.lib;SPIRV-Toolsd.lib;SPVRemapperd.lib;MachineIndependentd.lib;GenericCodeGend.lib;DirectXTexd.lib;rttr_core_d.lib;Jolt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /s /r /y /q "$(OutDir)net6.0" "$(OutDir)"
-rmdir /s /q "$(OutDir)net6.0"
-xcopy /y /d "$(SolutionDir)Libs\fmod\*.dll" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

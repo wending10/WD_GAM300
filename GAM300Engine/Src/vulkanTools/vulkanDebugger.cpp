@@ -41,7 +41,7 @@ namespace TDS
 			if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
 			{
 				//TDS_ERROR(debugMessage.str());
-				//std::cerr << debugMessage.str() << std::endl;
+				std::cerr << debugMessage.str() << std::endl;
 			}
 
 			return VK_FALSE;

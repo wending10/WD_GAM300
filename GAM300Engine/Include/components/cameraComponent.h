@@ -28,7 +28,7 @@ namespace TDS
 		//DLL_API TDSCamera(float Yaw, float pitch, float zNear = 0.1f, float zFar = 10.f, Vec3 position = { 0.0f, 0.0f, 3.0f }, Vec3 up = { 0.0f, 1.0f, 0.0f });
 
 		/*!*************************************************************************
-		Initializes the CameraComponent when created, given another CameraComponent
+		Initializes the CameraComponent when created, given another CameraComponent 
 		to move (for ECS)
 		****************************************************************************/
 		DLL_API CameraComponent(CameraComponent&& toMove) noexcept;
@@ -63,7 +63,7 @@ namespace TDS
 		DLL_API Vec3 getRightVector() { return m_Right; }
 		RTTR_ENABLE(IComponent);
 		RTTR_REGISTRATION_FRIEND
-
+				
 	private:
 
 		//camera attributes
@@ -81,7 +81,7 @@ namespace TDS
 		Vec3 m_Right;
 
 	};
-	DLL_API CameraComponent* GetCameraComponent(EntityID entityID);
+		DLL_API CameraComponent* GetCameraComponent(EntityID entityID);
 }
 
 #endif // CAMERACOMPONENT
