@@ -6,10 +6,15 @@ public class Flashlight_Script : Script
     //public Light lightSource;
     public float lightIntensity;
     public GameObject lightSourceObj;
+    public GameObject player;
     public bool activateLight = false;
     public GameDataManager myGameDataManager;
     public string flashAudiostr = "temp_flashlight";
-    public AudioComponent flashAudio;                             
+    public AudioComponent flashAudio;
+    public float followSpeed;
+
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
 
     [SerializeField] private bool flicker = false;
     [SerializeField] private float flickerTimer;
@@ -19,14 +24,13 @@ public class Flashlight_Script : Script
         flashAudio = gameObject.GetComponent<AudioComponent>();
     }
 
+    public override void Start()
+    {
+          
+    }
+
     public override void Update()
     {
-        //lightSourceObj = GameObjectScriptFind("Pointlight");
-        //lightIntensity = lightSourceObj.GetComponent<GraphicComponent>().getColourAlpha();
-
-        //For Inspector Display Can Be Removed When Building
-        //lightIntensity = lightSource.intensity;
-
         if (Input.GetKeyDown(Keycode.F))
         {
             activateLight = !activateLight;
@@ -34,29 +38,8 @@ public class Flashlight_Script : Script
             {
                 flashAudio.play(flashAudiostr);
             }
-            if(activateLight == false)
-            {
-                lightSourceObj.GetComponent<GraphicComponent>().SetColourAlpha(0.0f);
-            }
-            else
-            {
-                lightSourceObj.GetComponent<GraphicComponent>().SetColourAlpha(1.0f);
-            }
             //Input.KeyRelease(Keycode.F);
         }
-
-        //Remove this chunck of code when building
-        /*if (Input.GetKeyDown(Keycode.ZERO))
-        {
-            if (flicker)
-            {
-                flicker = false;
-            }
-            else
-            {
-                flicker = true;
-            }
-        }*/
 
         if (flicker)
         {
@@ -65,14 +48,10 @@ public class Flashlight_Script : Script
 
         if (activateLight)
         {
-            /*gameObject.GetComponent<MeshRenderer>().enabled = true;
-            gameObject.GetComponent<CapsuleColliderComponent>().enabled = true;*/
             lightSourceObj.SetActive(true);
         }
         else
         {
-           /* gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<CapsuleColliderComponent>().enabled = false;*/
             lightSourceObj.SetActive(false);
         }
 
@@ -82,6 +61,27 @@ public class Flashlight_Script : Script
     public override void LateUpdate()
     {
         flashAudio.stop(flashAudiostr);
+
+        if (activateLight)
+        {
+            
+            lightSourceObj.transform.SetPositionY((player.transform.GetPosition().Y + 10f));
+
+            yaw = Input.GetAxisX() * Input.GetSensitivity() * player.GetComponent<FPS_Controller_Script>().mouseSensitivity;
+            pitch -= Input.GetAxisY() * Input.GetSensitivity() * player.GetComponent<FPS_Controller_Script>().mouseSensitivity;
+
+            lightSourceObj.transform.SetRotationX(pitch);
+            lightSourceObj.transform.SetRotationY(player.transform.GetRotation().Y);
+
+            lightSourceObj.transform.SetRotation(Vector3.Slerp(lightSourceObj.transform.GetRotation(), 
+                player.GetComponent<FPS_Controller_Script>().playerCamera.transform.GetRotation()
+                ,Time.deltaTime * followSpeed));
+
+            Vector4 direction = new Vector4(lightSourceObj.transform.GetRotation().X,
+                lightSourceObj.transform.GetRotation().Y, lightSourceObj.transform.GetRotation().Z, 0);
+
+            lightSourceObj.GetComponent<SpotlightComponent>().SetDirection(direction);
+        }
     }
 
     void BatteryLife()
