@@ -331,8 +331,8 @@ namespace TDS
                 {
                     PhysicsSystem::SetIsPlaying(false);
                     CameraSystem::SetIsPlaying(false);
-                    
                 }
+                proxy_audio_system::ScriptStopAll();
             }
 
             ecs.runSystems(2, DeltaTime); // Event handler

@@ -36,6 +36,6 @@ public class PlayButton : Script
 
     public override void OnDestroy()
     {
-        bgm.stop(bgmName);
+        bgm.stopAll();
     }
 }

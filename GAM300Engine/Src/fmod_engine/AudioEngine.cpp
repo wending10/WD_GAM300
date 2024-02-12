@@ -75,7 +75,7 @@ namespace TDS
         void AudioEngine::loadSound(SoundInfo & soundInfo)
         {
             if (!soundLoaded(soundInfo)) {
-                //std::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
+                //::cout << "Audio Engine: Loading Sound from file " << soundInfo.getFilePath() << '\n';
                 FMOD::Sound* sound;
                 ERRCHECK(lowLevelSystem->createSound(soundInfo.getFilePath_inChar(), soundInfo.is3D() ? FMOD_3D : FMOD_2D, 0, &sound));
                 ERRCHECK(sound->setMode(soundInfo.isLoop() ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF));
@@ -317,7 +317,7 @@ namespace TDS
                 soundInfo.setState(SOUND_LOADED);
             }
 
-            return check;
+            return !check;
         }
 
         void AudioEngine::set3DListenerPosition(float posX, float posY, float posZ, float forwardX, float forwardY, float forwardZ, float upX, float upY, float upZ)
@@ -872,7 +872,7 @@ namespace TDS
             }
         }
     
-        DoNe:
+    DoNe:
 
         return check;
     }

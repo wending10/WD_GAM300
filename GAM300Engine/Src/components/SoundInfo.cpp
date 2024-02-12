@@ -24,7 +24,7 @@ rttr::registration::class_<SoundInfo>("Audio")
 .method("play", &SoundInfo::play)
 .method("pause", &SoundInfo::pause)
 .method("stop", &SoundInfo::stop)
-.method("setFilePath", &SoundInfo::setFilePath);
+.method("isLoop", &SoundInfo::isLoop);
 }
 
 namespace TDS
