@@ -165,30 +165,52 @@ public class Door_Script : Script
     private bool playForcedLockedAudio;
 
     public GameObject doorStates;
+    public GameObject doorText;
     public int doorIndex;
     public GameObject popupUI;
+
+    float toRadians(float degree)
+    {
+        return degree * (3.1415926535897931f / 180);
+    }
+
+    public override void Awake()
+    {
+        doorText = GameObjectScriptFind("DoorText");    // Hate this please change after milestone
+    }
 
     // Update is called once per frame
     override public void Update()
     {
-        if (doorStates.GetComponent<DoorState>().Doors[doorIndex] == DoorState.State.Unlocked)
-        {
-            //gameObject.SetActive(false);
-            // Door animation here
-        }
-        else if (!forcedLocked && gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
+        if (!forcedLocked && gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
         {
             doorStates.GetComponent<DoorState>().doorLookedAt = true;
-            if (Input.GetKeyDown(Keycode.E))
-            {
-                doorStates.SetActive(false);
-                lockpickGroup.SetActive(true);
-                lockpick.GetComponent<LockPick1>().doorIndex = doorIndex;
-                playerGameObject.SetActive(false);
-                GraphicsManagerWrapper.ToggleViewFrom2D(true);
 
-                if (!popupUI.GetComponent<PopupUI>().lockpickDisplayed)
-                    lockpick.GetComponent<LockPick1>().newLock();
+            if (doorStates.GetComponent<DoorState>().Doors[doorIndex] == DoorState.State.Unlocked)
+            {
+                doorText.GetComponent<UISpriteComponent>().SetFontMessage("Press E to enter");
+                if (Input.GetKeyDown(Keycode.E))
+                {
+                    Vector3 rotation = playerGameObject.transform.GetRotation();
+                    Quaternion quat = new Quaternion(rotation);
+                    Vector3 rotationToVector = new Vector3(-Mathf.Sin(toRadians(rotation.Y)), 0.0f, Mathf.Cos(toRadians(rotation.Y))) * 200;
+                    playerGameObject.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(playerGameObject.transform.GetPosition() + rotationToVector, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(1, 1, 1).Normalize(), new Vector3(1, 1, 1).Normalize());
+                }
+            }
+            else // Locked
+            {
+                doorText.GetComponent<UISpriteComponent>().SetFontMessage("Press E to lockpick");
+                if (Input.GetKeyDown(Keycode.E))
+                {
+                    doorStates.SetActive(false);
+                    lockpickGroup.SetActive(true);
+                    lockpick.GetComponent<LockPick1>().doorIndex = doorIndex;
+                    playerGameObject.SetActive(false);
+                    GraphicsManagerWrapper.ToggleViewFrom2D(true);
+
+                    if (!popupUI.GetComponent<PopupUI>().lockpickDisplayed)
+                        lockpick.GetComponent<LockPick1>().newLock();
+                }
             }
         }
 

@@ -216,8 +216,8 @@ public class GhostMovement : Script
 
     public void AlertMonster(int doorIndex)
     {
-        speed += 0.1f;
-        playSoundTimer = 1.0f;
+        speed += 0.2f;
+        playSoundTimer = 0.75f;
         walkingSoundCounter = 0;
         isPatrol = false;
         isChasingPlayer = true;
