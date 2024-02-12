@@ -89,7 +89,7 @@ public class GhostMovement : Script
         walkingSounds[7] = "mon_woodstep7";
         walkingSounds[8] = "mon_woodstep8";
 
-        speed = 0.3f;
+        speed = 0.2f;
         soundSpeed = 1.0f;
 
         playerMoved = false;
