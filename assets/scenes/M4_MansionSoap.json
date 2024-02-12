@@ -456,6 +456,203 @@
                 "Model UID": 0
             }
         },
+        "66": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Book_Generator____NitroMan",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 65,
+                "HierarchyIndex": 7,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 1603.72705078125,
+                    "y": 14.91082763671875,
+                    "z": -179.6867218017578
+                },
+                "Scale": {
+                    "x": 0.800000011920929,
+                    "y": 0.8500000238418579,
+                    "z": 0.800000011920929
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 1.5379999876022339,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 1603.6800537109375,
+                    "y": -53.0,
+                    "z": -177.67799377441406
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 1.5379999876022339,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.800000011920929,
+                    "y": 0.8500000238418579,
+                    "z": 0.800000011920929
+                },
+                "OldPosition": {
+                    "x": 1603.72705078125,
+                    "y": 14.91082763671875,
+                    "z": -179.6867218017578
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 1603.6800537109375,
+                    "y": -53.0,
+                    "z": -177.67799377441406
+                },
+                "OldFakeScale": {
+                    "x": 0.800000011920929,
+                    "y": 0.8500000238418579,
+                    "z": 0.800000011920929
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 1603.6800537109375,
+                    "y": -53.0,
+                    "z": -177.67799377441406
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "Book_Generator_-__NitroManSurface_Color.dds",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Bookshelf_Bin.bin3730986571",
+                "MeshName": "Book_Generator____NitroMan",
+                "MeshNodeName": "Book_Generator____NitroMan",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "1118": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "(Living Room) Ceiling Light",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 0,
+                "HierarchyIndex": 51,
+                "HierarchyChildren": [
+                    1119,
+                    1121,
+                    1123,
+                    1125
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "Scale": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "OldPosition": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "OldFakePosition": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "OldFakeScale": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Living_CeilingLight_Bin.bin",
+                "MeshName": "Living_CeilingLight_Bin.bin",
+                "MeshNodeName": "Living_CeilingLight_Bin.bin",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
         "457": {
             "ArchetypeID": "110100110000000000",
             "Enabled": true,
@@ -613,42 +810,39 @@
                 "RayScale": 1.0
             }
         },
-        "1118": {
+        "2": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
             "Name Tag": {
-                "Name": "(Living Room) Ceiling Light",
+                "Name": "Cylinder",
                 "Tag": "",
                 "IsActive": true,
-                "HierarchyParent": 0,
-                "HierarchyIndex": 51,
+                "HierarchyParent": 1,
+                "HierarchyIndex": 0,
                 "HierarchyChildren": [
-                    1119,
-                    1121,
-                    1123,
-                    1125
+                    3
                 ]
             },
             "Transform": {
                 "Position": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": 2.6538467407226563,
+                    "z": 879.316650390625
                 },
                 "Scale": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 1.7999999523162842,
+                    "y": 1.7999999523162842,
+                    "z": 1.7999999523162842
                 },
                 "Rotation": {
                     "x": 0.0,
-                    "y": -0.0,
+                    "y": 0.0,
                     "z": 0.0
                 },
                 "FakePosition": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": -49.5989990234375,
+                    "z": 882.322021484375
                 },
                 "FakeRotation": {
                     "x": 0.0,
@@ -656,14 +850,14 @@
                     "z": 0.0
                 },
                 "FakeScale": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 1.7999999523162842,
+                    "y": 1.7999999523162842,
+                    "z": 1.7999999523162842
                 },
                 "OldPosition": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": 2.6538467407226563,
+                    "z": 879.316650390625
                 },
                 "OldScale": {
                     "x": 0.0,
@@ -671,19 +865,19 @@
                     "z": 0.0
                 },
                 "OldRotation": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "OldFakePosition": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": -49.5989990234375,
+                    "z": 882.322021484375
                 },
                 "OldFakeScale": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 1.7999999523162842,
+                    "y": 1.7999999523162842,
+                    "z": 1.0
                 },
                 "OldFakeRotation": {
                     "x": 0.0,
@@ -691,9 +885,9 @@
                     "z": 0.0
                 },
                 "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "x": -68.63600158691406,
+                    "y": -49.5989990234375,
+                    "z": 882.322021484375
                 }
             },
             "Graphics Component": {
@@ -701,201 +895,9 @@
                 "TextureName": "",
                 "Show Mesh": true,
                 "Debug": false,
-                "ModelName": "Living_CeilingLight_Bin.bin",
-                "MeshName": "Living_CeilingLight_Bin.bin",
-                "MeshNodeName": "Living_CeilingLight_Bin.bin",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
-        "66": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Book_Generator____NitroMan",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 65,
-                "HierarchyIndex": 7,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": 1603.72705078125,
-                    "y": 14.91082763671875,
-                    "z": -179.6867218017578
-                },
-                "Scale": {
-                    "x": 0.800000011920929,
-                    "y": 0.8500000238418579,
-                    "z": 0.800000011920929
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 1.5379999876022339,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 1603.6800537109375,
-                    "y": -53.0,
-                    "z": -177.67799377441406
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 1.5379999876022339,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 0.800000011920929,
-                    "y": 0.8500000238418579,
-                    "z": 0.800000011920929
-                },
-                "OldPosition": {
-                    "x": 1603.72705078125,
-                    "y": 14.91082763671875,
-                    "z": -179.6867218017578
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 1603.6800537109375,
-                    "y": -53.0,
-                    "z": -177.67799377441406
-                },
-                "OldFakeScale": {
-                    "x": 0.800000011920929,
-                    "y": 0.8500000238418579,
-                    "z": 0.800000011920929
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 1603.6800537109375,
-                    "y": -53.0,
-                    "z": -177.67799377441406
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "Book_Generator_-__NitroManSurface_Color.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Bookshelf_Bin.bin3730986571",
-                "MeshName": "Book_Generator____NitroMan",
-                "MeshNodeName": "Book_Generator____NitroMan",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
-        "1054": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Base",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 1053,
-                "HierarchyIndex": 63,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -1048.22509765625,
-                    "y": -9.11811351776123,
-                    "z": -1039.5067138671875
-                },
-                "Scale": {
-                    "x": 1.4055298566818237,
-                    "y": 1.4055298566818237,
-                    "z": 1.4055298566818237
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -794.6488037109375,
-                    "y": -52.78672409057617,
-                    "z": -1083.5516357421875
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.4055298566818237,
-                    "y": 1.4055298566818237,
-                    "z": 1.4055298566818237
-                },
-                "OldPosition": {
-                    "x": -1048.22509765625,
-                    "y": -9.118114471435547,
-                    "z": -1039.5067138671875
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 1.1100000143051147,
-                    "y": 1.1100000143051147,
-                    "z": 1.1100000143051147
-                },
-                "OldFakePosition": {
-                    "x": -794.6488037109375,
-                    "y": -52.78672409057617,
-                    "z": -1083.5516357421875
-                },
-                "OldFakeScale": {
-                    "x": 1.4055298566818237,
-                    "y": 1.4055298566818237,
-                    "z": 1.4055298566818237
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": -794.64892578125,
-                    "y": -52.78672409057617,
-                    "z": -1083.5516357421875
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "KitchenCounter BaseColor.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Kitchen Counter_Bin.bin",
-                "MeshName": "Base",
-                "MeshNodeName": "Base",
+                "ModelName": "Cloth_Stand_Bin.bin",
+                "MeshName": "",
+                "MeshNodeName": "Cylinder",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -1063,29 +1065,27 @@
                 "RayScale": 1.0
             }
         },
-        "2": {
+        "1054": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
             "Name Tag": {
-                "Name": "Cylinder",
+                "Name": "Base",
                 "Tag": "",
                 "IsActive": true,
-                "HierarchyParent": 1,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": [
-                    3
-                ]
+                "HierarchyParent": 1053,
+                "HierarchyIndex": 63,
+                "HierarchyChildren": []
             },
             "Transform": {
                 "Position": {
-                    "x": -68.63600158691406,
-                    "y": 2.6538467407226563,
-                    "z": 879.316650390625
+                    "x": -1048.22509765625,
+                    "y": -9.11811351776123,
+                    "z": -1039.5067138671875
                 },
                 "Scale": {
-                    "x": 1.7999999523162842,
-                    "y": 1.7999999523162842,
-                    "z": 1.7999999523162842
+                    "x": 1.4055298566818237,
+                    "y": 1.4055298566818237,
+                    "z": 1.4055298566818237
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -1093,9 +1093,9 @@
                     "z": 0.0
                 },
                 "FakePosition": {
-                    "x": -68.63600158691406,
-                    "y": -49.5989990234375,
-                    "z": 882.322021484375
+                    "x": -794.6488037109375,
+                    "y": -52.78672409057617,
+                    "z": -1083.5516357421875
                 },
                 "FakeRotation": {
                     "x": 0.0,
@@ -1103,14 +1103,14 @@
                     "z": 0.0
                 },
                 "FakeScale": {
-                    "x": 1.7999999523162842,
-                    "y": 1.7999999523162842,
-                    "z": 1.7999999523162842
+                    "x": 1.4055298566818237,
+                    "y": 1.4055298566818237,
+                    "z": 1.4055298566818237
                 },
                 "OldPosition": {
-                    "x": -68.63600158691406,
-                    "y": 2.6538467407226563,
-                    "z": 879.316650390625
+                    "x": -1048.22509765625,
+                    "y": -9.118114471435547,
+                    "z": -1039.5067138671875
                 },
                 "OldScale": {
                     "x": 0.0,
@@ -1118,19 +1118,19 @@
                     "z": 0.0
                 },
                 "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "x": 1.1100000143051147,
+                    "y": 1.1100000143051147,
+                    "z": 1.1100000143051147
                 },
                 "OldFakePosition": {
-                    "x": -68.63600158691406,
-                    "y": -49.5989990234375,
-                    "z": 882.322021484375
+                    "x": -794.6488037109375,
+                    "y": -52.78672409057617,
+                    "z": -1083.5516357421875
                 },
                 "OldFakeScale": {
-                    "x": 1.7999999523162842,
-                    "y": 1.7999999523162842,
-                    "z": 1.0
+                    "x": 1.4055298566818237,
+                    "y": 1.4055298566818237,
+                    "z": 1.4055298566818237
                 },
                 "OldFakeRotation": {
                     "x": 0.0,
@@ -1138,19 +1138,19 @@
                     "z": 0.0
                 },
                 "ParentPosition": {
-                    "x": -68.63600158691406,
-                    "y": -49.5989990234375,
-                    "z": 882.322021484375
+                    "x": -794.64892578125,
+                    "y": -52.78672409057617,
+                    "z": -1083.5516357421875
                 }
             },
             "Graphics Component": {
                 "PointLight": false,
-                "TextureName": "",
+                "TextureName": "KitchenCounter BaseColor.dds",
                 "Show Mesh": true,
                 "Debug": false,
-                "ModelName": "Cloth_Stand_Bin.bin",
-                "MeshName": "",
-                "MeshNodeName": "Cylinder",
+                "ModelName": "Kitchen Counter_Bin.bin",
+                "MeshName": "Base",
+                "MeshNodeName": "Base",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -6939,102 +6939,6 @@
                 "Model UID": 0
             }
         },
-        "1024": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Base",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 1023,
-                "HierarchyIndex": 57,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -675.7438354492188,
-                    "y": 221.2398681640625,
-                    "z": -185.42762756347656
-                },
-                "Scale": {
-                    "x": 0.2409999668598175,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -1.5435833930969238,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -418.3567199707031,
-                    "y": -43.417083740234375,
-                    "z": -572.58837890625
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": -1.5435833930969238,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 0.2409999668598175,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "OldPosition": {
-                    "x": -675.7438354492188,
-                    "y": 221.2398681640625,
-                    "z": -185.42762756347656
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": -1.5435833930969238,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": -418.3567199707031,
-                    "y": -43.417083740234375,
-                    "z": -572.58837890625
-                },
-                "OldFakeScale": {
-                    "x": 0.2409999668598175,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": -1.5435833930969238,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": -418.3578186035156,
-                    "y": -43.41694641113281,
-                    "z": -572.58837890625
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "DiningChair BaseSurface_Color.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Dining_Chair_Bin.bin156954098",
-                "MeshName": "Base",
-                "MeshNodeName": "Base",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "411": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -7121,6 +7025,102 @@
                 "ModelName": "Adjusted_Bin.bin",
                 "MeshName": "Cube__1",
                 "MeshNodeName": "Cube_7_2",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "1024": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Base",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1023,
+                "HierarchyIndex": 57,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -675.7438354492188,
+                    "y": 221.2398681640625,
+                    "z": -185.42762756347656
+                },
+                "Scale": {
+                    "x": 0.2409999668598175,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -1.5435833930969238,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -418.3567199707031,
+                    "y": -43.417083740234375,
+                    "z": -572.58837890625
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": -1.5435833930969238,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.2409999668598175,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "OldPosition": {
+                    "x": -675.7438354492188,
+                    "y": 221.2398681640625,
+                    "z": -185.42762756347656
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": -1.5435833930969238,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -418.3567199707031,
+                    "y": -43.417083740234375,
+                    "z": -572.58837890625
+                },
+                "OldFakeScale": {
+                    "x": 0.2409999668598175,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": -1.5435833930969238,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": -418.3578186035156,
+                    "y": -43.41694641113281,
+                    "z": -572.58837890625
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "DiningChair BaseSurface_Color.dds",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Dining_Chair_Bin.bin156954098",
+                "MeshName": "Base",
+                "MeshNodeName": "Base",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -7423,102 +7423,6 @@
                 "Model UID": 0
             }
         },
-        "485": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Engraving__14",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 484,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": 1728.978515625,
-                    "y": 114.47940826416016,
-                    "z": 116.23974609375
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": -0.0,
-                    "y": -1.570796251296997,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 1728.978515625,
-                    "y": 114.47940826416016,
-                    "z": 116.23974609375
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": -1.570796251296997,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Engraving__14",
-                "MeshNodeName": "Engraving_15",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1026": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -7605,6 +7509,102 @@
                 "ModelName": "Dining_Chair_Bin.bin156954098",
                 "MeshName": "Cushion",
                 "MeshNodeName": "Cushion",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "485": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Engraving__14",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 484,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 1728.978515625,
+                    "y": 114.47940826416016,
+                    "z": 116.23974609375
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": -0.0,
+                    "y": -1.570796251296997,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 1728.978515625,
+                    "y": 114.47940826416016,
+                    "z": 116.23974609375
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": -1.570796251296997,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Engraving__14",
+                "MeshNodeName": "Engraving_15",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -19772,102 +19772,6 @@
                 "Model UID": 0
             }
         },
-        "483": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Engraving__13",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 482,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": 1850.9088134765625,
-                    "y": 114.47940826416016,
-                    "z": 103.61962890625
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": -0.0,
-                    "y": 1.570796251296997,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 1850.9088134765625,
-                    "y": 114.47940826416016,
-                    "z": 103.61962890625
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 1.570796251296997,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Engraving__13",
-                "MeshNodeName": "Engraving_14",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1032": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -19957,6 +19861,102 @@
                 "ModelName": "Dining_Chair_Bin.bin1661450744",
                 "MeshName": "Dining_Chair_Bin.bin1661450744",
                 "MeshNodeName": "Dining_Chair_Bin.bin1661450744",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "483": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Engraving__13",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 482,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 1850.9088134765625,
+                    "y": 114.47940826416016,
+                    "z": 103.61962890625
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": -0.0,
+                    "y": 1.570796251296997,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 1850.9088134765625,
+                    "y": 114.47940826416016,
+                    "z": 103.61962890625
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 1.570796251296997,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Engraving__13",
+                "MeshNodeName": "Engraving_14",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -20257,102 +20257,6 @@
                 "Model UID": 0
             }
         },
-        "493": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Engraving__3",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 492,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -2340.32421875,
-                    "y": 114.85025024414063,
-                    "z": 171.4477996826172
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -2340.32421875,
-                    "y": 114.85025024414063,
-                    "z": 171.4477996826172
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Engraving__3",
-                "MeshNodeName": "Engraving_4",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1034": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -20439,6 +20343,102 @@
                 "ModelName": "Dining_Chair_Bin.bin1661450744",
                 "MeshName": "Base",
                 "MeshNodeName": "Base",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "493": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Engraving__3",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 492,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -2340.32421875,
+                    "y": 114.85025024414063,
+                    "z": 171.4477996826172
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -2340.32421875,
+                    "y": 114.85025024414063,
+                    "z": 171.4477996826172
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Engraving__3",
+                "MeshNodeName": "Engraving_4",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -21519,102 +21519,6 @@
                 "Model UID": 0
             }
         },
-        "491": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Engraving__2",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 490,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -1991.713623046875,
-                    "y": 114.47940826416016,
-                    "z": -65.49520874023438
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": -0.0,
-                    "y": -1.570796251296997,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -1991.713623046875,
-                    "y": 114.47940826416016,
-                    "z": -65.49520874023438
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": -1.570796251296997,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Engraving__2",
-                "MeshNodeName": "Engraving_3",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1040": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -21703,6 +21607,102 @@
                 "ModelName": "Painting_Living_Bin.bin435023218",
                 "MeshName": "",
                 "MeshNodeName": "Frame",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "491": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Engraving__2",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 490,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -1991.713623046875,
+                    "y": 114.47940826416016,
+                    "z": -65.49520874023438
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": -0.0,
+                    "y": -1.570796251296997,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -1991.713623046875,
+                    "y": 114.47940826416016,
+                    "z": -65.49520874023438
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": -1.570796251296997,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Engraving__2",
+                "MeshNodeName": "Engraving_3",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -22005,102 +22005,6 @@
                 "Model UID": 0
             }
         },
-        "501": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Engraving__7",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 500,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -765.2568359375,
-                    "y": 114.47940826416016,
-                    "z": 175.26785278320313
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": 3.1415927410125732,
-                    "y": 8.742277657347586e-8,
-                    "z": 3.1415927410125732
-                },
-                "FakePosition": {
-                    "x": -765.2568359375,
-                    "y": 114.47940826416016,
-                    "z": 175.26785278320313
-                },
-                "FakeRotation": {
-                    "x": 3.1415927410125732,
-                    "y": 8.742277657347586e-8,
-                    "z": 3.1415927410125732
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "Door Stuff Gold.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Engraving__7",
-                "MeshNodeName": "Engraving_8",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1042": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -22190,6 +22094,102 @@
                 "ModelName": "Painting_Living_Bin.bin96936709",
                 "MeshName": "Painting_Living_Bin.bin96936709",
                 "MeshNodeName": "Painting_Living_Bin.bin96936709",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "501": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Engraving__7",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 500,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -765.2568359375,
+                    "y": 114.47940826416016,
+                    "z": 175.26785278320313
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": 3.1415927410125732,
+                    "y": 8.742277657347586e-8,
+                    "z": 3.1415927410125732
+                },
+                "FakePosition": {
+                    "x": -765.2568359375,
+                    "y": 114.47940826416016,
+                    "z": 175.26785278320313
+                },
+                "FakeRotation": {
+                    "x": 3.1415927410125732,
+                    "y": 8.742277657347586e-8,
+                    "z": 3.1415927410125732
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "Door Stuff Gold.dds",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Engraving__7",
+                "MeshNodeName": "Engraving_8",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -23266,102 +23266,6 @@
                 "Model UID": 0
             }
         },
-        "499": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Engraving__6",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 498,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -752.63671875,
-                    "y": 114.47940826416016,
-                    "z": 297.1037292480469
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -752.63671875,
-                    "y": 114.47940826416016,
-                    "z": 297.1037292480469
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "Door Stuff Gold.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Engraving__6",
-                "MeshNodeName": "Engraving_7",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1048": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -23450,6 +23354,102 @@
                 "ModelName": "Bookshelf_Bin.bin623702241",
                 "MeshName": "",
                 "MeshNodeName": "Book_Generator____NitroMan",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "499": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Engraving__6",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 498,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -752.63671875,
+                    "y": 114.47940826416016,
+                    "z": 297.1037292480469
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -752.63671875,
+                    "y": 114.47940826416016,
+                    "z": 297.1037292480469
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "Door Stuff Gold.dds",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Engraving__6",
+                "MeshNodeName": "Engraving_7",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -23751,102 +23751,6 @@
                 "Model UID": 0
             }
         },
-        "509": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Extrude__1",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 508,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": 2032.64501953125,
-                    "y": 58.97056579589844,
-                    "z": -1169.2337646484375
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 2032.64501953125,
-                    "y": 58.97056579589844,
-                    "z": -1169.2337646484375
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Extrude__1",
-                "MeshNodeName": "Extrude_11",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1050": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -23935,6 +23839,102 @@
                 "ModelName": "Bookshelf_Bin.bin623702241",
                 "MeshName": "",
                 "MeshNodeName": "Shelf",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "509": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Extrude__1",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 508,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 2032.64501953125,
+                    "y": 58.97056579589844,
+                    "z": -1169.2337646484375
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 2032.64501953125,
+                    "y": 58.97056579589844,
+                    "z": -1169.2337646484375
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Extrude__1",
+                "MeshNodeName": "Extrude_11",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -100709,102 +100709,6 @@
                 "Model UID": 0
             }
         },
-        "1031": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Cushion",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 1030,
-                "HierarchyIndex": 58,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -546.5902099609375,
-                    "y": 88.91131591796875,
-                    "z": -403.1375427246094
-                },
-                "Scale": {
-                    "x": 0.2409999668598175,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "Rotation": {
-                    "x": -3.1415863037109375,
-                    "y": -0.2698713541030884,
-                    "z": -3.1415884494781494
-                },
-                "FakePosition": {
-                    "x": -417.8966369628906,
-                    "y": -43.41716003417969,
-                    "z": -596.7178955078125
-                },
-                "FakeRotation": {
-                    "x": -3.1415863037109375,
-                    "y": -0.2698713541030884,
-                    "z": -3.1415884494781494
-                },
-                "FakeScale": {
-                    "x": 0.2409999668598175,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "OldPosition": {
-                    "x": -546.5902099609375,
-                    "y": 88.91131591796875,
-                    "z": -403.1375427246094
-                },
-                "OldScale": {
-                    "x": -3.1415863037109375,
-                    "y": -0.2698713541030884,
-                    "z": -3.1415884494781494
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": -417.8966369628906,
-                    "y": -43.41716003417969,
-                    "z": -596.7178955078125
-                },
-                "OldFakeScale": {
-                    "x": 0.2409999668598175,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "OldFakeRotation": {
-                    "x": -3.1415863037109375,
-                    "y": -0.2698713541030884,
-                    "z": -3.1415884494781494
-                },
-                "ParentPosition": {
-                    "x": -417.896728515625,
-                    "y": -43.41706085205078,
-                    "z": -596.7177734375
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "DiningChair CushionSurface_Color.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Dining_Chair_Bin.bin1296473011",
-                "MeshName": "Cushion",
-                "MeshNodeName": "Cushion",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "926": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -100893,6 +100797,102 @@
                 "ModelName": "Clock_S_Bin.bin",
                 "MeshName": "",
                 "MeshNodeName": "pend_handle",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "1031": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Cushion",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1030,
+                "HierarchyIndex": 58,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -546.5902099609375,
+                    "y": 88.91131591796875,
+                    "z": -403.1375427246094
+                },
+                "Scale": {
+                    "x": 0.2409999668598175,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "Rotation": {
+                    "x": -3.1415863037109375,
+                    "y": -0.2698713541030884,
+                    "z": -3.1415884494781494
+                },
+                "FakePosition": {
+                    "x": -417.8966369628906,
+                    "y": -43.41716003417969,
+                    "z": -596.7178955078125
+                },
+                "FakeRotation": {
+                    "x": -3.1415863037109375,
+                    "y": -0.2698713541030884,
+                    "z": -3.1415884494781494
+                },
+                "FakeScale": {
+                    "x": 0.2409999668598175,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "OldPosition": {
+                    "x": -546.5902099609375,
+                    "y": 88.91131591796875,
+                    "z": -403.1375427246094
+                },
+                "OldScale": {
+                    "x": -3.1415863037109375,
+                    "y": -0.2698713541030884,
+                    "z": -3.1415884494781494
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -417.8966369628906,
+                    "y": -43.41716003417969,
+                    "z": -596.7178955078125
+                },
+                "OldFakeScale": {
+                    "x": 0.2409999668598175,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "OldFakeRotation": {
+                    "x": -3.1415863037109375,
+                    "y": -0.2698713541030884,
+                    "z": -3.1415884494781494
+                },
+                "ParentPosition": {
+                    "x": -417.896728515625,
+                    "y": -43.41706085205078,
+                    "z": -596.7177734375
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "DiningChair CushionSurface_Color.dds",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Dining_Chair_Bin.bin1296473011",
+                "MeshName": "Cushion",
+                "MeshNodeName": "Cushion",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -106086,6 +106086,100 @@
                 "Model UID": 0
             }
         },
+        "1139": {
+            "ArchetypeID": "110010000000000000",
+            "Enabled": false,
+            "Name Tag": {
+                "Name": "LockpickCamera",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1136,
+                "HierarchyIndex": 2,
+                "HierarchyChildren": [
+                    1140,
+                    1141
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Camera Component": {
+                "Yaw": -90.0,
+                "Pitch": 0.0,
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Speed": 1.0,
+                "FOV": 45.0,
+                "MouseSensitivity": 0.10000000149011612
+            }
+        },
         "994": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -106180,100 +106274,6 @@
                 },
                 "Used In 2D": false,
                 "Model UID": 0
-            }
-        },
-        "1139": {
-            "ArchetypeID": "110010000000000000",
-            "Enabled": false,
-            "Name Tag": {
-                "Name": "LockpickCamera",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 1136,
-                "HierarchyIndex": 2,
-                "HierarchyChildren": [
-                    1140,
-                    1141
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Camera Component": {
-                "Yaw": -90.0,
-                "Pitch": 0.0,
-                "Position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "Speed": 1.0,
-                "FOV": 45.0,
-                "MouseSensitivity": 0.10000000149011612
             }
         },
         "995": {
@@ -107542,104 +107542,6 @@
                 "Model UID": 0
             }
         },
-        "1091": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Outer_Ring",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 1086,
-                "HierarchyIndex": 66,
-                "HierarchyChildren": [
-                    1092
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -1213.203857421875,
-                    "y": -52.62263870239258,
-                    "z": -58.917564392089844
-                },
-                "Scale": {
-                    "x": 3.5324132442474365,
-                    "y": 3.532320022583008,
-                    "z": 3.5324132442474365
-                },
-                "Rotation": {
-                    "x": -3.1415863037109375,
-                    "y": -0.0032751683611422777,
-                    "z": -3.1415908336639404
-                },
-                "FakePosition": {
-                    "x": -1213.203857421875,
-                    "y": -52.62263870239258,
-                    "z": -58.917564392089844
-                },
-                "FakeRotation": {
-                    "x": -3.1415863037109375,
-                    "y": -0.0032751683611422777,
-                    "z": -3.1415908336639404
-                },
-                "FakeScale": {
-                    "x": 3.5324132442474365,
-                    "y": 3.532320022583008,
-                    "z": 3.5324132442474365
-                },
-                "OldPosition": {
-                    "x": -1213.203857421875,
-                    "y": -52.62263870239258,
-                    "z": -58.917564392089844
-                },
-                "OldScale": {
-                    "x": -3.1415863037109375,
-                    "y": -0.003275168826803565,
-                    "z": -3.1415908336639404
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": -1213.203857421875,
-                    "y": -52.62263870239258,
-                    "z": -58.917564392089844
-                },
-                "OldFakeScale": {
-                    "x": 3.5324132442474365,
-                    "y": 3.532320022583008,
-                    "z": 3.5324132442474365
-                },
-                "OldFakeRotation": {
-                    "x": -3.1415863037109375,
-                    "y": -0.003275168826803565,
-                    "z": -3.1415908336639404
-                },
-                "ParentPosition": {
-                    "x": -1213.203857421875,
-                    "y": -52.62263870239258,
-                    "z": -58.917564392089844
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "WashMac_Bin.bin",
-                "MeshName": "",
-                "MeshNodeName": "Outer_Ring",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "1010": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -107728,6 +107630,104 @@
                 "ModelName": "Dining_Chair_Bin.bin",
                 "MeshName": "",
                 "MeshNodeName": "Cushion",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "1091": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Outer_Ring",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1086,
+                "HierarchyIndex": 66,
+                "HierarchyChildren": [
+                    1092
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": -1213.203857421875,
+                    "y": -52.62263870239258,
+                    "z": -58.917564392089844
+                },
+                "Scale": {
+                    "x": 3.5324132442474365,
+                    "y": 3.532320022583008,
+                    "z": 3.5324132442474365
+                },
+                "Rotation": {
+                    "x": -3.1415863037109375,
+                    "y": -0.0032751683611422777,
+                    "z": -3.1415908336639404
+                },
+                "FakePosition": {
+                    "x": -1213.203857421875,
+                    "y": -52.62263870239258,
+                    "z": -58.917564392089844
+                },
+                "FakeRotation": {
+                    "x": -3.1415863037109375,
+                    "y": -0.0032751683611422777,
+                    "z": -3.1415908336639404
+                },
+                "FakeScale": {
+                    "x": 3.5324132442474365,
+                    "y": 3.532320022583008,
+                    "z": 3.5324132442474365
+                },
+                "OldPosition": {
+                    "x": -1213.203857421875,
+                    "y": -52.62263870239258,
+                    "z": -58.917564392089844
+                },
+                "OldScale": {
+                    "x": -3.1415863037109375,
+                    "y": -0.003275168826803565,
+                    "z": -3.1415908336639404
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -1213.203857421875,
+                    "y": -52.62263870239258,
+                    "z": -58.917564392089844
+                },
+                "OldFakeScale": {
+                    "x": 3.5324132442474365,
+                    "y": 3.532320022583008,
+                    "z": 3.5324132442474365
+                },
+                "OldFakeRotation": {
+                    "x": -3.1415863037109375,
+                    "y": -0.003275168826803565,
+                    "z": -3.1415908336639404
+                },
+                "ParentPosition": {
+                    "x": -1213.203857421875,
+                    "y": -52.62263870239258,
+                    "z": -58.917564392089844
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "WashMac_Bin.bin",
+                "MeshName": "",
+                "MeshNodeName": "Outer_Ring",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -108321,6 +108321,104 @@
                 "Model UID": 0
             }
         },
+        "1018": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Base",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1017,
+                "HierarchyIndex": 56,
+                "HierarchyChildren": [
+                    1019
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": -463.75738525390625,
+                    "y": 221.239990234375,
+                    "z": -293.3431396484375
+                },
+                "Scale": {
+                    "x": 0.2410009205341339,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.18749308586120605,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -206.37026977539063,
+                    "y": -43.416961669921875,
+                    "z": -680.5037841796875
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": -0.18749308586120605,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.2410009205341339,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "OldPosition": {
+                    "x": -463.75738525390625,
+                    "y": 221.239990234375,
+                    "z": -293.3431396484375
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": -0.18749308586120605,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -206.37026977539063,
+                    "y": -43.416961669921875,
+                    "z": -680.5037841796875
+                },
+                "OldFakeScale": {
+                    "x": 0.2410009205341339,
+                    "y": 0.2409999668598175,
+                    "z": 0.2409999668598175
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": -0.18749308586120605,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": -206.37017822265625,
+                    "y": -43.416961669921875,
+                    "z": -680.5037231445313
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Dining_Chair_Bin.bin3704718890",
+                "MeshName": "",
+                "MeshNodeName": "Base",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
         "1099": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -108412,104 +108510,6 @@
                 "ModelName": "Dryer_Bin.bin",
                 "MeshName": "Dryer_Bin.bin",
                 "MeshNodeName": "Dryer_Bin.bin",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
-        "1018": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Base",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 1017,
-                "HierarchyIndex": 56,
-                "HierarchyChildren": [
-                    1019
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": -463.75738525390625,
-                    "y": 221.239990234375,
-                    "z": -293.3431396484375
-                },
-                "Scale": {
-                    "x": 0.2410009205341339,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.18749308586120605,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -206.37026977539063,
-                    "y": -43.416961669921875,
-                    "z": -680.5037841796875
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": -0.18749308586120605,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 0.2410009205341339,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "OldPosition": {
-                    "x": -463.75738525390625,
-                    "y": 221.239990234375,
-                    "z": -293.3431396484375
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": -0.18749308586120605,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": -206.37026977539063,
-                    "y": -43.416961669921875,
-                    "z": -680.5037841796875
-                },
-                "OldFakeScale": {
-                    "x": 0.2410009205341339,
-                    "y": 0.2409999668598175,
-                    "z": 0.2409999668598175
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": -0.18749308586120605,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": -206.37017822265625,
-                    "y": -43.416961669921875,
-                    "z": -680.5037231445313
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Dining_Chair_Bin.bin3704718890",
-                "MeshName": "",
-                "MeshNodeName": "Base",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -114367,6 +114367,8 @@
         "1": {},
         "1008": {},
         "65": {},
+        "66": {},
+        "1118": {},
         "457": {
             "Door_Script": {
                 "playerGameObject": {
@@ -114410,11 +114412,9 @@
                 }
             }
         },
-        "1118": {},
-        "66": {},
-        "1054": {},
-        "393": {},
         "2": {},
+        "393": {},
+        "1054": {},
         "67": {},
         "3": {},
         "387": {},
@@ -114576,13 +114576,13 @@
         "481": {},
         "26": {},
         "27": {},
-        "1024": {},
         "411": {},
+        "1024": {},
         "28": {},
         "29": {},
         "30": {},
-        "485": {},
         "1026": {},
+        "485": {},
         "31": {},
         "32": {},
         "431": {},
@@ -115159,13 +115159,13 @@
         "489": {},
         "99": {},
         "100": {},
-        "483": {},
         "1032": {},
+        "483": {},
         "101": {},
         "916": {},
         "102": {},
-        "493": {},
         "1034": {},
+        "493": {},
         "103": {},
         "104": {},
         "503": {},
@@ -115177,13 +115177,13 @@
         "1094": {},
         "107": {},
         "108": {},
-        "491": {},
         "1040": {},
+        "491": {},
         "924": {},
         "109": {},
         "110": {},
-        "501": {},
         "1042": {},
+        "501": {},
         "111": {},
         "112": {},
         "511": {},
@@ -115195,13 +115195,13 @@
         "1102": {},
         "115": {},
         "116": {},
-        "499": {},
         "1048": {},
+        "499": {},
         "996": {},
         "117": {},
         "118": {},
-        "509": {},
         "1050": {},
+        "509": {},
         "119": {},
         "120": {},
         "455": {
@@ -116291,8 +116291,8 @@
         "922": {},
         "923": {},
         "925": {},
-        "1031": {},
         "926": {},
+        "1031": {},
         "927": {},
         "1075": {},
         "930": {},
@@ -116346,8 +116346,8 @@
         "990": {},
         "991": {},
         "993": {},
-        "994": {},
         "1139": {},
+        "994": {},
         "995": {},
         "997": {},
         "1039": {},
@@ -116361,16 +116361,16 @@
         "1006": {},
         "1007": {},
         "1009": {},
-        "1091": {},
         "1010": {},
+        "1091": {},
         "1011": {},
         "1013": {},
         "1055": {},
         "1014": {},
         "1015": {},
         "1017": {},
-        "1099": {},
         "1018": {},
+        "1099": {},
         "1019": {},
         "1021": {},
         "1022": {},
@@ -116455,6 +116455,9 @@
                 "speed": {
                     "System.Single": "0"
                 },
+                "soundSpeed": {
+                    "System.Single": "0"
+                },
                 "walkingSoundCounter": {
                     "System.Int32": "-1"
                 },
@@ -116463,6 +116466,9 @@
                 },
                 "playSoundTimer": {
                     "System.Single": "0"
+                },
+                "playerMoved": {
+                    "System.Boolean": "False"
                 },
                 "gameObject": {
                     "ScriptAPI.GameObject": 1143
@@ -116622,12 +116628,12 @@
         "1": "110000100000000000",
         "1008": "110000100000000000",
         "65": "110000100000000000",
-        "457": "110100110000000000",
-        "1118": "110000100000000000",
         "66": "110000100000000000",
-        "1054": "110000100000000000",
-        "393": "110100110000000000",
+        "1118": "110000100000000000",
+        "457": "110100110000000000",
         "2": "110000100000000000",
+        "393": "110100110000000000",
+        "1054": "110000100000000000",
         "67": "110000100000000000",
         "3": "110000100000000000",
         "387": "110100110000000000",
@@ -116681,13 +116687,13 @@
         "481": "110000100000000000",
         "26": "110000100000000001",
         "27": "110000100000000000",
-        "1024": "110000100000000000",
         "411": "110000100000000000",
+        "1024": "110000100000000000",
         "28": "110000100000000000",
         "29": "110000100000000000",
         "30": "110000100000000000",
-        "485": "110000100000000000",
         "1026": "110000100000000000",
+        "485": "110000100000000000",
         "31": "110000100000000000",
         "32": "110000100000000000",
         "431": "110100110000000000",
@@ -116802,13 +116808,13 @@
         "489": "110000100000000000",
         "99": "110000100000000000",
         "100": "110000100000000000",
-        "483": "110000100000000000",
         "1032": "110000100000000000",
+        "483": "110000100000000000",
         "101": "110000100000000000",
         "916": "110000100000000000",
         "102": "110000100000000000",
-        "493": "110000100000000000",
         "1034": "110000100000000000",
+        "493": "110000100000000000",
         "103": "110000100000000000",
         "104": "110000100000000000",
         "503": "110000100000000000",
@@ -116820,13 +116826,13 @@
         "1094": "110000100000000000",
         "107": "110000100000000000",
         "108": "110000100000000000",
-        "491": "110000100000000000",
         "1040": "110000100000000000",
+        "491": "110000100000000000",
         "924": "110000100000000000",
         "109": "110000100000000000",
         "110": "110000100000000000",
-        "501": "110000100000000000",
         "1042": "110000100000000000",
+        "501": "110000100000000000",
         "111": "110000100000000000",
         "112": "110000100000000000",
         "511": "110000100000000000",
@@ -116838,13 +116844,13 @@
         "1102": "110000100000000000",
         "115": "110000100000000000",
         "116": "110000100000000000",
-        "499": "110000100000000000",
         "1048": "110000100000000000",
+        "499": "110000100000000000",
         "996": "110000100000000000",
         "117": "110000100000000000",
         "118": "110000100000000000",
-        "509": "110000100000000000",
         "1050": "110000100000000000",
+        "509": "110000100000000000",
         "119": "110000100000000000",
         "120": "110000100000000000",
         "455": "110100110000000000",
@@ -117591,8 +117597,8 @@
         "922": "110000100000000000",
         "923": "110000100000000000",
         "925": "110000100000000000",
-        "1031": "110000100000000000",
         "926": "110000100000000000",
+        "1031": "110000100000000000",
         "927": "110000100000000000",
         "1075": "110000100000000000",
         "930": "110000100000000000",
@@ -117646,8 +117652,8 @@
         "990": "110000100000000000",
         "991": "110000100000000000",
         "993": "110000100000000000",
-        "994": "110000100000000000",
         "1139": "110010000000000000",
+        "994": "110000100000000000",
         "995": "110000100000000000",
         "997": "110000100000000000",
         "1039": "110000100000000000",
@@ -117661,16 +117667,16 @@
         "1006": "110000100000000000",
         "1007": "110000100000000000",
         "1009": "110000100000000000",
-        "1091": "110000100000000000",
         "1010": "110000100000000000",
+        "1091": "110000100000000000",
         "1011": "110000100000000000",
         "1013": "110000100000000000",
         "1055": "110000100000000000",
         "1014": "110000100000000000",
         "1015": "110000100000000000",
         "1017": "110000100000000000",
-        "1099": "110000100000000000",
         "1018": "110000100000000000",
+        "1099": "110000100000000000",
         "1019": "110000100000000000",
         "1021": "110000100000000000",
         "1022": "110000100000000000",

@@ -37,6 +37,14 @@ public class GhostMovement : Script
     public GameObject player;
 
     public float speed;
+    public float soundSpeed;
+
+    public int walkingSoundCounter = -1;
+    public String[] walkingSounds;
+    public bool playSound;
+    public float playSoundTimer;
+
+    public bool playerMoved;
 
     //public void ReadWaypoint(Waypoint wp)
     //{
@@ -70,20 +78,24 @@ public class GhostMovement : Script
 
     public override void Awake()
     {
-        walkingSounds = new string[11];
-        walkingSounds[0] = "temp_step1";
-        walkingSounds[1] = "temp_step1";
-        walkingSounds[2] = "temp_step2";
-        walkingSounds[3] = "temp_step3";
-        walkingSounds[4] = "temp_step4";
-        walkingSounds[5] = "temp_step5";
-        walkingSounds[6] = "temp_step6";
-        walkingSounds[7] = "temp_step7";
-        walkingSounds[8] = "temp_step8";
-        walkingSounds[9] = "temp_step9";
-        walkingSounds[10] = "temp_step10";
+        walkingSounds = new string[9];
+        walkingSounds[0] = "mon_woodstep1";
+        walkingSounds[1] = "mon_woodstep1";
+        walkingSounds[2] = "mon_woodstep2";
+        walkingSounds[3] = "mon_woodstep3";
+        walkingSounds[4] = "mon_woodstep4";
+        walkingSounds[5] = "mon_woodstep5";
+        walkingSounds[6] = "mon_woodstep6";
+        walkingSounds[7] = "mon_woodstep7";
+        walkingSounds[8] = "mon_woodstep8";
 
-        speed = 0.15f;
+        speed = 0.3f;
+        soundSpeed = 1.0f;
+
+        playerMoved = false;
+
+        transform.SetPositionX(-2840.0f);
+        transform.SetPositionZ(-650.0f);
     }
 
     public override void Update()
@@ -176,17 +188,40 @@ public class GhostMovement : Script
         }
         else if (isChasingPlayer) // done playing sound, chasing player
         {
-            ScriptAPI.Vector3 originalPosition = transform.GetPosition();
-            ScriptAPI.Vector2 nextPosition = WaypointPathfinder.NextStep(new ScriptAPI.Vector2(originalPosition.X, originalPosition.Z), speed);
-            transform.SetPosition(new ScriptAPI.Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
-            //Console.WriteLine(nextPosition.X + "\t\t" + nextPosition.Y);
+            ScriptAPI.Vector2 ghostPosition = new ScriptAPI.Vector2(transform.GetPosition().X, transform.GetPosition().Z);
+            ScriptAPI.Vector2 playerPosition = new ScriptAPI.Vector2(player.transform.GetPosition().X, player.transform.GetPosition().Z);
+            if (WaypointPathfinder.SameRoom(ghostPosition, playerPosition)) 
+            {
+                // If touches, loses
+                if (ScriptAPI.Vector2.Distance(ghostPosition, playerPosition) <= 10.0f)
+                {
+                    // Losing screen
+                    SceneLoader.LoadLoseScreen();
+                }
+                else
+                {
+                    // Go straight to player
+                    ScriptAPI.Vector3 originalPosition = transform.GetPosition();
+                    ScriptAPI.Vector2 nextPosition = ScriptAPI.Vector2.MoveTowards(ghostPosition, playerPosition, speed);
+                    transform.SetPosition(new ScriptAPI.Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
+                }
+                playerMoved = true;
+                speed += 0.001f;
+            }
+            else
+            {
+                if (playerMoved)
+                {
+                    WaypointPathfinder.FindPath(ghostPosition, playerPosition);
+                }
+                ScriptAPI.Vector3 originalPosition = transform.GetPosition();
+                ScriptAPI.Vector2 nextPosition = WaypointPathfinder.NextStep(new ScriptAPI.Vector2(originalPosition.X, originalPosition.Z), speed);
+                transform.SetPosition(new ScriptAPI.Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
+                playerMoved = false;
+            }
         }
-    }
 
-    public int walkingSoundCounter = -1;
-    public String[] walkingSounds;
-    public bool playSound;
-    public float playSoundTimer;
+    }
 
     public bool PlayMonsterWalkingSound()
     {
@@ -199,11 +234,11 @@ public class GhostMovement : Script
                 audio.stop(walkingSounds[walkingSoundCounter]);
                 ++walkingSoundCounter;
 
-                if (walkingSoundCounter == 10)  // finished
+                if (walkingSoundCounter == 8)  // finished
                     return false;
 
                 audio.play(walkingSounds[walkingSoundCounter]);
-                playSoundTimer = 1.0f / walkingSoundCounter;
+                playSoundTimer = soundSpeed - walkingSoundCounter * 0.05f;
             }
             else
             {
@@ -216,14 +251,13 @@ public class GhostMovement : Script
 
     public void AlertMonster(int doorIndex)
     {
+        soundSpeed -= 0.1f;
         speed += 0.2f;
-        playSoundTimer = 0.75f;
+        playSoundTimer = soundSpeed;
         walkingSoundCounter = 0;
         isPatrol = false;
         isChasingPlayer = true;
 
-        transform.SetPositionX(-2840.0f);
-        transform.SetPositionZ(-650.0f);
         // Teleport monster based on door
         WaypointPathfinder.FindPath(new ScriptAPI.Vector2(-2840, -650), new ScriptAPI.Vector2(player.transform.GetPosition().X, player.transform.GetPosition().Z)); // temp position
 
