@@ -40,8 +40,10 @@ public class InventoryScript : Script
     public override void Update()
     {
         var entityID = gameObject.GetEntityID();
+        gameObject.GetComponent<FPS_Controller_Script>().playerCanMove = !(PopupUI.isDisplayed || InventoryIsOpen);
+        gameObject.GetComponent<FPS_Controller_Script>().cameraCanMove = !(PopupUI.isDisplayed || InventoryIsOpen);
 
-        if(Input.GetKeyDown(Keycode.I))
+        if (Input.GetKeyDown(Keycode.I))
         {
             Console.WriteLine("I pressed");
             toggleInventory();
@@ -63,6 +65,7 @@ public class InventoryScript : Script
             Input.Lock(true);
             Input.HideMouse(true);
         }
+
     }
 
     public void toggleInventory()
@@ -70,14 +73,6 @@ public class InventoryScript : Script
         Console.WriteLine("Toggle Inventory\n");
         InventoryIsOpen = !InventoryIsOpen;
         InventoryObject.SetActive(InventoryIsOpen);
-        if (InventoryIsOpen)
-        {
-            Console.WriteLine("asdasd");    
-            gameObject.GetComponent<FPS_Controller_Script>().playerCanMove = !(InventoryIsOpen || PopupUI.isDisplayed);
-            gameObject.GetComponent<FPS_Controller_Script>().cameraCanMove = !(InventoryIsOpen || PopupUI.isDisplayed);
-            //Console.WriteLine("asdasd222");
-
-        }
     }
 
     public void checkMouseInput()
