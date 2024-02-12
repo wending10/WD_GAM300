@@ -53,6 +53,7 @@ namespace ScriptAPI
 		void clearQueue();
 		void pause(System::String^ pathing);
 		void stop(System::String^ pathing);
+		void stopAll();
 
 		//Add to a queue of sound to be played sequentially
 		void Queue(System::String^ str);

@@ -23,6 +23,8 @@ public class LockPick1 : Script
     //public Image mySubtitlesBG;
 
     public AudioSource myVOSource;
+    public string startingVOstr;
+    public string[] endVOstr;
     public bool _TutorialCompleted;
 
     [Header("Lockpick Variables")]
@@ -87,9 +89,19 @@ public class LockPick1 : Script
         rattleSoundEffects[4] = "temp_lockrattle5";
         rattleSoundEffects[5] = "temp_lockrattle6";
 
+        startingVOstr = "pc_lockpickstart";
+        endVOstr = new string[2];
+        endVOstr[0] = "pc_lockpicksuccess1";
+        endVOstr[1] = "pc_lockpicksuccess2";
+
         audio = gameObject.GetComponent<AudioComponent>();
 
         newLock();
+    }
+
+    public override void Start()
+    {
+        audio.play(startingVOstr);
     }
 
     // Update is called once per frame
@@ -246,6 +258,8 @@ public class LockPick1 : Script
             {
                 if (timer <= 0)
                 {
+                    audio.Queue(endVOstr[0]);
+                    audio.Queue(endVOstr[1]);
                     playerController.SetActive(true);
                     Input.Lock(true);
                     //    playerCam.SetEnabled(true);
@@ -255,6 +269,7 @@ public class LockPick1 : Script
                     lockGroup.SetActive(false);
                     newLock();
                     GraphicsManagerWrapper.ToggleViewFrom2D(false);
+                    audio.playQueue();
                 }
                 else
                 {

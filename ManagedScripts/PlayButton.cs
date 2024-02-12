@@ -33,4 +33,9 @@ public class PlayButton : Script
             SceneLoader.LoadStartingCutscene();
         }
     }
+
+    public override void OnDestroy()
+    {
+        bgm.stop(bgmName);
+    }
 }

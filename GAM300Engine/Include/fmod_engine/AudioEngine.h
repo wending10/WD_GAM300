@@ -113,9 +113,19 @@ namespace TDS
             DLL_API void pauseSound(SoundInfo& soundInfo);
 
             /**
-             * Stops a looping sound if it's currently playing.
+            * Pause all sounds
+            */
+            DLL_API  void pauseAllSound();
+
+            /**
+             * Stops a sound if it's currently playing.
              */
             DLL_API  void stopSound(SoundInfo& soundInfo);
+
+            /**
+            * Stops all sound
+            */
+            DLL_API  void stopAllSound();
 
             /**
              * Method that updates the volume of a soundloop that is playing. This can be used to create audio 'fades'
@@ -141,7 +151,7 @@ namespace TDS
             /**
              * Checks if a sound has finished playing.
              */
-            DLL_API  void soundFinished(SoundInfo& soudnInfo);
+            DLL_API  bool soundFinished(SoundInfo& soudnInfo);
 
             /**
              * Sets the position of the listener in the 3D scene.
@@ -371,6 +381,7 @@ namespace TDS
         static void ScriptPlay(std::string pathing);
         static void ScriptPause(std::string pathing);
         static void ScriptStop(std::string pathing);
+        static void ScriptStopAll();
 
         static SoundInfo* find_sound_info(std::string str);
         static void Add_to_Queue(std::string str = "");
@@ -384,14 +395,14 @@ namespace TDS
         static AudioWerks::AudioEngine* aud_instance;
 
         static int totalNumClips;
+        static bool Q_state;
+        static std::string Q_name;
 
         static std::map<std::string, SoundInfo> music;
         static std::map<std::string, SoundInfo> SFX;
         static std::map<std::string, SoundInfo> background;
         static std::map<std::string, SoundInfo> VO;
         static std::map<std::string, std::pair<bool, SoundInfo*>> Queue;
-
-        static std::map<std::string, SoundInfo*> all_sounds;
         //static std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events;
     }; //end of proxy_audio_system
 } //end of TDS

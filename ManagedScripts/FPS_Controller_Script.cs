@@ -1,14 +1,15 @@
 ﻿using ScriptAPI;
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 public class FPS_Controller_Script : Script
 {
     public RigidBodyComponent rb;
-    public string startingVOstr;   //To be changed
     public AudioComponent startingVO;   //To be changed
     public string[] footStepSoundEffects;
     private int currentFootStepPlaying;
+    private bool stch;
     AudioComponent audio;
 
     #region Camera Movement Variables
@@ -125,7 +126,6 @@ public class FPS_Controller_Script : Script
         rb = gameObject.GetComponent<RigidBodyComponent>();
         //playerCamera = GameObjectScriptFind("playerCameraObject").GetComponent<CameraComponent>();
         startingVO = gameObject.GetComponent<AudioComponent>();
-        startingVOstr = "pc_lockpickstart";
         // Set internal variables
         playerCamera.SetFieldOfView(fov);
         originalScale = transform.GetScale();
@@ -137,16 +137,19 @@ public class FPS_Controller_Script : Script
             sprintCooldownReset = sprintCooldown;
         }
 
-        footStepSoundEffects = new string[5];
+        footStepSoundEffects = new string[10];
         footStepSoundEffects[0] = "temp_step1";
         footStepSoundEffects[1] = "temp_step2";
         footStepSoundEffects[2] = "temp_step3";
         footStepSoundEffects[3] = "temp_step4";
         footStepSoundEffects[4] = "temp_step5";
-
-        currentFootStepPlaying = 0;
+        footStepSoundEffects[5] = "temp_step6";
+        footStepSoundEffects[6] = "temp_step7";
+        footStepSoundEffects[7] = "temp_step8";
+        footStepSoundEffects[8] = "temp_step9";
+        footStepSoundEffects[9] = "temp_step10";
         audio = gameObject.GetComponent<AudioComponent>();
-        startingVO.stop(startingVOstr);
+        stch = true;
     }
     public override void Start()
     {
@@ -286,7 +289,6 @@ public class FPS_Controller_Script : Script
         {
             HeadBob();
         }
-        startingVO.play(startingVOstr);
 
     }
     public override void FixedUpdate()
@@ -312,11 +314,13 @@ public class FPS_Controller_Script : Script
             {
                 isWalking = true;
                 //audio.play(footStepSoundEffects[0]);
+                footstepAudio(true, false);
             }
             else
             {
                 isWalking = false;
                 //audio.stop(footStepSoundEffects[0]);
+                footstepAudio(false, false);
             }
 
             // All movement calculations shile sprint is active
@@ -334,6 +338,8 @@ public class FPS_Controller_Script : Script
                 velocityChange.X = Mathf.Clamp(velocityChange.X, -maxVelocityChange, maxVelocityChange);
                 velocityChange.Z = Mathf.Clamp(velocityChange.Z, -maxVelocityChange, maxVelocityChange);
                 velocityChange.Y = 0;
+
+                footstepAudio(enableSprint && isWalking, enableSprint);
 
                 // Player is only moving when valocity change != 0
                 // Makes sure fov change only happens during movement
@@ -594,4 +600,32 @@ public class FPS_Controller_Script : Script
     }
     #endregion
 
+    void footstepAudio(bool set, bool fast)
+    {
+        if(set)
+        {
+            if (fast) //tick to make it play faster
+            {                
+                if (stch)
+                {
+                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(9);
+                    audio.play(footStepSoundEffects[currentFootStepPlaying]);
+                }
+            }
+            else
+            {
+                if (stch)
+                {
+                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(9);
+                    audio.play(footStepSoundEffects[currentFootStepPlaying]);
+                }
+            }
+
+            stch = audio.finished(footStepSoundEffects[currentFootStepPlaying]);
+        }
+        else
+        {
+            audio.stop(footStepSoundEffects[currentFootStepPlaying]);
+        }
+    }
 }

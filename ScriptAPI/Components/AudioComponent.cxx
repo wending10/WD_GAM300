@@ -176,6 +176,11 @@ namespace ScriptAPI
 		TDS::proxy_audio_system::ScriptStop(toStdString(pathing));
 	}
 
+	void AudioComponent::stopAll()
+	{
+		TDS::proxy_audio_system::ScriptStopAll();
+	}
+
 	void AudioComponent::Queue(System::String^ str)
 	{
 		TDS::proxy_audio_system::Add_to_Queue(toStdString(str));
