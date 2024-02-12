@@ -196,8 +196,8 @@ public class FPS_Controller_Script : Script
         playerCanMove = !InventoryScript.InventoryIsOpen;*/
 
         playerCanMove = !InventoryScript.InventoryIsOpen;
-        cameraCanMove = !PopupUI.isDisplayed;
-        playerCanMove = !PopupUI.isDisplayed;
+        //cameraCanMove = !PopupUI.isDisplayed;
+        //playerCanMove = !PopupUI.isDisplayed;
 
         #region Sprint
 

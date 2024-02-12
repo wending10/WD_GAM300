@@ -26,7 +26,7 @@ public class RestartButton : Script
 
         if (Input.GetMouseButtonDown(Keycode.M1) && restartButtonSprite.IsMouseCollided())
         {
-            //Console.WriteLine("Restart Button Pressed");
+            Console.WriteLine("Restart Button Pressed");
             PopupUI.isDisplayed = false;
             SceneLoader.LoadMainGame();
         }
