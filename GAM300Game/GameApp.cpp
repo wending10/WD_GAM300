@@ -207,19 +207,6 @@ namespace TDS
 
     void GamApp::Update()
     {
-        RECT windowRect;
-        GetWindowRect(m_window.getWindowHandler(), &windowRect);
-
-        int windowWidth = windowRect.right - windowRect.left;
-        int windowHeight = windowRect.bottom - windowRect.top;
-
-        // Set the viewport dimensions
-        GraphicsManager::getInstance().getViewportScreen().x = windowRect.left;
-        GraphicsManager::getInstance().getViewportScreen().y = windowRect.top;
-        GraphicsManager::getInstance().getViewportScreen().z = windowWidth; 
-        GraphicsManager::getInstance().getViewportScreen().w = windowHeight; 
-
-        GraphicsManager::getInstance().getOffset() = windowHeight;
         auto executeUpdate = GetFunctionPtr<void(*)(void)>
             (
                 "ScriptAPI",
@@ -261,35 +248,36 @@ namespace TDS
                 "ToggleScriptViaName"
             );
         float lightx = 0.f;
-        RECT clientRect;
-        GetClientRect(m_window.getWindowHandler(), &clientRect);
-
-        int clientWidth = clientRect.right - clientRect.left;
-        int clientHeight = clientRect.bottom - clientRect.top;
-
-        // Maintaining a 16:9 aspect ratio
-        float aspectRatio = 16.0f / 9.0f;
-        int viewportWidth, viewportHeight;
-
-        if (clientWidth < (clientHeight * aspectRatio)) {
-            // Limited by width, scale height
-            viewportWidth = clientWidth;
-            viewportHeight = static_cast<int>(clientWidth / aspectRatio);
-        }
-        else {
-            // Limited by height, scale width
-            viewportWidth = static_cast<int>(clientHeight * aspectRatio);
-            viewportHeight = clientHeight;
-        }
-
-        // Set the viewport dimensions
-        GraphicsManager::getInstance().getViewportScreen().x = 0; // or some offset if needed
-        GraphicsManager::getInstance().getViewportScreen().y = 0; // or some offset if needed
-        GraphicsManager::getInstance().getViewportScreen().z = viewportWidth;
-        GraphicsManager::getInstance().getViewportScreen().w = viewportHeight;
 
         while (m_window.processInputEvent())
         {
+            RECT clientRect;
+            GetClientRect(m_window.getWindowHandler(), &clientRect);
+
+            int clientWidth = clientRect.right - clientRect.left;
+            int clientHeight = clientRect.bottom - clientRect.top;
+
+            // Maintaining a 16:9 aspect ratio
+            float aspectRatio = 16.0f / 9.0f;
+            int viewportWidth, viewportHeight;
+
+            if (clientWidth < (clientHeight * aspectRatio)) {
+                // Limited by width, scale height
+                viewportWidth = clientWidth;
+                viewportHeight = static_cast<int>(clientWidth / aspectRatio);
+            }
+            else {
+                // Limited by height, scale width
+                viewportWidth = static_cast<int>(clientHeight * aspectRatio);
+                viewportHeight = clientHeight;
+            }
+
+            // Set the viewport dimensions
+            GraphicsManager::getInstance().getViewportScreen().x = 0; // or some offset if needed
+            GraphicsManager::getInstance().getViewportScreen().y = 0; // or some offset if needed
+            GraphicsManager::getInstance().getViewportScreen().z = viewportWidth;
+            GraphicsManager::getInstance().getViewportScreen().w = viewportHeight;
+
             InputSystem::GetInstance()->update();
 
             TimeStep::CalculateDeltaTime();
