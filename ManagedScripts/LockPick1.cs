@@ -289,7 +289,6 @@ public class LockPick1 : Script
                 Vector3 rotation = playerController.transform.GetRotation();
                 Quaternion quat = new Quaternion(rotation);
                 Vector3 rotationToVector = new Vector3(-Mathf.Sin(toRadians(rotation.Y)), 0.0f, Mathf.Cos(toRadians(rotation.Y))) * 200;
-                Console.WriteLine(rotationToVector.X + "\t" + rotationToVector.Y + "\t" + rotationToVector.Z);
                 playerController.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(playerController.transform.GetPosition() + rotationToVector, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(1, 1, 1).Normalize(), new Vector3(1, 1, 1).Normalize());
                 Input.Lock(true);
                 //    playerCam.SetEnabled(true);
@@ -325,8 +324,12 @@ public class LockPick1 : Script
                 newLock();
                 GraphicsManagerWrapper.ToggleViewFrom2D(false);
                 doorStates.SetActive(true);
-                monster.GetComponent<GhostMovement>().AlertMonster(doorIndex);
                 popupUI.GetComponent<PopupUI>().lockpickDisplayed = false;
+
+                if (doorIndex != 0)
+                {
+                    monster.GetComponent<GhostMovement>().AlertMonster(doorIndex);
+                }
             }
             else
             {
