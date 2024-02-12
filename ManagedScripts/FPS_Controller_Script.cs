@@ -100,6 +100,7 @@ public class FPS_Controller_Script : Script
     // Internal Variables
     private bool isCrouched = false;
     private Vector3 originalScale;
+    private float originalHeight;
     #endregion
 
     #region Health
@@ -129,6 +130,7 @@ public class FPS_Controller_Script : Script
         // Set internal variables
         playerCamera.SetFieldOfView(fov);
         originalScale = transform.GetScale();
+        originalHeight = transform.GetPosition().Y;
         jointOriginalPos = joint.GetPosition();
 
         if (!unlimitedSprint)
@@ -247,15 +249,15 @@ public class FPS_Controller_Script : Script
 
         #endregion
 
-        /*#region Jump
+        //#region Jump
 
-        // Gets input and calls jump method
-        if (enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
-        {
-            Jump();
-        }
+        //// Gets input and calls jump method
+        //if (enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
+        //{
+        //    Jump();
+        //}
 
-        #endregion
+        //#endregion
 
         #region Crouch
 
@@ -263,22 +265,25 @@ public class FPS_Controller_Script : Script
         {
             if (Input.GetKeyDown(crouchKey) && !holdToCrouch)
             {
-                Crouch();
+                if (isCrouched) StandUp();
+                else Crouch();
+
+
+                isCrouched = !isCrouched;
+                Console.WriteLine(isCrouched);
             }
 
-            if (Input.GetKeyDown(crouchKey) && holdToCrouch)
-            {
-                isCrouched = false;
-                Crouch();
-            }
-            else if (Input.GetKeyUp(crouchKey) && holdToCrouch)
-            {
-                isCrouched = true;
-                Crouch();
-            }
+            //else if (Input.GetKeyDown(crouchKey) && holdToCrouch)
+            //{
+            //    Crouch();
+            //}
+            //else if (Input.GetKeyUp(crouchKey) && holdToCrouch)
+            //{
+            //    Crouch();
+            //}
         }
 
-        #endregion*/
+        #endregion
 
         //CheckGround();
 
@@ -539,27 +544,38 @@ public class FPS_Controller_Script : Script
     //#endregion
 
     #region Crouch Method
-    //private void Crouch()
-    //{
-    //    // Stands player up to full height
-    //    // Brings walkSpeed back up to original speed
-    //    if (isCrouched)
-    //    {
-    //        transform.SetScale(new Vector3(originalScale.X, originalScale.Y, originalScale.Z));
-    //        if (speedReduction != 0) walkSpeed /= speedReduction;
+    private void Crouch()
+    {
+        transform.SetScale(new Vector3(originalScale.X, crouchHeight, originalScale.Z));
 
-    //        isCrouched = false;
-    //    }
-    //    // Crouches player down to set height
-    //    // Reduces walkSpeed
-    //    else
-    //    {
-    //        transform.SetScale(new Vector3(originalScale.X, crouchHeight, originalScale.Z));
-    //        if (speedReduction != 0) walkSpeed *= speedReduction;
+        float heightToCrouchTo = originalHeight * crouchHeight;
 
-    //        isCrouched = true;
-    //    }
-    //}
+        //lerping to crouching height
+        //if (transform.GetPosition().Y > heightToCrouchTo)
+        //{
+        //    float heightdecreaseperframe = (originalHeight * (1 - crouchHeight)) * Time.deltaTime;
+        //    transform.SetPositionY(transform.GetPosition().Y - heightdecreaseperframe);
+        //}
+        //transform.SetPositionY(0);
+        Quaternion quat = new Quaternion(transform.GetRotation());
+        gameObject.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(
+            new Vector3(transform.GetPosition().X, 0, transform.GetPosition().Z),
+            new Vector4 (quat.X, quat.Y, quat.Z, quat.W), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+
+        if (speedReduction != 0) walkSpeed *= speedReduction;
+
+    }
+
+    private void StandUp()
+    {
+        transform.SetScale(new Vector3(originalScale.X, originalScale.Y, originalScale.Z));
+        //transform.SetPositionY(originalHeight);
+        Quaternion quat = new Quaternion(transform.GetRotation());
+        gameObject.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(
+            new Vector3(transform.GetPosition().X, originalHeight, transform.GetPosition().Z),
+            new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        if (speedReduction != 0) walkSpeed /= speedReduction;
+    }
     #endregion
 
     #region HeadBob Method
@@ -583,13 +599,13 @@ public class FPS_Controller_Script : Script
                 timer += Time.deltaTime * bobSpeed;
             }
             // Applies HeadBob movement
-            joint.SetPosition(new Vector3(jointOriginalPos.X + Mathf.Sin(timer) * bobAmount.X, jointOriginalPos.Y + Mathf.Sin(timer) * bobAmount.Y, jointOriginalPos.Z + Mathf.Sin(timer) * bobAmount.Z)); 
+            joint.SetPosition(new Vector3(jointOriginalPos.X + Mathf.Sin(timer) * bobAmount.X, jointOriginalPos.Y + Mathf.Sin(timer) * bobAmount.Y, jointOriginalPos.Z + Mathf.Sin(timer) * bobAmount.Z));
         }
         else
         {
             // Resets when play stops moving
             timer = 0;
-            joint.SetPosition(new Vector3(Mathf.Lerp(joint.GetPosition().X, jointOriginalPos.X, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.GetPosition().Y, jointOriginalPos.Y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.GetPosition().Z, jointOriginalPos.Z, Time.deltaTime * bobSpeed))); 
+            joint.SetPosition(new Vector3(Mathf.Lerp(joint.GetPosition().X, jointOriginalPos.X, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.GetPosition().Y, jointOriginalPos.Y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.GetPosition().Z, jointOriginalPos.Z, Time.deltaTime * bobSpeed)));
         }
     }
     #endregion
