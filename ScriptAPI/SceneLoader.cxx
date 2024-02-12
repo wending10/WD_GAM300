@@ -1,6 +1,7 @@
 #include "SceneLoader.hxx"
 #include "TypeConversion.hxx"
 #include "EngineInterface.hxx"
+#include "MacroHelper.h"
 namespace ScriptAPI
 {
 	void SceneLoader::LoadMainMenu()
@@ -14,7 +15,7 @@ namespace ScriptAPI
 	void SceneLoader::LoadMainGame()
 	{
 		EngineInterface::Reload();
-		TDS::SceneManager::GetInstance()->loadScene("M4_Mansion");
+		TDS::SceneManager::GetInstance()->loadScene("M4_MansionSoap");
 		TDS::SceneManager::GetInstance()->awake();
 		TDS::SceneManager::GetInstance()->start();
 	}
@@ -34,5 +35,12 @@ namespace ScriptAPI
 		TDS::SceneManager::GetInstance()->awake();
 		TDS::SceneManager::GetInstance()->start();
 	}
+
+	void SceneLoader::LoadQuitGame()
+	{
+		TDS::QuitEngine();
+	}
+
+
 
 }
