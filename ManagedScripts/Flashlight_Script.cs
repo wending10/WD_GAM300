@@ -4,7 +4,6 @@ using System;
 public class Flashlight_Script : Script
 {
     //public Light lightSource;
-    public float lightIntensity;
     public GameObject lightSourceObj;
     public GameObject player;
     public bool activateLight = false;
@@ -12,9 +11,13 @@ public class Flashlight_Script : Script
     public string flashAudiostr = "temp_flashlight";
     public AudioComponent flashAudio;
     public float followSpeed;
+    public int batteryLife = 100;
+    public float batteryTick = 20.0f;
 
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+    private float tick = 0.0f;
+
+
+    private Vector3 lookAmount = new Vector3();
 
     [SerializeField] private bool flicker = false;
     [SerializeField] private float flickerTimer;
@@ -26,7 +29,11 @@ public class Flashlight_Script : Script
 
     public override void Start()
     {
-          
+        if (lightSourceObj.GetComponent<SpotlightComponent>().GetEnabled())
+        {
+            Vector4 flashlightSettings = new Vector4(1f, 0.005f, 0.001f, 0.0f);
+            lightSourceObj.GetComponent<SpotlightComponent>().SetAttenuation(flashlightSettings);
+        }
     }
 
     public override void Update()
@@ -49,13 +56,13 @@ public class Flashlight_Script : Script
         if (activateLight)
         {
             lightSourceObj.SetActive(true);
+            BatteryLife();
         }
         else
         {
             lightSourceObj.SetActive(false);
         }
 
-        //BatteryLife();
     }
 
     public override void LateUpdate()
@@ -64,37 +71,34 @@ public class Flashlight_Script : Script
 
         if (activateLight)
         {
-            
-            lightSourceObj.transform.SetPositionY((player.transform.GetPosition().Y + 10f));
+            Vector3 currentDirection = new Vector3(lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().X, lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Y, lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Z);
+            Vector3 nextDirection = new Vector3(-player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().X, -player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().Y, player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().Z);
+            lookAmount = Vector3.MoveTowards(currentDirection, nextDirection, followSpeed * Time.deltaTime);
 
-            yaw = Input.GetAxisX() * Input.GetSensitivity() * player.GetComponent<FPS_Controller_Script>().mouseSensitivity;
-            pitch -= Input.GetAxisY() * Input.GetSensitivity() * player.GetComponent<FPS_Controller_Script>().mouseSensitivity;
-
-            lightSourceObj.transform.SetRotationX(pitch);
-            lightSourceObj.transform.SetRotationY(player.transform.GetRotation().Y);
-
-            lightSourceObj.transform.SetRotation(Vector3.Slerp(lightSourceObj.transform.GetRotation(), 
-                player.GetComponent<FPS_Controller_Script>().playerCamera.transform.GetRotation()
-                ,Time.deltaTime * followSpeed));
-
-            Vector4 direction = new Vector4(lightSourceObj.transform.GetRotation().X,
-                lightSourceObj.transform.GetRotation().Y, lightSourceObj.transform.GetRotation().Z, 0);
-
+            Vector4 direction = new Vector4(lookAmount.X, lookAmount.Y, lookAmount.Z, 0.0f);
             lightSourceObj.GetComponent<SpotlightComponent>().SetDirection(direction);
+            lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Normalize();
+
         }
     }
 
     void BatteryLife()
     {
-        if (lightIntensity <= 0)
+        if (batteryLife <= 0)
         {
             activateLight = false;
-            lightSourceObj.GetComponent<GraphicComponent>().SetColourAlpha(0.0f);
         }
 
         if (activateLight)
         {
-            lightIntensity -= 0.0001f * Time.deltaTime;
+            tick += Time.deltaTime;
+            if (tick >= batteryTick)
+            {
+                batteryLife--;
+                Vector4 color = new Vector4(lightSourceObj.GetComponent<SpotlightComponent>().GetColor().X, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().Y, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().Z, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().W * (batteryLife / 100.0f));
+                lightSourceObj.GetComponent<SpotlightComponent>().SetColor(color);
+                tick = 0.0f;
+            }
         }
     }
 
