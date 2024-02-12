@@ -26,7 +26,7 @@ public class ReturnToGame : Script
             
         if (Input.GetMouseButtonDown(Keycode.M1) && buttonSprite.IsMouseCollided())
         {
-            //Console.WriteLine("Continue Button Pressed");
+            Console.WriteLine("Continue Button Pressed");
             PopupUI.isDisplayed = false;
         }
     }
