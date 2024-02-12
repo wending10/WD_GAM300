@@ -40,9 +40,9 @@
             "4": 64
         },
         "110000000000100000": {
-            "0": 544,
-            "1": 1536,
-            "12": 1440
+            "0": 3672,
+            "1": 10368,
+            "12": 9720
         },
         "110000100000000010": {
             "0": 136,
@@ -19100,6 +19100,119 @@
                 "Model UID": 0
             }
         },
+        "1148": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box2",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 1,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.625,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.625,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.625,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.625,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.7304999828338623,
+                    "y": 0.16500002145767212
+                },
+                "BoundingBoxMax": {
+                    "x": -0.5195000171661377,
+                    "y": 0.47499996423721313
+                }
+            }
+        },
         "96": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -19484,6 +19597,119 @@
                 },
                 "Used In 2D": false,
                 "Model UID": 0
+            }
+        },
+        "1150": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box4",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 3,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.125,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.125,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.125,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.125,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.2305000126361847,
+                    "y": 0.16500002145767212
+                },
+                "BoundingBoxMax": {
+                    "x": -0.019499987363815308,
+                    "y": 0.47499996423721313
+                }
             }
         },
         "98": {
@@ -29182,6 +29408,119 @@
                 "Model UID": 0
             }
         },
+        "1159": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "ItemsTab",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 12,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.75,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 0.18400001525878906
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.75,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 0.18400001525878906
+                },
+                "OldPosition": {
+                    "x": -0.75,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.18400001525878906,
+                    "y": 0.18400001525878906,
+                    "z": 0.18400001525878906
+                },
+                "OldFakePosition": {
+                    "x": -0.75,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 0.18400001525878906
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.8400000333786011,
+                    "y": 0.6600000262260437
+                },
+                "BoundingBoxMax": {
+                    "x": -0.6599999666213989,
+                    "y": 0.8399999737739563
+                }
+            }
+        },
         "148": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -30545,6 +30884,119 @@
                 "Model UID": 0
             }
         },
+        "1167": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "CloseFont",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 20,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.2019100785255432,
+                    "y": -0.8678302764892578,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.07587635517120361,
+                    "y": 0.12083995342254639,
+                    "z": 0.12084001302719116
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.2019100785255432,
+                    "y": -0.8678302764892578,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.07587635517120361,
+                    "y": 0.12083995342254639,
+                    "z": 0.12084001302719116
+                },
+                "OldPosition": {
+                    "x": -0.2019100785255432,
+                    "y": -0.8678302764892578,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.07587635517120361,
+                    "y": 0.12083995342254639,
+                    "z": 0.12084001302719116
+                },
+                "OldFakePosition": {
+                    "x": -0.2019100785255432,
+                    "y": -0.8678302764892578,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.07587635517120361,
+                    "y": 0.12083995342254639,
+                    "z": 0.12084001302719116
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 3,
+                "is Font": true,
+                "message": "Close",
+                "Font Texture": "Font1.dds",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.5,
+                    "y": -0.5
+                },
+                "BoundingBoxMax": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            }
+        },
         "156": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -30838,6 +31290,119 @@
                 },
                 "Used In 2D": false,
                 "Model UID": 0
+            }
+        },
+        "1153": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box7",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 6,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.375,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.375,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.375,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.375,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.4805000126361847,
+                    "y": -0.17499996721744537
+                },
+                "BoundingBoxMax": {
+                    "x": -0.2694999873638153,
+                    "y": 0.13499997556209564
+                }
             }
         },
         "158": {
@@ -43721,6 +44286,119 @@
                 "Model UID": 0
             }
         },
+        "1161": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "PaintingsTab",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 14,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.25,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.25,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.25,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.25,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.3400000035762787,
+                    "y": 0.6600000262260437
+                },
+                "BoundingBoxMax": {
+                    "x": -0.1599999964237213,
+                    "y": 0.8399999737739563
+                }
+            }
+        },
         "229": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -46998,7 +47676,7 @@
                 },
                 "OldPosition": {
                     "x": -289.4020080566406,
-                    "y": 100.0,
+                    "y": 90.0,
                     "z": 1219.7508544921875
                 },
                 "OldScale": {
@@ -47013,7 +47691,7 @@
                 },
                 "OldFakePosition": {
                     "x": -289.4020080566406,
-                    "y": 100.0,
+                    "y": 90.0,
                     "z": 1219.7508544921875
                 },
                 "OldFakeScale": {
@@ -52320,6 +52998,102 @@
                 "Model UID": 0
             }
         },
+        "305": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Base_F",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 304,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 3645.618896484375,
+                    "y": -351.0186462402344,
+                    "z": 222.0787353515625
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 3645.618896484375,
+                    "y": -351.0186462402344,
+                    "z": 222.0787353515625
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "Base_F",
+                "MeshNodeName": "Base_F",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
         "672": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -52418,102 +53192,6 @@
                 "Model UID": 0
             }
         },
-        "305": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Base_F",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 304,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": 3645.618896484375,
-                    "y": -351.0186462402344,
-                    "z": 222.0787353515625
-                },
-                "Scale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 3645.618896484375,
-                    "y": -351.0186462402344,
-                    "z": 222.0787353515625
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "Base_F",
-                "MeshNodeName": "Base_F",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
         "307": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -52600,104 +53278,6 @@
                 "ModelName": "Adjusted_Bin.bin",
                 "MeshName": "Base_Stairs",
                 "MeshNodeName": "Base_Stairs",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
-        "676": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Oil_Tank_10",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 285,
-                "HierarchyIndex": 40,
-                "HierarchyChildren": [
-                    677
-                ]
-            },
-            "Transform": {
-                "Position": {
-                    "x": 224.50282287597656,
-                    "y": 59.16780090332031,
-                    "z": 182.40968322753906
-                },
-                "Scale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 224.50282287597656,
-                    "y": 59.16780090332031,
-                    "z": 182.40968322753906
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.100000023841858,
-                    "y": 1.2200000286102295,
-                    "z": 1.100000023841858
-                },
-                "OldPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakeScale": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Adjusted_Bin.bin",
-                "MeshName": "",
-                "MeshNodeName": "Oil_Tank_10",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -52863,6 +53443,104 @@
                     "z": 0.0
                 },
                 "RayScale": 1.0
+            }
+        },
+        "676": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Oil_Tank_10",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 285,
+                "HierarchyIndex": 40,
+                "HierarchyChildren": [
+                    677
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": 224.50282287597656,
+                    "y": 59.16780090332031,
+                    "z": 182.40968322753906
+                },
+                "Scale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 224.50282287597656,
+                    "y": 59.16780090332031,
+                    "z": 182.40968322753906
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.100000023841858,
+                    "y": 1.2200000286102295,
+                    "z": 1.100000023841858
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Adjusted_Bin.bin",
+                "MeshName": "",
+                "MeshNodeName": "Oil_Tank_10",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
             }
         },
         "311": {
@@ -81531,7 +82209,7 @@
             "Transform": {
                 "Position": {
                     "x": 80.09912109375,
-                    "y": 126.85279846191406,
+                    "y": 126.83474731445313,
                     "z": -123.25736999511719
                 },
                 "Scale": {
@@ -81546,7 +82224,7 @@
                 },
                 "FakePosition": {
                     "x": 80.09912109375,
-                    "y": 126.85279846191406,
+                    "y": 126.83474731445313,
                     "z": -123.25736999511719
                 },
                 "FakeRotation": {
@@ -81561,7 +82239,7 @@
                 },
                 "OldPosition": {
                     "x": 80.09912109375,
-                    "y": 126.85281372070313,
+                    "y": 126.83476257324219,
                     "z": -123.25736999511719
                 },
                 "OldScale": {
@@ -81576,7 +82254,7 @@
                 },
                 "OldFakePosition": {
                     "x": 80.09912109375,
-                    "y": 126.85281372070313,
+                    "y": 126.83476257324219,
                     "z": -123.25736999511719
                 },
                 "OldFakeScale": {
@@ -81599,7 +82277,7 @@
                 "IsTrigger": false,
                 "Collider Center": {
                     "x": 80.52911376953125,
-                    "y": 126.85279846191406,
+                    "y": 126.83474731445313,
                     "z": -104.3967056274414
                 },
                 "Collider Size": {
@@ -91600,6 +92278,119 @@
                 "Model UID": 0
             }
         },
+        "1154": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box8",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 7,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.125,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.125,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.125,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.125,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.2305000126361847,
+                    "y": -0.17499996721744537
+                },
+                "BoundingBoxMax": {
+                    "x": -0.019499987363815308,
+                    "y": 0.13499997556209564
+                }
+            }
+        },
         "787": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -92182,6 +92973,119 @@
                 },
                 "Used In 2D": false,
                 "Model UID": 0
+            }
+        },
+        "1162": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "ItemsFont",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 15,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.826739490032196,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.053934454917907715,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.826739490032196,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.053934454917907715,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "OldPosition": {
+                    "x": -0.826739490032196,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.053934454917907715,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "OldFakePosition": {
+                    "x": -0.826739490032196,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.053934454917907715,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 3,
+                "is Font": true,
+                "message": "Items",
+                "Font Texture": "Font1.dds",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.5,
+                    "y": -0.5
+                },
+                "BoundingBoxMax": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
             }
         },
         "795": {
@@ -106963,6 +107867,119 @@
                 "Model UID": 0
             }
         },
+        "1147": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box1",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 0,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.875,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.875,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.875,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.875,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": -0.5,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.9804999828338623,
+                    "y": 0.16500002145767212
+                },
+                "BoundingBoxMax": {
+                    "x": -0.7695000171661377,
+                    "y": 0.47499996423721313
+                }
+            }
+        },
         "1003": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
@@ -114490,6 +115507,1611 @@
                 },
                 "Angle": 45.0
             }
+        },
+        "1146": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "InventoryObject",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 0,
+                "HierarchyIndex": 75,
+                "HierarchyChildren": [
+                    1147,
+                    1148,
+                    1149,
+                    1150,
+                    1151,
+                    1152,
+                    1153,
+                    1154,
+                    1155,
+                    1156,
+                    1157,
+                    1158,
+                    1159,
+                    1160,
+                    1161,
+                    1162,
+                    1163,
+                    1164,
+                    1165,
+                    1166,
+                    1167,
+                    1168
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.5,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 1.0,
+                    "y": 2.0,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 1,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10196078568696976,
+                    "y": 0.10196078568696976,
+                    "z": 0.10196078568696976,
+                    "w": 0.6078431606292725
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -1.0,
+                    "y": -1.0
+                },
+                "BoundingBoxMax": {
+                    "x": 0.0,
+                    "y": 1.0
+                }
+            }
+        },
+        "1149": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box3",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 2,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.375,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.375,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.375,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.375,
+                    "y": 0.3199999928474426,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.4805000126361847,
+                    "y": 0.16500002145767212
+                },
+                "BoundingBoxMax": {
+                    "x": -0.2694999873638153,
+                    "y": 0.47499996423721313
+                }
+            }
+        },
+        "1151": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box5",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 4,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.875,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.875,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.875,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.875,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.9804999828338623,
+                    "y": -0.17499996721744537
+                },
+                "BoundingBoxMax": {
+                    "x": -0.7695000171661377,
+                    "y": 0.13499997556209564
+                }
+            }
+        },
+        "1152": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box6",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 5,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.625,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.625,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.625,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.625,
+                    "y": -0.019999999552965164,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.7304999828338623,
+                    "y": -0.17499996721744537
+                },
+                "BoundingBoxMax": {
+                    "x": -0.5195000171661377,
+                    "y": 0.13499997556209564
+                }
+            }
+        },
+        "1155": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box9",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 8,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.875,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.875,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.875,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.875,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.9804999828338623,
+                    "y": -0.5149999856948853
+                },
+                "BoundingBoxMax": {
+                    "x": -0.7695000171661377,
+                    "y": -0.20500004291534424
+                }
+            }
+        },
+        "1156": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box10",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 9,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.625,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.625,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.625,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.625,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.7304999828338623,
+                    "y": -0.5149999856948853
+                },
+                "BoundingBoxMax": {
+                    "x": -0.5195000171661377,
+                    "y": -0.20500004291534424
+                }
+            }
+        },
+        "1157": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box11",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 10,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.375,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.375,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.375,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.375,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.4805000126361847,
+                    "y": -0.5149999856948853
+                },
+                "BoundingBoxMax": {
+                    "x": -0.2694999873638153,
+                    "y": -0.20500004291534424
+                }
+            }
+        },
+        "1158": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Box12",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 11,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.125,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.125,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldPosition": {
+                    "x": -0.125,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": -0.125,
+                    "y": -0.36000001430511475,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.21100002527236938,
+                    "y": 0.309999942779541,
+                    "z": 1.0
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Inventory Box Img.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.2305000126361847,
+                    "y": -0.5149999856948853
+                },
+                "BoundingBoxMax": {
+                    "x": -0.019499987363815308,
+                    "y": -0.20500004291534424
+                }
+            }
+        },
+        "1160": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "NotesTab",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 13,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.5,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 0.18630003929138184
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.5,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 0.18630003929138184
+                },
+                "OldPosition": {
+                    "x": -0.5,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.18630003929138184,
+                    "y": 0.18630003929138184,
+                    "z": 0.18630003929138184
+                },
+                "OldFakePosition": {
+                    "x": -0.5,
+                    "y": 0.75,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.18000000715255737,
+                    "y": 0.1799999475479126,
+                    "z": 0.18630003929138184
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.5900000333786011,
+                    "y": 0.6600000262260437
+                },
+                "BoundingBoxMax": {
+                    "x": -0.4099999964237213,
+                    "y": 0.8399999737739563
+                }
+            }
+        },
+        "1163": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "NotesFont",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 16,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.581173300743103,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.06222224235534668,
+                    "y": 0.08000004291534424,
+                    "z": 0.08000004291534424
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.581173300743103,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.06222224235534668,
+                    "y": 0.08000004291534424,
+                    "z": 0.08000004291534424
+                },
+                "OldPosition": {
+                    "x": -0.581173300743103,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.06222224235534668,
+                    "y": 0.08000004291534424,
+                    "z": 0.08000004291534424
+                },
+                "OldFakePosition": {
+                    "x": -0.581173300743103,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.06222224235534668,
+                    "y": 0.08000004291534424,
+                    "z": 0.08000004291534424
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 3,
+                "is Font": true,
+                "message": "Notes",
+                "Font Texture": "Font1.dds",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.5,
+                    "y": -0.5
+                },
+                "BoundingBoxMax": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            }
+        },
+        "1164": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "PaintingsFont",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 17,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.3410641551017761,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.04428577423095703,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.3410641551017761,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.04428577423095703,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "OldPosition": {
+                    "x": -0.3410641551017761,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.04428577423095703,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "OldFakePosition": {
+                    "x": -0.3410641551017761,
+                    "y": 0.7200000286102295,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.04428577423095703,
+                    "y": 0.06999993324279785,
+                    "z": 0.06999999284744263
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 3,
+                "is Font": true,
+                "message": "Paintings",
+                "Font Texture": "Font1.dds",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.5,
+                    "y": -0.5
+                },
+                "BoundingBoxMax": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            }
+        },
+        "1165": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "UseFont",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 18,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.8703956007957458,
+                    "y": -0.8678303956985474,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.07502728700637817,
+                    "y": 0.12999999523162842,
+                    "z": 0.12999999523162842
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.8703956007957458,
+                    "y": -0.8678303956985474,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.07502728700637817,
+                    "y": 0.12999999523162842,
+                    "z": 0.12999999523162842
+                },
+                "OldPosition": {
+                    "x": -0.8703956007957458,
+                    "y": -0.8678303956985474,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.07502728700637817,
+                    "y": 0.12999999523162842,
+                    "z": 0.12999999523162842
+                },
+                "OldFakePosition": {
+                    "x": -0.8703956007957458,
+                    "y": -0.8678303956985474,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.07502728700637817,
+                    "y": 0.12999999523162842,
+                    "z": 0.12999999523162842
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "",
+                "EnableSprite": true,
+                "LayerID": 3,
+                "is Font": true,
+                "message": "Use",
+                "Font Texture": "Font1.dds",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.5,
+                    "y": -0.5
+                },
+                "BoundingBoxMax": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            }
+        },
+        "1166": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "UseIcon",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 19,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.9304229617118835,
+                    "y": -0.8029924631118774,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.10775518417358398,
+                    "y": 0.16000008583068848,
+                    "z": 0.1600000262260437
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.9304229617118835,
+                    "y": -0.8029924631118774,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.10775518417358398,
+                    "y": 0.16000008583068848,
+                    "z": 0.1600000262260437
+                },
+                "OldPosition": {
+                    "x": -0.9304229617118835,
+                    "y": -0.8029924631118774,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.10775518417358398,
+                    "y": 0.16000008583068848,
+                    "z": 0.1600000262260437
+                },
+                "OldFakePosition": {
+                    "x": -0.9304229617118835,
+                    "y": -0.8029924631118774,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.10775518417358398,
+                    "y": 0.16000008583068848,
+                    "z": 0.1600000262260437
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "Mouse Left Click UI.dds",
+                "EnableSprite": true,
+                "LayerID": 2,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.9843005537986755,
+                    "y": -0.8829925060272217
+                },
+                "BoundingBoxMax": {
+                    "x": -0.8765453696250916,
+                    "y": -0.7229924201965332
+                }
+            }
+        },
+        "1168": {
+            "ArchetypeID": "110000000000100000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "CloseIcon",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 1146,
+                "HierarchyIndex": 21,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": -0.27012282609939575,
+                    "y": -0.8179550170898438,
+                    "z": 0.0
+                },
+                "Scale": {
+                    "x": 0.08580887317657471,
+                    "y": 0.14462459087371826,
+                    "z": 0.17092019319534302
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": -0.27012282609939575,
+                    "y": -0.8179550170898438,
+                    "z": 0.0
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.08580887317657471,
+                    "y": 0.14462459087371826,
+                    "z": 0.17092019319534302
+                },
+                "OldPosition": {
+                    "x": -0.27012282609939575,
+                    "y": -0.8179550170898438,
+                    "z": 0.0
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.08580887317657471,
+                    "y": 0.14462459087371826,
+                    "z": 0.17092019319534302
+                },
+                "OldFakePosition": {
+                    "x": -0.27012282609939575,
+                    "y": -0.8179550170898438,
+                    "z": 0.0
+                },
+                "OldFakeScale": {
+                    "x": 0.08580887317657471,
+                    "y": 0.14462459087371826,
+                    "z": 0.17092019319534302
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "UI Sprite": {
+                "Texture": "I Key.dds",
+                "EnableSprite": true,
+                "LayerID": 3,
+                "is Font": false,
+                "message": "",
+                "Font Texture": "",
+                "ForeGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 0.0
+                },
+                "Sprite Color": {
+                    "x": 0.10000000149011612,
+                    "y": 0.10000000149011612,
+                    "z": 0.10000000149011612,
+                    "w": 1.0
+                },
+                "BackGroundColour": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "BoundingBoxMin": {
+                    "x": -0.3130272626876831,
+                    "y": -0.8902673125267029
+                },
+                "BoundingBoxMax": {
+                    "x": -0.2272183895111084,
+                    "y": -0.7456427216529846
+                }
+            }
         }
     },
     "Scripts": {
@@ -114542,94 +117164,12 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 457
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "8"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 457
-                }
             }
         },
         "1118": {},
         "3": {},
         "67": {},
         "451": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "2"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 451
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -114780,71 +117320,6 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 1140
                 }
-            },
-            "LockPick1": {
-                "_TutorialCompleted": {
-                    "System.Boolean": "False"
-                },
-                "cam": {
-                    "ScriptAPI.CameraComponent": 1139
-                },
-                "playerCam": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "innerLock": {
-                    "ScriptAPI.TransformComponent": 1137
-                },
-                "pickPosition": {
-                    "ScriptAPI.TransformComponent": 0
-                },
-                "playerController": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "lockGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "maxAngle": {
-                    "System.Single": "90"
-                },
-                "lockSpeed": {
-                    "System.Single": "10"
-                },
-                "unlocked": {
-                    "System.Boolean": "False"
-                },
-                "_NumOfTries": {
-                    "ScriptAPI.GameObject": 1141
-                },
-                "_AmtOfTries": {
-                    "ScriptAPI.UISpriteComponent": 1141
-                },
-                "lockRange": {
-                    "System.Single": "10"
-                },
-                "numOfTries": {
-                    "System.Int32": "0"
-                },
-                "played": {
-                    "System.Boolean": "False"
-                },
-                "doorIndex": {
-                    "System.Int32": "0"
-                },
-                "doorText": {
-                    "ScriptAPI.GameObject": 1142
-                },
-                "monster": {
-                    "ScriptAPI.GameObject": 1143
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 1140
-                }
             }
         },
         "24": {},
@@ -114879,47 +117354,6 @@
         "39": {},
         "1028": {},
         "439": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "4"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 439
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -115014,94 +117448,12 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 437
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "5"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 437
-                }
             }
         },
         "46": {},
         "47": {},
         "1036": {},
         "447": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "1"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 447
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -115189,93 +117541,11 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 441
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "11"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 441
-                }
             }
         },
         "50": {},
         "51": {},
         "435": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "12"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 435
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -115322,47 +117592,6 @@
         "932": {},
         "53": {},
         "445": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "10"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 445
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -115456,93 +117685,11 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 463
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "0"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 463
-                }
             }
         },
         "1116": {},
         "64": {},
         "461": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 0
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "1"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 461
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -115632,93 +117779,11 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 465
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "2"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 465
-                }
             }
         },
         "74": {},
         "75": {},
         "459": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "10"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 459
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -115816,47 +117881,6 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 467
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "3"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 467
-                }
             }
         },
         "805": {},
@@ -115880,10 +117904,30 @@
         "94": {},
         "95": {},
         "495": {},
+        "1148": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "1"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1148
+                }
+            }
+        },
         "96": {},
         "97": {},
         "912": {},
         "489": {},
+        "1150": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "3"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1150
+                }
+            }
+        },
         "98": {},
         "99": {},
         "483": {},
@@ -115972,47 +118016,6 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 455
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "11"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 455
-                }
             }
         },
         "1108": {},
@@ -116020,47 +118023,6 @@
         "1000": {},
         "121": {},
         "449": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "0"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 449
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -116151,47 +118113,6 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 453
                 }
-            },
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "False"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "3"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 453
-                }
             }
         },
         "126": {},
@@ -116231,6 +118152,7 @@
         "146": {},
         "147": {},
         "276": {},
+        "1159": {},
         "148": {},
         "869": {},
         "149": {},
@@ -116245,9 +118167,20 @@
         "154": {},
         "155": {},
         "284": {},
+        "1167": {},
         "156": {},
         "157": {},
         "278": {},
+        "1153": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "6"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1153
+                }
+            }
+        },
         "158": {},
         "159": {},
         "272": {},
@@ -116377,6 +118310,7 @@
         "885": {},
         "228": {},
         "286": {},
+        "1161": {},
         "229": {},
         "230": {},
         "231": {},
@@ -116417,11 +118351,6 @@
         "380": {},
         "251": {},
         "845": {
-            "ReturnToMainMenuButton": {
-                "gameObject": {
-                    "ScriptAPI.GameObject": 845
-                }
-            },
             "ReturnToMainMenuButton": {
                 "gameObject": {
                     "ScriptAPI.GameObject": 845
@@ -116470,11 +118399,11 @@
         "604": {},
         "301": {},
         "303": {},
-        "672": {},
         "305": {},
+        "672": {},
         "307": {},
-        "676": {},
         "309": {},
+        "676": {},
         "311": {},
         "680": {},
         "313": {},
@@ -116595,47 +118524,6 @@
         "440": {},
         "442": {},
         "443": {
-            "Door_Script": {
-                "playerGameObject": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "lockpickGroup": {
-                    "ScriptAPI.GameObject": 1136
-                },
-                "lockpick": {
-                    "ScriptAPI.GameObject": 1140
-                },
-                "doorState": {
-                    "System.Single": "0"
-                },
-                "locked": {
-                    "System.Boolean": "True"
-                },
-                "forcedLocked": {
-                    "System.Boolean": "True"
-                },
-                "chainedShut": {
-                    "System.Boolean": "False"
-                },
-                "collided": {
-                    "System.Boolean": "False"
-                },
-                "doorStates": {
-                    "ScriptAPI.GameObject": 1144
-                },
-                "doorIndex": {
-                    "System.Int32": "8"
-                },
-                "popupUI": {
-                    "ScriptAPI.GameObject": 842
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 443
-                }
-            },
             "Door_Script": {
                 "playerGameObject": {
                     "ScriptAPI.GameObject": 840
@@ -116930,12 +118818,23 @@
         "783": {},
         "784": {},
         "786": {},
+        "1154": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "7"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1154
+                }
+            }
+        },
         "787": {},
         "788": {},
         "790": {},
         "791": {},
         "792": {},
         "794": {},
+        "1162": {},
         "795": {},
         "796": {},
         "798": {},
@@ -116992,11 +118891,8 @@
                 "followSpeed": {
                     "System.Single": "10"
                 },
-                "batteryLife": {
-                    "System.Int32": "100"
-                },
                 "batteryTick": {
-                    "System.Single": "15"
+                    "System.Single": "20"
                 },
                 "flicker": {
                     "System.Boolean": "False"
@@ -117121,10 +119017,10 @@
                     "System.Boolean": "True"
                 },
                 "holdToCrouch": {
-                    "System.Boolean": "True"
+                    "System.Boolean": "False"
                 },
                 "crouchKey": {
-                    "System.UInt32": "65"
+                    "System.UInt32": "162"
                 },
                 "crouchHeight": {
                     "System.Single": "0.75"
@@ -117155,183 +119051,9 @@
                     "ScriptAPI.GameObject": 840
                 }
             },
-            "Flashlight_Script": {
-                "lightSourceObj": {
-                    "ScriptAPI.GameObject": 1145
-                },
-                "player": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "activateLight": {
+            "InventoryScript": {
+                "LockpickIsOpen": {
                     "System.Boolean": "False"
-                },
-                "flashAudiostr": {
-                    "System.String": "temp_flashlight"
-                },
-                "flashAudio": {
-                    "ScriptAPI.AudioComponent": 0
-                },
-                "followSpeed": {
-                    "System.Single": "10"
-                },
-                "batteryLife": {
-                    "System.Int32": "100"
-                },
-                "batteryTick": {
-                    "System.Single": "15"
-                },
-                "flicker": {
-                    "System.Boolean": "False"
-                },
-                "flickerTimer": {
-                    "System.Single": "0"
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 840
-                }
-            },
-            "FPS_Controller_Script": {
-                "rb": {
-                    "ScriptAPI.RigidBodyComponent": 0
-                },
-                "startingVO": {
-                    "ScriptAPI.AudioComponent": 0
-                },
-                "playerCamera": {
-                    "ScriptAPI.CameraComponent": 841
-                },
-                "fov": {
-                    "System.Single": "60"
-                },
-                "invertCamera": {
-                    "System.Boolean": "False"
-                },
-                "cameraCanMove": {
-                    "System.Boolean": "True"
-                },
-                "mouseSensitivity": {
-                    "System.Single": "2"
-                },
-                "maxLookAngle": {
-                    "System.Single": "50"
-                },
-                "lockCursor": {
-                    "System.Boolean": "True"
-                },
-                "crosshair": {
-                    "System.Boolean": "True"
-                },
-                "enableZoom": {
-                    "System.Boolean": "True"
-                },
-                "holdToZoom": {
-                    "System.Boolean": "False"
-                },
-                "zoomKey": {
-                    "System.UInt32": "2"
-                },
-                "zoomFOV": {
-                    "System.Single": "30"
-                },
-                "zoomStepTime": {
-                    "System.Single": "5"
-                },
-                "playerCanMove": {
-                    "System.Boolean": "True"
-                },
-                "walkSpeed": {
-                    "System.Single": "2"
-                },
-                "maxVelocityChange": {
-                    "System.Single": "10"
-                },
-                "isWalking": {
-                    "System.Boolean": "False"
-                },
-                "enableSprint": {
-                    "System.Boolean": "True"
-                },
-                "unlimitedSprint": {
-                    "System.Boolean": "False"
-                },
-                "sprintKey": {
-                    "System.UInt32": "160"
-                },
-                "sprintSpeed": {
-                    "System.Single": "3"
-                },
-                "currentSprintSpeed": {
-                    "System.Single": "0"
-                },
-                "sprintDuration": {
-                    "System.Single": "5"
-                },
-                "sprintCooldown": {
-                    "System.Single": "0.5"
-                },
-                "sprintFOV": {
-                    "System.Single": "80"
-                },
-                "sprintFOVStepTime": {
-                    "System.Single": "10"
-                },
-                "useSprintBar": {
-                    "System.Boolean": "True"
-                },
-                "hideBarWhenFull": {
-                    "System.Boolean": "True"
-                },
-                "sprintBarWidthPercent": {
-                    "System.Single": "0.3"
-                },
-                "sprintBarHeightPercent": {
-                    "System.Single": "0.015"
-                },
-                "isSprinting": {
-                    "System.Boolean": "False"
-                },
-                "enableJump": {
-                    "System.Boolean": "True"
-                },
-                "jumpKey": {
-                    "System.UInt32": "32"
-                },
-                "jumpPower": {
-                    "System.Single": "5"
-                },
-                "enableCrouch": {
-                    "System.Boolean": "True"
-                },
-                "holdToCrouch": {
-                    "System.Boolean": "True"
-                },
-                "crouchKey": {
-                    "System.UInt32": "65"
-                },
-                "crouchHeight": {
-                    "System.Single": "0.75"
-                },
-                "speedReduction": {
-                    "System.Single": "0.5"
-                },
-                "playerHealth": {
-                    "System.Int32": "100"
-                },
-                "enableHeadBob": {
-                    "System.Boolean": "True"
-                },
-                "joint": {
-                    "ScriptAPI.TransformComponent": 0
-                },
-                "bobSpeed": {
-                    "System.Single": "10"
-                },
-                "bobAmount": {
-                    "ScriptAPI.Vector3": {
-                        "X": 0.15000000596046448,
-                        "Y": 0.05000000074505806,
-                        "Z": 0.0
-                    }
                 },
                 "gameObject": {
                     "ScriptAPI.GameObject": 840
@@ -117346,14 +119068,6 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 842
                 }
-            },
-            "PopupUI": {
-                "lockpickDisplayed": {
-                    "System.Boolean": "False"
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 842
-                }
             }
         },
         "843": {
@@ -117361,19 +119075,9 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 843
                 }
-            },
-            "ReturnToGame": {
-                "gameObject": {
-                    "ScriptAPI.GameObject": 843
-                }
             }
         },
         "844": {
-            "RestartButton": {
-                "gameObject": {
-                    "ScriptAPI.GameObject": 844
-                }
-            },
             "RestartButton": {
                 "gameObject": {
                     "ScriptAPI.GameObject": 844
@@ -117487,6 +119191,16 @@
         "999": {},
         "1001": {},
         "1002": {},
+        "1147": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "0"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1147
+                }
+            }
+        },
         "1003": {},
         "1005": {},
         "1047": {},
@@ -117733,178 +119447,6 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 1143
                 }
-            },
-            "GhostMovement": {
-                "patrolSpeed": {
-                    "System.Single": "0.1"
-                },
-                "currTargetWaypt": {
-                    "System.Int32": "0"
-                },
-                "deltaTime": {
-                    "System.Single": "0"
-                },
-                "NumOfWaypoints": {
-                    "System.Int32": "1"
-                },
-                "isPatrol": {
-                    "System.Boolean": "True"
-                },
-                "isChasingPlayer": {
-                    "System.Boolean": "False"
-                },
-                "player": {
-                    "ScriptAPI.GameObject": 840
-                },
-                "speed": {
-                    "System.Single": "0"
-                },
-                "walkingSoundCounter": {
-                    "System.Int32": "-1"
-                },
-                "playSound": {
-                    "System.Boolean": "False"
-                },
-                "playSoundTimer": {
-                    "System.Single": "0"
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 1143
-                }
-            },
-            "WaypointSetup": {
-                "MainEntrance_Room": {
-                    "System.Int32": "0"
-                },
-                "Toilet_Room": {
-                    "System.Int32": "0"
-                },
-                "SH_Room": {
-                    "System.Int32": "0"
-                },
-                "Bed_Room": {
-                    "System.Int32": "0"
-                },
-                "Living_Room": {
-                    "System.Int32": "0"
-                },
-                "RightWing_Room": {
-                    "System.Int32": "0"
-                },
-                "Dining_Room": {
-                    "System.Int32": "0"
-                },
-                "Kitchen_Room": {
-                    "System.Int32": "0"
-                },
-                "Gallery_Room": {
-                    "System.Int32": "0"
-                },
-                "Study_Room": {
-                    "System.Int32": "0"
-                },
-                "LeftWing_Room": {
-                    "System.Int32": "0"
-                },
-                "GalleryFirst_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "GallerySecond_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "GalleryStudy_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "Study_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "StudyLeftWing_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "LeftWing_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "GalleryLeftWing_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "LeftWingMainEntrance_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "DiningMainEntrance_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingMainEntrance_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "MainEntrance_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingFirst_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingSecond_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingThird_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingLiving_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingBed_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "BedFirst_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "BedSecond_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "BedSH_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "SHFirst_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "SHSecond_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "SHLiving_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "SHToilet_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "Toilet_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "Living_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "LivingDining_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "Dining_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "DiningKitchen_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "Kitchen_Waypoint": {
-                    "System.Int32": "0"
-                },
-                "RightWingStairs_DoorWaypoint": {
-                    "System.Int32": "0"
-                },
-                "playerMoved": {
-                    "System.Boolean": "False"
-                },
-                "timer": {
-                    "System.Single": "0"
-                },
-                "gameObject": {
-                    "ScriptAPI.GameObject": 1143
-                }
             }
         },
         "1144": {
@@ -117918,20 +119460,86 @@
                 "gameObject": {
                     "ScriptAPI.GameObject": 1144
                 }
-            },
-            "DoorState": {
-                "doorLookedAt": {
-                    "System.Boolean": "False"
-                },
-                "doorText": {
-                    "ScriptAPI.GameObject": 1142
+            }
+        },
+        "1145": {},
+        "1146": {},
+        "1149": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "2"
                 },
                 "gameObject": {
-                    "ScriptAPI.GameObject": 1144
+                    "ScriptAPI.GameObject": 1149
                 }
             }
         },
-        "1145": {}
+        "1151": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "4"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1151
+                }
+            }
+        },
+        "1152": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "5"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1152
+                }
+            }
+        },
+        "1155": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "8"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1155
+                }
+            }
+        },
+        "1156": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "9"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1156
+                }
+            }
+        },
+        "1157": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "10"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1157
+                }
+            }
+        },
+        "1158": {
+            "InventoryBox": {
+                "BoxNumber": {
+                    "System.Int32": "11"
+                },
+                "gameObject": {
+                    "ScriptAPI.GameObject": 1158
+                }
+            }
+        },
+        "1160": {},
+        "1163": {},
+        "1164": {},
+        "1165": {},
+        "1166": {},
+        "1168": {}
     },
     "Active Archetype": {
         "944": "110000100000000000",
@@ -118111,10 +119719,12 @@
         "94": "110000100000000000",
         "95": "110000100000000000",
         "495": "110000100000000000",
+        "1148": "110000000000100000",
         "96": "110000100000000000",
         "97": "110000100000000000",
         "912": "110000100000000000",
         "489": "110000100000000000",
+        "1150": "110000000000100000",
         "98": "110000100000000000",
         "99": "110000100000000000",
         "483": "110000100000000000",
@@ -118213,6 +119823,7 @@
         "146": "110000100000000000",
         "147": "110000100000000000",
         "276": "110000100000000000",
+        "1159": "110000000000100000",
         "148": "110000100000000000",
         "869": "110000100000000000",
         "149": "110000100000000000",
@@ -118227,9 +119838,11 @@
         "154": "110000100000000000",
         "155": "110000100000000000",
         "284": "110000100000000000",
+        "1167": "110000000000100000",
         "156": "110000100000000000",
         "157": "110000100000000000",
         "278": "110000100000000000",
+        "1153": "110000000000100000",
         "158": "110000100000000000",
         "159": "110000100000000000",
         "272": "110000100000000000",
@@ -118359,6 +119972,7 @@
         "885": "110000100000000000",
         "228": "110000100000000000",
         "286": "110000100000000000",
+        "1161": "110000000000100000",
         "229": "110000100000000000",
         "230": "110000100000000000",
         "231": "110000100000000000",
@@ -118441,11 +120055,11 @@
         "604": "110000100000000000",
         "301": "110000100000000000",
         "303": "110000100000000000",
-        "672": "110000100000000000",
         "305": "110000100000000000",
+        "672": "110000100000000000",
         "307": "110000100000000000",
-        "676": "110000100000000000",
         "309": "110100110000000000",
+        "676": "110000100000000000",
         "311": "110000100000000000",
         "680": "110000100000000000",
         "313": "110100110000000000",
@@ -118818,12 +120432,14 @@
         "783": "110000100000000000",
         "784": "110000100000000000",
         "786": "110000100000000000",
+        "1154": "110000000000100000",
         "787": "110000100000000000",
         "788": "110000100000000000",
         "790": "110000100000000000",
         "791": "110000100000000000",
         "792": "110000100000000000",
         "794": "110000100000000000",
+        "1162": "110000000000100000",
         "795": "110000100000000000",
         "796": "110000100000000000",
         "798": "110000100000000000",
@@ -118971,6 +120587,7 @@
         "999": "110000100000000000",
         "1001": "110000100000000000",
         "1002": "110000100000000000",
+        "1147": "110000000000100000",
         "1003": "110000100000000000",
         "1005": "110000100000000000",
         "1047": "110000100000000000",
@@ -119047,6 +120664,20 @@
         "1141": "110000000000100000",
         "1143": "110000100000000000",
         "1144": "110000000000000000",
-        "1145": "110000100000000010"
+        "1145": "110000100000000010",
+        "1146": "110000000000100000",
+        "1149": "110000000000100000",
+        "1151": "110000000000100000",
+        "1152": "110000000000100000",
+        "1155": "110000000000100000",
+        "1156": "110000000000100000",
+        "1157": "110000000000100000",
+        "1158": "110000000000100000",
+        "1160": "110000000000100000",
+        "1163": "110000000000100000",
+        "1164": "110000000000100000",
+        "1165": "110000000000100000",
+        "1166": "110000000000100000",
+        "1168": "110000000000100000"
     }
 }
