@@ -88,6 +88,11 @@ namespace TDS
             DLL_API  void update();
 
             /**
+            * Checks if any sound is playing
+            */
+            DLL_API  bool anySoundPlaying();
+
+            /**
              * Loads a sound from disk using provided settings
              * Prepares for later playback with playSound()
              * Only reads the audio file and loads into the audio engine
@@ -382,6 +387,7 @@ namespace TDS
         static void ScriptPause(std::string pathing);
         static void ScriptStop(std::string pathing);
         static void ScriptStopAll();
+        static bool ScriptAnySoundPlaying();
 
         static SoundInfo* find_sound_info(std::string str);
         static void Add_to_Queue(std::string str = "");

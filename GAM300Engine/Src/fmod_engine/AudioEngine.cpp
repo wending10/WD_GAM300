@@ -70,6 +70,34 @@ namespace TDS
         void AudioEngine::update()
         {
             ERRCHECK(studioSystem->update()); // also updates the low level system
+
+            
+        }
+
+        bool AudioEngine::anySoundPlaying()
+        {
+            bool check{ false };
+            
+            for (std::pair<unsigned int, FMOD::Channel*> it : normalPlaying)
+            {
+                it.second->isPlaying(&check);
+
+                if (check)
+                {
+                    break;
+                }
+            }
+            for (std::pair<unsigned int, FMOD::Channel*> it : loopsPlaying)
+            {
+                it.second->isPlaying(&check);
+
+                if(check)
+                {
+                    break;
+                }
+            }
+
+            return check;
         }
 
         void AudioEngine::loadSound(SoundInfo & soundInfo)
@@ -764,6 +792,11 @@ namespace TDS
     void proxy_audio_system::ScriptStopAll()
     {
         aud_instance->stopAllSound();
+    }
+
+    bool proxy_audio_system::ScriptAnySoundPlaying()
+    {
+        return aud_instance->anySoundPlaying();
     }
 
     SoundInfo* proxy_audio_system::find_sound_info(std::string str)

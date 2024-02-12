@@ -24,7 +24,7 @@ public class ReturnToMainMenuButton : Script
             returntoMMButtonSprite.SetEnabled(false);
         }
 
-        if (Input.GetMouseButtonDown(Keycode.M1) && returntoMMButtonSprite.IsMouseCollided())
+        if (Input.GetMouseButtonDown(Keycode.M1) && returntoMMButtonSprite.IsMouseCollided() && PopupUI.isDisplayed == true)
         {
             //Console.WriteLine("Return to MM Button Pressed");
             PopupUI.isDisplayed = false;
