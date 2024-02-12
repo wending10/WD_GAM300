@@ -40,8 +40,10 @@ public class InventoryScript : Script
     public override void Update()
     {
         var entityID = gameObject.GetEntityID();
+        gameObject.GetComponent<FPS_Controller_Script>().playerCanMove = !(PopupUI.isDisplayed || InventoryIsOpen);
+        gameObject.GetComponent<FPS_Controller_Script>().cameraCanMove = !(PopupUI.isDisplayed || InventoryIsOpen);
 
-        if(Input.GetKeyDown(Keycode.I))
+        if (Input.GetKeyDown(Keycode.I))
         {
             Console.WriteLine("I pressed");
             toggleInventory();
@@ -52,7 +54,7 @@ public class InventoryScript : Script
             Input.Lock(false);
             Input.HideMouse(false);
         }
-        else if (InventoryIsOpen) // Inventory opened
+        if (InventoryIsOpen) // Inventory opened
         {
             Input.Lock(false);
             Input.HideMouse(false);
@@ -63,6 +65,7 @@ public class InventoryScript : Script
             Input.Lock(true);
             Input.HideMouse(true);
         }
+
     }
 
     public void toggleInventory()
@@ -70,11 +73,6 @@ public class InventoryScript : Script
         Console.WriteLine("Toggle Inventory\n");
         InventoryIsOpen = !InventoryIsOpen;
         InventoryObject.SetActive(InventoryIsOpen);
-        if (InventoryIsOpen)
-        {
-            player.GetComponent<FPS_Controller_Script>().playerCanMove = !InventoryIsOpen;
-            player.GetComponent<FPS_Controller_Script>().cameraCanMove = !InventoryIsOpen;
-        }
     }
 
     public void checkMouseInput()
@@ -112,47 +110,47 @@ public class InventoryScript : Script
 
         itemsObjsImg = new List<string>
         {
-            "Invnt Battery Img.dds",            "Inventory Box Img.dds",
-            "Invnt Battery Img.dds",            "Inventory Box Img.dds",
-            "Invnt Battery Img.dds",            "Inventory Box Img.dds",
-            "Invnt Battery Img.dds",            "Inventory Box Img.dds",
-            "Invnt Battery Img.dds",            "Inventory Box Img.dds",
-            "Invnt Battery Img.dds",            "Inventory Box Img.dds"
+            "Invnt Battery Img.dds",            "Invnt Battery Img.dds",
+            "Invnt Battery Img.dds",            "Invnt Battery Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds"
         };
 
         itemObjsInInventory = new List<string>
         {
-            "Battery",            "",
-            "Battery",            "",
-            "Battery",            "",
-            "Battery",            "",
-            "Battery",            "",
-            "Battery",            ""
+            "Battery",            "Battery",
+            "Battery",            "Battery",
+            "",            "",
+            "",            "",
+            "",            "",
+            "",            ""
         };
 
         notesObjsImg = new List<string>
         {
-            "Notes1.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
-            "Notes7.dds",            "Notes8.dds",
-            "Notes9.dds",            "Notes10.dds",
-            "Notes11.dds",           "Notes12.dds"
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds"
         };
 
         noteObjsInInventory = new List<string>
         {
-            "Note Test",           "",
             "",           "",
             "",           "",
-            "Note7",           "Note8",
-            "Note9",           "Note10",
-            "Note11",           "Note12"
+            "",           "",
+            "",           "",
+            "",           "",
+            "",           ""
         };
 
         paintingsObjsImg = new List<string>
         {
-            "p01.dds",            "Inventory Box Img.dds",
+            "Inventory Box Img.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
             "Inventory Box Img.dds",            "Inventory Box Img.dds",
@@ -162,7 +160,7 @@ public class InventoryScript : Script
 
         paintingObjsInInventory = new List<string>
         {
-            "Painting Test",            "",
+            "",            "",
             "",            "",
             "",            "",
             "",            "",

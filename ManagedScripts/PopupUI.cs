@@ -33,8 +33,6 @@ public class PopupUI : Script
             popUpScreen.SetEnabled(true);
             Input.Lock(false);
             Input.HideMouse(false);
-            /*player.GetComponent<FPS_Controller_Script>().playerCanMove = !isDisplayed;
-            player.GetComponent<FPS_Controller_Script>().cameraCanMove = !isDisplayed;*/
 
         }
         else if(!InventoryScript.InventoryIsOpen && !lockpickDisplayed)
