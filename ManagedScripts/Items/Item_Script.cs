@@ -58,7 +58,7 @@ public class Item_Script : Script
         Vector3 itemPos = gameObject.transform.GetPosition();
         Vector3 playerPos = playerObject.transform.GetPosition();
         float distance = Vector3.Distance(itemPos, playerPos);
-        Console.WriteLine(distance);
+        //Console.WriteLine(distance);
         return distance < 100.0;
     }
 }

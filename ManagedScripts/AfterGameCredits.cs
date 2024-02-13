@@ -84,7 +84,7 @@ public class AfterGameCredits : Script
             }
             if (counter > 22.5f)
             {
-                Console.WriteLine("Switching to mainMenu");
+                //Console.WriteLine("Switching to mainMenu");
                 SceneLoader.LoadMainMenu();
             }
 

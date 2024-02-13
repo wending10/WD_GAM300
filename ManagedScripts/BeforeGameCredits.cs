@@ -56,7 +56,7 @@ public class BeforeGameCredits : Script
 
             if(counter > 6.0f)
             {
-                Console.WriteLine("Switching to mainMenu");
+                //Console.WriteLine("Switching to mainMenu");
                 SceneLoader.LoadMainMenu();
             }
             
