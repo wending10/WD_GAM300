@@ -110,6 +110,11 @@ namespace TDS
             DLL_API  int playSound(SoundInfo& soundInfo);
 
             /**
+            * Plays all sound in paused state
+            */
+            DLL_API  void playAllPaused();
+
+            /**
             * Pause a sound file using FMOD's low level audio system.
             *
             * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
@@ -146,12 +151,17 @@ namespace TDS
             * The SoundInfo object's position coordinates will be used for the new sound position, so
             * SoundInfo::set3DCoords(x,y,z) should be called before this method to set the new desired location.
             */
-            DLL_API  void update3DSoundPosition(SoundInfo soundInfo);
+            DLL_API  void update3DSoundPosition(SoundInfo& soundInfo);
 
             /**
              * Checks if a sound is playing.
              */
-            DLL_API  bool soundIsPlaying(SoundInfo soundInfo);
+            DLL_API  bool soundIsPlaying(SoundInfo& soundInfo);
+
+            /**
+            * Checks if a sound is paused
+            */
+            DLL_API  bool soundIsPaused(SoundInfo& soundInfo);
 
             /**
              * Checks if a sound has finished playing.
@@ -386,6 +396,8 @@ namespace TDS
         static void ScriptPlay(std::string pathing);
         static void ScriptPause(std::string pathing);
         static void ScriptStop(std::string pathing);
+        static void ScriptPlayAllPaused();
+        static void ScriptPauseAll();
         static void ScriptStopAll();
         static bool ScriptAnySoundPlaying();
 
@@ -402,7 +414,7 @@ namespace TDS
 
         static int totalNumClips;
         static bool Q_state;
-        static std::string Q_name;
+        static SoundInfo Q_name;
 
         static std::map<std::string, SoundInfo> music;
         static std::map<std::string, SoundInfo> SFX;

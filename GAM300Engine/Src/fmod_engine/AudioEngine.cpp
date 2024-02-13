@@ -180,6 +180,28 @@ namespace TDS
 
         }
 
+        void AudioEngine::playAllPaused()
+        {
+            bool check{ false };
+            
+            for (std::pair<unsigned int, FMOD::Channel*> it : loopsPlaying)
+            {
+                it.second->getPaused(&check);
+                if (check)
+                {
+                    it.second->setPaused(false);
+                }
+            }
+            for (std::pair<unsigned int, FMOD::Channel*> it : normalPlaying)
+            {
+                it.second->getPaused(&check);
+                if (check)
+                {
+                    it.second->setPaused(false);
+                }
+            }
+        }
+
         void AudioEngine::pauseSound(SoundInfo& soundInfo)
         {
             if (soundInfo.isPlaying())
@@ -302,7 +324,7 @@ namespace TDS
         }
 
 
-        void AudioEngine::update3DSoundPosition(SoundInfo soundInfo)
+        void AudioEngine::update3DSoundPosition(SoundInfo& soundInfo)
         {
             if (soundIsPlaying(soundInfo))
                 set3dChannelPosition(soundInfo, loopsPlaying[soundInfo.getUniqueID()]);
@@ -311,7 +333,7 @@ namespace TDS
 
         }
 
-        bool AudioEngine::soundIsPlaying(SoundInfo soundInfo)
+        bool AudioEngine::soundIsPlaying(SoundInfo& soundInfo)
         {
             int channelnum{ 0 };
 
@@ -325,6 +347,27 @@ namespace TDS
             return false;
 
             //return (soundInfo.isLoop() || soundInfo.isPlaying()) && soundInfo.isLoaded() && loopsPlaying.count(soundInfo.getUniqueID());
+        }
+
+        bool AudioEngine::soundIsPaused(SoundInfo& soundInfo)
+        {
+            bool check{ false };
+
+            if (soundInfo.isLoop())
+            {
+                loopsPlaying[soundInfo.getUniqueID()]->getPaused(&check);
+            }
+            else
+            {
+                normalPlaying[soundInfo.getUniqueID()]->getPaused(&check);
+            }
+
+            if (check)
+            {
+                soundInfo.setState(SOUND_PAUSE);
+            }
+
+            return check;
         }
 
         bool AudioEngine::soundFinished(SoundInfo& soundInfo)
@@ -554,7 +597,7 @@ namespace TDS
     AudioWerks::AudioEngine* proxy_audio_system::aud_instance = nullptr;
     int proxy_audio_system::totalNumClips{ 0 };
     bool proxy_audio_system::Q_state{ false };
-    std::string proxy_audio_system::Q_name{};
+    SoundInfo proxy_audio_system::Q_name{};
 
     std::map<std::string, SoundInfo> proxy_audio_system::music;
     std::map<std::string, SoundInfo> proxy_audio_system::SFX;
@@ -589,10 +632,7 @@ namespace TDS
 
     void proxy_audio_system::audio_event_update()
     {
-        if (Q_state)
-        {
-            Play_queue();
-        }
+        
     }
 
     void proxy_audio_system::load_all_audio_files()
@@ -786,12 +826,55 @@ namespace TDS
             }
         }
 
-    DoNe:;
+        DoNe:;
+    }
+
+    void proxy_audio_system::ScriptPlayAllPaused()
+    {
+        aud_instance->playAllPaused();
+    }
+
+    void proxy_audio_system::ScriptPauseAll()
+    {
+        aud_instance->pauseAllSound();
     }
 
     void proxy_audio_system::ScriptStopAll()
     {
-        aud_instance->stopAllSound();
+        for (auto& temp : background)
+        {
+            if (aud_instance->soundIsPlaying(temp.second))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : music)
+        {
+            if (aud_instance->soundIsPlaying(temp.second))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : SFX)
+        {
+            if (aud_instance->soundIsPlaying(temp.second))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+        for (auto& temp : VO)
+        {
+            if (aud_instance->soundIsPlaying(temp.second))
+            {
+                aud_instance->stopSound(temp.second);
+                goto DoNe;
+            }
+        }
+
+        DoNe:;
     }
 
     bool proxy_audio_system::ScriptAnySoundPlaying()
@@ -845,12 +928,12 @@ namespace TDS
 
     void proxy_audio_system::Play_queue()
     {        
-        Q_state = true;
+        /*Q_state = true;
 
         if (Queue.begin()->second.first)
         {
             aud_instance->playSound(*Queue.begin()->second.second);
-            Q_name = Queue.begin()->first;
+            Q_name = *Queue.begin()->second.second;
             Queue.extract(Queue.begin()->first);
         }
         if (aud_instance->soundIsPlaying(Q_name))
@@ -860,7 +943,7 @@ namespace TDS
         if (Queue.empty())
         {
             Q_state = false;
-        }
+        }*/
     }
 
     void proxy_audio_system::Clear_queue()
