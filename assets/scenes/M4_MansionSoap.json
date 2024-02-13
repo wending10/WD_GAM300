@@ -462,29 +462,27 @@
                 "Model UID": 0
             }
         },
-        "2": {
+        "1054": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
             "Name Tag": {
-                "Name": "Cylinder",
+                "Name": "Base",
                 "Tag": "",
                 "IsActive": true,
-                "HierarchyParent": 1,
-                "HierarchyIndex": 0,
-                "HierarchyChildren": [
-                    3
-                ]
+                "HierarchyParent": 1053,
+                "HierarchyIndex": 63,
+                "HierarchyChildren": []
             },
             "Transform": {
                 "Position": {
-                    "x": -68.63600158691406,
-                    "y": 2.6538467407226563,
-                    "z": 879.316650390625
+                    "x": -1048.22509765625,
+                    "y": -9.11811351776123,
+                    "z": -1039.5067138671875
                 },
                 "Scale": {
-                    "x": 1.7999999523162842,
-                    "y": 1.7999999523162842,
-                    "z": 1.7999999523162842
+                    "x": 1.4055298566818237,
+                    "y": 1.4055298566818237,
+                    "z": 1.4055298566818237
                 },
                 "Rotation": {
                     "x": 0.0,
@@ -492,9 +490,9 @@
                     "z": 0.0
                 },
                 "FakePosition": {
-                    "x": -68.63600158691406,
-                    "y": -49.5989990234375,
-                    "z": 882.322021484375
+                    "x": -794.6488037109375,
+                    "y": -52.78672409057617,
+                    "z": -1083.5516357421875
                 },
                 "FakeRotation": {
                     "x": 0.0,
@@ -502,14 +500,14 @@
                     "z": 0.0
                 },
                 "FakeScale": {
-                    "x": 1.7999999523162842,
-                    "y": 1.7999999523162842,
-                    "z": 1.7999999523162842
+                    "x": 1.4055298566818237,
+                    "y": 1.4055298566818237,
+                    "z": 1.4055298566818237
                 },
                 "OldPosition": {
-                    "x": -68.63600158691406,
-                    "y": 2.6538467407226563,
-                    "z": 879.316650390625
+                    "x": -1048.22509765625,
+                    "y": -9.118114471435547,
+                    "z": -1039.5067138671875
                 },
                 "OldScale": {
                     "x": 0.0,
@@ -517,19 +515,19 @@
                     "z": 0.0
                 },
                 "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "x": 1.1100000143051147,
+                    "y": 1.1100000143051147,
+                    "z": 1.1100000143051147
                 },
                 "OldFakePosition": {
-                    "x": -68.63600158691406,
-                    "y": -49.5989990234375,
-                    "z": 882.322021484375
+                    "x": -794.6488037109375,
+                    "y": -52.78672409057617,
+                    "z": -1083.5516357421875
                 },
                 "OldFakeScale": {
-                    "x": 1.7999999523162842,
-                    "y": 1.7999999523162842,
-                    "z": 1.0
+                    "x": 1.4055298566818237,
+                    "y": 1.4055298566818237,
+                    "z": 1.4055298566818237
                 },
                 "OldFakeRotation": {
                     "x": 0.0,
@@ -537,19 +535,19 @@
                     "z": 0.0
                 },
                 "ParentPosition": {
-                    "x": -68.63600158691406,
-                    "y": -49.5989990234375,
-                    "z": 882.322021484375
+                    "x": -794.64892578125,
+                    "y": -52.78672409057617,
+                    "z": -1083.5516357421875
                 }
             },
             "Graphics Component": {
                 "PointLight": false,
-                "TextureName": "",
+                "TextureName": "KitchenCounter BaseColor.dds",
                 "Show Mesh": true,
                 "Debug": false,
-                "ModelName": "Cloth_Stand_Bin.bin",
-                "MeshName": "",
-                "MeshNodeName": "Cylinder",
+                "ModelName": "Kitchen Counter_Bin.bin",
+                "MeshName": "Base",
+                "MeshNodeName": "Base",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -717,234 +715,39 @@
                 "RayScale": 1.0
             }
         },
-        "1054": {
+        "2": {
             "ArchetypeID": "110000100000000000",
             "Enabled": true,
             "Name Tag": {
-                "Name": "Base",
+                "Name": "Cylinder",
                 "Tag": "",
                 "IsActive": true,
-                "HierarchyParent": 1053,
-                "HierarchyIndex": 63,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": -1048.22509765625,
-                    "y": -9.11811351776123,
-                    "z": -1039.5067138671875
-                },
-                "Scale": {
-                    "x": 1.4055298566818237,
-                    "y": 1.4055298566818237,
-                    "z": 1.4055298566818237
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": -794.6488037109375,
-                    "y": -52.78672409057617,
-                    "z": -1083.5516357421875
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 1.4055298566818237,
-                    "y": 1.4055298566818237,
-                    "z": 1.4055298566818237
-                },
-                "OldPosition": {
-                    "x": -1048.22509765625,
-                    "y": -9.118114471435547,
-                    "z": -1039.5067138671875
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 1.1100000143051147,
-                    "y": 1.1100000143051147,
-                    "z": 1.1100000143051147
-                },
-                "OldFakePosition": {
-                    "x": -794.6488037109375,
-                    "y": -52.78672409057617,
-                    "z": -1083.5516357421875
-                },
-                "OldFakeScale": {
-                    "x": 1.4055298566818237,
-                    "y": 1.4055298566818237,
-                    "z": 1.4055298566818237
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": -794.64892578125,
-                    "y": -52.78672409057617,
-                    "z": -1083.5516357421875
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "KitchenCounter BaseColor.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Kitchen Counter_Bin.bin",
-                "MeshName": "Base",
-                "MeshNodeName": "Base",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
-        "66": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "Book_Generator____NitroMan",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 65,
-                "HierarchyIndex": 7,
-                "HierarchyChildren": []
-            },
-            "Transform": {
-                "Position": {
-                    "x": 1603.72705078125,
-                    "y": 14.91082763671875,
-                    "z": -179.6867218017578
-                },
-                "Scale": {
-                    "x": 0.800000011920929,
-                    "y": 0.8500000238418579,
-                    "z": 0.800000011920929
-                },
-                "Rotation": {
-                    "x": 0.0,
-                    "y": 1.5379999876022339,
-                    "z": 0.0
-                },
-                "FakePosition": {
-                    "x": 1603.6800537109375,
-                    "y": -53.0,
-                    "z": -177.67799377441406
-                },
-                "FakeRotation": {
-                    "x": 0.0,
-                    "y": 1.5379999876022339,
-                    "z": 0.0
-                },
-                "FakeScale": {
-                    "x": 0.800000011920929,
-                    "y": 0.8500000238418579,
-                    "z": 0.800000011920929
-                },
-                "OldPosition": {
-                    "x": 1603.72705078125,
-                    "y": 14.91082763671875,
-                    "z": -179.6867218017578
-                },
-                "OldScale": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "OldFakePosition": {
-                    "x": 1603.6800537109375,
-                    "y": -53.0,
-                    "z": -177.67799377441406
-                },
-                "OldFakeScale": {
-                    "x": 0.800000011920929,
-                    "y": 0.8500000238418579,
-                    "z": 0.800000011920929
-                },
-                "OldFakeRotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "ParentPosition": {
-                    "x": 1603.6800537109375,
-                    "y": -53.0,
-                    "z": -177.67799377441406
-                }
-            },
-            "Graphics Component": {
-                "PointLight": false,
-                "TextureName": "Book_Generator_-__NitroManSurface_Color.dds",
-                "Show Mesh": true,
-                "Debug": false,
-                "ModelName": "Bookshelf_Bin.bin3730986571",
-                "MeshName": "Book_Generator____NitroMan",
-                "MeshNodeName": "Book_Generator____NitroMan",
-                "Color": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0,
-                    "w": 1.0
-                },
-                "Used In 2D": false,
-                "Model UID": 0
-            }
-        },
-        "1118": {
-            "ArchetypeID": "110000100000000000",
-            "Enabled": true,
-            "Name Tag": {
-                "Name": "(Living Room) Ceiling Light",
-                "Tag": "",
-                "IsActive": true,
-                "HierarchyParent": 0,
-                "HierarchyIndex": 51,
+                "HierarchyParent": 1,
+                "HierarchyIndex": 0,
                 "HierarchyChildren": [
-                    1119,
-                    1121,
-                    1123,
-                    1125
+                    3
                 ]
             },
             "Transform": {
                 "Position": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": 2.6538467407226563,
+                    "z": 879.316650390625
                 },
                 "Scale": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 1.7999999523162842,
+                    "y": 1.7999999523162842,
+                    "z": 1.7999999523162842
                 },
                 "Rotation": {
                     "x": 0.0,
-                    "y": -0.0,
+                    "y": 0.0,
                     "z": 0.0
                 },
                 "FakePosition": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": -49.5989990234375,
+                    "z": 882.322021484375
                 },
                 "FakeRotation": {
                     "x": 0.0,
@@ -952,14 +755,14 @@
                     "z": 0.0
                 },
                 "FakeScale": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 1.7999999523162842,
+                    "y": 1.7999999523162842,
+                    "z": 1.7999999523162842
                 },
                 "OldPosition": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": 2.6538467407226563,
+                    "z": 879.316650390625
                 },
                 "OldScale": {
                     "x": 0.0,
@@ -967,19 +770,19 @@
                     "z": 0.0
                 },
                 "OldRotation": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
                 },
                 "OldFakePosition": {
-                    "x": 914.1080932617188,
-                    "y": 3.716796875,
-                    "z": -598.45849609375
+                    "x": -68.63600158691406,
+                    "y": -49.5989990234375,
+                    "z": 882.322021484375
                 },
                 "OldFakeScale": {
-                    "x": 1.350000023841858,
-                    "y": 1.350000023841858,
-                    "z": 1.350000023841858
+                    "x": 1.7999999523162842,
+                    "y": 1.7999999523162842,
+                    "z": 1.0
                 },
                 "OldFakeRotation": {
                     "x": 0.0,
@@ -987,9 +790,9 @@
                     "z": 0.0
                 },
                 "ParentPosition": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
+                    "x": -68.63600158691406,
+                    "y": -49.5989990234375,
+                    "z": 882.322021484375
                 }
             },
             "Graphics Component": {
@@ -997,9 +800,9 @@
                 "TextureName": "",
                 "Show Mesh": true,
                 "Debug": false,
-                "ModelName": "Living_CeilingLight_Bin.bin",
-                "MeshName": "Living_CeilingLight_Bin.bin",
-                "MeshNodeName": "Living_CeilingLight_Bin.bin",
+                "ModelName": "Cloth_Stand_Bin.bin",
+                "MeshName": "",
+                "MeshNodeName": "Cylinder",
                 "Color": {
                     "x": 1.0,
                     "y": 1.0,
@@ -1165,6 +968,203 @@
                     "z": 0.0
                 },
                 "RayScale": 1.0
+            }
+        },
+        "1118": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "(Living Room) Ceiling Light",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 0,
+                "HierarchyIndex": 51,
+                "HierarchyChildren": [
+                    1119,
+                    1121,
+                    1123,
+                    1125
+                ]
+            },
+            "Transform": {
+                "Position": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "Scale": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": -0.0,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "OldPosition": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "OldFakePosition": {
+                    "x": 914.1080932617188,
+                    "y": 3.716796875,
+                    "z": -598.45849609375
+                },
+                "OldFakeScale": {
+                    "x": 1.350000023841858,
+                    "y": 1.350000023841858,
+                    "z": 1.350000023841858
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Living_CeilingLight_Bin.bin",
+                "MeshName": "Living_CeilingLight_Bin.bin",
+                "MeshNodeName": "Living_CeilingLight_Bin.bin",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
+            }
+        },
+        "66": {
+            "ArchetypeID": "110000100000000000",
+            "Enabled": true,
+            "Name Tag": {
+                "Name": "Book_Generator____NitroMan",
+                "Tag": "",
+                "IsActive": true,
+                "HierarchyParent": 65,
+                "HierarchyIndex": 7,
+                "HierarchyChildren": []
+            },
+            "Transform": {
+                "Position": {
+                    "x": 1603.72705078125,
+                    "y": 14.91082763671875,
+                    "z": -179.6867218017578
+                },
+                "Scale": {
+                    "x": 0.800000011920929,
+                    "y": 0.8500000238418579,
+                    "z": 0.800000011920929
+                },
+                "Rotation": {
+                    "x": 0.0,
+                    "y": 1.5379999876022339,
+                    "z": 0.0
+                },
+                "FakePosition": {
+                    "x": 1603.6800537109375,
+                    "y": -53.0,
+                    "z": -177.67799377441406
+                },
+                "FakeRotation": {
+                    "x": 0.0,
+                    "y": 1.5379999876022339,
+                    "z": 0.0
+                },
+                "FakeScale": {
+                    "x": 0.800000011920929,
+                    "y": 0.8500000238418579,
+                    "z": 0.800000011920929
+                },
+                "OldPosition": {
+                    "x": 1603.72705078125,
+                    "y": 14.91082763671875,
+                    "z": -179.6867218017578
+                },
+                "OldScale": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "OldFakePosition": {
+                    "x": 1603.6800537109375,
+                    "y": -53.0,
+                    "z": -177.67799377441406
+                },
+                "OldFakeScale": {
+                    "x": 0.800000011920929,
+                    "y": 0.8500000238418579,
+                    "z": 0.800000011920929
+                },
+                "OldFakeRotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "ParentPosition": {
+                    "x": 1603.6800537109375,
+                    "y": -53.0,
+                    "z": -177.67799377441406
+                }
+            },
+            "Graphics Component": {
+                "PointLight": false,
+                "TextureName": "Book_Generator_-__NitroManSurface_Color.dds",
+                "Show Mesh": true,
+                "Debug": false,
+                "ModelName": "Bookshelf_Bin.bin3730986571",
+                "MeshName": "Book_Generator____NitroMan",
+                "MeshNodeName": "Book_Generator____NitroMan",
+                "Color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                },
+                "Used In 2D": false,
+                "Model UID": 0
             }
         },
         "3": {
@@ -82322,7 +82322,7 @@
             "Transform": {
                 "Position": {
                     "x": 80.09912109375,
-                    "y": 126.834716796875,
+                    "y": 126.83148193359375,
                     "z": -123.25736999511719
                 },
                 "Scale": {
@@ -82337,7 +82337,7 @@
                 },
                 "FakePosition": {
                     "x": 80.09912109375,
-                    "y": 126.834716796875,
+                    "y": 126.83148193359375,
                     "z": -123.25736999511719
                 },
                 "FakeRotation": {
@@ -82352,7 +82352,7 @@
                 },
                 "OldPosition": {
                     "x": 80.09912109375,
-                    "y": 126.83473205566406,
+                    "y": 126.83148956298828,
                     "z": -123.25736999511719
                 },
                 "OldScale": {
@@ -82367,7 +82367,7 @@
                 },
                 "OldFakePosition": {
                     "x": 80.09912109375,
-                    "y": 126.83473205566406,
+                    "y": 126.83148956298828,
                     "z": -123.25736999511719
                 },
                 "OldFakeScale": {
@@ -82390,7 +82390,7 @@
                 "IsTrigger": false,
                 "Collider Center": {
                     "x": 80.52911376953125,
-                    "y": 126.834716796875,
+                    "y": 126.83148193359375,
                     "z": -104.3967056274414
                 },
                 "Collider Size": {
@@ -117459,11 +117459,9 @@
         "65": {},
         "944": {},
         "1": {},
-        "2": {},
-        "393": {},
         "1054": {},
-        "66": {},
-        "1118": {},
+        "393": {},
+        "2": {},
         "457": {
             "Door_Script": {
                 "playerGameObject": {
@@ -117507,6 +117505,8 @@
                 }
             }
         },
+        "1118": {},
+        "66": {},
         "3": {},
         "67": {},
         "451": {
@@ -117592,6 +117592,9 @@
                 },
                 "opened": {
                     "System.Boolean": "False"
+                },
+                "_InteractUI": {
+                    "ScriptAPI.GameObject": 1171
                 },
                 "voClip": {
                     "ScriptAPI.AudioComponent[]": 0
@@ -118326,6 +118329,9 @@
                 "opened": {
                     "System.Boolean": "False"
                 },
+                "_InteractUI": {
+                    "ScriptAPI.GameObject": 1171
+                },
                 "voClip": {
                     "ScriptAPI.AudioComponent[]": 0
                 },
@@ -118534,6 +118540,9 @@
                 },
                 "opened": {
                     "System.Boolean": "False"
+                },
+                "_InteractUI": {
+                    "ScriptAPI.GameObject": 1171
                 },
                 "voClip": {
                     "ScriptAPI.AudioComponent[]": 0
@@ -119643,6 +119652,9 @@
                 "opened": {
                     "System.Boolean": "False"
                 },
+                "_InteractUI": {
+                    "ScriptAPI.GameObject": 1171
+                },
                 "voClip": {
                     "ScriptAPI.AudioComponent[]": 0
                 },
@@ -119696,6 +119708,9 @@
                 },
                 "Note_Texture": {
                     "System.String": "Receipt.dds"
+                },
+                "_InteractUI": {
+                    "ScriptAPI.GameObject": 1171
                 },
                 "gameObject": {
                     "ScriptAPI.GameObject": 1117
@@ -119994,12 +120009,12 @@
         "65": "110000100000000000",
         "944": "110000100000000000",
         "1": "110000100000000000",
-        "2": "110000100000000000",
-        "393": "110100110000000000",
         "1054": "110000100000000000",
-        "66": "110000100000000000",
-        "1118": "110000100000000000",
+        "393": "110100110000000000",
+        "2": "110000100000000000",
         "457": "110100110000000000",
+        "1118": "110000100000000000",
+        "66": "110000100000000000",
         "3": "110000100000000000",
         "67": "110000100000000000",
         "451": "110100110000000000",
