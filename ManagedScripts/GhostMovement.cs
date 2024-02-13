@@ -59,6 +59,7 @@ public class GhostMovement : Script
     public bool hideEventDone;
     public bool hideEvent;
     public int hideEventStep;
+    public GameObject SHDoor;
 
     //public void ReadWaypoint(Waypoint wp)
     //{
@@ -92,16 +93,15 @@ public class GhostMovement : Script
 
     public override void Awake()
     {
-        walkingSounds = new string[9];
+        walkingSounds = new string[8];
         walkingSounds[0] = "mon_woodstep1";
-        walkingSounds[1] = "mon_woodstep1";
-        walkingSounds[2] = "mon_woodstep2";
-        walkingSounds[3] = "mon_woodstep3";
-        walkingSounds[4] = "mon_woodstep4";
-        walkingSounds[5] = "mon_woodstep5";
-        walkingSounds[6] = "mon_woodstep6";
-        walkingSounds[7] = "mon_woodstep7";
-        walkingSounds[8] = "mon_woodstep8";
+        walkingSounds[1] = "mon_woodstep2";
+        walkingSounds[2] = "mon_woodstep3";
+        walkingSounds[3] = "mon_woodstep4";
+        walkingSounds[4] = "mon_woodstep5";
+        walkingSounds[5] = "mon_woodstep6";
+        walkingSounds[6] = "mon_woodstep7";
+        walkingSounds[7] = "mon_woodstep8";
 
         speed = 0.2f;
         soundSpeed = 1.0f;
@@ -244,6 +244,14 @@ public class GhostMovement : Script
         }
     }
 
+    public void PlayMonsterWalkingSoundInitial()
+    {
+        AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+        walkingSoundCounter = 0;
+        audio.play(walkingSounds[walkingSoundCounter]);
+        playSound = true;
+    }
+
     public bool PlayMonsterWalkingSound()
     {
         AudioComponent audio = gameObject.GetComponent<AudioComponent>();
@@ -255,8 +263,10 @@ public class GhostMovement : Script
                 audio.stop(walkingSounds[walkingSoundCounter]);
                 ++walkingSoundCounter;
 
-                if (walkingSoundCounter == 8)  // finished
+                if (walkingSoundCounter == 7)  // finished
+                {
                     return false;
+                }
 
                 audio.play(walkingSounds[walkingSoundCounter]);
                 playSoundTimer = soundSpeed - walkingSoundCounter * 0.05f;
@@ -275,7 +285,6 @@ public class GhostMovement : Script
         soundSpeed -= 0.1f;
         speed += 0.2f;
         playSoundTimer = soundSpeed;
-        walkingSoundCounter = 0;
         isPatrol = false;
         isChasingPlayer = true;
 
@@ -284,7 +293,7 @@ public class GhostMovement : Script
 
         player.transform.SetPosition(transform.GetPosition());
 
-        playSound = true;
+        PlayMonsterWalkingSoundInitial();
     }
 
     public void BedroomHidingEvent()
@@ -332,6 +341,7 @@ public class GhostMovement : Script
                 hideEventDone = true;
                 hideEvent = false;
                 isChasingPlayer = false;
+                SHDoor.GetComponent<Door_Script>().forcedLocked = false;
                 break;
         }
     }

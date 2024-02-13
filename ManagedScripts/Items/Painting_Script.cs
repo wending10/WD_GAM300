@@ -31,6 +31,8 @@ public class Painting_Script : Script
     public AudioComponent[] voClip = new AudioComponent[2];
 
     public float timer;
+    public GameObject hidingGameObject;
+    public GameObject ghost;
 
     override public void Awake()
     {
@@ -59,6 +61,13 @@ public class Painting_Script : Script
                 InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
                 gameObject.GetComponent<GraphicComponent>().SetView2D(true);
                 gameObject.SetActive(false);
+
+                // hiding event 
+                hidingGameObject.GetComponent<Hiding>().numOfPaintingsTook++;
+                if (hidingGameObject.GetComponent<Hiding>().numOfPaintingsTook == 1)
+                {
+                    ghost.GetComponent<GhostMovement>().PlayMonsterWalkingSoundInitial();
+                }
             }
         }
         else

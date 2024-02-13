@@ -34,8 +34,11 @@ public class Hiding : Script
 
     public float turnSpeed = 0.01f;
 
+    public int numOfPaintingsTook = 0;
+
     public override void Awake()
     {
+        numOfPaintingsTook = 0;
     }
 
     public override void Start()
@@ -76,7 +79,7 @@ public class Hiding : Script
                 player.GetComponent<Flashlight_Script>().activateLight = false;
                 _flashlight.SetActive(false);
 
-                if (enemyPathfinding.GetComponent<GhostMovement>().hideEventDone == false)
+                if (enemyPathfinding.GetComponent<GhostMovement>().hideEventDone == false && numOfPaintingsTook == 1)
                 {
                     if (enemyPathfinding.GetComponent<GhostMovement>().hideEvent == false)
                     {
