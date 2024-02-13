@@ -34,7 +34,7 @@ public class RestartButton : Script
             restartButtonSprite.SetEnabled(false);
         }
 
-        if (Input.GetMouseButtonDown(Keycode.M1) && restartButtonSprite.IsMouseCollided())
+        if (Input.GetMouseButtonDown(Keycode.M1) && restartButtonSprite.IsMouseCollided() && PopupUI.isDisplayed == true)
         {
             Console.WriteLine("Restart Button Pressed");
             PopupUI.isDisplayed = false;
