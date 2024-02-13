@@ -139,11 +139,11 @@ namespace TDS
 
                         if (soundInfo.isLoop()) // add to channel map of sounds currently playing, to stop later
                         {
-                            loopsPlaying.insert({ soundInfo.getUniqueID(), channel });
+                            loopsPlaying[soundInfo.getUniqueID()] = channel;
                         }
                         else
                         {
-                            normalPlaying.insert({ soundInfo.getUniqueID(), channel });
+                            normalPlaying[soundInfo.getUniqueID()] = channel;
                         }
 
                         ERRCHECK(channel->setReverbProperties(0, soundInfo.getReverbAmount()));
@@ -727,10 +727,7 @@ namespace TDS
     {
         for (auto& temp : allSounds)
         {
-            if (aud_instance->soundIsPlaying(temp.second))
-            {
-                aud_instance->stopSound(temp.second);
-            }
+            aud_instance->stopSound(temp.second);
         }
     }
 

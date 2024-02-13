@@ -307,6 +307,7 @@ namespace TDS
                 if (Input::isKeyPressed(VK_ESCAPE))
                 {
                     gamePaused = !gamePaused;
+                    proxy_audio_system::ScriptPlayAllPaused();
                 }
 
                 if (startPlaying)
@@ -337,6 +338,7 @@ namespace TDS
                     InputSystem::GetInstance()->setMouseLock(false);
                     InputSystem::GetInstance()->setCursorVisible(true);
                 }
+                proxy_audio_system::ScriptPauseAll();
             }
 
             ecs.runSystems(2, DeltaTime); // Event handler

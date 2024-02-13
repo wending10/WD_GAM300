@@ -34,7 +34,11 @@ public class PlayButton : Script
 
     public override void Update()
     {
-        bgm.play(bgmName);
+        if(bgm.finished(bgmName))
+        {
+            bgm.play(bgmName);
+            Console.WriteLine("Mainmenu Update()");
+        }
 
         if (Input.GetMouseButtonDown(Keycode.M1) && sprite.IsMouseCollided())
         {
@@ -46,6 +50,6 @@ public class PlayButton : Script
 
     public override void OnDestroy()
     {
-        bgm.stopAll();
+        bgm.stop(bgmName);
     }
 }
