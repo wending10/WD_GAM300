@@ -36,6 +36,8 @@ public class LockPick1 : Script
     public static int counter;
 
     public AudioSource myVOSource;
+    public string startingVOstr;
+    public string[] endVOstr;
     public bool _TutorialCompleted;
 
     [Header("Lockpick Variables")]
@@ -125,6 +127,11 @@ public class LockPick1 : Script
         audio = gameObject.GetComponent<AudioComponent>();
 
         newLock();
+    }
+
+    public override void Start()
+    {
+        audio.play(startingVOstr);
     }
 
     // Update is called once per frame

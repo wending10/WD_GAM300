@@ -17,6 +17,8 @@ public class Item_Script : Script
     private GameObject playerObject;
     //RigidBodyComponent rigidBodyComponent; //for raycast?
 
+    AudioComponent audioPlayer;
+
     [SerializeField]
     public string Item_Name;
     public string Item_Texture;
@@ -24,7 +26,7 @@ public class Item_Script : Script
 
     public override void Awake()
     {
-
+        audioPlayer = gameObject.GetComponent<AudioComponent>();
     }
 
     public override void Start()

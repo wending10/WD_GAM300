@@ -27,8 +27,8 @@ public class Painting_Script : Script
     //private GraphicComponent _color;
 
     [Header("AudioStuff")]
-    public AudioSource AudioPlayer;
-    public AudioComponent[] voClip = new AudioComponent[2];
+    public AudioComponent AudioPlayer;
+    public String voClip;
 
     public float timer;
     public GameObject hidingGameObject;
@@ -36,8 +36,8 @@ public class Painting_Script : Script
 
     override public void Awake()
     {
-        //voClip[0].setFilePath("pc_stealpainting1");
-        //voClip[1].setFilePath("pc_shinelightafterreceipt"); //This one should be items VO
+        voClip = "pc_stealpainting1";
+        AudioPlayer = gameObject.GetComponent<AudioComponent>();
         //_color.a = 1;
         //timer = 1.0f;
         //Console.WriteLine("Painting script");
@@ -61,6 +61,7 @@ public class Painting_Script : Script
                 InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
                 gameObject.GetComponent<GraphicComponent>().SetView2D(true);
                 gameObject.SetActive(false);
+                AudioPlayer.play(voClip);
 
                 // hiding event 
                 hidingGameObject.GetComponent<Hiding>().numOfPaintingsTook++;

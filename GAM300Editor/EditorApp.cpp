@@ -300,6 +300,7 @@ namespace TDS
             {
                 if (Input::isKeyPressed(VK_ESCAPE))
                 {
+                    proxy_audio_system::ScriptPlayAllPaused();
                     gamePaused = !gamePaused;
                     std::cout << "editor system paused = " << gamePaused << std::endl;
                 }
@@ -331,8 +332,8 @@ namespace TDS
                 {
                     PhysicsSystem::SetIsPlaying(false);
                     CameraSystem::SetIsPlaying(false);
-                    
                 }
+                proxy_audio_system::ScriptPauseAll();
             }
 
             ecs.runSystems(2, DeltaTime); // Event handler

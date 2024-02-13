@@ -27,14 +27,18 @@ public class PlayButton : Script
     public override void Awake()
     {
         GraphicsManagerWrapper.ToggleViewFrom2D(true);
-        bgmName = "skyclad_sound_ambience_dark_loop_dynamic_tones_howling_moaning_mournful_eerie_105";
+        bgmName = "Horror_Menu_Finale_Finale";
         bgm = gameObject.GetComponent<AudioComponent>();
         sprite = gameObject.GetComponent<UISpriteComponent>();
     }
 
     public override void Update()
     {
-        bgm.play(bgmName);
+        if(bgm.finished(bgmName))
+        {
+            bgm.play(bgmName);
+            Console.WriteLine("Mainmenu Update()");
+        }
 
         if (Input.GetMouseButtonDown(Keycode.M1) && sprite.IsMouseCollided())
         {
@@ -42,5 +46,10 @@ public class PlayButton : Script
             bgm.stop(bgmName);
             SceneLoader.LoadStartingCutscene();
         }
+    }
+
+    public override void OnDestroy()
+    {
+        bgm.stop(bgmName);
     }
 }

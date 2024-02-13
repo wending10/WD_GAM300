@@ -1,24 +1,16 @@
-﻿/*!*************************************************************************
-****
-\file FPS_Controller_Script.cs
-\author Elton Teo, Wong Chong Sheng
-\par DP email: e.teo@digipen.edu, w.chongsheng@digipen.edu
-\par Course: csd3450
-\date 10-12-2023
-\brief  Script for controlling movement of player
-****************************************************************************
-***/
-using ScriptAPI;
+﻿using ScriptAPI;
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 public class FPS_Controller_Script : Script
 {
     public RigidBodyComponent rb;
-    public string startingVOstr;   //To be changed
     public AudioComponent startingVO;   //To be changed
     public string[] footStepSoundEffects;
+    String[] backgroundMusic;
     private int currentFootStepPlaying;
+    float audioTimer;
     AudioComponent audio;
 
     #region Camera Movement Variables
@@ -136,7 +128,6 @@ public class FPS_Controller_Script : Script
         rb = gameObject.GetComponent<RigidBodyComponent>();
         //playerCamera = GameObjectScriptFind("playerCameraObject").GetComponent<CameraComponent>();
         startingVO = gameObject.GetComponent<AudioComponent>();
-        //startingVOstr = "pc_lockpickstart";
         // Set internal variables
         playerCamera.SetFieldOfView(fov);
         originalScale = transform.GetScale();
@@ -149,16 +140,20 @@ public class FPS_Controller_Script : Script
             sprintCooldownReset = sprintCooldown;
         }
 
-        footStepSoundEffects = new string[5];
-        footStepSoundEffects[0] = "temp_step1";
-        footStepSoundEffects[1] = "temp_step2";
-        footStepSoundEffects[2] = "temp_step3";
-        footStepSoundEffects[3] = "temp_step4";
-        footStepSoundEffects[4] = "temp_step5";
-
+        footStepSoundEffects = new string[8];
+        footStepSoundEffects[0] = "pc_woodstep1";
+        footStepSoundEffects[1] = "pc_woodstep2";
+        footStepSoundEffects[2] = "pc_woodstep3";
+        footStepSoundEffects[3] = "pc_woodstep4";
+        footStepSoundEffects[4] = "pc_woodstep5";
+        footStepSoundEffects[5] = "pc_woodstep6";
+        footStepSoundEffects[6] = "pc_woodstep7";
+        footStepSoundEffects[7] = "pc_woodstep8";
         currentFootStepPlaying = 0;
-        audio = gameObject.GetComponent<AudioComponent>();
-        //startingVO.stop(startingVOstr);
+        audioTimer = 1.0f;
+
+        backgroundMusic = new String[3];
+        backgroundMusic[0] = "ambientdrone1";
     }
     public override void Start()
     {
@@ -302,7 +297,6 @@ public class FPS_Controller_Script : Script
         {
             HeadBob();
         }
-        //startingVO.play(startingVOstr);
 
     }
     public override void FixedUpdate()
@@ -327,12 +321,10 @@ public class FPS_Controller_Script : Script
             if (Input.GetKey(Keycode.W) || Input.GetKey(Keycode.S) || Input.GetKey(Keycode.A) || Input.GetKey(Keycode.D))
             {
                 isWalking = true;
-                //audio.play(footStepSoundEffects[0]);
             }
             else
             {
                 isWalking = false;
-                //audio.stop(footStepSoundEffects[0]);
             }
 
             // All movement calculations shile sprint is active
@@ -391,8 +383,9 @@ public class FPS_Controller_Script : Script
 
                 // this is the command to move the object, modify the variable if needed for too slow/fast
                 gameObject.GetComponent<RigidBodyComponent>().SetLinearVelocity(velocityChange * 50);
-
             }
+
+            footstepAudio();
 
         }
 
@@ -441,6 +434,12 @@ public class FPS_Controller_Script : Script
 
         //}
         #endregion
+
+        //if (audio.finished(backgroundMusic[0]))
+        //{
+        //    audio.play(backgroundMusic[0]);
+        //    //audio.setVolume(0.5f);
+        //}
     }
 
     public override void LateUpdate()
@@ -621,4 +620,37 @@ public class FPS_Controller_Script : Script
     }
     #endregion
 
+    void footstepAudio()
+    {
+        audio = gameObject.GetComponent<AudioComponent>();
+        
+        if(isWalking)
+        {
+            if (audioTimer < 0.0f)
+            {
+                audio.stop(footStepSoundEffects[currentFootStepPlaying]);
+                
+                if (isSprinting)
+                {
+                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(8);
+                    audio.play(footStepSoundEffects[currentFootStepPlaying]);
+                    audioTimer = 0.5f;
+                }
+                else
+                {
+                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(8);
+                    audio.play(footStepSoundEffects[currentFootStepPlaying]);
+                    audioTimer = 1.0f;
+                }
+            }
+            else
+            {
+                audioTimer -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            audio.stop(footStepSoundEffects[0]);
+        }
+    }
 }
