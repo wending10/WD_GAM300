@@ -117593,8 +117593,11 @@
                 "opened": {
                     "System.Boolean": "False"
                 },
+                "AudioPlayer": {
+                    "ScriptAPI.AudioComponent": 0
+                },
                 "voClip": {
-                    "ScriptAPI.AudioComponent[]": 0
+                    "System.String": ""
                 },
                 "timer": {
                     "System.Single": "0"
@@ -118326,8 +118329,11 @@
                 "opened": {
                     "System.Boolean": "False"
                 },
+                "AudioPlayer": {
+                    "ScriptAPI.AudioComponent": 0
+                },
                 "voClip": {
-                    "ScriptAPI.AudioComponent[]": 0
+                    "System.String": ""
                 },
                 "timer": {
                     "System.Single": "0"
@@ -118535,8 +118541,11 @@
                 "opened": {
                     "System.Boolean": "False"
                 },
+                "AudioPlayer": {
+                    "ScriptAPI.AudioComponent": 0
+                },
                 "voClip": {
-                    "ScriptAPI.AudioComponent[]": 0
+                    "System.String": ""
                 },
                 "timer": {
                     "System.Single": "0"
@@ -119643,8 +119652,11 @@
                 "opened": {
                     "System.Boolean": "False"
                 },
+                "AudioPlayer": {
+                    "ScriptAPI.AudioComponent": 0
+                },
                 "voClip": {
-                    "ScriptAPI.AudioComponent[]": 0
+                    "System.String": ""
                 },
                 "timer": {
                     "System.Single": "0"

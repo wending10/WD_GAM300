@@ -1,14 +1,4 @@
-﻿/*!*************************************************************************
-****
-\file FPS_Controller_Script.cs
-\author Elton Teo, Wong Chong Sheng
-\par DP email: e.teo@digipen.edu, w.chongsheng@digipen.edu
-\par Course: csd3450
-\date 10-12-2023
-\brief  Script for controlling movement of player
-****************************************************************************
-***/
-using ScriptAPI;
+﻿using ScriptAPI;
 using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
@@ -18,6 +8,7 @@ public class FPS_Controller_Script : Script
     public RigidBodyComponent rb;
     public AudioComponent startingVO;   //To be changed
     public string[] footStepSoundEffects;
+    String[] backgroundMusic;
     private int currentFootStepPlaying;
     float audioTimer;
     AudioComponent audio;
@@ -149,19 +140,20 @@ public class FPS_Controller_Script : Script
             sprintCooldownReset = sprintCooldown;
         }
 
-        footStepSoundEffects = new string[10];
-        footStepSoundEffects[0] = "temp_step1";
-        footStepSoundEffects[1] = "temp_step2";
-        footStepSoundEffects[2] = "temp_step3";
-        footStepSoundEffects[3] = "temp_step4";
-        footStepSoundEffects[4] = "temp_step5";
-        footStepSoundEffects[5] = "temp_step6";
-        footStepSoundEffects[6] = "temp_step7";
-        footStepSoundEffects[7] = "temp_step8";
-        footStepSoundEffects[8] = "temp_step9";
-        footStepSoundEffects[9] = "temp_step10";
+        footStepSoundEffects = new string[8];
+        footStepSoundEffects[0] = "pc_woodstep1";
+        footStepSoundEffects[1] = "pc_woodstep2";
+        footStepSoundEffects[2] = "pc_woodstep3";
+        footStepSoundEffects[3] = "pc_woodstep4";
+        footStepSoundEffects[4] = "pc_woodstep5";
+        footStepSoundEffects[5] = "pc_woodstep6";
+        footStepSoundEffects[6] = "pc_woodstep7";
+        footStepSoundEffects[7] = "pc_woodstep8";
         currentFootStepPlaying = 0;
         audioTimer = 1.0f;
+
+        backgroundMusic = new String[3];
+        backgroundMusic[0] = "ambientdrone1";
     }
     public override void Start()
     {
@@ -442,6 +434,12 @@ public class FPS_Controller_Script : Script
 
         //}
         #endregion
+
+        //if (audio.finished(backgroundMusic[0]))
+        //{
+        //    audio.play(backgroundMusic[0]);
+        //    //audio.setVolume(0.5f);
+        //}
     }
 
     public override void LateUpdate()
@@ -634,13 +632,13 @@ public class FPS_Controller_Script : Script
                 
                 if (isSprinting)
                 {
-                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(9);
+                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(8);
                     audio.play(footStepSoundEffects[currentFootStepPlaying]);
                     audioTimer = 0.5f;
                 }
                 else
                 {
-                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(9);
+                    currentFootStepPlaying = RandomNumberGenerator.GetInt32(8);
                     audio.play(footStepSoundEffects[currentFootStepPlaying]);
                     audioTimer = 1.0f;
                 }

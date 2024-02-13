@@ -18,7 +18,7 @@ public class Flashlight_Script : Script
     public GameObject player;
     public bool activateLight = false;
     public GameDataManager myGameDataManager;
-    public string flashAudiostr = "temp_flashlight";
+    public string flashAudiostr = "lightshut5";
     public AudioComponent flashAudio;
     public float followSpeed;
     public static float batteryLife = 100.0f;

@@ -18,7 +18,6 @@ public class Item_Script : Script
     //RigidBodyComponent rigidBodyComponent; //for raycast?
 
     AudioComponent audioPlayer;
-    String[] voClip;
 
     [SerializeField]
     public string Item_Name;
@@ -27,9 +26,6 @@ public class Item_Script : Script
     public override void Awake()
     {
         audioPlayer = gameObject.GetComponent<AudioComponent>();
-        voClip = new String[2];
-        voClip[0]= "pc_shinelightbeforereceipt";
-        voClip[1]= "pc_shinelightafterreceipt"; //This one should be items VO
     }
 
     public override void Start()
@@ -45,7 +41,6 @@ public class Item_Script : Script
             Console.WriteLine("Picked up item");
             InventoryScript.addItemIntoInventory(Item_Name, Item_Texture);
             gameObject.SetActive(false);
-            audioPlayer.play(voClip[0]);
         }
     }
 
@@ -55,7 +50,6 @@ public class Item_Script : Script
         Vector3 playerPos = playerObject.transform.GetPosition();
         float distance = Vector3.Distance(itemPos, playerPos);
         Console.WriteLine(distance);
-        audioPlayer.play(voClip[1]);
         return distance < 100.0;
     }
 }

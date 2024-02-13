@@ -10,6 +10,7 @@
 ***/
 using ScriptAPI;
 using System;
+using System.Threading.Tasks.Dataflow;
 
 public class Note_Script : Script
 {
@@ -17,6 +18,8 @@ public class Note_Script : Script
     //RigidBodyComponent rigidBodyComponent; //for raycast?
     AudioComponent clip;
     AudioSource player;
+    //bool once;
+    String[] voClip;
 
     [SerializeField]
     public string Note_Name;
@@ -26,6 +29,11 @@ public class Note_Script : Script
     public override void Awake()
     {
         Note_VO = "pc_checkreceipt";
+
+        voClip = new String[2];
+        voClip[0] = "pc_shinelightbeforereceipt";
+        voClip[1] = "pc_shinelightafterreceipt";
+        //once = true;
     }
 
     public override void Start()
@@ -54,6 +62,11 @@ public class Note_Script : Script
         Vector3 playerPos = playerObject.transform.GetPosition();
         float distance = Vector3.Distance(itemPos, playerPos);
         Console.WriteLine(distance);
+        //if(once)
+        //{
+        //    clip.play(voClip[0]);
+        //    once = false;
+        //}
         return distance < 100.0;
     }
 }

@@ -27,7 +27,7 @@ public class PlayButton : Script
     public override void Awake()
     {
         GraphicsManagerWrapper.ToggleViewFrom2D(true);
-        bgmName = "skyclad_sound_ambience_dark_loop_dynamic_tones_howling_moaning_mournful_eerie_105";
+        bgmName = "Horror_Menu_Finale_Finale";
         bgm = gameObject.GetComponent<AudioComponent>();
         sprite = gameObject.GetComponent<UISpriteComponent>();
     }

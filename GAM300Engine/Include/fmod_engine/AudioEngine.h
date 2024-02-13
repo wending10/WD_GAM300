@@ -416,10 +416,7 @@ namespace TDS
         static bool Q_state;
         static SoundInfo Q_name;
 
-        static std::map<std::string, SoundInfo> music;
-        static std::map<std::string, SoundInfo> SFX;
-        static std::map<std::string, SoundInfo> background;
-        static std::map<std::string, SoundInfo> VO;
+        static std::map<std::string, SoundInfo> allSounds;
         static std::map<std::string, std::pair<bool, SoundInfo*>> Queue;
         //static std::map<unsigned int, std::map<Vec3*, SOUND_STATE*>> sound_events;
     }; //end of proxy_audio_system
