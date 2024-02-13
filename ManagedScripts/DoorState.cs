@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file DoorState.cs
+\author Elton Teo
+\par DP email: e.teo@digipen.edu
+\par Course: csd3450
+\date 10-12-2023
+\brief  States for doors
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 public class DoorState : Script
 {

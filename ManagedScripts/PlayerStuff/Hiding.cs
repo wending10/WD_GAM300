@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*!*************************************************************************
+****
+\file Hiding.cs
+\author Elton Teo Zhe Wei
+\par DP email: e.teo@digipen.edu
+\par Course: csd3450
+\date 12-12-2023
+\brief  Gameplay script for player hiding from the monster
+****************************************************************************
+***/
+using System;
 using ScriptAPI;
 
 public class Hiding : Script
