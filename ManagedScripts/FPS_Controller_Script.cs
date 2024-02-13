@@ -281,7 +281,7 @@ public class FPS_Controller_Script : Script
 
 
                 isCrouched = !isCrouched;
-                Console.WriteLine(isCrouched);
+                //Console.WriteLine(isCrouched);
             }
 
             //else if (Input.GetKeyDown(crouchKey) && holdToCrouch)

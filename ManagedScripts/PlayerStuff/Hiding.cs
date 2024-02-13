@@ -93,7 +93,7 @@ public class Hiding : Script
             _InteractUI.SetActive(false);
             if (Input.GetKeyDown(Keycode.E))
             {
-                Console.WriteLine("There");
+                //Console.WriteLine("There");
                 hiding = false;
                 interactable = true;
                 //player.transform.SetPosition(nonHidingPos);

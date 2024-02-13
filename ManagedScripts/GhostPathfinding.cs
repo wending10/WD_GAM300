@@ -127,10 +127,10 @@ public class GhostPathfinding : Script
 
         //just debug mouse pos first
         
-        Console.WriteLine("X: ");
-        Console.WriteLine(wp1.X);
-        Console.WriteLine("Z: ");
-        Console.WriteLine(wp1.Y);
+        //Console.WriteLine("X: ");
+        //Console.WriteLine(wp1.X);
+        //Console.WriteLine("Z: ");
+        //Console.WriteLine(wp1.Y);
 
 
         currRowIndex = (int)wp1.X;
@@ -160,7 +160,7 @@ public class GhostPathfinding : Script
             {
                 
                 //done moving
-                Console.WriteLine("Done Moving to mouse pos");
+                //Console.WriteLine("Done Moving to mouse pos");
 
             }
 
