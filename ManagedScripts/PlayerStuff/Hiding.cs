@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using ScriptAPI;
 
 public class Hiding : Script
@@ -10,7 +11,7 @@ public class Hiding : Script
     public float _RotationAngle;
     public GameObject player;
     public GhostMovement? enemyPathfinding;
-    public Flashlight_Script _flashlight;
+    public GameObject _flashlight;
     public GameObject? _InteractUI;
     public CheckGameState myGameState;
     public GameObject closet;
@@ -30,7 +31,7 @@ public override void Awake()
 
     public override void Start()
     {
-        _flashlight = player.GetComponent<Flashlight_Script>();
+        //_flashlight = player.GetComponent<Flashlight_Script>();
         hidingPos = closet.transform.GetPosition();
         _RotationAngle = 180;
     }
@@ -40,6 +41,7 @@ public override void Awake()
         
         if (interactable && gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
         {
+            _InteractUI.SetActive(true);
             if (Input.GetKeyDown(Keycode.E) && hiding == false)
             {
                 Console.WriteLine("Here");
@@ -53,36 +55,17 @@ public override void Awake()
 
                 player.GetComponent<FPS_Controller_Script>().playerCanMove = false;
                 player.GetComponent<FPS_Controller_Script>().enableHeadBob = false;
-                _flashlight.activateLight = false;
-                _flashlight.is_Enabled = false;
-                if (_flashlight.flashAudio.finished(_flashlight.flashAudiostr))
+                if (player.GetComponent<Flashlight_Script>().flashAudio.finished(player.GetComponent<Flashlight_Script>().flashAudiostr) && player.GetComponent<Flashlight_Script>().activateLight)
                 {
-                    _flashlight.flashAudio.play(_flashlight.flashAudiostr);
+                    player.GetComponent<Flashlight_Script>().flashAudio.play(player.GetComponent<Flashlight_Script>().flashAudiostr);
                 }
-
-
-                /*if (gameObject.GetComponent<NameTagComponent>().GetName() == "Bedroom_Body" && myGameState._CurrentState == GameState.Gameplay)
-                {
-                    if (!playedAudio)
-                    {
-                        playerVOSource.clip = voClip;
-                        playerVOSource.Play();
-                        subtitles.enabled = true;
-                        subtitles.text = "Martin (Internal): \"Nothing inside, but I could hide in here in case someone shows up.\"";
-                        playedAudio = true;
-                    }
-
-                    if (!playerVOSource.isPlaying && playedAudio)
-                    {
-                        subtitles.enabled = false;
-                    }
-                }*/
-
-                //Input.KeyRelease(Keycode.E);
+                player.GetComponent<Flashlight_Script>().activateLight = false;
+                _flashlight.SetActive(false);
             }
         }
         else if (hiding)
         {
+            _InteractUI.SetActive(false);
             if (Input.GetKeyDown(Keycode.E))
             {
                 Console.WriteLine("There");
@@ -91,9 +74,13 @@ public override void Awake()
                 player.transform.SetPosition(nonHidingPos);
                 player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
                 player.GetComponent<FPS_Controller_Script>().enableHeadBob = true;
-                _flashlight.is_Enabled = true;
+                _flashlight.SetActive(true);
                 //Input.KeyRelease(Keycode.E);
             }
+        }
+        else
+        {
+            _InteractUI.SetActive(false);
         }
         
     }
