@@ -45,9 +45,10 @@ public class Hiding : Script
 
         counter = 0;
         audioPlayer = gameObject.GetComponent<AudioComponent>();
-        voClips = new string[2];
+        voClips = new string[3];
         voClips[0] = "pc_hideinclosetfirst";
         voClips[1] = "pc_wanderingcloset";
+        voClips[2] = "pc_monstergoesaway2";
         subtitles = new String[2];
         subtitles[0] = "Nothing inside";
         subtitles[1] = "But I could hide in here in case someone shows up";
@@ -140,6 +141,7 @@ public class Hiding : Script
                 player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
                 player.GetComponent<FPS_Controller_Script>().enableHeadBob = true;
                 _flashlight.SetActive(true);
+                audioPlayer.play(voClips[2]);
                 //Input.KeyRelease(Keycode.E);
             }
         }

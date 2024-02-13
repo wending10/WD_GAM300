@@ -25,6 +25,8 @@ public class QuitButton : Script
     {
         if (Input.GetMouseButtonDown(Keycode.M1) && sprite.IsMouseCollided())
         {
+            AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+            audio.stopAll();
             SceneLoader.LoadQuitGame();
         }
     }

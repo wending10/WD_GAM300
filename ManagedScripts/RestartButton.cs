@@ -37,6 +37,8 @@ public class RestartButton : Script
         if (Input.GetMouseButtonDown(Keycode.M1) && restartButtonSprite.IsMouseCollided() && PopupUI.isDisplayed == true)
         {
             Console.WriteLine("Restart Button Pressed");
+            AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+            audio.stopAll();
             PopupUI.isDisplayed = false;
             SceneLoader.LoadMainGame();
         }
