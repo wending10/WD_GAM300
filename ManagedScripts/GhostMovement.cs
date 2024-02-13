@@ -54,6 +54,7 @@ public class GhostMovement : Script
     public String[] walkingSounds;
     String[] monsterPatrol;
     String[] monsterAlert;
+    String[] voiceClips;
     public bool playSound;
     public float playSoundTimer;
 
@@ -123,6 +124,10 @@ public class GhostMovement : Script
         monsterAlert[4] = "mon_alerted5";
         monsterAlert[5] = "mon_alerted6";
         monsterAlert[6] = "mon_alerted7";
+
+        voiceClips = new String[2];
+        voiceClips[0] = "pc_monstergoesaway1";
+        voiceClips[1] = "pc_monstergoesaway2";
 
         speed = 0.2f;
         soundSpeed = 1.0f;
@@ -374,6 +379,12 @@ public class GhostMovement : Script
                 hideEvent = false;
                 isChasingPlayer = false;
                 SHDoor.GetComponent<Door_Script>().forcedLocked = false;
+                AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+                audio.play(voiceClips[0]);
+                if (audio.finished(voiceClips[0]))
+                {
+                    audio.play(voiceClips[1]);
+                }
                 break;
         }
     }
