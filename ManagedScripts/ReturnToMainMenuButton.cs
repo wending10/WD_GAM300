@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*!*************************************************************************
+****
+\file ReturnToMainMenuButton.cs
+\author Matthew Cheung
+\par DP email: j.cheung@digipen.edu
+\par Course: csd3450
+\date 20-1-2024
+\brief  Script for pause menu main menu button
+****************************************************************************
+***/
+using System;
 using ScriptAPI;
 
 public class ReturnToMainMenuButton : Script

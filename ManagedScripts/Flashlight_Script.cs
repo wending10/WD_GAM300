@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file Flashlight_Script.cs
+\author Go Ruo Yan
+\par DP email: ruoyan.go@digipen.edu
+\par Course: csd3450
+\date 9-2-2024
+\brief  Script for flashlight
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 
 public class Flashlight_Script : Script

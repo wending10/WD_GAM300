@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file FPS_Controller_Script.cs
+\author Elton Teo, Wong Chong Sheng
+\par DP email: e.teo@digipen.edu, w.chongsheng@digipen.edu
+\par Course: csd3450
+\date 10-12-2023
+\brief  Script for controlling movement of player
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 using System.ComponentModel;
 using System.Security.Cryptography;

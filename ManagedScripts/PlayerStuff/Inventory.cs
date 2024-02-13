@@ -1,4 +1,15 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file Inventory.cs
+\author Celine Leong
+\par DP email: jiayiceline.leong@digipen.edu
+\par Course: csd3450
+\date 15-1-2024
+\brief  Gameplay script for inventory logic, when player presses 'I' they 
+        can toggle inventory.
+****************************************************************************
+***/
+using ScriptAPI;
 
 public class InventoryScript : Script
 {
