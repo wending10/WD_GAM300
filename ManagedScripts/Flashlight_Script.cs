@@ -18,7 +18,7 @@ public class Flashlight_Script : Script
     public GameObject player;
     public bool activateLight = false;
     public GameDataManager myGameDataManager;
-    public string flashAudiostr = "lightshut5";
+    public string[] flashAudiostr;
     public AudioComponent flashAudio;
     public float followSpeed;
     public static float batteryLife = 100.0f;
@@ -36,6 +36,10 @@ public class Flashlight_Script : Script
     public override void Awake()
     {
         flashAudio = gameObject.GetComponent<AudioComponent>();
+        flashAudiostr = new string[3];
+        flashAudiostr[0] = "flashlight on";
+        flashAudiostr[1] = "flashlight off";
+        flashAudiostr[2] = "flashlight battery restore";
     }
 
     public override void Start()
@@ -52,9 +56,19 @@ public class Flashlight_Script : Script
         if (Input.GetKeyDown(Keycode.F))
         {
             activateLight = !activateLight;
-            if (flashAudio.finished(flashAudiostr))
+            if(activateLight )
             {
-                flashAudio.play(flashAudiostr);
+                if (flashAudio.finished(flashAudiostr[0]))
+                {
+                    flashAudio.play(flashAudiostr[0]);
+                }
+            }
+            else
+            {
+                if (flashAudio.finished(flashAudiostr[1]))
+                {
+                    flashAudio.play(flashAudiostr[1]);
+                }
             }
             //Input.KeyRelease(Keycode.F);
         }
@@ -78,8 +92,6 @@ public class Flashlight_Script : Script
 
     public override void LateUpdate()
     {
-        flashAudio.stop(flashAudiostr);
-
         if (activateLight)
         {
             Vector3 currentDirection = new Vector3(lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().X, lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Y, lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Z);
