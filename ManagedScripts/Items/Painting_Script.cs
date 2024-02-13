@@ -20,6 +20,7 @@ public class Painting_Script : Script
     public string Painting_Name;
     public string Painting_Texture;
     public bool opened;
+    public GameObject? _InteractUI;
 
     //public Animator _PaintingAnimator;
     //public Flashlight_Script _FlashlightScript;
@@ -49,13 +50,21 @@ public class Painting_Script : Script
     // Update is called once per frame
     override public void Update()
     {
-        if (Input.GetKeyDown(Keycode.E) && isWithinRange()/* && rigidBodyComponent.IsRayHit()*/)
+        if (isWithinRange())
         {
-            Console.WriteLine("Picked up painting");
-            InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
-            gameObject.GetComponent<GraphicComponent>().SetView2D(true);
-            gameObject.SetActive(false);
-            AudioPlayer.play(voClip);
+            _InteractUI.SetActive(true);
+            if (Input.GetKeyDown(Keycode.E) /*&& isWithinRange() && rigidBodyComponent.IsRayHit()*/)
+            {
+                Console.WriteLine("Picked up painting");
+                InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
+                gameObject.GetComponent<GraphicComponent>().SetView2D(true);
+                gameObject.SetActive(false);
+                AudioPlayer.play(voClip);
+            }
+        }
+        else
+        {
+            _InteractUI.SetActive(false);
         }
     }
 
