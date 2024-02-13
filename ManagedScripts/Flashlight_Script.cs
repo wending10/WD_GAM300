@@ -26,7 +26,7 @@ public class Flashlight_Script : Script
 
 
     private float tick = 0.0f;
-    private float brightness = 200.0f;
+    private float brightness = 1.0f;
 
     private Vector3 lookAmount = new Vector3();
 
@@ -108,8 +108,8 @@ public class Flashlight_Script : Script
                 batteryLife--;
                 tick = 0.0f;
             }
-            brightness = 200.0f * (batteryLife / 100.0f);
-            Vector4 color = new Vector4(lightSourceObj.GetComponent<SpotlightComponent>().GetColor().X, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().Y, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().Z, (short)brightness);
+            brightness = 1.0f * (batteryLife / 100.0f);
+            Vector4 color = new Vector4(lightSourceObj.GetComponent<SpotlightComponent>().GetColor().X, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().Y, lightSourceObj.GetComponent<SpotlightComponent>().GetColor().Z, brightness);
             lightSourceObj.GetComponent<SpotlightComponent>().SetColor(color);
         }
     }
