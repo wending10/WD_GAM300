@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file Note_Script.cs
+\author Celine Leong
+\par DP email: jiayiceline.leong@digipen.edu
+\par Course: csd3450
+\date 15-1-2024
+\brief  Gameplay script for player interaction with notes
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 
 public class Note_Script : Script
@@ -17,7 +27,7 @@ public class Note_Script : Script
 
     public override void Start()
     {
-        playerObject = GameObjectScriptFind("Player");
+        playerObject = GameObjectScriptFind("player");
         //rigidBodyComponent = gameObject.GetComponent<RigidBodyComponent>();
     }
 
