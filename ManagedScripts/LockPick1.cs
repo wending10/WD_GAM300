@@ -21,6 +21,9 @@ public class LockPick1 : Script
 
     //public Text mySubtitles;
     //public Image mySubtitlesBG;
+    String[] Subtitles;
+    [SerializeField]
+    public static int counter;
 
     public AudioSource myVOSource;
     public bool _TutorialCompleted;
@@ -42,6 +45,7 @@ public class LockPick1 : Script
     //public AudioClip[] rattleSoundEffects;
     public String[] lockSoundEffects;
     public String[] rattleSoundEffects;
+    public String[] playerGuideVO;
     float delay = 0.4f;
     public GameObject _NumOfTries;
     public UISpriteComponent _AmtOfTries;
@@ -89,6 +93,25 @@ public class LockPick1 : Script
         rattleSoundEffects[4] = "temp_lockrattle5";
         rattleSoundEffects[5] = "temp_lockrattle6";
 
+        playerGuideVO = new String[7];
+        playerGuideVO[0] = "pc_lockpickstart";
+        playerGuideVO[1] = "pc_lockpicksuccess1";
+        playerGuideVO[2] = "pc_lockpicksuccess2";
+        playerGuideVO[3] = "pc_lockpickfail";
+        playerGuideVO[4] = "";
+        playerGuideVO[5] = "";
+        playerGuideVO[6] = "";
+
+        Subtitles = new String[7];
+        Subtitles[0] = "Martin (Internal): Hopefully, I won\'t forget how to do this.";
+        Subtitles[1] = "Martin (Internal): Alright, looks like I\'m in.";
+        Subtitles[2] = "Martin (Internal): No turning back now.";
+        Subtitles[3] = "Martin (Internal): That was too loud... I better not screw up again.";
+        Subtitles[4] = "";
+        Subtitles[5] = "Move [mouse] to adjust pick";
+        Subtitles[6] = "Press [E] to turn lock";
+
+        counter = 0;
         audio = gameObject.GetComponent<AudioComponent>();
 
         newLock();
@@ -124,9 +147,18 @@ public class LockPick1 : Script
         //{
         //_NumOfTries.SetActive(true);
 
+        //subtitles
+        UISpriteComponent Sprite = GameObjectScriptFind("VOSubtitles").GetComponent<UISpriteComponent>();
+        //UISpriteComponent Sprite = gameObject.GetComponent<UISpriteComponent>();
+        Sprite.SetFontMessage(Subtitles[counter]);
+
+        if (counter < 5)
+        audio.play(playerGuideVO[counter]);
+
         #region Move Pick
         if (movePick)
             {
+                
                 //Vector3 dir = Input.mousePosition - cam.WorldToScreenPoint(transform.position);
                 Vector3 dir = Input.GetLocalMousePos() - new Vector3(Screen.width / 2, Screen.height / 2, 0);  //cam.WorldToScreenPoint(transform.GetPosition());
 
@@ -154,12 +186,15 @@ public class LockPick1 : Script
                 movePick = false;
                 keyPressTime = 1;
                 audio.play(lockSoundEffects[0]);
+                counter = 5;
             }
             if (Input.GetKeyUp(Keycode.E))
             {
                 movePick = true;
                 keyPressTime = 0;
                 deduct = true;
+                if (audio.finished(playerGuideVO[0]))
+                counter = 6;
             }
             #endregion
 
@@ -182,6 +217,7 @@ public class LockPick1 : Script
                 audio.play(lockSoundEffects[1]);
                 timer = 1.2f;
                 passed = true;
+                
             }
             else
             {
@@ -246,13 +282,13 @@ public class LockPick1 : Script
 
         if (passed)
         {
+            counter = 1;
             if (timer <= 0)
             {
                 playerController.SetActive(true);
                 Vector3 rotation = playerController.transform.GetRotation();
                 Quaternion quat = new Quaternion(rotation);
                 Vector3 rotationToVector = new Vector3(-Mathf.Sin(toRadians(rotation.Y)), 0.0f, Mathf.Cos(toRadians(rotation.Y))) * 200;
-                Console.WriteLine(rotationToVector.X + "\t" + rotationToVector.Y + "\t" + rotationToVector.Z);
                 playerController.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(playerController.transform.GetPosition() + rotationToVector, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(1, 1, 1).Normalize(), new Vector3(1, 1, 1).Normalize());
                 Input.Lock(true);
                 //    playerCam.SetEnabled(true);
@@ -269,10 +305,15 @@ public class LockPick1 : Script
             {
                 timer -= Time.deltaTime;
             }
+            if (audio.finished(playerGuideVO[1]))
+            {
+            counter = 2;
+            }
         }
 
         if (failed)
         {
+            counter = 3;
             if (timer <= 0)
             {
                 playerController.SetActive(true);
@@ -283,8 +324,12 @@ public class LockPick1 : Script
                 newLock();
                 GraphicsManagerWrapper.ToggleViewFrom2D(false);
                 doorStates.SetActive(true);
-                monster.GetComponent<GhostMovement>().AlertMonster(doorIndex);
                 popupUI.GetComponent<PopupUI>().lockpickDisplayed = false;
+
+                if (doorIndex != 0)
+                {
+                    monster.GetComponent<GhostMovement>().AlertMonster(doorIndex);
+                }
             }
             else
             {
