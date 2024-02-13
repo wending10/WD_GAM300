@@ -44,11 +44,11 @@ public class Flashlight_Script : Script
 
     public override void Start()
     {
-        if (lightSourceObj.GetComponent<SpotlightComponent>().GetEnabled())
+        /*if (lightSourceObj.GetComponent<SpotlightComponent>().GetEnabled())
         {
-            Vector4 flashlightSettings = new Vector4(1f, 0.005f, 0.000f, 0.0f);
+            Vector4 flashlightSettings = new Vector4(5.0f, 0.005f, 0.000f, 0.0f);
             lightSourceObj.GetComponent<SpotlightComponent>().SetAttenuation(flashlightSettings);
-        }
+        }*/
     }
 
     public override void Update()

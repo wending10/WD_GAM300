@@ -129,7 +129,7 @@ public class GhostMovement : Script
         voiceClips[0] = "pc_monstergoesaway1";
         voiceClips[1] = "pc_monstergoesaway2";
 
-        speed = 0.2f;
+        speed = 1.0f;
         soundSpeed = 1.0f;
         hideEventStep = 0;
 
@@ -350,7 +350,7 @@ public class GhostMovement : Script
         {
             case 0:
                 ScriptAPI.Vector2 firstPosition = new ScriptAPI.Vector2(1790, -323);
-                ScriptAPI.Vector2 firstPositionNext = ScriptAPI.Vector2.MoveTowards(ghostPosition, firstPosition, 1.3f);
+                ScriptAPI.Vector2 firstPositionNext = ScriptAPI.Vector2.MoveTowards(ghostPosition, firstPosition, 5.0f);
                 transform.SetPosition(new ScriptAPI.Vector3(firstPositionNext.X, originalPosition.Y, firstPositionNext.Y));
 
                 if (firstPositionNext.X == firstPosition.X && firstPositionNext.Y == firstPosition.Y)
@@ -362,7 +362,7 @@ public class GhostMovement : Script
 
             case 1:
                 ScriptAPI.Vector2 secondPosition = new ScriptAPI.Vector2(2167, -100);
-                ScriptAPI.Vector2 secondPositionNext = ScriptAPI.Vector2.MoveTowards(ghostPosition, secondPosition, 1.0f);
+                ScriptAPI.Vector2 secondPositionNext = ScriptAPI.Vector2.MoveTowards(ghostPosition, secondPosition, 5.0f);
                 transform.SetPosition(new ScriptAPI.Vector3(secondPositionNext.X, originalPosition.Y, secondPositionNext.Y));
 
                 if (secondPositionNext.X == secondPosition.X && secondPositionNext.Y == secondPosition.Y)
