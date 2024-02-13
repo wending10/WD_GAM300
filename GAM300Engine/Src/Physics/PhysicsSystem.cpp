@@ -147,11 +147,18 @@ namespace TDS
 				using namespace JoltToTDS;
 				EActivation mode = EActivation::Activate;
 				//pBodies->SetPosition(ToBodyID(_rigidbody[i]), ToVec3(_transform[i].GetPosition()), mode); // only uncomment for debugging in editor
-				if (GetBoxCollider(entities[i]) && GetBoxCollider(entities[i])->GetIsTrigger())
+				if (GetBoxCollider(entities[i])) // Temporary will be remove with animation system
 				{
 					BoxCollider* vBox = GetBoxCollider(entities[i]);
-					JPH::Body* pBody = &m_pBodyManager->GetBody(ToBodyID(_rigidbody[i]));
-					pBody->SetIsSensor(true);
+					auto* pBody = m_pSystem->GetBodyLockInterfaceNoLock().TryGetBody(ToBodyID(_rigidbody[i]));
+					if (vBox->GetIsTrigger())
+					{
+						pBody->SetIsSensor(true);
+					}
+					else
+					{
+						pBody->SetIsSensor(false);
+					}
 				}
 
 			}

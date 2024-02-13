@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file Door_Script.cs
+\author Elton Teo
+\par DP email: e.teo@digipen.edu
+\par Course: csd3450
+\date 10-12-2023
+\brief  Script for door logic
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.CompilerServices.RuntimeHelpers;

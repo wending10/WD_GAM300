@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file GhostMovement.cs
+\author Thea Sea
+\par DP email: thea.sea@digipen.edu
+\par Course: csd3450
+\date 15-1-2024
+\brief  Script for ghost movement
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
