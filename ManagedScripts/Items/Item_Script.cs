@@ -28,7 +28,7 @@ public class Item_Script : Script
 
     public override void Start()
     {
-        playerObject = GameObjectScriptFind("Player");
+        playerObject = GameObjectScriptFind("player");
         //rigidBodyComponent = gameObject.GetComponent<RigidBodyComponent>();
     }
 

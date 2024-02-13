@@ -21,8 +21,8 @@ public class Flashlight_Script : Script
     public string flashAudiostr = "temp_flashlight";
     public AudioComponent flashAudio;
     public float followSpeed;
-    public static int batteryLife = 100;
-    public float batteryTick = 20.0f;
+    public static float batteryLife = 100.0f;
+    public float batteryTick = 15.0f;
 
     private float tick = 0.0f;
 
@@ -41,7 +41,7 @@ public class Flashlight_Script : Script
     {
         if (lightSourceObj.GetComponent<SpotlightComponent>().GetEnabled())
         {
-            Vector4 flashlightSettings = new Vector4(1f, 0.005f, 0.001f, 0.0f);
+            Vector4 flashlightSettings = new Vector4(1f, 0.005f, 0.000f, 0.0f);
             lightSourceObj.GetComponent<SpotlightComponent>().SetAttenuation(flashlightSettings);
         }
     }
@@ -82,12 +82,12 @@ public class Flashlight_Script : Script
         if (activateLight)
         {
             Vector3 currentDirection = new Vector3(lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().X, lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Y, lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Z);
-            Vector3 nextDirection = new Vector3(-player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().X, -player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().Y, player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().Z);
+            Vector3 nextDirection = new Vector3(-player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().X,-player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().Y, player.GetComponent<FPS_Controller_Script>().playerCamera.transform.getForwardVector().Z);
             lookAmount = Vector3.MoveTowards(currentDirection, nextDirection, followSpeed * Time.deltaTime);
 
             Vector4 direction = new Vector4(lookAmount.X, lookAmount.Y, lookAmount.Z, 0.0f);
             lightSourceObj.GetComponent<SpotlightComponent>().SetDirection(direction);
-            lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Normalize();
+            //lightSourceObj.GetComponent<SpotlightComponent>().GetDirection().Normalize();
 
         }
     }
