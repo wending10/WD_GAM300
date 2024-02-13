@@ -338,7 +338,7 @@ public class LockPick1 : Script
 
                 if (doorIndex != 0)
                 {
-                    monster.GetComponent<GhostMovement>().AlertMonster(doorIndex);
+                    monster.GetComponent<GhostMovement>().AlertMonster();
                 }
             }
             else

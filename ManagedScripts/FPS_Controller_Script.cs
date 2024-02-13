@@ -205,7 +205,7 @@ public class FPS_Controller_Script : Script
         cameraCanMove = !InventoryScript.InventoryIsOpen;
         playerCanMove = !InventoryScript.InventoryIsOpen;*/
 
-        playerCanMove = !InventoryScript.InventoryIsOpen;
+        //playerCanMove = !InventoryScript.InventoryIsOpen;
         //cameraCanMove = !PopupUI.isDisplayed;
         //playerCanMove = !PopupUI.isDisplayed;
 
@@ -281,7 +281,7 @@ public class FPS_Controller_Script : Script
 
 
                 isCrouched = !isCrouched;
-                Console.WriteLine(isCrouched);
+                //Console.WriteLine(isCrouched);
             }
 
             //else if (Input.GetKeyDown(crouchKey) && holdToCrouch)

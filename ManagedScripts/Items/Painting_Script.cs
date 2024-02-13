@@ -31,6 +31,8 @@ public class Painting_Script : Script
     public AudioComponent[] voClip = new AudioComponent[2];
 
     public float timer;
+    public GameObject hidingGameObject;
+    public GameObject ghost;
 
     override public void Awake()
     {
@@ -59,6 +61,13 @@ public class Painting_Script : Script
                 InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
                 gameObject.GetComponent<GraphicComponent>().SetView2D(true);
                 gameObject.SetActive(false);
+
+                // hiding event 
+                hidingGameObject.GetComponent<Hiding>().numOfPaintingsTook++;
+                if (hidingGameObject.GetComponent<Hiding>().numOfPaintingsTook == 1)
+                {
+                    ghost.GetComponent<GhostMovement>().PlayMonsterWalkingSoundInitial();
+                }
             }
         }
         else
@@ -72,7 +81,7 @@ public class Painting_Script : Script
         Vector3 itemPos = gameObject.transform.GetPosition();
         Vector3 playerPos = playerObject.transform.GetPosition();
         float distance = Vector3.Distance(itemPos, playerPos);
-        Console.WriteLine(distance);
+        //Console.WriteLine(distance);
         return distance < 100.0;
     }
 }

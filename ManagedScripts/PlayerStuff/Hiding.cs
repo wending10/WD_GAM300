@@ -20,12 +20,11 @@ public class Hiding : Script
     public Vector3 nonHidingPos;
     public float _RotationAngle;
     public GameObject player;
-    public GhostMovement? enemyPathfinding;
+    public GameObject enemyPathfinding;
     public GameObject _flashlight;
-    public GameObject? _InteractUI;
-    public CheckGameState myGameState;
+    public GameObject _InteractUI;
+    //public CheckGameState myGameState;
     public GameObject closet;
-    public Quaternion rotGoal;
     /*[Header("AudioStuff")]
     public AudioSource playerVOSource;
     public AudioClip voClip;
@@ -35,15 +34,18 @@ public class Hiding : Script
 
     public float turnSpeed = 0.01f;
 
-public override void Awake()
+    public int numOfPaintingsTook = 0;
+
+    public override void Awake()
     {
+        numOfPaintingsTook = 0;
     }
 
     public override void Start()
     {
         //_flashlight = player.GetComponent<Flashlight_Script>();
         hidingPos = closet.transform.GetPosition();
-        _RotationAngle = 180;
+        _RotationAngle = 180.0f;
     }
 
     public override void Update()
@@ -54,14 +56,19 @@ public override void Awake()
             _InteractUI.SetActive(true);
             if (Input.GetKeyDown(Keycode.E) && hiding == false)
             {
-                Console.WriteLine("Here");
                 hiding = true;
                 interactable = false;
                 nonHidingPos = player.transform.GetPosition();
-                player.transform.SetPosition(closet.transform.GetPosition());
+                //player.transform.SetPosition(closet.transform.GetPosition());
 
-                Vector3 vec3 = new Vector3(0, _RotationAngle, 0);
-                player.transform.SetRotation(vec3);
+                Vector3 rotation = new Vector3(0, 0, 0);
+                //player.transform.SetRotation(rotation);
+
+                Quaternion quat = new Quaternion(rotation);
+                Vector3 newPosition = new Vector3(closet.transform.GetPosition().X, player.transform.GetPosition().Y, closet.transform.GetPosition().Z);
+                player.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(newPosition, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+
+                player.transform.SetRotation(new Vector3(0, -_RotationAngle, 0));
 
                 player.GetComponent<FPS_Controller_Script>().playerCanMove = false;
                 player.GetComponent<FPS_Controller_Script>().enableHeadBob = false;
@@ -71,6 +78,17 @@ public override void Awake()
                 }
                 player.GetComponent<Flashlight_Script>().activateLight = false;
                 _flashlight.SetActive(false);
+
+                if (enemyPathfinding.GetComponent<GhostMovement>().hideEventDone == false && numOfPaintingsTook == 1)
+                {
+                    if (enemyPathfinding.GetComponent<GhostMovement>().hideEvent == false)
+                    {
+                        enemyPathfinding.transform.SetPosition(new Vector3(1790.0f, enemyPathfinding.transform.GetPosition().Y, -750.0f));
+                        enemyPathfinding.GetComponent<GhostMovement>().hideEvent = true;
+                    }
+                    enemyPathfinding.GetComponent<GhostMovement>().isChasingPlayer = false;
+                    enemyPathfinding.GetComponent<GhostMovement>().playSound = false;
+                }
             }
         }
         else if (hiding)
@@ -78,10 +96,16 @@ public override void Awake()
             _InteractUI.SetActive(false);
             if (Input.GetKeyDown(Keycode.E))
             {
-                Console.WriteLine("There");
+                //Console.WriteLine("There");
                 hiding = false;
                 interactable = true;
-                player.transform.SetPosition(nonHidingPos);
+                //player.transform.SetPosition(nonHidingPos);
+
+                Vector3 rotation = player.transform.GetRotation();
+                Quaternion quat = new Quaternion(rotation);
+                player.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(nonHidingPos, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(1, 1, 1).Normalize(), new Vector3(1, 1, 1).Normalize());
+
+                // add if monster is finished
                 player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
                 player.GetComponent<FPS_Controller_Script>().enableHeadBob = true;
                 _flashlight.SetActive(true);
