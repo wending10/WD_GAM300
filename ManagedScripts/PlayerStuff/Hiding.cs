@@ -25,10 +25,13 @@ public class Hiding : Script
     public GameObject _InteractUI;
     //public CheckGameState myGameState;
     public GameObject closet;
-    /*[Header("AudioStuff")]
-    public AudioSource playerVOSource;
-    public AudioClip voClip;
-    public Text subtitles;*/
+    [Header("AudioStuff")]
+    //public AudioSource playerVOSource;
+    public AudioComponent audioPlayer;
+    String[] voClips;
+    public String[] subtitles;
+    int counter;
+    GameObject textmachine;
 
     private float timer = 1.0f;
 
@@ -39,6 +42,14 @@ public class Hiding : Script
     public override void Awake()
     {
         numOfPaintingsTook = 0;
+
+        counter = 0;
+        audioPlayer = gameObject.GetComponent<AudioComponent>();
+        voClips = new string[2];
+        voClips[0] = "pc_hideinclosetfirst";
+        subtitles = new String[2];
+        subtitles[0] = "Nothing inside";
+        subtitles[1] = "But I could hide in here in case someone shows up";
     }
 
     public override void Start()
@@ -46,6 +57,8 @@ public class Hiding : Script
         //_flashlight = player.GetComponent<Flashlight_Script>();
         hidingPos = closet.transform.GetPosition();
         _RotationAngle = 180.0f;
+
+        timer = 0.7f;
     }
 
     public override void Update()
@@ -54,12 +67,28 @@ public class Hiding : Script
         if (interactable && gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
         {
             _InteractUI.SetActive(true);
+
+            //textmachine.SetActive(false);
+            UISpriteComponent Sprite = GameObjectScriptFind("VOSubtitles").GetComponent<UISpriteComponent>();
+            if(timer <= 0.0f)
+            {
+                counter = 1;
+            }
+            else
+            {
+                timer -= Time.deltaTime;
+            }
+            Sprite.SetFontMessage(subtitles[counter]);
+
+            audioPlayer.play(voClips[0]);
+
             if (Input.GetKeyDown(Keycode.E) && hiding == false)
             {
                 hiding = true;
                 interactable = false;
                 nonHidingPos = player.transform.GetPosition();
                 //player.transform.SetPosition(closet.transform.GetPosition());
+                counter = 1;
 
                 Vector3 rotation = new Vector3(0, 0, 0);
                 //player.transform.SetRotation(rotation);
@@ -94,6 +123,7 @@ public class Hiding : Script
         else if (hiding)
         {
             _InteractUI.SetActive(false);
+
             if (Input.GetKeyDown(Keycode.E))
             {
                 //Console.WriteLine("There");

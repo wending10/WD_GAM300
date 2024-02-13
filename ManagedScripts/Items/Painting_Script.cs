@@ -28,7 +28,7 @@ public class Painting_Script : Script
 
     [Header("AudioStuff")]
     public AudioComponent AudioPlayer;
-    public String voClip;
+    public String[] voClip;
 
     public float timer;
     public GameObject hidingGameObject;
@@ -36,7 +36,10 @@ public class Painting_Script : Script
 
     override public void Awake()
     {
-        voClip = "pc_stealpainting1";
+        voClip = new string[3];
+        voClip[0] = "pc_stealpainting1";
+        voClip[1] = "pc_shinelightbeforereceipt";
+        voClip[2] = "pc_shinelightafterreceipt";
         AudioPlayer = gameObject.GetComponent<AudioComponent>();
         //_color.a = 1;
         //timer = 1.0f;
@@ -55,13 +58,15 @@ public class Painting_Script : Script
         if (isWithinRange())
         {
             _InteractUI.SetActive(true);
+            AudioPlayer.play(voClip[1]);
+
             if (Input.GetKeyDown(Keycode.E) /*&& isWithinRange() && rigidBodyComponent.IsRayHit()*/)
             {
                 Console.WriteLine("Picked up painting");
                 InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
                 gameObject.GetComponent<GraphicComponent>().SetView2D(true);
                 gameObject.SetActive(false);
-                AudioPlayer.play(voClip);
+                AudioPlayer.play(voClip[0]);
 
                 // hiding event 
                 hidingGameObject.GetComponent<Hiding>().numOfPaintingsTook++;

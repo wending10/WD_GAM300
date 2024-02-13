@@ -52,6 +52,8 @@ public class GhostMovement : Script
 
     public int walkingSoundCounter = -1;
     public String[] walkingSounds;
+    String[] monsterPatrol;
+    String[] monsterAlert;
     public bool playSound;
     public float playSoundTimer;
 
@@ -102,6 +104,25 @@ public class GhostMovement : Script
         walkingSounds[5] = "mon_woodstep6";
         walkingSounds[6] = "mon_woodstep7";
         walkingSounds[7] = "mon_woodstep8";
+
+        monsterPatrol = new string[8];
+        monsterPatrol[0] = "mon_patrol1";
+        monsterPatrol[1] = "mon_patrol2";
+        monsterPatrol[2] = "mon_patrol3";
+        monsterPatrol[3] = "mon_patrol4";
+        monsterPatrol[4] = "mon_patrol5";
+        monsterPatrol[5] = "mon_patrol6";
+        monsterPatrol[6] = "mon_patrol7";
+        monsterPatrol[7] = "mon_patrol8";
+
+        monsterAlert = new string[7];
+        monsterAlert[0] = "mon_alerted1";
+        monsterAlert[1] = "mon_alerted2";
+        monsterAlert[2] = "mon_alerted3";
+        monsterAlert[3] = "mon_alerted4";
+        monsterAlert[4] = "mon_alerted5";
+        monsterAlert[5] = "mon_alerted6";
+        monsterAlert[6] = "mon_alerted7";
 
         speed = 0.2f;
         soundSpeed = 1.0f;
@@ -222,6 +243,7 @@ public class GhostMovement : Script
                     ScriptAPI.Vector3 originalPosition = transform.GetPosition();
                     ScriptAPI.Vector2 nextPosition = ScriptAPI.Vector2.MoveTowards(ghostPosition, playerPosition, speed);
                     transform.SetPosition(new ScriptAPI.Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
+                    
                 }
                 playerMoved = true;
                 speed += 0.001f;
@@ -270,6 +292,16 @@ public class GhostMovement : Script
 
                 audio.play(walkingSounds[walkingSoundCounter]);
                 playSoundTimer = soundSpeed - walkingSoundCounter * 0.05f;
+
+                //audio.set3DCoords(transform.GetPosition());
+                if(isChasingPlayer)
+                {
+                    audio.play(monsterAlert[RandomNumberGenerator.GetInt32(7)]);
+                }
+                else
+                {
+                    audio.play(monsterPatrol[RandomNumberGenerator.GetInt32(8)]);
+                }
             }
             else
             {
