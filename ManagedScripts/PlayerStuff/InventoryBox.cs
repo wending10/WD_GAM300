@@ -18,6 +18,7 @@ public class InventoryBox : Script
     public int BoxNumber;
     public string storedObjName;
     public string storedObjTexture;
+    
 
     //public Sprite emptyBox;
 
@@ -95,7 +96,7 @@ public class InventoryBox : Script
             if(storedObjName == "Battery")
             {
                 // Do battery logic
-                Flashlight_Script.batteryLife = 100;
+                Flashlight_Script.batteryLife = 100.0f;
             }
             if(storedObjName == "???")
             {
