@@ -33,8 +33,8 @@ public class PopupUI : Script
             popUpScreen.SetEnabled(true);
             Input.Lock(false);
             Input.HideMouse(false);
-            player.GetComponent<FPS_Controller_Script>().playerCanMove = false;
-            player.GetComponent<FPS_Controller_Script>().cameraCanMove = false;
+            //player.GetComponent<FPS_Controller_Script>().playerCanMove = false;
+            //player.GetComponent<FPS_Controller_Script>().cameraCanMove = false;
 
         }
         else if(!InventoryScript.InventoryIsOpen && !lockpickDisplayed)
@@ -43,8 +43,8 @@ public class PopupUI : Script
             popUpScreen.SetEnabled(false);
             Input.Lock(true);
             Input.HideMouse(true);
-            player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
-            player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
+            //player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
+            //player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
         }
     }
 

@@ -24,6 +24,7 @@ public class InventoryScript : Script
     public GameObject NotesTab;
     public GameObject PaintingsTab;
     public GameObject player;
+    public GameObject hidingGameObject;
 
     public override void Awake()
     {
@@ -40,7 +41,7 @@ public class InventoryScript : Script
     public override void Update()
     {
         var entityID = gameObject.GetEntityID();
-        gameObject.GetComponent<FPS_Controller_Script>().playerCanMove = !(PopupUI.isDisplayed || InventoryIsOpen);
+        gameObject.GetComponent<FPS_Controller_Script>().playerCanMove = !(PopupUI.isDisplayed || InventoryIsOpen || hidingGameObject.GetComponent<Hiding>().hiding);
         gameObject.GetComponent<FPS_Controller_Script>().cameraCanMove = !(PopupUI.isDisplayed || InventoryIsOpen);
 
         if (Input.GetKeyDown(Keycode.I))

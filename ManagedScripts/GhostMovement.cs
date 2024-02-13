@@ -35,6 +35,7 @@ public class GhostMovement : Script
     public bool isChasingPlayer = false;
 
     public GameObject player;
+    public GameObject hidingGameObject;
 
     public float speed;
     public float soundSpeed;
@@ -45,6 +46,9 @@ public class GhostMovement : Script
     public float playSoundTimer;
 
     public bool playerMoved;
+    public bool hideEventDone;
+    public bool hideEvent;
+    public int hideEventStep;
 
     //public void ReadWaypoint(Waypoint wp)
     //{
@@ -91,8 +95,11 @@ public class GhostMovement : Script
 
         speed = 0.2f;
         soundSpeed = 1.0f;
+        hideEventStep = 0;
 
         playerMoved = false;
+        hideEvent = false;
+        hideEventDone = false;
 
         transform.SetPositionX(-2840.0f);
         transform.SetPositionZ(-650.0f);
@@ -182,6 +189,7 @@ public class GhostMovement : Script
         ////Console.WriteLine($"Going to waypoint at : ({wp1.X}, {wp1.Z})");
 
         // Play monster walking sound
+
         if (playSound)
         {
             playSound = PlayMonsterWalkingSound();
@@ -219,8 +227,11 @@ public class GhostMovement : Script
                 transform.SetPosition(new ScriptAPI.Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
                 playerMoved = false;
             }
+        } 
+        else if (hideEvent)
+        {
+            BedroomHidingEvent();
         }
-
     }
 
     public bool PlayMonsterWalkingSound()
@@ -249,7 +260,7 @@ public class GhostMovement : Script
         return true;
     }
 
-    public void AlertMonster(int doorIndex)
+    public void AlertMonster()
     {
         soundSpeed -= 0.1f;
         speed += 0.2f;
@@ -264,5 +275,54 @@ public class GhostMovement : Script
         player.transform.SetPosition(transform.GetPosition());
 
         playSound = true;
+    }
+
+    public void BedroomHidingEvent()
+    {
+        if (!hidingGameObject.GetComponent<Hiding>().hiding)
+        {
+            isChasingPlayer = true;
+        }
+        else
+        {
+            isChasingPlayer = false;
+        }
+        ScriptAPI.Vector3 originalPosition = transform.GetPosition();
+        ScriptAPI.Vector2 ghostPosition = new ScriptAPI.Vector2(originalPosition.X, originalPosition.Z);
+
+        switch (hideEventStep)
+        {
+            case 0:
+                ScriptAPI.Vector2 firstPosition = new ScriptAPI.Vector2(1790, -323);
+                ScriptAPI.Vector2 firstPositionNext = ScriptAPI.Vector2.MoveTowards(ghostPosition, firstPosition, 1.3f);
+                transform.SetPosition(new ScriptAPI.Vector3(firstPositionNext.X, originalPosition.Y, firstPositionNext.Y));
+
+                if (firstPositionNext.X == firstPosition.X && firstPositionNext.Y == firstPosition.Y)
+                {
+                    ++hideEventStep;
+                }
+
+                break;
+
+            case 1:
+                ScriptAPI.Vector2 secondPosition = new ScriptAPI.Vector2(2167, -100);
+                ScriptAPI.Vector2 secondPositionNext = ScriptAPI.Vector2.MoveTowards(ghostPosition, secondPosition, 1.0f);
+                transform.SetPosition(new ScriptAPI.Vector3(secondPositionNext.X, originalPosition.Y, secondPositionNext.Y));
+
+                if (secondPositionNext.X == secondPosition.X && secondPositionNext.Y == secondPosition.Y)
+                {
+                    ++hideEventStep;
+                }
+
+                break;
+
+            case 2:
+                transform.SetPositionX(-2840.0f);
+                transform.SetPositionZ(-650.0f);
+                hideEventDone = true;
+                hideEvent = false;
+                isChasingPlayer = false;
+                break;
+        }
     }
 }
