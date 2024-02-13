@@ -27,6 +27,11 @@ public class MonsterSound : Script
         audioPlayer.stopAll();
     }
 
+    public void rattledoor()
+    {
+        audioPlayer.play(voClips[2]);
+    }
+
     public void DoorMonsterSound()
     {
         audioPlayer.play(voClips[2]);

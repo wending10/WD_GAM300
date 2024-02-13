@@ -30,10 +30,6 @@ public class Note_Script : Script
     public override void Awake()
     {
         Note_VO = "pc_checkreceipt";
-
-        voClip = new String[2];
-        voClip[0] = "pc_shinelightbeforereceipt";
-        voClip[1] = "pc_shinelightafterreceipt";
         //once = true;
     }
 
