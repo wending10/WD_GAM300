@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*!*************************************************************************
+****
+\file LockPick1.cs
+\author Go Ruo Yan
+\par DP email: ruoyan.go@digipen.edu
+\par Course: csd3450
+\date 12-11-2023
+\brief  Script lock picking gameplay
+****************************************************************************
+***/
+using System;
 using System.ComponentModel.DataAnnotations;
 using ScriptAPI;
 

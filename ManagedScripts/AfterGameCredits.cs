@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file AfterGameCredits.cs
+\author Matthew Cheung
+\par DP email: j.cheung@digipen.edu
+\par Course: csd3450
+\date 20-1-2024
+\brief  Script for after game credits
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 
 public class AfterGameCredits : Script

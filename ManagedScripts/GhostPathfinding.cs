@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file GhostPathfinding.cs
+\author Thea Sea
+\par DP email: thea.sea@digipen.edu
+\par Course: csd3450
+\date 10-1-2024
+\brief  Script for ghost to pathfind to player
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;

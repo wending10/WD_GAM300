@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*!*************************************************************************
+****
+\file ReturnToGame.cs
+\author Matthew Cheung
+\par DP email: j.cheung@digipen.edu
+\par Course: csd3450
+\date 20-1-2024
+\brief  Script for pause menu continue game button
+****************************************************************************
+***/
+using System;
 using ScriptAPI;
 
 public class ReturnToGame : Script

@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file InventoryBox.cs
+\author Celine Leong
+\par DP email: jiayiceline.leong@digipen.edu
+\par Course: csd3450
+\date 15-1-2024
+\brief  Gameplay script for each inventory slot 
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 using static System.Net.Mime.MediaTypeNames;
 
