@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file BeforeGameCredits.cs
+\author Matthew Cheung
+\par DP email: j.cheung@digipen.edu
+\par Course: csd3450
+\date 20-1-2024
+\brief  Script for before game credits
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 
 public class BeforeGameCredits : Script
@@ -46,7 +56,7 @@ public class BeforeGameCredits : Script
 
             if(counter > 6.0f)
             {
-                Console.WriteLine("Switching to mainMenu");
+                //Console.WriteLine("Switching to mainMenu");
                 SceneLoader.LoadMainMenu();
             }
             

@@ -1,4 +1,14 @@
-﻿using ScriptAPI;
+﻿/*!*************************************************************************
+****
+\file PopupUI.cs
+\author Matthew Cheung
+\par DP email: j.cheung@digipen.edu
+\par Course: csd3450
+\date 20-1-2024
+\brief  Script for pause menu
+****************************************************************************
+***/
+using ScriptAPI;
 using System;
 
 public class PopupUI : Script
@@ -33,8 +43,8 @@ public class PopupUI : Script
             popUpScreen.SetEnabled(true);
             Input.Lock(false);
             Input.HideMouse(false);
-            player.GetComponent<FPS_Controller_Script>().playerCanMove = !(isDisplayed && InventoryScript.InventoryIsOpen);
-            player.GetComponent<FPS_Controller_Script>().cameraCanMove = !(isDisplayed && InventoryScript.InventoryIsOpen);
+            //player.GetComponent<FPS_Controller_Script>().playerCanMove = false;
+            //player.GetComponent<FPS_Controller_Script>().cameraCanMove = false;
 
         }
         else if(!InventoryScript.InventoryIsOpen && !lockpickDisplayed)
@@ -43,6 +53,8 @@ public class PopupUI : Script
             popUpScreen.SetEnabled(false);
             Input.Lock(true);
             Input.HideMouse(true);
+            //player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
+            //player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
         }
     }
 

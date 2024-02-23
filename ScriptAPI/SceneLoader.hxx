@@ -13,6 +13,8 @@ namespace ScriptAPI
 
 		static void LoadStartingCutscene();
 
+		static void LoadLoseScreen();
+
 		static void LoadEndGameCredits();
 
 		static void LoadQuitGame();

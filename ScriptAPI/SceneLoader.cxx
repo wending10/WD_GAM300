@@ -28,6 +28,14 @@ namespace ScriptAPI
 		TDS::SceneManager::GetInstance()->start();
 	}
 
+	void SceneLoader::LoadLoseScreen()
+	{
+		EngineInterface::Reload();
+		TDS::SceneManager::GetInstance()->loadScene("LoseScene");
+		TDS::SceneManager::GetInstance()->awake();
+		TDS::SceneManager::GetInstance()->start();
+	}
+
 	void SceneLoader::LoadEndGameCredits()
 	{
 		EngineInterface::Reload();

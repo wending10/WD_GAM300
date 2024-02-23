@@ -49,14 +49,14 @@ namespace TDS
     Application::Application(HINSTANCE hinstance, int& nCmdShow, const wchar_t* classname, WNDPROC wndproc)
         :m_window(hinstance, nCmdShow, classname)
     {
-        m_window.createWindow(wndproc, 1280,720);
+        m_window.createWindow(wndproc, 1280, 720);
 
         //m_pVKInst = std::make_shared<VulkanInstance>(m_window);
         //m_Renderer = std::make_shared<Renderer>(m_window, *m_pVKInst.get());
         Log::Init();
         TDS_INFO("window width: {}, window height: {}", m_window.getWidth(), m_window.getHeight());
 
-       /* models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");*/
+        /* models = Model::createModelFromFile(*m_pVKInst.get(), "Test.bin");*/
     }
     void  Application::handleMessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
@@ -64,7 +64,7 @@ namespace TDS
         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam); //for imgui implementation
         //can extern  some imgui wndproc handler | tbc
         SetWindowHandle(hWnd);
-        
+
         switch (uMsg)
         {
         case WM_CREATE:
@@ -127,50 +127,50 @@ namespace TDS
             Input::keystatus = Input::KeyStatus::IDLE;
         }break;
 
-            // Input System Stuff
-            case WM_INPUT: {
-               
-                RAWINPUT rawInput;
-                UINT size = sizeof(RAWINPUT);
+        // Input System Stuff
+        case WM_INPUT: {
 
-                GetRawInputData((HRAWINPUT)lParam, RID_INPUT, &rawInput, &size, sizeof(RAWINPUTHEADER));
+            RAWINPUT rawInput;
+            UINT size = sizeof(RAWINPUT);
 
-                if (rawInput.header.dwType == RIM_TYPEMOUSE) {
+            GetRawInputData((HRAWINPUT)lParam, RID_INPUT, &rawInput, &size, sizeof(RAWINPUTHEADER));
 
-                    // Process mouse input
-                    TDS::InputSystem::GetInstance()->setRawMouseInput(rawInput.data.mouse.lLastX, rawInput.data.mouse.lLastY);
+            if (rawInput.header.dwType == RIM_TYPEMOUSE) {
 
-                    // Accumulate the X-axis mouse movement
-                    InputSystem::GetInstance()->accumulatedMouseX += rawInput.data.mouse.lLastX;
+                // Process mouse input
+                TDS::InputSystem::GetInstance()->setRawMouseInput(rawInput.data.mouse.lLastX, rawInput.data.mouse.lLastY);
 
-                    // Accumulate the Y-axis mouse movement
-                    InputSystem::GetInstance()->accumulatedMouseY += rawInput.data.mouse.lLastY;
+                // Accumulate the X-axis mouse movement
+                InputSystem::GetInstance()->accumulatedMouseX += rawInput.data.mouse.lLastX;
 
-                }
+                // Accumulate the Y-axis mouse movement
+                InputSystem::GetInstance()->accumulatedMouseY += rawInput.data.mouse.lLastY;
 
-            }break;
-            case WM_MOUSEWHEEL: {
-                InputSystem::GetInstance()->processMouseScroll(wParam);
-            }break;
-            case WM_MOUSEMOVE:
+            }
+
+        }break;
+        case WM_MOUSEWHEEL: {
+            InputSystem::GetInstance()->processMouseScroll(wParam);
+        }break;
+        case WM_MOUSEMOVE:
+        {
+            POINT p;
+            GetCursorPos(&p);
+            ScreenToClient(GetActiveWindow(), &p);
+            InputSystem::GetInstance()->setLocalMousePos(p.x, p.y);
+            if (TDS::InputSystem::GetInstance()->getMouseLock())
             {
-                POINT p;
-                GetCursorPos(&p);
-                ScreenToClient(GetActiveWindow(), &p);
-                InputSystem::GetInstance()->setLocalMousePos(p.x, p.y);
-                if (TDS::InputSystem::GetInstance()->getMouseLock())
-                {
-                    HWND activeWindow = GetForegroundWindow();
-                    if (activeWindow != nullptr) {
-                        RECT windowRect;
-                        if (GetWindowRect(activeWindow, &windowRect)) {
-                            TDS::InputSystem::GetInstance()->setWindowCenter((windowRect.left + windowRect.right) / 2, (windowRect.top + windowRect.bottom) / 2);
-                        }
+                HWND activeWindow = GetForegroundWindow();
+                if (activeWindow != nullptr) {
+                    RECT windowRect;
+                    if (GetWindowRect(activeWindow, &windowRect)) {
+                        TDS::InputSystem::GetInstance()->setWindowCenter((windowRect.left + windowRect.right) / 2, (windowRect.top + windowRect.bottom) / 2);
                     }
-                    TDS::InputSystem::GetInstance()->lockMouseCenter(hWnd);
                 }
+                TDS::InputSystem::GetInstance()->lockMouseCenter(hWnd);
+            }
 
-            }break;
+        }break;
         }
     }
     void Application::SetWindowHandle(HWND hWnd)
@@ -258,7 +258,7 @@ namespace TDS
             TimeStep::CalculateDeltaTime();
             float DeltaTime = TimeStep::GetDeltaTime();
             std::shared_ptr<EditorScene> pScene = static_pointer_cast<EditorScene>(LevelEditorManager::GetInstance()->panels[SCENE]);
-			std::shared_ptr<GamePlayScene> pGamePlayScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
+            std::shared_ptr<GamePlayScene> pGamePlayScene = static_pointer_cast<GamePlayScene>(LevelEditorManager::GetInstance()->panels[GAMEPLAYSCENE]);
             if (pScene->isFocus)
             {
                 GraphicsManager::getInstance().setCamera(m_camera);
@@ -300,6 +300,7 @@ namespace TDS
             {
                 if (Input::isKeyPressed(VK_ESCAPE))
                 {
+                    proxy_audio_system::ScriptPlayAllPaused();
                     gamePaused = !gamePaused;
                     std::cout << "editor system paused = " << gamePaused << std::endl;
                 }
@@ -331,8 +332,8 @@ namespace TDS
                 {
                     PhysicsSystem::SetIsPlaying(false);
                     CameraSystem::SetIsPlaying(false);
-                    
                 }
+                proxy_audio_system::ScriptPauseAll();
             }
 
             ecs.runSystems(2, DeltaTime); // Event handler
@@ -378,7 +379,7 @@ namespace TDS
             InputSystem::GetInstance()->accumulatedMouseY = 0;
         }
         stopScriptEngine();
-      
+
 
         AssetManager::GetInstance()->ShutDown();
 
@@ -390,7 +391,7 @@ namespace TDS
         }
         imguiHelper::Exit();
         ecs.destroy();
-       
+
         GraphicsManager::getInstance().ShutDown();
         DDSConverter::Destroy();
         //shutdown grid
@@ -748,7 +749,7 @@ namespace TDS
             L"-o \"../scriptDLL/\" -r \"win-x64\"";
 #endif // NDEBUG
 
-            
+
 
         // Define the struct to config the compiler process call
         STARTUPINFOW startInfo;
@@ -807,7 +808,7 @@ namespace TDS
         // Failed build
         else
         {
-             throw std::runtime_error("Failed to build managed scripts!");
+            throw std::runtime_error("Failed to build managed scripts!");
         }
     }
 
@@ -841,12 +842,12 @@ namespace TDS
     <ItemGroup>
     <Reference Include="ScriptAPI"> )";
 #ifdef _DEBUG
-        csprojFile << R"(
+            csprojFile << R"(
         <HintPath>..\Debug-x64\ScriptAPI.dll</HintPath>
         )";
 #endif  //_DEBUG
 #ifdef NDEBUG
-        csprojFile << R"(
+            csprojFile << R"(
         <HintPath>..\Release-x64\ScriptAPI.dll</HintPath>
         )";
 #endif //NDEBUG
@@ -1006,7 +1007,7 @@ namespace TDS
             return false;
         }
 
-       
+
         return true;
 
     }
