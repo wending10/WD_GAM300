@@ -14,6 +14,8 @@ using ScriptAPI;
 
 public class LockPick1 : Script
 {
+    public GameBlackboard? gameBlackboard;
+
     float toDegree(float radians)
     {
         return radians * (180 / 3.1415926535897931f);
@@ -139,8 +141,21 @@ public class LockPick1 : Script
     // Update is called once per frame
     override public void Update()
     {
-        Input.Lock(false);
+        //Input.Lock(false);
         doorText.SetActive(false);
+
+        if (Input.GetKeyDown(Keycode.ESC))
+        {
+            playerController.SetActive(true);
+            gameBlackboard.gameState = GameBlackboard.GameState.InGame;
+            //Input.Lock(true);
+            //    playerCam.SetEnabled(true);
+            //    Door_UI.SetActive(false);
+            lockGroup.SetActive(false);
+            GraphicsManagerWrapper.ToggleViewFrom2D(false);
+            doorStates.SetActive(true);
+            popupUI.GetComponent<PopupUI>().lockpickDisplayed = false;
+        }
 
         //if (!_TutorialCompleted)
         //{
@@ -172,9 +187,9 @@ public class LockPick1 : Script
         //UISpriteComponent Sprite = gameObject.GetComponent<UISpriteComponent>();
 
         if (counter < 5)
-        audio.play(playerGuideVO[counter]);
+            audio.play(playerGuideVO[counter]);
         if(audio.finished(playerGuideVO[0]))
-        counter = 6;
+            counter = 6;
         // if (audio.finished(playerGuideVO[counter]))
         // {
         //     audio.stop(playerGuideVO[counter]);
@@ -330,14 +345,15 @@ public class LockPick1 : Script
                 Quaternion quat = new Quaternion(rotation);
                 Vector3 rotationToVector = new Vector3(-Mathf.Sin(toRadians(rotation.Y)), 0.0f, Mathf.Cos(toRadians(rotation.Y))) * 200;
                 playerController.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(playerController.transform.GetPosition() + rotationToVector, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(1, 1, 1).Normalize(), new Vector3(1, 1, 1).Normalize());
-                Input.Lock(true);
+
+                gameBlackboard.gameState = GameBlackboard.GameState.InGame;
+                //Input.Lock(true);
                 //    playerCam.SetEnabled(true);
                 //    Door_UI.SetActive(false);
                 unlocked = true;
                 doorStates.SetActive(true);
                 doorStates.GetComponent<DoorState>().Doors[doorIndex] = DoorState.State.Unlocked;
                 lockGroup.SetActive(false);
-                newLock();
                 GraphicsManagerWrapper.ToggleViewFrom2D(false);
                 popupUI.GetComponent<PopupUI>().lockpickDisplayed = false;
                 
@@ -364,10 +380,7 @@ public class LockPick1 : Script
             else
             {
                 timer -= Time.deltaTime;
-            }
-            
-          
-           
+            }           
         }
 
         if (failed)
@@ -377,11 +390,11 @@ public class LockPick1 : Script
             {
                 audio.stop(playerGuideVO[3]);
                 playerController.SetActive(true);
-                Input.Lock(true);
+                gameBlackboard.gameState = GameBlackboard.GameState.InGame;
+                //Input.Lock(true);
                 //    playerCam.SetEnabled(true);
                 //    Door_UI.SetActive(false);
                 lockGroup.SetActive(false);
-                newLock();
                 GraphicsManagerWrapper.ToggleViewFrom2D(false);
                 doorStates.SetActive(true);
                 popupUI.GetComponent<PopupUI>().lockpickDisplayed = false;
@@ -390,7 +403,6 @@ public class LockPick1 : Script
                 {
                     monster.GetComponent<GhostMovement>().AlertMonster();
                 }
-                failed = false; //reset lockpick to not passed
                 counter = 5; //move mouse to adjust pick
             }
             else
@@ -404,13 +416,14 @@ public class LockPick1 : Script
 
     public void newLock()
     {
+        gameBlackboard.gameState = GameBlackboard.GameState.Lockpicking;
         originalPosition = new Vector3(0.0f, 600.0f, 2500.0f);
         originalRotation = transform.GetRotation();
 
         audio.stop(lockSoundEffects[1]);
         audio.stop(lockSoundEffects[2]);
         popupUI.GetComponent<PopupUI>().lockpickDisplayed = true;
-        Input.Lock(false);
+        //Input.Lock(false);
 
         failed = false;
         passed = false;
