@@ -76,6 +76,7 @@ public class LockPick1 : Script
     private bool movePick;
     private bool deduct;
     private bool displayTutorial;
+    private bool next_VO;
     private bool pickWasCloseButYouMovedAway;
     private bool firstTimeTutorial = true;
     private bool playOnce = true;
@@ -87,7 +88,7 @@ public class LockPick1 : Script
     public static bool failed;
     public static bool passed;
     float timer;
-    
+
     public int doorIndex;
     public GameObject doorText;
     public GameObject monster;
@@ -133,7 +134,8 @@ public class LockPick1 : Script
 
         counter = 0;
         audio = gameObject.GetComponent<AudioComponent>();
-        // GameplaySubtitles.counter = 5; //no effect on set gameplay subtitles to be empty 
+        next_VO = true;
+        // GameplaySubtitles.counter = 5; //no effect on set gameplay subtitles to be empty
 
         newLock();
     }
@@ -142,6 +144,7 @@ public class LockPick1 : Script
     {
         //audio.play(startingVOstr);
         movePick = true;
+        next_VO = true;
         pickWasCloseButYouMovedAway = false;
     }
 
@@ -193,14 +196,13 @@ public class LockPick1 : Script
         UISpriteComponent ClosedSub = GameObjectScriptFind("Subtitles").GetComponent<UISpriteComponent>();
         //UISpriteComponent Sprite = gameObject.GetComponent<UISpriteComponent>();
 
-        if (counter < 5)
+        if (counter < 5 && next_VO)
+        {
             audio.play(playerGuideVO[counter]);
-        if(audio.finished(playerGuideVO[0]))
+            next_VO = false;
+        }
+        if (audio.finished(playerGuideVO[0]))
             counter = 6;
-        // if (audio.finished(playerGuideVO[counter]))
-        // {
-        //     audio.stop(playerGuideVO[counter]);
-        // }
 
         #region Move Pick
         float eulerAngleDegree = toDegree(eulerAngle);
@@ -506,7 +508,7 @@ public class LockPick1 : Script
                 audio.stop("pc_findtherightspot");
             }
         }
-        
+
         if (!failed && Input.GetKeyDown(Keycode.E)) //lock turns
         {
             originalRotation = transform.GetRotation();
@@ -518,6 +520,7 @@ public class LockPick1 : Script
         if (Input.GetKey(Keycode.E))
         {
             counter = 5; //"Move [mouse] to adjust pick";
+            next_VO = true;
 
         }
         if (Input.GetKeyUp(Keycode.E)) //lock not turning
@@ -527,12 +530,12 @@ public class LockPick1 : Script
             deduct = true;
             if (audio.finished(playerGuideVO[0]))
             {
-            audio.stop(playerGuideVO[0]);
                 //;
                 //wait for "Hopefully I won't forget how to 
                 //do this".. to finish playing before showing ui instructions
                 counter = 6; //"Press [E] to turn lock";
-            } 
+                next_VO = true;
+            }
         }
         #endregion
 
@@ -607,17 +610,18 @@ public class LockPick1 : Script
                 lockGroup.SetActive(false);
                 GraphicsManagerWrapper.ToggleViewFrom2D(false);
                 popupUI.GetComponent<PopupUI>().lockpickDisplayed = false;
-                
+
                 //no turning back now
                 //ClosedSub.SetFontMessage(Subtitles[1]); no effect
                 counter = 2;
                 audio.play(playerGuideVO[2]);
+                next_VO = true;
                 GameplaySubtitles.counter = 7;
                 // if (audio.finished(playerGuideVO[2]))
                 // {
                 //     GameplaySubtitles.counter = 5; //no effect
                 // }
-            
+
 
                 // if (audio.finished(playerGuideVO[1])) //also no effect, doont do this
                 // {
@@ -626,12 +630,12 @@ public class LockPick1 : Script
                 //     audio.play(playerGuideVO[2]);
 
                 // }
-                
+
             }
             else
             {
                 timer -= Time.deltaTime;
-            }           
+            }
         }
 
         if (failed)
@@ -639,7 +643,7 @@ public class LockPick1 : Script
             counter = 3;
             if (timer <= 0 && audio.finished(playerGuideVO[3]))
             {
-                audio.stop(playerGuideVO[3]);
+                //audio.stop(playerGuideVO[3]);
                 playerController.SetActive(true);
                 gameBlackboard.gameState = GameBlackboard.GameState.InGame;
                 //Input.Lock(true);
@@ -655,13 +659,14 @@ public class LockPick1 : Script
                     monster.GetComponent<GhostMovement>().AlertMonster();
                 }
                 counter = 5; //move mouse to adjust pick
+                next_VO = true;
             }
             else
             {
                 timer -= Time.deltaTime;
             }
         }
-        
+
         Sprite.SetFontMessage(Subtitles[counter]); //update last
     }
 
