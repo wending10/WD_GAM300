@@ -60,6 +60,7 @@ public class GhostMovement : Script
 
     public bool playerMoved;
     public bool hideEventDone;
+    public static bool GhostGone;
     public bool hideEvent;
     public int hideEventStep;
     public GameObject SHDoor;
@@ -134,6 +135,7 @@ public class GhostMovement : Script
         playerMoved = false;
         hideEvent = false;
         hideEventDone = false;
+        GhostGone = false;
 
         transform.SetPositionX(-2840.0f);
         transform.SetPositionZ(-650.0f);
@@ -262,11 +264,27 @@ public class GhostMovement : Script
                 transform.SetPosition(new ScriptAPI.Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
                 playerMoved = false;
             }
-        } 
+            AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+            //audio.set3DCoords(transform.GetPosition());
+            audio.play(monsterAlert[RandomNumberGenerator.GetInt32(7)]);
+        }
         else if (hideEvent)
         {
             BedroomHidingEvent();
         }
+
+        if (hideEventDone)
+        {
+            // AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+            // if (audio.finished(voiceClips))
+            // {
+            //     audio.stop(voiceClips);
+            //     GameplaySubtitles.counter = 8;
+            // }
+            GhostGone = true;
+        }
+        
+
     }
 
     public void PlayMonsterWalkingSoundInitial()
@@ -290,6 +308,7 @@ public class GhostMovement : Script
 
                 if (walkingSoundCounter == 7)  // finished
                 {
+                    audio.play("pc_afterscare_heartbeat");
                     return false;
                 }
 
@@ -297,11 +316,7 @@ public class GhostMovement : Script
                 playSoundTimer = soundSpeed - walkingSoundCounter * 0.05f;
 
                 //audio.set3DCoords(transform.GetPosition());
-                if(isChasingPlayer)
-                {
-                    audio.play(monsterAlert[RandomNumberGenerator.GetInt32(7)]);
-                }
-                else
+                if (!hideEvent)
                 {
                     audio.play(monsterPatrol[RandomNumberGenerator.GetInt32(8)]);
                 }
@@ -343,7 +358,7 @@ public class GhostMovement : Script
         }
         ScriptAPI.Vector3 originalPosition = transform.GetPosition();
         ScriptAPI.Vector2 ghostPosition = new ScriptAPI.Vector2(originalPosition.X, originalPosition.Z);
-
+        AudioComponent audio = gameObject.GetComponent<AudioComponent>();
         switch (hideEventStep)
         {
             case 0:
@@ -355,7 +370,8 @@ public class GhostMovement : Script
                 {
                     ++hideEventStep;
                 }
-
+                audio.play("pc_afterscare_breathing");
+                audio.play("pc_afterscare_heartbeat"); 
                 break;
 
             case 1:
@@ -377,9 +393,14 @@ public class GhostMovement : Script
                 hideEvent = false;
                 isChasingPlayer = false;
                 SHDoor.GetComponent<Door_Script>().forcedLocked = false;
-                AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+
+                audio.stop("pc_afterscare_breathing"); 
                 audio.play(voiceClips);
+                GameplaySubtitles.counter = 11; // wth was that
+
+
                 break;
         }
+        
     }
 }
