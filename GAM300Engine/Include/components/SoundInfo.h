@@ -97,7 +97,7 @@ namespace TDS
         */
         DLL_API  void setVolume(float vol);
 
-        DLL_API  SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, bool _muted = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 1.f, float _reverbamount = 0.f);
+        DLL_API  SoundInfo(std::string _filePath = "", bool _isLoop = false, bool _is3D = false, bool _muted = false, SOUND_STATE _theState = SOUND_ERR, float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _volume = 0.1f, float _reverbamount = 0.f);
 
         void operator=(const SoundInfo& rhs)
         {
