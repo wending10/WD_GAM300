@@ -30,6 +30,7 @@ public class PlayButton : Script
         GraphicsManagerWrapper.ToggleViewFrom2D(true);
         bgmName = "Horror_Menu_Finale_Finale";
         bgm = gameObject.GetComponent<AudioComponent>();
+        audioPlayer = new AudioSource();
         sprite = gameObject.GetComponent<UISpriteComponent>();
     }
 
@@ -38,6 +39,7 @@ public class PlayButton : Script
         if (bgm.finished(bgmName))
         {
             bgm.play(bgmName);
+            //AudioSource.Play(bgmName);
             Console.WriteLine("Mainmenu Update()");
         }
 

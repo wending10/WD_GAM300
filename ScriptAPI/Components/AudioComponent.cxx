@@ -130,9 +130,14 @@ namespace ScriptAPI
 		return ReverbAmount;
 	}
 
-	float AudioComponent::getVolume()
+	float AudioComponent::getVolume(System::String^ pathing)
 	{
-		return volume;
+		return TDS::proxy_audio_system::getVolume(toStdString(pathing));
+	}
+	
+	float AudioComponent::getMasterVol()
+	{
+		return TDS::proxy_audio_system::getMasterVolume();
 	}
 	
 	float AudioComponent::getMasterVol()
@@ -150,9 +155,35 @@ namespace ScriptAPI
 		return TDS::proxy_audio_system::getSFXVolume();
 	}
 
-	void AudioComponent::setVolume(float vol)
+	float AudioComponent::getBGMVol()
+	{
+		return TDS::proxy_audio_system::getBGMVolume();
+	}
+
+	float AudioComponent::getSFXVol()
+	{
+		return TDS::proxy_audio_system::getSFXVolume();
+	}
+
+	void AudioComponent::setVolume(float vol, System::String^ pathing)
 	{
 		volume = vol;
+		TDS::proxy_audio_system::SetVolume(vol, toStdString(pathing));
+	}
+
+	void AudioComponent::setMasterVol(float vol)
+	{
+		TDS::proxy_audio_system::SetMasterVolume(vol);
+	}
+
+	void AudioComponent::setBGMVol(float vol)
+	{
+		TDS::proxy_audio_system::SetBGMVolume(vol);
+	}
+
+	void AudioComponent::setSFXVol(float vol)
+	{
+		TDS::proxy_audio_system::SetSFXVolume(vol);
 	}
 
 	void AudioComponent::setMasterVol(float vol)
