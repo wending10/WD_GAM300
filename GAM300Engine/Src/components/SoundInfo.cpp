@@ -113,10 +113,7 @@ namespace TDS
         
         volume = vol / 100.f;
 
-        if (volume > 1.f)
-        {
-            volume = 1.f;
-        }
+        volume = Mathf::Clamp(volume, 0.f, 1.f);
     }
 
     SoundInfo::SoundInfo(std::string _filePath, bool _isLoop, bool _is3D, bool _muted, SOUND_STATE _theState, float _x, float _y, float _z, float _volume, float _reverbamount)
