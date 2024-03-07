@@ -39,9 +39,10 @@ public class FinishGame : Script
                     GraphicsManagerWrapper.SetFadeFactor(fadeValue);
                     if (fadeValue <= 0.0f)
                     {
-                        blackboard.gameState = GameBlackboard.GameState.Paused;
-                        SceneLoader.LoadEndGameCredits();
                         fadeOut = false;
+                        Input.Lock(false);
+                        Input.HideMouse(false);
+                        SceneLoader.LoadEndGameCredits();
                     }
                 }
             }

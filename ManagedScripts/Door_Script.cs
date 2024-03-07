@@ -48,7 +48,7 @@ public class Door_Script : Script
     private float fadeValueIncrement = 0.05f;
 
     // basement door
-    public bool basementDoor = false;
+    public bool basementDoor;
     float toRadians(float degree)
     {
         return degree * (3.1415926535897931f / 180);
