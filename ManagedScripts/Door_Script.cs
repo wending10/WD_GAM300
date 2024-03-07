@@ -48,7 +48,7 @@ public class Door_Script : Script
     private float fadeValueIncrement = 0.05f;
 
     // basement door
-    public bool basementDoor;
+    public bool basementDoor = false;
     float toRadians(float degree)
     {
         return degree * (3.1415926535897931f / 180);
@@ -97,6 +97,11 @@ public class Door_Script : Script
                         else if (fadeValue <= 0.0f && fadeIn == false && basementDoor == true)
                         {
                             fadeIn = true;
+                            Vector3 newPos = new Vector3(3450, -145, 340);
+                            Vector3 rotation = playerGameObject.transform.GetRotation();
+                            Quaternion quat = new Quaternion(rotation);
+                            playerGameObject.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(newPos, new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(1, 1, 1).Normalize(), new Vector3(1, 1, 1).Normalize());
+
                         }
                     }
                 }
