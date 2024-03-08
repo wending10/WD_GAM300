@@ -927,7 +927,7 @@
                     "ScriptAPI.AudioComponent": 2
                 },
                 "bgmName": {
-                    "System.String": "skyclad_sound_ambience_dark_loop_dynamic_tones_howling_moaning_mournful_eerie_105"
+                    "System.String": "Horror_Menu_Finale_Finale"
                 },
                 "blackScreen": {
                     "ScriptAPI.GameObject": 7
@@ -939,8 +939,8 @@
         },
         "3": {
             "MainMenuOptions": {
-                "inOptionsMenu": {
-                    "System.Boolean": "False"
+                "mainmenubgm": {
+                    "ScriptAPI.AudioComponent": 3
                 },
                 "gameObject": {
                     "ScriptAPI.GameObject": 3
