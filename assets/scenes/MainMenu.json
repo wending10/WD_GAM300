@@ -926,9 +926,6 @@
                 "bgm": {
                     "ScriptAPI.AudioComponent": 2
                 },
-                "buttonSfx": {
-                    "ScriptAPI.AudioComponent": 0
-                },
                 "bgmName": {
                     "System.String": "Horror_Menu_Finale_Finale"
                 },
