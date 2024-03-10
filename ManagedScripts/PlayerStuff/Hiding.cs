@@ -66,7 +66,7 @@ public class Hiding : Script
     public override void Update()
     {
 
-        if (interactable && gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
+        if (interactable && gameObject.GetComponent<RigidBodyComponent>().IsRayHit() && gameObject.GetComponent<RigidBodyComponent>().IsPlayerCast())
         {
             _InteractUI.SetActive(true);
 
