@@ -64,10 +64,13 @@ public class p01 : Script
 
                     // Trigger Painting Event
                     AudioPlayer.play("gallery_movepainting");
+                    AudioPlayer.play("mon_patrol4");
                     GameplaySubtitles.counter = 8;
 
                     // hiding event 
                     GalleryHiding.GhostShouldMove = true;
+                    GalleryHiding.timeLimit = 10.0f;
+                    GalleryHiding.GhostMoved = false;
                     ghost.GetComponent<GhostMovement>().PlayMonsterWalkingSoundInitial();
                 }
             }
