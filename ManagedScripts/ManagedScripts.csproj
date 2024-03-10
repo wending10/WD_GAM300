@@ -20,8 +20,9 @@
     </PropertyGroup>
     <ItemGroup>
     <Reference Include="ScriptAPI"> 
-        <HintPath>..\Release-x64\ScriptAPI.dll</HintPath>
+        <HintPath>..\Debug-x64\ScriptAPI.dll</HintPath>
         
     </Reference>
     </ItemGroup>
 </Project>
+            
