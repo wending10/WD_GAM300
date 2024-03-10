@@ -9,6 +9,7 @@ public class DoorSquek : Script
     AudioComponent audio;
     private bool alerted = false;
     private float elapsedTime = 0f;
+    public GameObject eventChasing;
     public override void Awake()
     {
         audio = gameObject.GetComponent<AudioComponent>();
@@ -34,6 +35,7 @@ public class DoorSquek : Script
                 audio.play(monsterChase);
                 alerted = false;
                 elapsedTime = 0f;
+                eventChasing.GetComponent<EventChasing>().eventStarted = true;
             }
         }
     }
