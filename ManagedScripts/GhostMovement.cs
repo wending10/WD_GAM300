@@ -77,7 +77,9 @@ public class GhostMovement : Script
 
     #region Gallery 
 
+    public GameObject galleryHidingGameObject; // (Study) Hide Closet > Door_2 > Door_2
     public bool galleryHideEventDone;
+    public bool galleryChaseEventDone;
 
     #endregion
 
@@ -89,7 +91,9 @@ public class GhostMovement : Script
         MovingToDoor,
         BedroomHidingEvent,
         LivingDiningRoomEvent,
-        LivingRoomHidingEvent
+        LivingRoomHidingEvent,
+        GalleryHidingEvent,
+        GalleryChasingEvent
     }
 
     [DontSerializeField]
@@ -156,7 +160,7 @@ public class GhostMovement : Script
         }
 
         // Testing (to be removed)
-        if (Input.GetKeyDown(Keycode.K)) 
+        if (Input.GetKeyDown(Keycode.K))
         {
             currentEvent = GhostEvent.LivingDiningRoomEvent;
             startEvent = true;
@@ -204,7 +208,7 @@ public class GhostMovement : Script
                 break;
 
             case GhostEvent.ChasingPlayer:
-
+                Console.WriteLine("ChasingPlayer");
                 if (!WaypointPathfinder.SameRoom(ghostPosition, playerPosition)) // If player moves out of the room, ghost doesnt chase (MAYBE CHANGE)
                 {
                     currentEvent = GhostEvent.Nothing;
@@ -228,7 +232,7 @@ public class GhostMovement : Script
                     //Vector3 originalPosition = transform.GetPosition();
                     //Vector2 nextPosition = Vector2.MoveTowards(ghostPosition, playerPosition, speed);
                     //transform.SetPosition(new Vector3(nextPosition.X, originalPosition.Y, nextPosition.Y));
-                    
+
                     MoveTo(playerPosition, speed);
                 }
                 playerMoved = true;
@@ -237,6 +241,7 @@ public class GhostMovement : Script
                 break;
 
             case GhostEvent.MovingToDoor:
+                Console.WriteLine("MovingToDoor");
 
                 if (WaypointPathfinder.SameRoom(ghostPosition, playerPosition)) // If player is in the same room as ghost, chase player
                 {
@@ -282,6 +287,18 @@ public class GhostMovement : Script
                 LivingRoomHidingEvent();
 
                 break;
+
+            case GhostEvent.GalleryHidingEvent:
+
+                GalleryHidingEvent();
+
+                break;
+
+            case GhostEvent.GalleryChasingEvent:
+
+                GalleryChasingEvent();
+
+                break;
         }
     }
 
@@ -291,7 +308,7 @@ public class GhostMovement : Script
         walkingSoundCounter = 0;
         audio.play(walkingSounds[walkingSoundCounter]);
         Vector3 temp = new Vector3(1000, 1000, 0);
-        audio.set3DCoords(temp/*transform.GetPosition()*/ ,walkingSounds[walkingSoundCounter]);
+        audio.set3DCoords(temp/*transform.GetPosition()*/ , walkingSounds[walkingSoundCounter]);
         currentEvent = GhostEvent.PlayingWalkingSound;
     }
     public bool PlayMonsterWalkingSound()
@@ -381,6 +398,8 @@ public class GhostMovement : Script
 
     public void BedroomHidingEvent()
     {
+        Console.WriteLine("BedroomHidingEvent");
+
         if (startEvent) // Initialize variables (teleporting monster to starting position etc)
         {
             transform.SetPosition(new Vector3(1790.0f, transform.GetPosition().Y, -750.0f));
@@ -412,7 +431,7 @@ public class GhostMovement : Script
                 }
 
                 audio.play("pc_afterscare_breathing");
-                audio.play("pc_afterscare_heartbeat"); 
+                audio.play("pc_afterscare_heartbeat");
                 break;
 
             case 1: // Moving to player / hiding closet
@@ -443,11 +462,13 @@ public class GhostMovement : Script
 
                 break;
         }
-        
+
     }
 
     public void LivingDiningRoomEvent()
     {
+        Console.WriteLine("LivingDiningRoomEvent");
+
         if (startEvent) // Initialize variables
         {
             livingDiningRoomStandingTimer = 1.0f;
@@ -495,9 +516,9 @@ public class GhostMovement : Script
                 currentEvent = GhostEvent.Nothing;
 
                 // Teleporting monster away so player wont see it (for now the position is in the gallery)
-                transform.SetPositionX(-2840.0f);
-                transform.SetPositionZ(-650);
-                
+                transform.SetPositionX(-1920.0f);
+                transform.SetPositionZ(175.0f);
+
                 break;
         }
     }
@@ -505,6 +526,8 @@ public class GhostMovement : Script
     // LivingRoomHidingEvent => move from living room - right wing door to left of couch, look ard, walk into dining room painting & stay there
     public void LivingRoomHidingEvent()
     {
+        Console.WriteLine("LivingRoomHidingEvent");
+
         if (startEvent) // Initialize variables
         {
             livingRoomHidingTimer = 1.0f;
@@ -561,6 +584,112 @@ public class GhostMovement : Script
 
                 livingRoomHideEventDone = true;
                 currentEvent = GhostEvent.Nothing;
+
+                break;
+        }
+    }
+
+    public void GalleryHidingEvent()
+    {
+        Console.WriteLine("GalleryHidingEvent");
+        if (startEvent) // Initialize variables (teleporting monster to starting position etc)
+        {
+            transform.SetPosition(new Vector3(-1920.0f, transform.GetPosition().Y, -300.0f));
+            eventStep = 0;
+            startEvent = false;
+        }
+
+        if (!galleryHidingGameObject.GetComponent<GalleryHiding>().hiding) // If player comes out of hiding, monster will chase player
+        {
+            isChasingPlayer = true;
+        }
+        else // If player goes back into closet / does not come out, monster will just move and disappear
+        {
+            isChasingPlayer = false;
+        }
+
+        AudioComponent audio = gameObject.GetComponent<AudioComponent>();
+
+        switch (eventStep)
+        {
+            case 0: // Walk to Study Room Door
+
+                if (MoveTo(new Vector2(-2850, -300), 10.0f))
+                {
+                    ++eventStep;
+                }
+
+                audio.play("pc_afterscare_breathing");
+                audio.play("pc_afterscare_heartbeat");
+                break;
+
+            case 1: // Walk into Study Room
+
+                if (MoveTo(new Vector2(-2850, 175), 5.0f))
+                {
+                    ++eventStep;
+                }
+
+                break;
+
+            case 2: // Walk out of Study Room
+
+                if (MoveTo(new Vector2(-1920, 175), 5.0f))
+                {
+                    ++eventStep;
+                }
+
+                break;
+
+            case 3: // Event done
+
+                galleryHideEventDone = true;
+                currentEvent = GhostEvent.Nothing;
+                isChasingPlayer = false;
+                GalleryHiding.GhostShouldMove = false;
+
+                audio.FadeOut(2, "pc_afterscare_breathing");
+                audio.FadeOut(2, "pc_afterscare_heartbeat");
+
+                break;
+        }
+    }
+
+    public void GalleryChasingEvent() 
+    {
+        Console.WriteLine("GalleryChasingEvent");
+        if (startEvent) // Initialize variables (teleporting monster to starting position etc)
+        {
+            transform.SetPosition(new Vector3(-1920.0f, transform.GetPosition().Y, -300.0f));
+            eventStep = 0;
+            startEvent = false;
+        }
+
+        if (!galleryHidingGameObject.GetComponent<GalleryHiding>().hiding) // If player comes out of hiding, monster will chase player
+        {
+            isChasingPlayer = true;
+        }
+        else // If player goes back into closet / does not come out, monster will just move and disappear
+        {
+            isChasingPlayer = false;
+        }
+
+        switch (eventStep)
+        {
+            case 0: // Walk to Study Room Door
+
+                if (MoveTo(new Vector2(-1414, -729), 5.0f))
+                {
+                    ++eventStep;
+                }
+
+                break;
+
+            case 1: // Event done
+
+                galleryChaseEventDone = true;
+                currentEvent = GhostEvent.Nothing;
+                isChasingPlayer = false;
 
                 break;
         }
