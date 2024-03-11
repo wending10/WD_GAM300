@@ -858,7 +858,7 @@ public class GhostMovement : Script
                 // If touches, loses
                 if (Vector2.Distance(ghostPosition, playerPosition) <= 75.0f)
                 {
-                    //QueueJumpscare(); // For presentation
+                    QueueJumpscare(); // For presentation
                     return;
                 }
                 else
