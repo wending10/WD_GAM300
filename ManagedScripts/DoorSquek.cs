@@ -9,7 +9,8 @@ public class DoorSquek : Script
     AudioComponent audio;
     private bool alerted = false;
     private float elapsedTime = 0f;
-    public GameObject eventChasing;
+    //public GameObject eventChasing;
+    public GameObject monster;
     public override void Awake()
     {
         audio = gameObject.GetComponent<AudioComponent>();
@@ -24,6 +25,8 @@ public class DoorSquek : Script
         if (gameObject.GetComponent<RigidBodyComponent>().IsRayHit() && Input.GetKeyDown(Keycode.E))
         {
             audio.play(doorSquekSFX);
+            monster.GetComponent<GhostMovement>().currentEvent = GhostMovement.GhostEvent.FinalChasingEvent;
+            monster.GetComponent<GhostMovement>().startEvent = true;
             alerted = true;
         }
         if (alerted == true)
@@ -35,7 +38,8 @@ public class DoorSquek : Script
                 audio.play(monsterChase);
                 alerted = false;
                 elapsedTime = 0f;
-                eventChasing.GetComponent<EventChasing>().eventStarted = true;
+
+                //eventChasing.GetComponent<EventChasing>().eventStarted = true;
             }
         }
     }
