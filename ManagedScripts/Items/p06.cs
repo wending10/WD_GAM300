@@ -55,7 +55,7 @@ public class p06 : Script
     // Update is called once per frame
     override public void Update()
     {
-        if (gameObject.GetComponent<RigidBodyComponent>().IsRayHit() && gameObject.GetComponent<RigidBodyComponent>().IsPlayerCast() && !DropPainting)
+        if (gameObject.GetComponent<RigidBodyComponent>().IsRayHit() && !DropPainting)
         {
             Console.WriteLine("Painting");
             _InteractUI.SetActive(true);
@@ -141,6 +141,7 @@ public class p06 : Script
                 {
                     player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
                     player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
+                    ghost.GetComponent<GhostMovement>().currentEvent = GhostMovement.GhostEvent.LivingRoomHidingEvent;
                     endingSequence = true;
                     gameObject.SetActive(false);
                 }
@@ -150,7 +151,7 @@ public class p06 : Script
 
     public override void LateUpdate()
     {
-        if (gameObject.GetComponent<RigidBodyComponent>().IsRayHit() && gameObject.GetComponent<RigidBodyComponent>().IsPlayerCast())
+        if (gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
         {
             _InteractUI.SetActive(true);
         }
