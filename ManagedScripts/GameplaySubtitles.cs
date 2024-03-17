@@ -307,6 +307,8 @@ public class GameplaySubtitles : Script
         {
             if (audio.finished("pc_stealpainting1"))
             {
+
+                audio.set3DCoords(GhostMovement.GhostTransformPosition, "mon_alerted3");
                 audio.play("mon_alerted3");
 
                 audio.stop("pc_stealpainting1");
@@ -319,6 +321,7 @@ public class GameplaySubtitles : Script
             if (audio.finished("gallery_movepainting")&& audio.finished("painting_dropin")) // Creaking sound ends
             {
                 audio.stop("gallery_movepainting");
+                audio.set3DCoords(GhostMovement.GhostTransformPosition, "mon_alerted3");
                 audio.play("mon_alerted3");
                 audio.play("pc_monsterrattledoor"); // Someone's coming, better hide
                 counter = 22; //commented this out as u dont hide after every painting u pick up
@@ -418,9 +421,11 @@ public class GameplaySubtitles : Script
             if (audio.finished("misc_leave"))
             {
                 audio.play("pc_scream");
+                audio.set3DCoords(transform.GetPosition(), "painting_dropin");
                 audio.play("painting_dropin"); //scream and drop painting into fire same time 
                 GameplaySubtitles.counter = 8;
             }
+            audio.set3DCoords(transform.GetPosition(), "painting_burning");
             audio.play("painting_burning");
             if (Isfire)
             {
@@ -437,7 +442,7 @@ public class GameplaySubtitles : Script
         // }
         // else
         // {
-        //     audio.playQueue();
+        //     audio.playplay();
 
         //     if (counter > 16)//cutscene over
         //     {

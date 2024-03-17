@@ -97,6 +97,7 @@ public class EventBathroomSink : Script
 
     void MoveShowerCurtain()
     {
+        audio.set3DCoords(transform.GetPosition(), "showerpull");
         audio.play("showerpull");
         bathroomCurtains.transform.SetPositionX(bathroomCurtains.transform.GetPosition().X + (showerCuratinMoveSpeed * Time.deltaTime));
     }
