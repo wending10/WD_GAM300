@@ -299,6 +299,9 @@ public class FPS_Controller_Script : Script
         {
             HeadBob();
         }
+
+        Vector3 up_vector = Vector3.Normalize(Vector3.Cross(playerCamera.getRightVector(), playerCamera.getForwardVector()));
+        audio.setPlayerCoords(transform.GetPosition(), Vector3.Normalize(playerCamera.getForwardVector()), up_vector);
     }
     public override void FixedUpdate()
     {
@@ -437,15 +440,14 @@ public class FPS_Controller_Script : Script
         #endregion
         if (!LockPick1.enteredHouse)
         {
-            if (audio.finished(backgroundMusic[0]))
-            {
-                audio.play(backgroundMusic[0]);
-                //audio.setVolume(0.5f);
-            }
+            audio.play(backgroundMusic[0]);
         }
         else
         {
-            audio.FadeOut(3, backgroundMusic[0]);
+            if (audio.checkPlaying(backgroundMusic[0]))
+            {
+                audio.FadeOut(3, backgroundMusic[0]);
+            }
             if (audio.finished(backgroundMusic[0]))
             {
                 audio.FadeIn(3, "ambientdrone1");
@@ -656,9 +658,6 @@ public class FPS_Controller_Script : Script
                     audio.play(footStepSoundEffects[currentFootStepPlaying]);
                     audioTimer = 1.0f;
                 }
-
-                Vector3 up_vector = Vector3.Normalize(Vector3.Cross(playerCamera.getForwardVector(), playerCamera.getRightVector()));
-                audio.setPlayerCoords(transform.GetPosition(), Vector3.Normalize(playerCamera.getForwardVector()), up_vector);
             }
             else
             {
