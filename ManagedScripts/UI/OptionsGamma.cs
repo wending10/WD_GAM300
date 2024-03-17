@@ -1,60 +1,61 @@
 ﻿/*!*************************************************************************
 ****
-\file OptionsBgmVolume.cs
+\file OptionsGamma.cs
 \author Matthew Cheung
 \par DP email: j.cheung@digipen.edu
 \par Course: csd3450
-\date 5-33-2024
-\brief  Script for settings menu BGM volume
+\date 15-03-2024
+\brief  Script for settings gamma in options menu
 ****************************************************************************
 ***/
+
 using ScriptAPI;
 using System;
 
-public class OptionsBgmVolume : Script
+public class OptionsGamma : Script
 {
-    public bool BGMpressedVolUp;
-    private float BgmVolume;
+    public bool pressedGammaUp;
+    private float gammaValue;
     private UISpriteComponent sprite;
-    private AudioComponent bgmVol;
     private AudioComponent buttonSfx;
     private string buttonSfxName = "";
-    public GameObject bgmText;
 
+    public GameObject gammaText;
     public override void Awake()
     {
-        sprite = gameObject.GetComponent<UISpriteComponent>();
-        bgmVol = gameObject.GetComponent<AudioComponent>();
         buttonSfxName = "button_press";
         buttonSfx = gameObject.GetComponent<AudioComponent>();
-
+        sprite = gameObject.GetComponent<UISpriteComponent>();
     }
 
     public override void Update()
     {
-        BgmVolume = bgmVol.getBGMVol();
+        gammaValue = GraphicsManagerWrapper.GetFadeFactor();
+        gammaValue = Math.Clamp(gammaValue, 0.0f, 1.0f);
 
         if (Input.GetMouseButtonDown(Keycode.M1) && sprite.IsMouseCollided())
         {
-            if (BGMpressedVolUp)
+            if(pressedGammaUp)
             {
-                BgmVolume += 5.0f;
-                bgmVol.setBGMVol(BgmVolume);
+                gammaValue += 0.05f;
+                GraphicsManagerWrapper.SetFadeFactor(gammaValue);
             }
+            
             else
             {
-                BgmVolume -= 5.0f;
-                bgmVol.setBGMVol(BgmVolume);
+                gammaValue -= 0.05f;
+                GraphicsManagerWrapper.SetFadeFactor(gammaValue);
             }
-            //Console.WriteLine(bgmVol.getBGMVol());
-            BgmVolume = Math.Clamp(BgmVolume, 0, 100);
-            bgmText.GetComponent<UISpriteComponent>().SetFontMessage(((int)BgmVolume).ToString());
+
+            
             buttonSfx.play(buttonSfxName);
         }
+        gammaValue = Math.Clamp(gammaValue, 0.0f, 1.0f);
+        gammaText.GetComponent<UISpriteComponent>().SetFontMessage((Math.Round(gammaValue, 2)).ToString());
+
     }
 
     public override void OnDestroy()
     {
     }
 }
-

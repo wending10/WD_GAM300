@@ -42,6 +42,7 @@ public class InGameOptionsBackButton : Script
 
         if (Input.GetMouseButtonDown(Keycode.M1) && optionsBackButtonSprite.IsMouseCollided() && gameBlackboard.gameState == GameBlackboard.GameState.Options)
         {
+            //Console.WriteLine("Options Back Button Pressed");
             buttonSfx.play(buttonSfxName);
             gameBlackboard.gameState = GameBlackboard.GameState.Paused;
             InGameOptionsButton.openedOptionsMenu = false;
