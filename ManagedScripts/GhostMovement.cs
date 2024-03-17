@@ -508,12 +508,11 @@ public class GhostMovement : Script
     {
         if (startEvent) // Initialize variables (teleporting monster to starting position etc)
         {
-            
             eventStep = -1;
             //Console.WriteLine("initialized bedroom hiding event");
 
             startEvent = false;
-            bedroomMonsterAppearTimer = 3.0f;
+            bedroomMonsterAppearTimer = 5.0f;
 
             previousEvent = GhostEvent.BedroomHidingEvent;
             return;
@@ -526,7 +525,7 @@ public class GhostMovement : Script
         switch (eventStep)
         {
             case -1:
-                
+            
                 if (bedroomMonsterAppearTimer <= 0.0f)
                 {
                     transform.SetPosition(new Vector3(1790.0f, transform.GetPosition().Y, -750.0f));

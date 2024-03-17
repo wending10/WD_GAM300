@@ -49,6 +49,7 @@ public class FPS_Controller_Script : Script
     [Header("Movement Variables")]
     public bool playerCanMove = true;
     public float walkSpeed = 2f;
+    private float savedWalkSpeed = 2f;
     public float maxVelocityChange = 10f;
     public bool isWalking = false;
 
@@ -154,6 +155,7 @@ public class FPS_Controller_Script : Script
 
         backgroundMusic = new String[3];
         backgroundMusic[0] = "outside_ambience";
+        savedWalkSpeed = walkSpeed;
     }
     public override void Start()
     {
@@ -587,7 +589,7 @@ public class FPS_Controller_Script : Script
             new Vector3(transform.GetPosition().X, 0, transform.GetPosition().Z),
             new Vector4 (quat.X, quat.Y, quat.Z, quat.W), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
 
-        if (speedReduction != 0) walkSpeed *= speedReduction;
+        if (speedReduction != 0 && walkSpeed == savedWalkSpeed) walkSpeed *= speedReduction;
     }
 
     public void StandUp()
@@ -598,7 +600,7 @@ public class FPS_Controller_Script : Script
         gameObject.GetComponent<RigidBodyComponent>().SetPositionRotationAndVelocity(
             new Vector3(transform.GetPosition().X, originalHeight, transform.GetPosition().Z),
             new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
-        if (speedReduction != 0) walkSpeed /= speedReduction;
+        if (speedReduction != 0 && walkSpeed < savedWalkSpeed) walkSpeed /= speedReduction;
     }
     #endregion
 
