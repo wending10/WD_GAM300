@@ -247,7 +247,7 @@ public class GhostMovement : Script
                 //}
 
                 if (bedroomHidingGameObject.GetComponent<Hiding>().hiding || 
-                    galleryHidingGameObject.GetComponent<GalleryHiding>().hiding ||
+                    galleryHidingGameObject.GetComponent<Hiding>().hiding ||
                     livingRoomHidingGameObject.GetComponent<Hiding>().hiding) // NOTE: Will add in the other hiding boolean variables later
                 {
                     currentEvent = previousEvent;
@@ -355,7 +355,7 @@ public class GhostMovement : Script
                 //Console.WriteLine(Vector3.Distance(player.transform.GetPosition(), transform.GetPosition()));
                 //if (gameObject.GetComponent<RigidBodyComponent>().IsRayHit()) // If player is in sight
                 if (Vector3.Distance(player.transform.GetPosition(), transform.GetPosition()) <= 700.0f &&
-                    !galleryHidingGameObject.GetComponent<GalleryHiding>().hiding) // If player is in range
+                    !galleryHidingGameObject.GetComponent<Hiding>().hiding) // If player is in range
                 {
                     // NOTE: May want to add in "not hiding" condition
                     currentEvent = GhostEvent.ChasingPlayer;
@@ -856,7 +856,7 @@ public class GhostMovement : Script
         }
         
 
-        if (!galleryHidingGameObject.GetComponent<GalleryHiding>().hiding) // If player comes out of hiding, monster will chase player
+        if (!galleryHidingGameObject.GetComponent<Hiding>().hiding) // If player comes out of hiding, monster will chase player
         {
             previousEvent = GhostEvent.GalleryHidingEvent;
             currentEvent = GhostEvent.ChasingPlayer;
@@ -899,7 +899,8 @@ public class GhostMovement : Script
 
                 galleryHideEventDone = true;
                 currentEvent = GhostEvent.Nothing;
-                GalleryHiding.GhostShouldMove = false;
+                galleryHidingGameObject.GetComponent<EventGalleryHiding>().GhostShouldMove = false;
+                galleryHidingGameObject.GetComponent<EventGalleryHiding>().GhostMoved = false;
 
                 audio.FadeOut(2, "pc_afterscare_breathing");
                 audio.FadeOut(2, "pc_afterscare_heartbeat");
