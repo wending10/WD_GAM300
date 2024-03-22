@@ -96,14 +96,17 @@ public class LockPick1 : Script
     public GameObject doorStates;
 
     public float lockpickShakeTimer;
+    private float lockpickTimerCountdown = 0.4f;
+    private bool lockpickFlashing = false;
 
     // Start is called before the first frame update
     override public void Awake()
     {
-        lockSoundEffects = new String[3];
+        lockSoundEffects = new String[4];
         lockSoundEffects[0] = "lockpick_turn";
         lockSoundEffects[1] = "lockpick success";
         lockSoundEffects[2] = "lockpick_failtry";
+        lockSoundEffects[3] = "lockpick_failfull";
 
         rattleSoundEffects = new String[7];
         rattleSoundEffects[0] = "lockpick_move1";
@@ -590,13 +593,16 @@ public class LockPick1 : Script
                 if (deduct == true)
                 {
                     numOfTries -= 1;
+                    audio.play(lockSoundEffects[2]);
                     deduct = false;
+                    lockpickFlashing = true;
                 }
+
 
                 if (numOfTries <= 0)
                 {
                     // NOTE: Audio
-                    audio.play(lockSoundEffects[2]);
+                    audio.play(lockSoundEffects[3]);
                     movePick = false;
                     timer = 1.0f;
                     failed = true;
@@ -606,7 +612,17 @@ public class LockPick1 : Script
         #endregion
 
         _AmtOfTries.SetFontMessage("Number of tries left: " + numOfTries.ToString());
-
+        if (lockpickFlashing)
+        {
+            lockpickTimerCountdown -= Time.deltaTime;
+            _AmtOfTries.SetFontColour(new Vector4(1.0f, 0.0f, 0.0f, 1.0f)); // red
+            if (lockpickTimerCountdown <= 0)
+            {
+                lockpickFlashing = false;
+                lockpickTimerCountdown = 0.4f;
+                _AmtOfTries.SetFontColour(new Vector4(1.0f, 1.0f, 1.0f, 1.0f)); // white
+            }
+        }
         if (numOfTries <= 1)
         {
             _AmtOfTries.SetFontColour(new Vector4(1.0f, 0.0f, 0.0f, 1.0f)); // red
