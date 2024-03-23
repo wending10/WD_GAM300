@@ -19,6 +19,8 @@ public class QuitButton : Script
     private string buttonSfxName = "";
     private bool firstHover = true;
 
+    GameObject QuitObject;
+
     public override void Awake()
     {
         sprite = gameObject.GetComponent<UISpriteComponent>();
@@ -26,6 +28,11 @@ public class QuitButton : Script
         buttonSfx = gameObject.GetComponent<AudioComponent>();
     }
 
+    public override void Start()
+    {
+        QuitObject = GameObjectScriptFind("QuitConfirmation");
+        QuitObject.SetActive(false);
+    }
     public override void Update()
     {
         if (sprite.IsMouseCollided() && firstHover)
@@ -44,7 +51,8 @@ public class QuitButton : Script
             buttonSfx.play(buttonSfxName);
             AudioComponent audio = gameObject.GetComponent<AudioComponent>();
             //audio.stopAll();
-            SceneLoader.LoadQuitGame();
+            //SceneLoader.LoadQuitGame();
+            QuitObject.SetActive(true);
         }
     }
 }
