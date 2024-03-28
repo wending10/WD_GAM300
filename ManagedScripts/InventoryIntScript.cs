@@ -3,18 +3,19 @@ using System;
 
 public class InventoryIntScript : Script 
 {
-	public GameObject receipt;
+	
+	//public GameObject receipt;
 	public GameObject ToFather;
-	public GameObject ToAntonio;
+	//public GameObject ToAntonio;
 	public GameObject player;
 	public GameObject playerCamera;
     public GameBlackboard gameBlackboard;
+	public GameObject interectCam;
 	private bool cameraDunMove;
 	private Vector2 offset;
 	private float PI = 3.14159f;
 	private float PI_2 = 1.5708f;
 	private bool doOnce = false;
-	private Vector3 cameraRot = new Vector3(0,0,0);
     public override void Awake()
 	{
 
@@ -29,7 +30,6 @@ public class InventoryIntScript : Script
 		//}
 		if (doOnce)
 		{
-			cameraRot = playerCamera.GetComponent<TransformComponent>().GetRotation();
             player.GetComponent<FPS_Controller_Script>().playerCanMove = false;
             player.GetComponent<FPS_Controller_Script>().cameraCanMove = false;
             doOnce = false;
@@ -64,6 +64,9 @@ public class InventoryIntScript : Script
 			gameBlackboard.gameState = GameBlackboard.GameState.InGame;
 			ToFather.SetActive(false);
 
+			interectCam.SetActive(false);
+			playerCamera.SetActive(true);
+
 			// reset
             player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
             player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
@@ -76,22 +79,22 @@ public class InventoryIntScript : Script
 		{
 			GraphicsManagerWrapper.ToggleViewFrom2D(true);
 			gameBlackboard.gameState = GameBlackboard.GameState.InventoryInteract;
+			playerCamera.SetActive(false);
+			interectCam.SetActive(true);
             bool status = ToFather.GetActive();
             ToFather.SetActive(true);
-			float offsetAngle = player.GetComponent<TransformComponent>().GetRotation().Y - 180;
-			float offsetAngleRadian = offsetAngle * PI / 180.0f;
-			ToFather.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, offsetAngleRadian, 0));
+			ToFather.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, 0, 0));
 
-            ToFather.GetComponent<TransformComponent>().SetPosition(
-				player.GetComponent<TransformComponent>().GetPosition() +
-				player.GetComponent<FPS_Controller_Script>().playerCamera.getForwardVector());
+			//ToFather.GetComponent<TransformComponent>().SetPosition(
+			//player.GetComponent<TransformComponent>().GetPosition() +
+			//interectCam.GetComponent<CameraComponent>().getForwardVector());
 
-			ToFather.GetComponent<TransformComponent>().SetPosition(
-				new Vector3(
-					player.GetComponent<TransformComponent>().GetPosition().X,
-					player.GetComponent<TransformComponent>().GetPosition().Y + player.GetComponent<FPS_Controller_Script>().playerCamera.getForwardVector().Y,
-					player.GetComponent<TransformComponent>().GetPosition().Z -1 )
-				);
+			//ToFather.GetComponent<TransformComponent>().SetPosition(
+			//	new Vector3(
+			//		player.GetComponent<TransformComponent>().GetPosition().X,
+			//		player.GetComponent<TransformComponent>().GetPosition().Y + player.GetComponent<FPS_Controller_Script>().playerCamera.getForwardVector().Y,
+			//		player.GetComponent<TransformComponent>().GetPosition().Z -1 )
+			//	);
 			//ToFather.GetComponent<TransformComponent>().SetRotationX(PI_2);
 
 			//Vector3 direction = ToFather.GetComponent<TransformComponent>().GetPosition() - player.GetComponent<TransformComponent>().GetPosition();
@@ -99,9 +102,9 @@ public class InventoryIntScript : Script
 			//Quaternion quatRotation = Quaternion.LookRotation(direction, up);
 			//Vector3 eulerRotation = Quaternion.EulerAngle(quatRotation);
 			//ToFather.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, eulerRotation.Y, 0));
-			
 
-            cameraDunMove = true;
+
+			cameraDunMove = true;
 			doOnce = true;
 		}
         if (Input.GetMouseButton(Keycode.M1))
