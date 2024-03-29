@@ -4,9 +4,9 @@ using System;
 public class InventoryIntScript : Script 
 {
 	
-	//public GameObject receipt;
+	public GameObject receipt;
 	public GameObject ToFather;
-	//public GameObject ToAntonio;
+	public GameObject ToAntonio;
 	public GameObject player;
 	public GameObject playerCamera;
     public GameBlackboard gameBlackboard;
@@ -16,6 +16,13 @@ public class InventoryIntScript : Script
 	private float PI = 3.14159f;
 	private float PI_2 = 1.5708f;
 	private bool doOnce = false;
+	private float mouseDeltaX;
+	private float mouseDeltaY;
+
+	public bool showReceipt = false;
+	public bool showToFather = false;
+	public bool showToAntonio = false;
+
     public override void Awake()
 	{
 
@@ -37,6 +44,7 @@ public class InventoryIntScript : Script
         if (cameraDunMove)
 		{
 			// use WASD to move the object
+			offset = new Vector2(0.0f, 0.0f);
 			if (Input.GetKey(Keycode.W))
 			{
 				offset.Y += 0.1f;
@@ -47,73 +55,108 @@ public class InventoryIntScript : Script
             }
 			if (Input.GetKey(Keycode.A))
 			{
-                offset.X -= 0.1f;
+				offset.X += 0.1f;
             }
 			if (Input.GetKey(Keycode.D))
 			{
-				offset.X += 0.1f;
+                offset.X -= 0.1f;
 			}
-            //playerCamera.GetComponent<TransformComponent>().SetRotation(new Vector3(0.0f, 0.0f, 0.0f));
 
-            //ToFather.GetComponent<TransformComponent>().SetPosition(player.GetComponent<TransformComponent>().GetPosition() - new Vector3(offset.X, offset.Y, 1.0f));
+			// too lazy to optimize
+            ToFather.GetComponent<TransformComponent>().SetPosition(ToFather.GetComponent<TransformComponent>().GetPosition() - new Vector3(0f, offset.Y, 0f));
+            ToFather.GetComponent<TransformComponent>().SetRotation(ToFather.GetComponent<TransformComponent>().GetRotation() - new Vector3(0f, offset.X, 0f));
+            ToAntonio.GetComponent<TransformComponent>().SetPosition(ToAntonio.GetComponent<TransformComponent>().GetPosition() - new Vector3(0f, offset.Y, 0f));
+            ToAntonio.GetComponent<TransformComponent>().SetRotation(ToAntonio.GetComponent<TransformComponent>().GetRotation() - new Vector3(0f, offset.X, 0f));
+            receipt.GetComponent<TransformComponent>().SetPosition(receipt.GetComponent<TransformComponent>().GetPosition() - new Vector3(0f, offset.Y, 0f));
+            receipt.GetComponent<TransformComponent>().SetRotation(receipt.GetComponent<TransformComponent>().GetRotation() - new Vector3(0f, offset.X, 0f));
 
         }
-        if (Input.GetKeyDown(Keycode.ESC))
+        if (Input.GetKeyDown(Keycode.ESC) && gameBlackboard.gameState == GameBlackboard.GameState.InventoryInteract)
 		{
             GraphicsManagerWrapper.ToggleViewFrom2D(false);
 			gameBlackboard.gameState = GameBlackboard.GameState.InGame;
-			ToFather.SetActive(false);
 
 			interectCam.SetActive(false);
 			playerCamera.SetActive(true);
 
-			// reset
+            ToFather.SetActive(false);
+			ToAntonio.SetActive(false);
+			receipt.SetActive(false);
+
+            // reset
             player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
             player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
             cameraDunMove = false;
 			offset = new Vector2(0.0f, 0.0f);
-			//cameraRot = new Vector3(0.0f, 0.0f, 0.0f);
+			showReceipt = false;
+			showToFather = false;
+			showToAntonio = false;
+
+			// safety net
+			if (player.transform.GetPosition().Y != 90)
+			{
+				player.transform.SetPositionY(90);
+				player.GetComponent<RigidBodyComponent>().SetPosition(player.transform.GetPosition());
+			}
 
         }
-		if (Input.GetKeyDown(Keycode.G) )
+		if (showToFather && cameraDunMove == false)
 		{
 			GraphicsManagerWrapper.ToggleViewFrom2D(true);
 			gameBlackboard.gameState = GameBlackboard.GameState.InventoryInteract;
 			playerCamera.SetActive(false);
 			interectCam.SetActive(true);
-            bool status = ToFather.GetActive();
-            ToFather.SetActive(true);
-			ToFather.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, 0, 0));
 
-			//ToFather.GetComponent<TransformComponent>().SetPosition(
-			//player.GetComponent<TransformComponent>().GetPosition() +
-			//interectCam.GetComponent<CameraComponent>().getForwardVector());
-
-			//ToFather.GetComponent<TransformComponent>().SetPosition(
-			//	new Vector3(
-			//		player.GetComponent<TransformComponent>().GetPosition().X,
-			//		player.GetComponent<TransformComponent>().GetPosition().Y + player.GetComponent<FPS_Controller_Script>().playerCamera.getForwardVector().Y,
-			//		player.GetComponent<TransformComponent>().GetPosition().Z -1 )
-			//	);
-			//ToFather.GetComponent<TransformComponent>().SetRotationX(PI_2);
-
-			//Vector3 direction = ToFather.GetComponent<TransformComponent>().GetPosition() - player.GetComponent<TransformComponent>().GetPosition();
-			//Vector3 up = new Vector3(0, 1, 0);
-			//Quaternion quatRotation = Quaternion.LookRotation(direction, up);
-			//Vector3 eulerRotation = Quaternion.EulerAngle(quatRotation);
-			//ToFather.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, eulerRotation.Y, 0));
-
+            //ToFather.GetComponent<GraphicComponent>().SetShowMesh(true);
+			ToFather.SetActive(true);
+			ToFather.GetComponent<TransformComponent>().SetPosition(new Vector3(0, -1, 1));
+			ToFather.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, PI, 0));
 
 			cameraDunMove = true;
 			doOnce = true;
 		}
-        if (Input.GetMouseButton(Keycode.M1))
+		else if (showToAntonio && cameraDunMove == false)
+		{
+			GraphicsManagerWrapper.ToggleViewFrom2D(true);
+			gameBlackboard.gameState = GameBlackboard.GameState.InventoryInteract;
+			playerCamera.SetActive(false);
+			interectCam.SetActive(true);
+
+            ToAntonio.SetActive(true);
+            ToAntonio.GetComponent<TransformComponent>().SetPosition(new Vector3(0, -1, 1));
+			ToAntonio.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, PI, 0));
+
+			cameraDunMove = true;
+			doOnce = true;
+		}
+		else if (showReceipt && cameraDunMove == false)
+		{
+			GraphicsManagerWrapper.ToggleViewFrom2D(true);
+			gameBlackboard.gameState = GameBlackboard.GameState.InventoryInteract;
+			playerCamera.SetActive(false);
+			interectCam.SetActive(true);
+
+			receipt.SetActive(true);
+			receipt.GetComponent<TransformComponent>().SetPosition(new Vector3(0, -1, 1));
+			receipt.GetComponent<TransformComponent>().SetRotation(new Vector3(PI_2, PI, 0));
+
+			cameraDunMove = true;
+			doOnce = true;
+		}
+		if (Input.GetMouseButton(Keycode.M1))
         {
-            float rotationAngleRadian = ToFather.GetComponent<TransformComponent>().GetRotation().Y;
-            float rotationAngleDegree = rotationAngleRadian * 180.0f / 3.14159f;
-            rotationAngleDegree += Input.GetMouseDeltaX();
-            rotationAngleRadian = rotationAngleDegree * 3.14159f / 180.0f;
-			ToFather.GetComponent<TransformComponent>().SetRotationY(rotationAngleRadian);
+			if (mouseDeltaX != Input.GetMouseDeltaX() && mouseDeltaY != Input.GetMouseDeltaY())
+			{
+				float rotationAngleXRadian = ToFather.GetComponent<TransformComponent>().GetRotation().X;
+                float rotationAngleYRadian = ToFather.GetComponent<TransformComponent>().GetRotation().Y;
+                rotationAngleXRadian += Input.GetMouseDeltaY() * PI / 180.0f;
+                rotationAngleYRadian += Input.GetMouseDeltaX() * PI / 180.0f;
+
+				ToFather.GetComponent<TransformComponent>().SetRotationX(rotationAngleXRadian);
+                ToFather.GetComponent<TransformComponent>().SetRotationY(rotationAngleYRadian);
+            }
+            mouseDeltaX = Input.GetMouseDeltaX();
+			mouseDeltaY = Input.GetMouseDeltaY();
         }
 
     }

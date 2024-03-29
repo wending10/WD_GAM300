@@ -114,8 +114,8 @@ public class GameBlackboard : Script
                 break;
 
             case GameState.InventoryInteract:
-                Input.Lock(false);
-                Input.HideMouse(false);
+                Input.Lock(true);
+                Input.HideMouse(true);
                 //Console.WriteLine("GameState.InventoryInteract");
 
                 break;
