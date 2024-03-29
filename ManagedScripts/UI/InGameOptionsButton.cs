@@ -18,11 +18,14 @@ public class InGameOptionsButton : Script
     public static bool openedOptionsMenu;
     private AudioComponent buttonSfx;
     private string buttonSfxName = "";
+    private bool firstHover = true;
+    GameObject arrowObject;
 
     public override void Awake()
     {
         buttonSfxName = "button_press";
         buttonSfx = gameObject.GetComponent<AudioComponent>();
+        arrowObject = GameObjectScriptFind("OptionsArrow");
     }
 
     public override void Start()
@@ -39,6 +42,18 @@ public class InGameOptionsButton : Script
         else
         {
             optionsButtonSprite.SetEnabled(false);
+        }
+
+        if (optionsButtonSprite.IsMouseCollided() && firstHover && (gameBlackboard.gameState == GameBlackboard.GameState.Paused))
+        {
+            firstHover = false;
+            buttonSfx.play("buttonhover");
+            arrowObject.SetActive(true);
+        }
+        if (!optionsButtonSprite.IsMouseCollided())
+        {
+            firstHover = true;
+            arrowObject.SetActive(false);
         }
 
         if (Input.GetMouseButtonDown(Keycode.M1) && optionsButtonSprite.IsMouseCollided() && gameBlackboard.gameState == GameBlackboard.GameState.Paused)

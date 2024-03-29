@@ -296,6 +296,10 @@ public class InventoryScript : Script
             {
                 // Do ??? logic
             }
+            toggleInventory();
+            gameObject.GetComponent<FPS_Controller_Script>().playerCanMove = true;
+            gameObject.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
+            gameBlackboard.gameState = GameBlackboard.GameState.InGame;
         }
     }
 
