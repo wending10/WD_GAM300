@@ -87,7 +87,7 @@ public class Hiding : Script
         }
         if (interactable && gameObject.GetComponent<RigidBodyComponent>().IsRayHit()&& !hiding)
         {
-            _InteractUI.SetActive(true);
+            //_InteractUI.SetActive(true);
             doorStates.GetComponent<DoorState>().doorLookedAt = true;
             //doorText.SetActive(true);
             doorText.GetComponent<UISpriteComponent>().SetFontMessage("Press E to Hide");
@@ -144,7 +144,7 @@ public class Hiding : Script
         {
             doorText.GetComponent<UISpriteComponent>().SetFontMessage("Hold E to Leave Closet");
 
-            _InteractUI.SetActive(false);
+            //_InteractUI.SetActive(false);
             doorStates.GetComponent<DoorState>().doorLookedAt = true;
 
             if (Input.GetKey(Keycode.E) || Input.GetKeyDown(Keycode.E))
@@ -186,7 +186,7 @@ public class Hiding : Script
         }
         else
         {
-            _InteractUI.SetActive(false);
+            //_InteractUI.SetActive(false);
 
 
         }
