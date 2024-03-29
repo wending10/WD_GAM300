@@ -105,7 +105,7 @@ public class InventoryScript : Script
         Console.WriteLine("Toggle Inventory\n");
         InventoryIsOpen = !InventoryIsOpen;
         InventoryObject.SetActive(InventoryIsOpen);
-        
+
         if (InventoryIsOpen)
         {
             audio.play(audioOpenName);
@@ -126,11 +126,15 @@ public class InventoryScript : Script
             {
                 Console.WriteLine("Collide Items");
                 currentTab = "Items";
+                //itemsTitle.SetActive(true);
+                //notesTitle.SetActive(false);
             }
             if(withinButton(NotesTab)) // Slightly off in y-axis
             {
                 Console.WriteLine("Collide Notes");
                 currentTab = "Notes";
+                //itemsTitle.SetActive(false);
+                //notesTitle.SetActive(true);
             }
             if (withinButton(PaintingsTab)) // Slightly off in y-axis
             { 
@@ -162,6 +166,8 @@ public class InventoryScript : Script
         PaintingsTab    = GameObjectScriptFind("PaintingsTab");
         UseButton = GameObjectScriptFind("UseButton");
         ExamineButton = GameObjectScriptFind("ExamineButton");
+
+
 
         itemsObjsImg = new List<string>
         {
