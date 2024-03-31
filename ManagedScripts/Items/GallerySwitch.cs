@@ -57,7 +57,7 @@ public class GallerySwitch : Script
                     audioPlayer.play("pc_openedsomething");
 
                     GameplaySubtitles.counter = 44;
-                    gameObject.GetComponent<ColliderComponent>().SetEnabled(false);
+                    //gameObject.GetComponent<ColliderComponent>().SetEnabled(false);
                 }
             }
         }
