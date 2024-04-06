@@ -23,6 +23,7 @@ public class GameplaySubtitles : Script
     float timer;
     int pressCtrlTwice = 0;
     float subtitleTimer = 2.0f;
+    private bool subtitleTimerOn = false;
     private float twoSecTimer = 2.0f;
 
     public override void Awake()
@@ -402,16 +403,23 @@ public class GameplaySubtitles : Script
         }
         if (counter == 46)
         {
-            if (subtitleTimer <= 0.0f)
+            if (subtitleTimer <= 0.0f && !subtitleTimerOn)
             {
                 GameplaySubtitles.counter = 47;
+                subtitleTimerOn = true;
             }
             else
             {
                 subtitleTimer -= Time.deltaTime;
                 GameplaySubtitles.counter = 46;
+                if (subtitleTimerOn)
+                {
+                    subtitleTimer = 2.0f;
+                    subtitleTimerOn = false;
+                }
 
             }
+
         }
         if (counter == 47)
         {
