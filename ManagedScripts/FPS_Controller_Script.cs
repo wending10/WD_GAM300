@@ -612,6 +612,18 @@ public class FPS_Controller_Script : Script
             new Vector3(transform.GetPosition().X, transform.GetPosition().Y + (originalHeight * crouchHeight), transform.GetPosition().Z),
             new Vector4(quat.X, quat.Y, quat.Z, quat.W), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
         if (speedReduction != 0 && walkSpeed < savedWalkSpeed) walkSpeed /= speedReduction;
+        
+        // Safety net
+        if (gameObject.transform.GetPosition().Y >= 0f && gameObject.transform.GetPosition().Y != 90)
+        {
+            gameObject.transform.SetPositionY(90);
+            gameObject.GetComponent<RigidBodyComponent>().SetPosition(gameObject.transform.GetPosition());
+        }
+        else if (gameObject.transform.GetPosition().Y < 0f && gameObject.transform.GetPosition().Y != -145)
+        {
+            gameObject.transform.SetPositionY(-145);
+            gameObject.GetComponent<RigidBodyComponent>().SetPosition(gameObject.transform.GetPosition());
+        }
     }
     #endregion
 
