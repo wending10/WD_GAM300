@@ -68,6 +68,12 @@ public class Door_Script : Script
     // Update is called once per frame
     override public void Update()
     {
+        float TEMP_originalFadeValue = GraphicsManagerWrapper.GetFadeFactor();
+        if (originalFadeValue <= TEMP_originalFadeValue)
+        {
+            originalFadeValue = TEMP_originalFadeValue;
+        }
+
         if (!forcedLocked && gameObject.GetComponent<RigidBodyComponent>().IsRayHit())
         {
             doorStates.GetComponent<DoorState>().doorLookedAt = true;
