@@ -103,16 +103,22 @@ public class Checkpoint : Script
 
         // Monster
         //Console.WriteLine("Monster");
+        Monster.GetComponent<GhostMovement>().currentEvent = GhostEventCheckpoint;
+
         if (GhostEventCheckpoint == GhostMovement.GhostEvent.DiningRoomEvent)
         {
             Monster.transform.SetPosition(new Vector3(-58.0f, Monster.transform.GetPosition().Y, -1060.0f));
             Monster.transform.SetRotation(new Vector3(0.0f, (float)Math.PI, 0.0f));
         }
+        else if (GhostEventCheckpoint == GhostMovement.GhostEvent.FinalChasingEvent)
+        {
+            Monster.transform.SetPosition(new Vector3(-10000.0f, Monster.transform.GetPosition().Y, -10000.0f));
+            Monster.GetComponent<GhostMovement>().currentEvent = GhostMovement.GhostEvent.Nothing;
+        }
         else
         {
             Monster.transform.SetPosition(MonsterPositonCheckpoint);
         }
-        Monster.GetComponent<GhostMovement>().currentEvent = GhostEventCheckpoint;
         Monster.GetComponent<GhostMovement>().startEvent = true;
 
         DoorStates.Doors[FinalChaseDoorIndex] = DoorState.State.Locked;
