@@ -627,7 +627,7 @@ public class FPS_Controller_Script : Script
             gameObject.transform.SetPositionY(90);
             gameObject.GetComponent<RigidBodyComponent>().SetPosition(gameObject.transform.GetPosition());
         }
-        else if (gameObject.transform.GetPosition().Y < 0f && gameObject.transform.GetPosition().Y != -145)
+        else if (gameObject.transform.GetPosition().Y < -100f && gameObject.transform.GetPosition().Y != -145)
         {
             gameObject.transform.SetPositionY(-145);
             gameObject.GetComponent<RigidBodyComponent>().SetPosition(gameObject.transform.GetPosition());
