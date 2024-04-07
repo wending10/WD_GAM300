@@ -136,6 +136,8 @@ public class Checkpoint : Script
         p03.isPaintingCollected = GalleryOtherPainting2Collected;
         GallerySwitch.isActivated = SwitchClicked;
 
+        Player.GetComponent<FPS_Controller_Script>().cameraCanMove = true;
+        Player.GetComponent<FPS_Controller_Script>().playerCanMove = true;
         //if (!GalleryMainPaintingCollected)
         //{
         //    GalleryMainPainting.GetComponent<ColliderComponent>().SetEnabled(true);
