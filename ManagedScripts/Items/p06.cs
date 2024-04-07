@@ -19,6 +19,8 @@ public class p06 : Script
     public string Painting_Texture;
 
     public GameObject _InteractUI;
+    public GameObject paintingLighting;
+    public GameObject closetLighting;
 
     [Header("AudioStuff")]
     public AudioComponent AudioPlayer;
@@ -73,6 +75,8 @@ public class p06 : Script
                 gameObject.GetComponent<AudioComponent>().play("Horror Stinger_2_Linear");
                 gameObject.GetComponent<AudioComponent>().setVolume(0.6f, "Horror Stinger_2_Linear");
                 isPaintingCollected = true;
+                paintingLighting.GetComponent<Blinking>().SetEnabled(false);
+                paintingLighting.GetComponent<PointlightComponent>().SetColorAlpha(0.0f);
                 //InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
 
                 // View Object Stuff
@@ -93,6 +97,7 @@ public class p06 : Script
                 //{
                 //    ghost.GetComponent<GhostMovement>().PlayMonsterWalkingSoundInitial();
                 //}
+
             }
 
         }
@@ -166,6 +171,8 @@ public class p06 : Script
                     ghost.GetComponent<GhostMovement>().startEvent = true;
                     endingSequence = true;
                     gameObject.SetActive(false);
+
+                    closetLighting.GetComponent<Blinking>().SetEnabled(true);
 
                     // reset player height
                     Quaternion quat = new Quaternion(transform.GetRotation());

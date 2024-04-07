@@ -622,7 +622,7 @@ public class FPS_Controller_Script : Script
         if (speedReduction != 0 && walkSpeed < savedWalkSpeed) walkSpeed /= speedReduction;
         
         // Safety net
-        if (gameObject.transform.GetPosition().Y >= 0f && gameObject.transform.GetPosition().Y != 90)
+        if (gameObject.transform.GetPosition().Y >= -100f && gameObject.transform.GetPosition().Y != 90)
         {
             gameObject.transform.SetPositionY(90);
             gameObject.GetComponent<RigidBodyComponent>().SetPosition(gameObject.transform.GetPosition());
