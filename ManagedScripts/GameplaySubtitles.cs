@@ -485,16 +485,17 @@ public class GameplaySubtitles : Script
         }
         if (counter == 32)
         {
+            Vector3 temp = new Vector3(936.0f, 60.0f, -990.0f);
             if (audio.finished("misc_leave"))
             {
                 audio.play("pc_scream");
                 audio.set3DCoords(listenerpos, "pc_scream");
                 audio.play("painting_dropin"); //scream and drop painting into fire same time 
-                audio.set3DCoords(transform.GetPosition(), "painting_dropin");
+                audio.set3DCoords(temp, "painting_dropin");
                 GameplaySubtitles.counter = 8;
             }
             audio.play("painting_burning");
-            audio.set3DCoords(transform.GetPosition(), "painting_burning");
+            audio.set3DCoords(temp, "painting_burning");
         }
         if (counter == 50)
         {

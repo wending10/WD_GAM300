@@ -309,7 +309,7 @@ public class FPS_Controller_Script : Script
             HeadBob();
         }
 
-        Vector3 up_vector = Vector3.Normalize(Vector3.Cross(playerCamera.getRightVector(), playerCamera.getForwardVector()));
+        Vector3 up_vector = Vector3.Normalize(Vector3.Cross(playerCamera.getForwardVector(), playerCamera.getRightVector()));
         audio.setPlayerCoords(transform.GetPosition(), Vector3.Normalize(playerCamera.getForwardVector()), up_vector);
         audio.set3DCoords(audio.getListenerPos(), "pc_checkreceipt");
         audio.set3DCoords(audio.getListenerPos(), "pc_shinelightbeforereceipt");
