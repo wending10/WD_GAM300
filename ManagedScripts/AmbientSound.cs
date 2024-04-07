@@ -9,7 +9,6 @@ public class AmbientSound : Script
 
     public override void Awake()
     {
-        ob = gameObject;
         bgm = new String("window_ambience");
     }
 
@@ -20,7 +19,7 @@ public class AmbientSound : Script
 
     public override void Update()
     {
-        play.set3DCoords(ob.GetComponent<TransformComponent>().GetPosition(), bgm);
+        play.set3DCoords(gameObject.GetComponent<TransformComponent>().GetPosition(), bgm);
         play.play(bgm);
         play.setVolume(0.5f, bgm);
     }

@@ -320,6 +320,16 @@ namespace TDS
             DLL_API  bool isMuted();
 
             /**
+             * Set loop for a sound
+             */
+            DLL_API  void setLoop(SoundInfo& soundInfo, bool set);
+
+            /**
+             * Returns if sound is looping
+             */
+            DLL_API  bool GetLoop(SoundInfo& soundInfo);
+
+            /**
              * Get container of sounds that's loaded
              */
             DLL_API  std::map<unsigned int, FMOD::Sound*> getSoundContainer();
@@ -492,6 +502,7 @@ namespace TDS
         static void ScriptUnload(std::string pathing);
         static SoundInfo* ScriptGetSound(std::string pathing);
         static unsigned int ScriptGetID(std::string pathing);
+        static bool ScriptGetLoop(std::string pathing);
 
         static bool CheckPlaying(std::string pathing); //to be changed
         static bool CheckPause(std::string pathing); //to be changed
@@ -503,6 +514,7 @@ namespace TDS
         static void ScriptFadeIn(unsigned int duration, std::string pathing);
         static void ScriptSetPosition(Vec3 pos, std::string pathing);
         static void ScriptSetListenerPos(Vec3 pos, Vec3 for_vec, Vec3 up_vec);
+        static void ScriptSetLoop(bool set, std::string pathing);
 
         static SoundInfo* find_sound_info(std::string str);
         static void Add_to_Queue(std::string str = "");
