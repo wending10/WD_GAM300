@@ -70,6 +70,8 @@ public class p06 : Script
             {
                 Hiding.playOnce = false;
                 Console.WriteLine("Picked up painting");
+                gameObject.GetComponent<AudioComponent>().play("Horror Stinger_2_Linear");
+                gameObject.GetComponent<AudioComponent>().setVolume(0.6f, "Horror Stinger_2_Linear");
                 isPaintingCollected = true;
                 //InventoryScript.addPaintingIntoInventory(Painting_Name, Painting_Texture);
 

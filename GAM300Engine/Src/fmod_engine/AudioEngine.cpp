@@ -627,6 +627,25 @@ namespace TDS
             return muted;
         }
 
+        void AudioEngine::setLoop(SoundInfo& soundInfo, bool set)
+        {
+            soundInfo.isLoop = set;
+
+            if (soundInfo.isLoop)
+            {
+                ERRCHECK(channels[soundInfo.uniqueID]->setMode(FMOD_LOOP_NORMAL));
+            }
+            else
+            {
+                ERRCHECK(channels[soundInfo.uniqueID]->setMode(FMOD_LOOP_OFF));
+            }
+        }
+
+        bool AudioEngine::GetLoop(SoundInfo& soundInfo)
+        {
+            return soundInfo.isLoop;
+        }
+
         std::map<unsigned int, FMOD::Sound*> AudioEngine::getSoundContainer()
         {
             return sounds;
@@ -866,6 +885,11 @@ namespace TDS
         return aud_instance->findSound(pathing)->uniqueID;
     }
 
+    bool proxy_audio_system::ScriptGetLoop(std::string pathing)
+    {
+        return aud_instance->GetLoop(*find_sound_info(pathing));
+    }
+
     bool proxy_audio_system::CheckPlaying(std::string pathing)
     {
         return aud_instance->checkPlaying(*find_sound_info(pathing));
@@ -932,6 +956,11 @@ namespace TDS
         aud_instance->set3DListenerPosition(pos.x, pos.y, pos.z,
             for_vec.x, for_vec.y, for_vec.z,
             up_vec.x, up_vec.y, up_vec.z);
+    }
+
+    void proxy_audio_system::ScriptSetLoop(bool set, std::string pathing)
+    {
+        aud_instance->setLoop(*find_sound_info(pathing), set);
     }
 
     SoundInfo* proxy_audio_system::find_sound_info(std::string str)
