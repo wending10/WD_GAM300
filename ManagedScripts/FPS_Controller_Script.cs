@@ -470,7 +470,7 @@ public class FPS_Controller_Script : Script
             }
 
             audio.play("window_ambience");
-            audio.set3DCoords(new Vector3(981.70f, 94.99f, 501.68f), "window_ambience");
+            audio.set3DCoords(new Vector3(981.70f, 94.99f, 1001.68f), "window_ambience");
             if(audio.isitLoop("window_ambience"))
             {
                 audio.setLoop(true, "window_ambience");
