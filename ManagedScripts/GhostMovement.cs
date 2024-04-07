@@ -865,13 +865,13 @@ public class GhostMovement : Script
             case 2: // "Looking" around for player (just made it wait for a while for now)
 
                 // Looking for player
-                if ((playerOriginalPosition - player.transform.GetPosition() != new Vector3(0.0f, 0.0f, 0.0f)) || // Player moved
-                    !player.GetComponent<FPS_Controller_Script>().isCrouched || player.GetComponent<Flashlight_Script>().activateLight)
-                {
-                    currentEvent = GhostEvent.ChasingPlayer;
-                    speed = 15.0f;
-                    distance = 60.0f;
-                }
+                //if ((playerOriginalPosition - player.transform.GetPosition() != new Vector3(0.0f, 0.0f, 0.0f)) || // Player moved
+                //    !player.GetComponent<FPS_Controller_Script>().isCrouched || player.GetComponent<Flashlight_Script>().activateLight)
+                //{
+                //    currentEvent = GhostEvent.ChasingPlayer;
+                //    speed = 15.0f;
+                //    distance = 60.0f;
+                //}
 
                 if (diningRoomTimer <= 0)
                 {
