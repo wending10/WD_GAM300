@@ -89,6 +89,7 @@ public class p06 : Script
                 GameplaySubtitles.counter = 27; //somethings diff..
                 InteractUI.isShow = false;
                 AudioPlayer.play("pc_somethingdiff");
+                AudioPlayer.set3DCoords(AudioPlayer.getListenerPos(), "pc_somethingdiff");
 
                 gameObject.GetComponent<ColliderComponent>().SetEnabled(false);
                 // hiding event 

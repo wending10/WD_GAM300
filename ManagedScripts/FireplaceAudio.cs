@@ -15,7 +15,8 @@ public class FireplaceAudio : Script
 
     public override void Update()
     {
-        audioComponent.set3DCoords(new Vector3(934.28f, 49.1388f, -995.61f), "fireplace");
-        audioComponent.play("fireplace");
+        //audioComponent.play("fireplace");
+        audioComponent.setVolume(0.6f, "fireplace");
+        audioComponent.set3DCoords(transform.GetPosition(), "fireplace");
     }
 }

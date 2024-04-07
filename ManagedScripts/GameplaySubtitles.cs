@@ -130,7 +130,12 @@ public class GameplaySubtitles : Script
 
         UISpriteComponent Sprite = gameObject.GetComponent<UISpriteComponent>();
         AudioComponent audio = gameObject.GetComponent<AudioComponent>();
-            
+        Vector3 listenerpos = gameObject.GetComponent<AudioComponent>().getListenerPos();
+        audio.set3DCoords(listenerpos, "pc_okuncle");
+        audio.set3DCoords(listenerpos, "pc_letsseewhere");
+        audio.set3DCoords(listenerpos, "pc_placelooksbigger");
+        audio.set3DCoords(listenerpos, "pc_switchtoopen");
+
         if (counter == 0)
         {
             if (Input.GetKeyDown(Keycode.F))
@@ -181,7 +186,6 @@ public class GameplaySubtitles : Script
             {
                 counter = 17;
                 audio.play("pc_okuncle");
-
             }
             if (Input.GetKeyDown(Keycode.CTRL))
             {
@@ -201,7 +205,6 @@ public class GameplaySubtitles : Script
                 LockPick1.counter = 6;//prevent audio repeat
                 //play enter house bgm
                 audio.play(BGMfile[0]);
-                
             }
 
         }
@@ -350,8 +353,9 @@ public class GameplaySubtitles : Script
             if (audio.finished("pc_stealpainting1"))
             {
 
-                audio.set3DCoords(GhostMovement.GhostTransformPosition, "mon_alerted3");
                 audio.play("mon_alerted3");
+                audio.set3DCoords(GhostMovement.GhostTransformPosition, "mon_alerted3");
+
                 audio.play("pc_monsterrattledoor"); //someone's coming better hide
                 counter = 22;
                 audio.stop("pc_stealpainting1");
@@ -364,9 +368,12 @@ public class GameplaySubtitles : Script
             if (audio.finished("gallery_movepainting")&& audio.finished("painting_dropin")) // Creaking sound ends
             {
                 audio.stop("gallery_movepainting");
-                audio.set3DCoords(GhostMovement.GhostTransformPosition, "mon_alerted3");
                 audio.play("mon_alerted3");
+                audio.set3DCoords(GhostMovement.GhostTransformPosition, "mon_alerted3");
+                audio.play("pc_monsterrattledoor"); // Someone's coming, better hide
+                audio.set3DCoords(listenerpos, "pc_monsterrattledoor");
                 audio.play("pc_icanhearitcoming"); // I can hear it coming (variation of: someone's coming)
+                audio.set3DCoords(listenerpos, "pc_icanhearitcoming");
                 counter = 51; 
             }
         }
@@ -481,12 +488,13 @@ public class GameplaySubtitles : Script
             if (audio.finished("misc_leave"))
             {
                 audio.play("pc_scream");
-                audio.set3DCoords(transform.GetPosition(), "painting_dropin");
+                audio.set3DCoords(listenerpos, "pc_scream");
                 audio.play("painting_dropin"); //scream and drop painting into fire same time 
+                audio.set3DCoords(transform.GetPosition(), "painting_dropin");
                 GameplaySubtitles.counter = 8;
             }
-            audio.set3DCoords(transform.GetPosition(), "painting_burning");
             audio.play("painting_burning");
+            audio.set3DCoords(transform.GetPosition(), "painting_burning");
         }
         if (counter == 50)
         {
@@ -515,7 +523,7 @@ public class GameplaySubtitles : Script
 
 
         Sprite.SetFontMessage(Subtitles[counter]);
-        
-        
+
+        audio.set3DCoords(audio.getListenerPos(), "pc_runningoutofjuice");
     }
 }

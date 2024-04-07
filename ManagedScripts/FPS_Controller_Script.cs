@@ -311,6 +311,9 @@ public class FPS_Controller_Script : Script
 
         Vector3 up_vector = Vector3.Normalize(Vector3.Cross(playerCamera.getRightVector(), playerCamera.getForwardVector()));
         audio.setPlayerCoords(transform.GetPosition(), Vector3.Normalize(playerCamera.getForwardVector()), up_vector);
+        audio.set3DCoords(audio.getListenerPos(), "pc_checkreceipt");
+        audio.set3DCoords(audio.getListenerPos(), "pc_shinelightbeforereceipt");
+        audio.set3DCoords(audio.getListenerPos(), "pc_shinelightafterreceipt");
     }
     public override void FixedUpdate()
     {
@@ -466,9 +469,12 @@ public class FPS_Controller_Script : Script
                 }
             }
 
-            audio.set3DCoords(new Vector3(981.70f, 94.99f, 501.68f), "window_ambience");
             audio.play("window_ambience");
-            audio.setLoop(true, "window_ambience");
+            audio.set3DCoords(new Vector3(981.70f, 94.99f, 501.68f), "window_ambience");
+            if(audio.isitLoop("window_ambience"))
+            {
+                audio.setLoop(true, "window_ambience");
+            }
         }
     }
 

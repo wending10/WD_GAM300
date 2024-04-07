@@ -91,6 +91,7 @@ public class p07 : Script
                 // Trigger Painting Event
                 AudioPlayer.play("gallery_movepainting");
                 AudioPlayer.play("pc_stealpainting1");
+                AudioPlayer.set3DCoords(AudioPlayer.getListenerPos(), "pc_stealpainting1");
                 GameplaySubtitles.counter = 13;
 
                 // hiding event 

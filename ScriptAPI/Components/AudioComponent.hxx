@@ -30,6 +30,7 @@ namespace ScriptAPI
 		unsigned int getUniqueID();
 		unsigned int getMSLength();
 		std::string getFilePath();
+		Vector3 getListenerPos();
 
 		void setFilePath(System::String^ str_path);
 
