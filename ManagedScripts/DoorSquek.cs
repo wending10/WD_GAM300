@@ -39,8 +39,8 @@ public class DoorSquek : Script
             elapsedTime += Time.deltaTime;
             if (elapsedTime >= 1f)
             {
-                audio.set3DCoords(transform.GetPosition(), monsterAlert);
                 audio.play(monsterAlert);
+                audio.set3DCoords(transform.GetPosition(), monsterAlert);
                 audio.play(monsterChase);
                 alerted = false;
                 elapsedTime = 0f;

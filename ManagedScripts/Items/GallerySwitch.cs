@@ -51,12 +51,14 @@ public class GallerySwitch : Script
                 {
                     mightHaveOpened = true;
                     audioPlayer.play("pc_mighthaveopened");
+                    audioPlayer.set3DCoords(audioPlayer.getListenerPos(), "pc_mighthaveopened");
                     GameplaySubtitles.counter = 43;
                 }
                 else
                 {
                     openedsomething = true;
                     audioPlayer.play("pc_openedsomething");
+                    audioPlayer.set3DCoords(audioPlayer.getListenerPos(), "pc_openedsomething");
 
                     GameplaySubtitles.counter = 44;
                     //gameObject.GetComponent<ColliderComponent>().SetEnabled(false);

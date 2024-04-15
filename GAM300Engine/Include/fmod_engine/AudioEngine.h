@@ -390,7 +390,7 @@ namespace TDS
             /**
              * Sets the 3D position of a sound
              */
-            void set3dChannelPosition(SoundInfo soundInfo, FMOD::Channel* channel);
+            void set3dChannelPosition(SoundInfo& soundInfo, FMOD::Channel* channel);
 
             /**
              * Initializes the reverb effect
@@ -412,10 +412,10 @@ namespace TDS
             static const unsigned int MAX_AUDIO_CHANNELS = 1024;
 
             // Units per meter.  I.e feet would = 3.28.  centimeters would = 100.
-            const float DISTANCEFACTOR = 150.0f;
+            const float DISTANCEFACTOR = 200.0f;
 
             // Listener head position, initialized to default value
-            FMOD_VECTOR listenerpos = { 0.0f, 0.0f, -1.0f * DISTANCEFACTOR };
+            FMOD_VECTOR listenerpos = { 0.0f, 0.0f, -1.0f };
 
             FMOD_VECTOR listenervelocity = { 0.f, 0.f, 0.f * DISTANCEFACTOR };
 
@@ -526,6 +526,7 @@ namespace TDS
         static float getMasterVolume();
         static float getBGMVolume();
         static float getSFXVolume();
+        static Vec3 getListenerPos();
 
         static void SetVolume(float vol, std::string pathing);
         static void SetMasterVolume(float vol);

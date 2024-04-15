@@ -105,6 +105,11 @@ namespace ScriptAPI
 		return filePath;
 	}
 
+	Vector3 AudioComponent::getListenerPos()
+	{
+		return Vector3(TDS::proxy_audio_system::getListenerPos());
+	}
+
 	void AudioComponent::setFilePath(System::String^ str_path)
 	{
 		filePath = toStdString(str_path);

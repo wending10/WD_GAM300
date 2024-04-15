@@ -70,5 +70,6 @@ public class GalleryLetter : Script
         {
             //_InteractUI.SetActive(false);
         }
+        clip.set3DCoords(clip.getListenerPos(), "pc_moreinthebasement");
     }
 }

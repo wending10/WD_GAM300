@@ -14,6 +14,7 @@ public class LivingRoomClock : Script
 
     public override void Update()
     {
+        //audio.play(sound);
         audio.set3DCoords(gameObject.GetComponent<TransformComponent>().GetPosition(), sound);
     }
 }
